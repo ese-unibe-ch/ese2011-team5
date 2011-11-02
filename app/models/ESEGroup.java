@@ -61,6 +61,8 @@ public class ESEGroup extends Model {
 
 		if (valid) {
 			this.userList.add(user);
+			user.save();
+			this.save();
 		} else {
 			// TODO Throw an exception or do something similar, because user is
 			// already in this group or does not exist
@@ -78,9 +80,10 @@ public class ESEGroup extends Model {
 																		// this!
 
 		boolean valid = !this.userList.contains(user) && user != null;
-
 		if (valid) {
 			this.userList.add(user);
+			this.owner.save();
+			//this.save();
 		} else {
 			// TODO Throw an exception or do something similar, because user is
 			// already in this group or does not exist

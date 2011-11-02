@@ -11,7 +11,7 @@ GET	/favicon.ico	404
 GET	/User/?			ESECtlUser.lsUsers
 GET /User/lsgroups/?	ESECtlUser.lsGroups
 GET /User/lsgroups/listusersofgroup/?	ESECtlUser.listUsersOfGroup
-GET /User/lsgroups/?	ESECtlUser.addUserToGroup
+POST /User/lsgroups/?	ESECtlUser.addUserToGroup
 GET	/User/add/?		ESECtlUser.addUser
 POST	/User/add/?		ESECtlUser.addUserPost
 GET	/User/mod/?		ESECtlUser.addUser

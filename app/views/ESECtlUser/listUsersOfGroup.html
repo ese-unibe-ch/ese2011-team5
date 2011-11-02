@@ -5,9 +5,8 @@
 
 <p>Users of group ${group.groupName}:</p>
 
-#{list items:usersOfGroup, as:'user'}
-	<p>#{a @ESECtlUser.listUsersOfGroup(user.id)}${user.username}#{/a}</p>
-#{/list}
+
+${usersOfGroup.size()}
 
 <p>Add User:</p>
 #{list items:allOtherUsers, as:'user'}

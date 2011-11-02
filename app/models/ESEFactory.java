@@ -58,7 +58,8 @@ public abstract class ESEFactory
 	public static ESEGroup createGroup(String groupName, ESEUser owner)
 	{
 		ESEGroup group = new ESEGroup(groupName, owner);
-		// group.save();
+		owner.save();
+		group.save();
 
 		return group;
 	}

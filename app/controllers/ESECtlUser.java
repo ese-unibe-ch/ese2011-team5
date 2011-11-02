@@ -54,13 +54,20 @@ public class ESECtlUser extends Controller
 	}
 	
 	public static void addUserToGroup(long groupID, String username){
+		System.out.println(username);
 		ESEGroup group = ESEGroup.findById(groupID);
 		group.addUser(username);
+		System.out.println("Start listing");
+		for(int index=0;index<group.userList.size();index++)
+		{
+			System.out.println("unten" + group.userList.get(index));
+		}
+		System.out.println("End listing");
+		listUsersOfGroup(groupID);
 	}
 	
 	public static void listUsersOfGroup(long groupID){
 		ESEGroup group = ESEGroup.findById(groupID);
-		
 		//group.addUser("steve");
 		
 		List<ESEUser> usersOfGroup = group.getAllUser();
