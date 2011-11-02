@@ -13,7 +13,7 @@ public class ESECalendarController extends Controller
 {
 	private static String loggedInUser = Secure.Security.connected();
 
-	public static void lsEvents (String uri_user, String uri_cal, 
+	public static void listEvents (String uri_user, String uri_cal, 
 			String uri_yy, String uri_mm, String uri_dd) {
 		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
@@ -39,11 +39,11 @@ public class ESECalendarController extends Controller
 		render(user, cal, le, msg);
 	}
 
-	public static void lsEvents (String uri_user, String uri_cal) {
+	public static void listEvents (String uri_user, String uri_cal) {
 		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
-		ESECalendarController.lsEvents(user, cal, null, null, null);
+		ESECalendarController.listEvents(user, cal, null, null, null);
 	}
 
 	public static void addEvent (
@@ -104,7 +104,7 @@ public class ESECalendarController extends Controller
 				ESEFactory.createEvent(
 					ename, ebeg, eend, epub, c);
 			}
-			ESECalendarController.lsEvents(user, cal);
+			ESECalendarController.listEvents(user, cal);
 		}
 		params.flash();
 		validation.keep();
@@ -158,7 +158,7 @@ public class ESECalendarController extends Controller
 		if ((c = u.getCalendar(cal)) != null && permitted(c)) {
 			c.removeEvent(Long.parseLong(eid));
 		}
-		ESECalendarController.lsEvents(user, cal);
+		ESECalendarController.listEvents(user, cal);
 	}
 
 	public static Boolean permitted (
