@@ -11,10 +11,9 @@
 
 <p>Add User:</p>
 #{list items:allOtherUsers, as:'user'}
-	<!-- <p>#{a @ESECtlUser.addUserToGroup(group.id, user.username)}${user.username}#{/a}</p> --!>
-	#{a @ESECtlUser.addUserToGroup(group.id, "steve")}steve#{/a}
+	<p>#{a @ESECtlUser.addUserToGroup(group.id, user.username)}${user.username}#{/a}</p>
+	
 #{/list}
-
 
 
 #{tail /}
