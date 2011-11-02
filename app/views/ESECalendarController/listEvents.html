@@ -35,7 +35,7 @@
 	${_.getStartDate().toString()} |
 	${_.getEndDate().toString()} |
 	${_.isPublic().toString()} |
-	#{a @ESECalendarController.modEvent(user, cal, _.getId())}edit#{/a} |
+	#{a @ESECalendarController.modifyEvent(user, cal, _.getId())}edit#{/a} |
 	#{a @ESECalendarController.delEvent(user, cal, _.getId())}delete#{/a}
 	<br />
 #{/list}
