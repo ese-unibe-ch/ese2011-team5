@@ -6,8 +6,8 @@
 #{list lu}
 	${_.getId()}
 	<a href="/${_.getUsername()}">${_.getUsername()}</a> |
-	#{a @ESECtlUser.addUser(_.getUsername())}edit#{/a} |
-	#{a @ESECtlUser.delUser(_.getUsername())}delete#{/a}
+	#{a @ESEUserController.addUser(_.getUsername())}edit#{/a} |
+	#{a @ESEUserController.delUser(_.getUsername())}delete#{/a}
 	<br />
 #{/list}
 #{else}

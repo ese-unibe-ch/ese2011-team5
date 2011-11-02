@@ -6,7 +6,7 @@ import play.data.validation.*;
 import models.*;
 
 @With(Secure.class)
-public class ESECtlUser extends Controller
+public class ESEUserController extends Controller
 {
 	private static String loggedInUser = Secure.Security.connected();
 
@@ -40,7 +40,7 @@ public class ESECtlUser extends Controller
 		if (!validation.hasErrors()) {
 			currentUser.createGroup(groupName);
 		}
-		ESECtlUser.lsGroups();
+		ESEUserController.lsGroups();
 		params.flash();
 	}
 	
@@ -90,11 +90,11 @@ public class ESECtlUser extends Controller
 				ESEFactory.createUser(username, password,
 					firstName, firstName);
 			}
-			ESECtlUser.lsUsers();
+			ESEUserController.lsUsers();
 		}
 		params.flash();
 		validation.keep();
-		ESECtlUser.addUser(username);
+		ESEUserController.addUser(username);
 	}
 
 	public static void delUser (String username	) {
@@ -107,7 +107,7 @@ public class ESECtlUser extends Controller
 			 */
 			u.delete();
 		}
-		ESECtlUser.lsUsers();
+		ESEUserController.lsUsers();
 	}
 	
 	
