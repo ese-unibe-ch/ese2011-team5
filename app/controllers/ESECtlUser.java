@@ -52,6 +52,14 @@ public class ESECtlUser extends Controller
 		groups = ESEUser.getGroupsOfUser(auth_user);
 		render(groups);
 	}
+	
+	public static void listUsersOfGroup(String groupName){
+		render(groupName);
+	}
+	
+	//public static void addUserToGroupPost(){
+	//	
+	//}
 
 	public static void addUser (
 		String uname

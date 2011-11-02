@@ -4,7 +4,7 @@
 #{head /}
 
 #{list items:groups, as:'group'}
-<p>${group.groupName}</p>
+	<p>#{a @ESECtlUser.listUsersOfGroup(group.groupName)}${group.groupName}#{/a}</p>
 #{/list}
 
 #{else}
