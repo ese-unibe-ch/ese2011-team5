@@ -9,18 +9,13 @@ import models.*;
 import utils.*;
 
 @With(Secure.class)
-public class ESECtlCalendar extends Controller
+public class ESECalendarController extends Controller
 {
-	private static String auth_user = Secure.Security.connected();
+	private static String loggedInUser = Secure.Security.connected();
 
-	public static void lsEvents (
-		String uri_user,
-		String uri_cal,
-		String uri_yy,
-		String uri_mm,
-		String uri_dd
-	) {
-		String user = uri_user==null ?auth_user :uri_user;
+	public static void lsEvents (String uri_user, String uri_cal, 
+			String uri_yy, String uri_mm, String uri_dd) {
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
 		ESEUser u;
@@ -29,7 +24,7 @@ public class ESECtlCalendar extends Controller
 		List<ESEEvent> le = null;
 
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = auth_user;
+			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null) {
@@ -44,14 +39,11 @@ public class ESECtlCalendar extends Controller
 		render(user, cal, le, msg);
 	}
 
-	public static void lsEvents (
-		String uri_user,
-		String uri_cal
-	) {
-		String user = uri_user==null ?auth_user :uri_user;
+	public static void lsEvents (String uri_user, String uri_cal) {
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
-		ESECtlCalendar.lsEvents(user, cal, null, null, null);
+		ESECalendarController.lsEvents(user, cal, null, null, null);
 	}
 
 	public static void addEvent (
@@ -64,7 +56,7 @@ public class ESECtlCalendar extends Controller
 		String epub,
 		Boolean err_date
 	) {
-		String user = uri_user==null ?auth_user :uri_user;
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
 		render(user, cal, eid, ename, ebeg, eend, epub, err_date);
@@ -79,7 +71,7 @@ public class ESECtlCalendar extends Controller
 		@Required String eend,
 		String epub
 	) {
-		String user = uri_user==null ?auth_user :uri_user;
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
 		ESEUser u;
@@ -99,7 +91,7 @@ public class ESECtlCalendar extends Controller
 			err_date = true;
 		}
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = auth_user;
+			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
 		if (!validation.hasErrors() && !err_date &&
@@ -112,11 +104,11 @@ public class ESECtlCalendar extends Controller
 				ESEFactory.createEvent(
 					ename, ebeg, eend, epub, c);
 			}
-			ESECtlCalendar.lsEvents(user, cal);
+			ESECalendarController.lsEvents(user, cal);
 		}
 		params.flash();
 		validation.keep();
-		ESECtlCalendar.addEvent(user, cal, eid, ename, ebeg,
+		ESECalendarController.addEvent(user, cal, eid, ename, ebeg,
 			eend, epub, err_date);
 	}
 
@@ -125,14 +117,14 @@ public class ESECtlCalendar extends Controller
 		String uri_cal,
 		String eid
 	) {
-		String user = uri_user==null ?auth_user :uri_user;
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
 		ESEUser u;
 		ESECalendar c;
 		ESEEvent e = null;	/* XXX: needs handling */
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = auth_user;
+			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null && permitted(c)) {
@@ -141,7 +133,7 @@ public class ESECtlCalendar extends Controller
 		/**
 		 *	XXX: ugly below
 		 */
-		ESECtlCalendar.addEvent(user, cal, eid, e.getEventName(),
+		ESECalendarController.addEvent(user, cal, eid, e.getEventName(),
 			ESEConversionHelper.convertDateToString(
 				e.getStartDate()),
 			ESEConversionHelper.convertDateToString(
@@ -154,25 +146,25 @@ public class ESECtlCalendar extends Controller
 		String uri_cal,
 		String eid
 	) {
-		String user = uri_user==null ?auth_user :uri_user;
+		String user = uri_user==null ?loggedInUser :uri_user;
 		String cal = uri_cal;
 
 		ESEUser u;
 		ESECalendar c;
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = auth_user;
+			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null && permitted(c)) {
 			c.removeEvent(Long.parseLong(eid));
 		}
-		ESECtlCalendar.lsEvents(user, cal);
+		ESECalendarController.lsEvents(user, cal);
 	}
 
 	public static Boolean permitted (
 		ESECalendar c
 	) {
 		String cal_owner = c.getOwner().getUsername();
-		return auth_user.equals(cal_owner);
+		return loggedInUser.equals(cal_owner);
 	}
 }

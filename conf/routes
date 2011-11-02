@@ -23,9 +23,9 @@ POST	/User/addgroup/?	ESECtlUser.addGroupPost
 #
 GET	/							ESECtlUser.lsCalendars
 GET	/{uri_user}/?						ESECtlUser.lsCalendars
-GET	/{uri_user}/{uri_cal}/?					ESECtlCalendar.lsEvents
-GET	/{uri_user}/{uri_cal}/add/?				ESECtlCalendar.addEvent
-POST	/{uri_user}/{uri_cal}/add/?				ESECtlCalendar.addEventPost
-GET	/{uri_user}/{uri_cal}/mod/?				ESECtlCalendar.modEvent
-GET	/{uri_user}/{uri_cal}/del/?				ESECtlCalendar.delEvent
-GET	/{uri_user}/{uri_cal}/{uri_yy}/{uri_mm}/{uri_dd}/?	ESECtlCalendar.lsEvents
+GET	/{uri_user}/{uri_cal}/?					ESECalendarController.lsEvents
+GET	/{uri_user}/{uri_cal}/add/?				ESECalendarController.addEvent
+POST	/{uri_user}/{uri_cal}/add/?				ESECalendarController.addEventPost
+GET	/{uri_user}/{uri_cal}/mod/?				ESECalendarController.modEvent
+GET	/{uri_user}/{uri_cal}/del/?				ESECalendarController.delEvent
+GET	/{uri_user}/{uri_cal}/{uri_yy}/{uri_mm}/{uri_dd}/?	ESECalendarController.lsEvents
