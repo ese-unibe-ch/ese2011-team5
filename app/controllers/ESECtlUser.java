@@ -53,14 +53,21 @@ public class ESECtlUser extends Controller
 		render(groups);
 	}
 	
-	public static void listUsersOfGroup(String groupName){
-		render(groupName);
+	public static void addUserToGroup(long groupID, String username){
+		ESEGroup group = ESEGroup.findById(groupID);
+		group.addUser(username);
 	}
 	
-	//public static void addUserToGroupPost(){
-	//	
-	//}
-
+	public static void listUsersOfGroup(long groupID){
+		ESEGroup group = ESEGroup.findById(groupID);
+		
+		//group.addUser("steve");
+		
+		List<ESEUser> usersOfGroup = group.getAllUser();
+		List<ESEUser> allOtherUsers = ESEUser.getAllOtherUsers(auth_user);
+		render(group, usersOfGroup, allOtherUsers);
+	}
+	
 	public static void addUser (
 		String uname
 	) {

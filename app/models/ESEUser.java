@@ -37,7 +37,6 @@ public class ESEUser extends Model {
 	 */
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	public List<ESEGroup> groupList;
-
 	/** The first name of the user displayed in the profile.
 	 */
 	public String firstName = "";

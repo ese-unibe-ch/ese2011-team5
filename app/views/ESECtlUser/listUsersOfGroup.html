@@ -3,10 +3,18 @@
 
 #{head /}
 
-<p>${groupName}
+<p>Users of group ${group.groupName}:</p>
 
-#{else}
-	empty
-#{/else}
+#{list items:usersOfGroup, as:'user'}
+	<p>#{a @ESECtlUser.listUsersOfGroup(user.id)}${user.username}#{/a}</p>
+#{/list}
+
+<p>Add User:</p>
+#{list items:allOtherUsers, as:'user'}
+	<!-- <p>#{a @ESECtlUser.addUserToGroup(group.id, user.username)}${user.username}#{/a}</p> --!>
+	#{a @ESECtlUser.addUserToGroup(group.id, "steve")}steve#{/a}
+#{/list}
+
+
 
 #{tail /}
