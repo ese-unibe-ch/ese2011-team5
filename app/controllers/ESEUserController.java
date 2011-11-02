@@ -10,10 +10,10 @@ public class ESEUserController extends Controller
 {
 	private static String loggedInUser = Secure.Security.connected();
 
-	public static void lsCalendars (String uri_user) {
+	public static void lsCalendars (String uriUser) {
 		ESEUser u;
 		List<ESECalendar> lc;
-		String user = uri_user==null ?loggedInUser :uri_user;
+		String user = uriUser==null ?loggedInUser :uriUser;
 
 		if ((u = ESEUser.getUser(user)) == null) {
 			user = loggedInUser;
@@ -24,9 +24,9 @@ public class ESEUserController extends Controller
 	}
 
 	public static void lsUsers () {
-		List<ESEUser> lu;
-		lu = ESEUser.getAllOtherUsers(loggedInUser);
-		render(lu);
+		List<ESEUser> userList;
+		userList = ESEUser.getAllOtherUsers(loggedInUser);
+		render(userList);
 	}
 
 	public static void addGroup(){

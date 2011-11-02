@@ -3,7 +3,7 @@
 
 #{head /}
 
-#{list lu}
+#{list userList}
 	${_.getId()}
 	<a href="/${_.getUsername()}">${_.getUsername()}</a> |
 	#{a @ESEUserController.addUser(_.getUsername())}edit#{/a} |
