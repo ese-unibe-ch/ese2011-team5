@@ -1,4 +1,5 @@
-*{ You can use plain selenium command using the selenium tag }*
+*{ Currently a user must be logged in before a new user can be created.
+Thus the test tests also normal log in }*
 
 #{selenium 'Test Register a new user'}
 
@@ -24,7 +25,17 @@
 	assertTextPresent('gretchen')
 	assertTextPresent('brian')
 	assertTextPresent('ptolemy')
+	
+	clickAndWait('link=logout')
+	assertTextPresent('You have been logged out')
+    assertTextPresent('Username')
+    assertTextPresent('Password')
     
+    type('username','ptolemy')
+    type('password','alexandria')
+    clickAndWait('signin')
     
+    assertTextPresent('logged in as ptolemy')
+        
     
 #{/selenium}
