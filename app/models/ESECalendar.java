@@ -286,4 +286,16 @@ public class ESECalendar extends Model
 	{
 		return this.getAllEventsAsList().iterator();
 	}
+
+	/**
+	 *	XXX: need something like this..
+	 */
+	public ESEEvent getEvent(Long id) {
+		for (ESEEvent e : this.eventList) {
+			if (id == e.getId()) {
+				return e;
+			}
+		}
+		return null;
+	}
 }

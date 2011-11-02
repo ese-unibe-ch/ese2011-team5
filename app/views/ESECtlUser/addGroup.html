@@ -1,0 +1,19 @@
+#{extends 'main.html' /}
+#{set title:'XXX: title' /}
+
+#{head /}
+
+#{ifErrors}
+	input error
+	<br />
+#{/ifErrors}
+
+#{form @ESECtlUser.addGroupPost()}
+	<label for="name">group name: </label>
+	<input type="text" name="groupName" id="groupName" value="${groupName}" />
+	<br />
+
+	<input type="submit" value="add group" />
+#{/form}
+
+#{tail /}

@@ -8,21 +8,21 @@
 	<br />
 #{/ifErrors}
 
-#{form @usr.add_usr_post(uname, pass, fname, lname)}
+#{form @ESECtlUser.addUserPost()}
 	<label for="name">username: </label>
 	<input type="text" name="uname" id="uname" value="${uname}" />
 	<br />
 
 	<label for="beg">password: </label>
-	<input type="text" name="pass" id="pass" value="${pass}" />
+	<input type="text" name="upass" id="upass" value="${upass}" />
 	<br />
 
 	<label for="end">first name: </label>
-	<input type="text" name="fname" id="fname" value="${fname}" />
+	<input type="text" name="ufname" id="ufname" value="${ufname}" />
 	<br />
 
 	<label for="end">last name: </label>
-	<input type="text" name="lname" id="lname" value="${lname}" />
+	<input type="text" name="ulname" id="ulname" value="${ulname}" />
 	<br />
 
 	<input type="submit" value="add user" />

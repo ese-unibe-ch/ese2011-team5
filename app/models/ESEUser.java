@@ -37,7 +37,6 @@ public class ESEUser extends Model {
 	 */
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
 	public List<ESEGroup> groupList;
-
 	/** The first name of the user displayed in the profile.
 	 */
 	public String firstName = "";
@@ -133,6 +132,18 @@ public class ESEUser extends Model {
 	 */
 	public List<ESECalendar> getAllCalendars() {
 		return this.calendarList;
+	}
+
+	/**
+	 *	XXX: new routing needs something like this..
+	 */
+	public ESECalendar getCalendar(String name) {
+		for (ESECalendar c : calendarList) {
+			if (name.equals(c.getCalendarName())) {
+				return c;
+			}
+		}
+		return null;
 	}
 
 	/** Returns list of all groups from user.

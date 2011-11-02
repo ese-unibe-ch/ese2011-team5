@@ -1,0 +1,14 @@
+#{extends 'main.html' /}
+#{set title:'XXX: title' /}
+
+#{head /}
+
+#{list items:groups, as:'group'}
+	<p>#{a @ESECtlUser.listUsersOfGroup(group.id)}${group.groupName}#{/a}</p>
+#{/list}
+
+#{else}
+	empty
+#{/else}
+
+#{tail /}

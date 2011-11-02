@@ -8,21 +8,21 @@
 	<br />
 #{/ifErrors}
 
-#{form @cal.add_evt_post(id, eid, name, beg, end, pub)}
+#{form @ESECtlCalendar.addEventPost(user, cal, eid)}
 	<label for="name">name: </label>
-	<input type="text" name="name" id="name" value="${ename}" />
+	<input type="text" name="ename" id="ename" value="${ename}" />
 	<br />
 
 	<label for="beg">beg: </label>
-	<input type="text" name="beg" id="beg" value="${ebeg}" />
+	<input type="text" name="ebeg" id="ebeg" value="${ebeg}" />
 	${err_date ?'invalid date' :''}<br />
 
 	<label for="end">end: </label>
-	<input type="text" name="end" id="end" value="${eend}" />
+	<input type="text" name="eend" id="eend" value="${eend}" />
 	${err_date ?'invalid date' :''}<br />
 
 	<label for="pub">pub: </label>
-	<input type="checkbox" name="pub" id="pub"
+	<input type="checkbox" name="epub" id="epub"
 		"${epub=='true' ?'checked' :''}" />
 	<br />
 

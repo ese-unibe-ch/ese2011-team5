@@ -5,7 +5,7 @@ import play.test.*;
 import models.*;
 
 @OnApplicationStart
-public class bst extends Job
+public class ESEJobBootstrap extends Job
 {
 	public void doJob (
 	) {

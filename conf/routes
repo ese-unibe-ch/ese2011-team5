@@ -1,20 +1,31 @@
 # routes
+
+# misc.
 #
-#	module -> id -> action -> parameters
+*	/		module:secure
+GET	/public/	staticDir:public
+GET	/favicon.ico	404
 
-*	/					module:secure
-*	/					usr.ls_cals
-*	/usr					usr.ls
-GET	/usr/add				usr.add_usr
-POST	/usr/add				usr.add_usr_post
-*	/usr/rm					usr.rm_usr
-*	/usr/{id}				usr.ls_cals
-*	/cal/{id}				cal.ls_evts
-*	/cal/{id}/{year}/{month}/{day}		cal.ls_evts
-GET	/cal/{id}/add				cal.add_evt
-POST	/cal/{id}/add				cal.add_evt_post
-*	/cal/{id}/rm				cal.rm_evt
-*	/cal/{id}/edit				cal.edit_evt
+# user
+#
+GET	/User/?			ESECtlUser.lsUsers
+GET /User/lsgroups/?	ESECtlUser.lsGroups
+GET /User/lsgroups/listusersofgroup/?	ESECtlUser.listUsersOfGroup
+GET /User/lsgroups/?	ESECtlUser.addUserToGroup
+GET	/User/add/?		ESECtlUser.addUser
+POST	/User/add/?		ESECtlUser.addUserPost
+GET	/User/mod/?		ESECtlUser.addUser
+GET	/User/del/?		ESECtlUser.delUser
+GET	/User/addgroup/?	ESECtlUser.addGroup
+POST	/User/addgroup/?	ESECtlUser.addGroupPost
 
-GET	/public/				staticDir:public
-GET	/favicon.ico				404
+# home
+#
+GET	/							ESECtlUser.lsCalendars
+GET	/{uri_user}/?						ESECtlUser.lsCalendars
+GET	/{uri_user}/{uri_cal}/?					ESECtlCalendar.lsEvents
+GET	/{uri_user}/{uri_cal}/add/?				ESECtlCalendar.addEvent
+POST	/{uri_user}/{uri_cal}/add/?				ESECtlCalendar.addEventPost
+GET	/{uri_user}/{uri_cal}/mod/?				ESECtlCalendar.modEvent
+GET	/{uri_user}/{uri_cal}/del/?				ESECtlCalendar.delEvent
+GET	/{uri_user}/{uri_cal}/{uri_yy}/{uri_mm}/{uri_dd}/?	ESECtlCalendar.lsEvents

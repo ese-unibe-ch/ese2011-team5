@@ -1,0 +1,49 @@
+#{extends 'main.html' /}
+#{set title:'XXX: title' /}
+
+#{head /}
+
+<a href="/${user}/${cal}/${msg.yp}/${msg.mp}/1">prev</a> |
+<a href="/${user}/${cal}">${msg.cm_name}, ${msg.y}</a> |
+<a href="/${user}/${cal}/${msg.yn}/${msg.mn}/1">next</a>
+<br />
+<br />
+
+<div class="month">
+%{
+	for (i in 0..6) {
+}%
+<div class="${msg.thead[i].get_cssc()}">
+	${msg.thead[i].get_head().substring(0,2)}
+</div>
+%{
+	}
+	for (i in 0..msg.cm_days-1) {
+}%
+<div class="${msg.edays[i].get_cssc()}">
+	<a href="/${user}/${cal}/${msg.y}/${msg.m}/${i+1}">${i+1}</a>
+</div>
+%{
+	}
+}%
+</div>
+<br />
+
+#{list le}
+	${_.getId()} |
+	${_.getName()} |
+	${_.getStartDate().toString()} |
+	${_.getEndDate().toString()} |
+	${_.isPublic().toString()} |
+	#{a @ESECtlCalendar.modEvent(user, cal, _.getId())}edit#{/a} |
+	#{a @ESECtlCalendar.delEvent(user, cal, _.getId())}delete#{/a}
+	<br />
+#{/list}
+#{else}
+	empty
+	<br />
+#{/else}
+<br />
+
+<a href="/${user}/${cal}/add">add event</a> |
+#{tail /}
