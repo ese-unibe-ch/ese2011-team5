@@ -8,10 +8,10 @@ GET	/favicon.ico	404
 
 # user
 #
-GET	/User/?			ESEUserController.lsUsers
-GET /User/lsgroups/?	ESEUserController.lsGroups
-GET /User/lsgroups/listusersofgroup/?	ESEUserController.listUsersOfGroup
-POST /User/lsgroups/?	ESEUserController.addUserToGroup
+GET	/User/?			ESEUserController.listUsers
+GET /User/listgroups/?	ESEUserController.listGroups
+GET /User/listgroups/listusersofgroup/?	ESEUserController.listUsersOfGroup
+POST /User/listgroups/?	ESEUserController.addUserToGroup
 GET	/User/add/?		ESEUserController.addUser
 POST	/User/add/?		ESEUserController.addUserPost
 GET	/User/mod/?		ESEUserController.addUser
@@ -21,8 +21,8 @@ POST	/User/addgroup/?	ESEUserController.addGroupPost
 
 # home
 #
-GET	/							ESEUserController.lsCalendars
-GET	/{uri_user}/?						ESEUserController.lsCalendars
+GET	/							ESEUserController.listCalendars
+GET	/{uri_user}/?						ESEUserController.listCalendars
 GET	/{uri_user}/{uri_cal}/?					ESECalendarController.lsEvents
 GET	/{uri_user}/{uri_cal}/add/?				ESECalendarController.addEvent
 POST	/{uri_user}/{uri_cal}/add/?				ESECalendarController.addEventPost

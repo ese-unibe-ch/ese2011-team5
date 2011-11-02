@@ -10,20 +10,20 @@ public class ESEUserController extends Controller
 {
 	private static String loggedInUser = Secure.Security.connected();
 
-	public static void lsCalendars (String uriUser) {
+	public static void listCalendars (String uriUser) {
 		ESEUser u;
-		List<ESECalendar> lc;
+		List<ESECalendar> calendarList;
 		String user = uriUser==null ?loggedInUser :uriUser;
 
 		if ((u = ESEUser.getUser(user)) == null) {
 			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
-		lc = u.getAllCalendars();
-		render(user, lc);
+		calendarList = u.getAllCalendars();
+		render(user, calendarList);
 	}
 
-	public static void lsUsers () {
+	public static void listUsers () {
 		List<ESEUser> userList;
 		userList = ESEUser.getAllOtherUsers(loggedInUser);
 		render(userList);
@@ -40,11 +40,11 @@ public class ESEUserController extends Controller
 		if (!validation.hasErrors()) {
 			currentUser.createGroup(groupName);
 		}
-		ESEUserController.lsGroups();
+		ESEUserController.listGroups();
 		params.flash();
 	}
 	
-	public static void lsGroups () {
+	public static void listGroups () {
 		List<ESEGroup> groups;
 		groups = ESEUser.getGroupsOfUser(loggedInUser);
 		render(groups);
@@ -90,7 +90,7 @@ public class ESEUserController extends Controller
 				ESEFactory.createUser(username, password,
 					firstName, firstName);
 			}
-			ESEUserController.lsUsers();
+			ESEUserController.listUsers();
 		}
 		params.flash();
 		validation.keep();
@@ -107,7 +107,7 @@ public class ESEUserController extends Controller
 			 */
 			u.delete();
 		}
-		ESEUserController.lsUsers();
+		ESEUserController.listUsers();
 	}
 	
 	
