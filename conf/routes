@@ -9,10 +9,13 @@ GET	/favicon.ico	404
 # user
 #
 GET	/User/?			ESECtlUser.lsUsers
+GET /User/lsgroups/?	ESECtlUser.lsGroups
 GET	/User/add/?		ESECtlUser.addUser
 POST	/User/add/?		ESECtlUser.addUserPost
 GET	/User/mod/?		ESECtlUser.addUser
 GET	/User/del/?		ESECtlUser.delUser
+GET	/User/addgroup/?	ESECtlUser.addGroup
+POST	/User/addgroup/?	ESECtlUser.addGroupPost
 
 # home
 #

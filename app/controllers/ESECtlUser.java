@@ -32,6 +32,27 @@ public class ESECtlUser extends Controller
 		render(lu);
 	}
 
+	public static void addGroup(){
+		List<ESEGroup> groups;
+		groups = ESEUser.getGroupsOfUser(auth_user);
+		render(groups);
+	}
+	
+	public static void addGroupPost(@Required String groupName){
+		ESEUser currentUser = ESEUser.getUser(auth_user);
+		if (!validation.hasErrors()) {
+			currentUser.createGroup(groupName);
+		}
+		ESECtlUser.lsGroups();
+		params.flash();
+	}
+	
+	public static void lsGroups () {
+		List<ESEGroup> groups;
+		groups = ESEUser.getGroupsOfUser(auth_user);
+		render(groups);
+	}
+
 	public static void addUser (
 		String uname
 	) {
@@ -76,4 +97,6 @@ public class ESECtlUser extends Controller
 		}
 		ESECtlUser.lsUsers();
 	}
+	
+	
 }
