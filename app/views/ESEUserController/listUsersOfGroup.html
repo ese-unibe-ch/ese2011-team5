@@ -10,7 +10,7 @@ ${usersOfGroup.size()}
 
 <p>Add User:</p>
 #{list items:allOtherUsers, as:'user'}
-	<p>#{a @ESECtlUser.addUserToGroup(group.id, user.username)}${user.username}#{/a}</p>
+	<p>#{a @ESEUserController.addUserToGroup(group.id, user.username)}${user.username}#{/a}</p>
 	
 #{/list}
 
