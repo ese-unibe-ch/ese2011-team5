@@ -8,38 +8,35 @@ import models.*;
 @With(Secure.class)
 public class ESECtlUser extends Controller
 {
-	private static String auth_user = Secure.Security.connected();
+	private static String loggedInUser = Secure.Security.connected();
 
-	public static void lsCalendars (
-		String uri_user
-	) {
+	public static void lsCalendars (String uri_user) {
 		ESEUser u;
 		List<ESECalendar> lc;
-		String user = uri_user==null ?auth_user :uri_user;
+		String user = uri_user==null ?loggedInUser :uri_user;
 
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = auth_user;
+			user = loggedInUser;
 			u = ESEUser.getUser(user);
 		}
 		lc = u.getAllCalendars();
 		render(user, lc);
 	}
 
-	public static void lsUsers (
-	) {
+	public static void lsUsers () {
 		List<ESEUser> lu;
-		lu = ESEUser.getAllOtherUsers(auth_user);
+		lu = ESEUser.getAllOtherUsers(loggedInUser);
 		render(lu);
 	}
 
 	public static void addGroup(){
 		List<ESEGroup> groups;
-		groups = ESEUser.getGroupsOfUser(auth_user);
+		groups = ESEUser.getGroupsOfUser(loggedInUser);
 		render(groups);
 	}
 	
 	public static void addGroupPost(@Required String groupName){
-		ESEUser currentUser = ESEUser.getUser(auth_user);
+		ESEUser currentUser = ESEUser.getUser(loggedInUser);
 		if (!validation.hasErrors()) {
 			currentUser.createGroup(groupName);
 		}
@@ -49,7 +46,7 @@ public class ESECtlUser extends Controller
 	
 	public static void lsGroups () {
 		List<ESEGroup> groups;
-		groups = ESEUser.getGroupsOfUser(auth_user);
+		groups = ESEUser.getGroupsOfUser(loggedInUser);
 		render(groups);
 	}
 	
@@ -68,10 +65,9 @@ public class ESECtlUser extends Controller
 	
 	public static void listUsersOfGroup(long groupID){
 		ESEGroup group = ESEGroup.findById(groupID);
-		//group.addUser("steve");
 		
 		List<ESEUser> usersOfGroup = group.getAllUser();
-		List<ESEUser> allOtherUsers = ESEUser.getAllOtherUsers(auth_user);
+		List<ESEUser> allOtherUsers = ESEUser.getAllOtherUsers(loggedInUser);
 		render(group, usersOfGroup, allOtherUsers);
 	}
 	
@@ -81,34 +77,28 @@ public class ESECtlUser extends Controller
 		render(uname);
 	}
 
-	public static void addUserPost (
-		@Required String uname,
-		@Required String upass,
-		String ufname,
-		String ulname
-	) {
-		ESEUser u = null;
+	public static void addUserPost (@Required String username, 
+			@Required String password, String firstName, String familyName) {
+		ESEUser potentialNewUser = null;
 		if (!validation.hasErrors()) {
-			if ((u = ESEUser.getUser(uname)) != null) {
-				u.editPassword(upass);
-				u.editFirstName(upass);
-				u.editFamilyName(upass);
+			if ((potentialNewUser = ESEUser.getUser(username)) != null) {
+				potentialNewUser.editPassword(password);
+				potentialNewUser.editFirstName(password);
+				potentialNewUser.editFamilyName(password);
 			}
 			else {
-				ESEFactory.createUser(uname, upass,
-					ufname, ufname);
+				ESEFactory.createUser(username, password,
+					firstName, firstName);
 			}
 			ESECtlUser.lsUsers();
 		}
 		params.flash();
 		validation.keep();
-		ESECtlUser.addUser(uname);
+		ESECtlUser.addUser(username);
 	}
 
-	public static void delUser (
-		String uname
-	) {
-		ESEUser u = ESEUser.getUser(uname);
+	public static void delUser (String username	) {
+		ESEUser u = ESEUser.getUser(username);
 		if (u != null) {
 			/**
 			 *	XXX: ESEUser.removeUser() should exist
