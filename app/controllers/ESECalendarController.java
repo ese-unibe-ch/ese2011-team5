@@ -11,11 +11,9 @@ import utils.*;
 @With(Secure.class)
 public class ESECalendarController extends Controller
 {
-	private static String loggedInUser = Secure.Security.connected();
-
 	public static void listEvents (String uriUser, String uri_cal, 
 			String uri_yy, String uri_mm, String uri_dd) {
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 		String cal = uri_cal;
 
 		ESEUser u;
@@ -24,7 +22,7 @@ public class ESECalendarController extends Controller
 		List<ESEEvent> le = null;
 
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = loggedInUser;
+			user = loggedInUser();
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null) {
@@ -40,7 +38,7 @@ public class ESECalendarController extends Controller
 	}
 
 	public static void listEvents (String uriUser, String uri_cal) {
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 		String cal = uri_cal;
 
 		ESECalendarController.listEvents(user, cal, null, null, null);
@@ -48,7 +46,7 @@ public class ESECalendarController extends Controller
 
 	public static void addEvent (String uriUser, String uri_cal, String eid, 
 			String ename, String ebeg, String eend, String epub, Boolean err_date) {
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 		String cal = uri_cal;
 
 		render(user, cal, eid, ename, ebeg, eend, epub, err_date);
@@ -56,7 +54,7 @@ public class ESECalendarController extends Controller
 
 	public static void addEventPost (String uriUser, String uri_cal, 
 			String eid, @Required String ename, @Required String ebeg, @Required String eend, String epub) {
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 		String cal = uri_cal;
 
 		ESEUser u;
@@ -76,7 +74,7 @@ public class ESECalendarController extends Controller
 			err_date = true;
 		}
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = loggedInUser;
+			user = loggedInUser();
 			u = ESEUser.getUser(user);
 		}
 		if (!validation.hasErrors() && !err_date &&
@@ -98,14 +96,14 @@ public class ESECalendarController extends Controller
 	}
 
 	public static void modifyEvent(String uriUser, String uri_cal, String eid) {
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 		String cal = uri_cal;
 
 		ESEUser u;
 		ESECalendar c;
 		ESEEvent e = null;	/* XXX: needs handling */
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = loggedInUser;
+			user = loggedInUser();
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null && permitted(c)) {
@@ -123,13 +121,13 @@ public class ESECalendarController extends Controller
 	}
 
 	public static void delEvent (String uri_user, String uri_cal, String eid) {
-		String user = uri_user==null ?loggedInUser :uri_user;
+		String user = uri_user==null ?loggedInUser() :uri_user;
 		String cal = uri_cal;
 
 		ESEUser u;
 		ESECalendar c;
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = loggedInUser;
+			user = loggedInUser();
 			u = ESEUser.getUser(user);
 		}
 		if ((c = u.getCalendar(cal)) != null && permitted(c)) {
@@ -142,6 +140,11 @@ public class ESECalendarController extends Controller
 		ESECalendar c
 	) {
 		String cal_owner = c.getOwner().getUsername();
-		return loggedInUser.equals(cal_owner);
+		return loggedInUser().equals(cal_owner);
+	}
+
+	public static String loggedInUser (
+	) {
+		return Secure.Security.connected();
 	}
 }

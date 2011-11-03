@@ -8,15 +8,13 @@ import models.*;
 @With(Secure.class)
 public class ESEUserController extends Controller
 {
-	private static String loggedInUser = Secure.Security.connected();
-
 	public static void listCalendars (String uriUser) {
 		ESEUser u;
 		List<ESECalendar> calendarList;
-		String user = uriUser==null ?loggedInUser :uriUser;
+		String user = uriUser==null ?loggedInUser() :uriUser;
 
 		if ((u = ESEUser.getUser(user)) == null) {
-			user = loggedInUser;
+			user = loggedInUser();
 			u = ESEUser.getUser(user);
 		}
 		calendarList = u.getAllCalendars();
@@ -25,18 +23,18 @@ public class ESEUserController extends Controller
 
 	public static void listUsers () {
 		List<ESEUser> userList;
-		userList = ESEUser.getAllOtherUsers(loggedInUser);
+		userList = ESEUser.getAllOtherUsers(loggedInUser());
 		render(userList);
 	}
 
 	public static void addGroup(){
 		List<ESEGroup> groups;
-		groups = ESEUser.getGroupsOfUser(loggedInUser);
+		groups = ESEUser.getGroupsOfUser(loggedInUser());
 		render(groups);
 	}
 	
 	public static void addGroupPost(@Required String groupName){
-		ESEUser currentUser = ESEUser.getUser(loggedInUser);
+		ESEUser currentUser = ESEUser.getUser(loggedInUser());
 		if (!validation.hasErrors()) {
 			currentUser.createGroup(groupName);
 		}
@@ -46,7 +44,7 @@ public class ESEUserController extends Controller
 	
 	public static void listGroups () {
 		List<ESEGroup> groups;
-		groups = ESEUser.getGroupsOfUser(loggedInUser);
+		groups = ESEUser.getGroupsOfUser(loggedInUser());
 		render(groups);
 	}
 	
@@ -67,7 +65,7 @@ public class ESEUserController extends Controller
 		ESEGroup group = ESEGroup.findById(groupID);
 		
 		List<ESEUser> usersOfGroup = group.getAllUser();
-		List<ESEUser> allOtherUsers = ESEUser.getAllOtherUsers(loggedInUser);
+		List<ESEUser> allOtherUsers = ESEUser.getAllOtherUsers(loggedInUser());
 		render(group, usersOfGroup, allOtherUsers);
 	}
 	
@@ -109,6 +107,9 @@ public class ESEUserController extends Controller
 		}
 		ESEUserController.listUsers();
 	}
-	
-	
+
+	public static String loggedInUser (
+	) {
+		return Secure.Security.connected();
+	}
 }
