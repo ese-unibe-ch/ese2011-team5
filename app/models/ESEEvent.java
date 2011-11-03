@@ -4,6 +4,7 @@ import java.util.Date;
 import javax.persistence.*;
 import play.data.validation.Required;
 import play.db.jpa.Model;
+import utils.ESEConversionHelper;
 
 /** Class handling events in calendars
  * @see ESECalendar

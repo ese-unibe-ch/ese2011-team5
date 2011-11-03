@@ -11,6 +11,7 @@ import models.*;
 import org.junit.*;
 
 import play.test.UnitTest;
+import utils.ESEConversionHelper;
 
 public class ESEConversionHelperTest extends UnitTest{
 

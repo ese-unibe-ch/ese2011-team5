@@ -9,6 +9,7 @@ import org.junit.*;
 
 import play.test.Fixtures;
 import play.test.UnitTest;
+import utils.ESEConversionHelper;
 
 public class ESEEventTest extends UnitTest {
 
