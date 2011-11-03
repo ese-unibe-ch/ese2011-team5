@@ -1,21 +1,21 @@
 package utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 /**
- * ESECalendarUtil builds a wrapper around the <code> java.calendar</code>, so 
- * that the features provided by <code>java.calendar</code> may be used most 
- * efficiently.
+ * ESECalendarUtil builds a wrapper around the {@link java.util.Calendar}, so 
+ * that the features provided by this class may be used most efficiently.
  * 
- * @author lyriael
+ * @author Judith Fuog
  *
  */
 public class ESECalendarUtil {
 	
-	private static java.util.Calendar cal;
+	private static java.util.Calendar calendar;
 	
 	/**
 	 * Private constructor. Use {@link #getInstanceToday()} to receive a valid
@@ -25,18 +25,13 @@ public class ESECalendarUtil {
 	}
 	
 	/**
-	 * Get an instance of <code>ESECalendarUtil</code>. By default
+	 * Get an instance of {@link ESECalendar}. By default
 	 * it points at today.<p>
-	 * {@link #getInstanceOfDate(Date date)} to set it with a <code>
-	 * Date</code> object.<br>
-	 * {@link #getInstanceOfStringDate(String date)} to set it with
-	 * a <code>String</code> that is then converted to an <code>Date</code>
-	 * object.
 	 * 
 	 * @return ESECalendarUtil
 	 */
 	public static ESECalendarUtil getInstanceToday(){
-		cal = java.util.Calendar.getInstance();
+		calendar = java.util.Calendar.getInstance();
 		return new ESECalendarUtil();	
 	}
 	
@@ -44,10 +39,11 @@ public class ESECalendarUtil {
 	 * Sets the calendar at this
 	 * specific date.
 	 * 
-	 * @param day
+	 * @param date at which the calendar should point.
 	 */
 	public void setAtDate(Date date){
-		cal.setTime(date);
+		assert(date!=null);
+		calendar.setTime(date);
 	}
 	
 	/**
@@ -58,71 +54,68 @@ public class ESECalendarUtil {
 	 * 
 	 * Wrong input is not handled.
 	 * 
-	 * @param int month
+	 * @param month at which the calendar should be set.
 	 */
 	public void setMonth(int month){
 		assert(month >0);
 		assert(month <=12);
-		cal.set(cal.MONTH, month-1);
+		calendar.set(calendar.MONTH, month-1);
 	}
 
 	/**
 	 * Returns the current month indicated by numbers
 	 * from 1(jan) to 12 (dec).
 	 * 
-	 * @return int month
+	 * @return month at which the calendar currently points.
 	 */
 	public int getMonth(){
-		int month = cal.get(cal.MONTH);
+		int month = calendar.get(calendar.MONTH);
 		assert(0<=month);
 		assert(month<12);
 		return month+1;
 	}
 	
 	/**
-	 * Sets the calendar at this month within the
-	 * same year. <br>
-	 * Months are numbered starting from 1 (jan) to
-	 * 12 (dec). <p>
+	 * Sets the calendar at this year. <br>
 	 * 
 	 * Wrong input is not handled.
 	 * 
-	 * @param int month
+	 * @param year at which the calendar should point.
 	 */
 	public void setYear(int year){
-		cal.set(cal.YEAR, year-1);
+		calendar.set(calendar.YEAR, year-1);
 	}
 
 	/**
 	 * Returns the current year.
 	 * 
-	 * @return int year
+	 * @return int year at which the calendar currently points.
 	 */
 	public int getYear(){
-		return cal.get(cal.YEAR);
+		return calendar.get(calendar.YEAR);
 	}
 	
 	/**
-	 * Sets the calendar at this date within the
+	 * Sets the calendar to this date within the
 	 * same month. <br>
 	 * 
 	 * Wrong input is not handled.
 	 * 
-	 * @param int month
+	 * @param dayOfMonth at which the calendar should be set.
 	 */
 	public void setDayOfMonth(int dayOfMonth){
 		assert(dayOfMonth >0);
 		assert(dayOfMonth <=31);
-		cal.set(cal.DAY_OF_MONTH, dayOfMonth);
+		calendar.set(calendar.DAY_OF_MONTH, dayOfMonth);
 	}
 
 	/**
 	 * Returns the current day of the month (date).
 	 * 
-	 * @return int date
+	 * @return int day of month at which the calendar currently points.
 	 */
 	public int getDayOfMonth(){
-		int dayOfMonth = cal.get(cal.DAY_OF_MONTH);
+		int dayOfMonth = calendar.get(calendar.DAY_OF_MONTH);
 		assert(0<dayOfMonth);
 		assert(dayOfMonth<=31);
 		return dayOfMonth;
@@ -131,13 +124,13 @@ public class ESECalendarUtil {
 	/**
 	 * Returns amount of days in the current month.
 	 * 
-	 * @see setAtDate(Date day)
-	 * @see setMonth(int month)
+	 * @see #setAtDate(Date day)
+	 * @see #setMonth(int month)
 	 * 
 	 * @return int days
 	 */
 	public int numberOfDaysOfCurrentMonth(){
-		return cal.getActualMaximum(cal.DATE);
+		return calendar.getActualMaximum(calendar.DATE);
 		//TODO tests
 	}
 	
@@ -164,7 +157,7 @@ public class ESECalendarUtil {
 	 * @see #daysOfLastMonth()
 	 * @see #daysOfNextMonth()
 	 * 
-	 * @return ArrayList<Integer> Days
+	 * @return ArrayList<Integer> with all the dates of the current month.
 	 */
 	public List<Integer> daysOfCurrentMonth(){
 		List<Integer> currentMonth = new ArrayList<Integer>();
@@ -189,11 +182,11 @@ public class ESECalendarUtil {
 	 */
 	public List<Integer> daysOfNextMonth() {
 		
-		int lastDay = cal.getActualMaximum(cal.DATE);
+		int lastDay = calendar.getActualMaximum(calendar.DATE);
 		System.out.println("Last day in this month: "+lastDay);
-		cal.set(cal.DAY_OF_MONTH, lastDay);
-		int lastDayOfWeek = (((cal.get(cal.DAY_OF_WEEK))+5)%7)+1;
-		cal.set(cal.DAY_OF_MONTH, 1);	//setting default
+		calendar.set(calendar.DAY_OF_MONTH, lastDay);
+		int lastDayOfWeek = (((calendar.get(calendar.DAY_OF_WEEK))+5)%7)+1;
+		calendar.set(calendar.DAY_OF_MONTH, 1);	//setting default
 		int remainingDays = 7-lastDayOfWeek;
 		
 		List<Integer> nextMonth = new ArrayList<Integer>();
@@ -221,11 +214,11 @@ public class ESECalendarUtil {
 	public List<Integer> daysOfLastMonth() {
 		
 		int firstDay = firstWeekdayOfCurrentMonth();
-		cal.set(cal.DAY_OF_MONTH, 1);
-		cal.add(cal.DAY_OF_MONTH, -1);
+		calendar.set(calendar.DAY_OF_MONTH, 1);
+		calendar.add(calendar.DAY_OF_MONTH, -1);
 
-		int lastDayOflastMonth = cal.get(cal.DAY_OF_MONTH);	
-		cal.add(cal.DAY_OF_WEEK, 1);
+		int lastDayOflastMonth = calendar.get(calendar.DAY_OF_MONTH);	
+		calendar.add(calendar.DAY_OF_WEEK, 1);
 		
 		List<Integer> lastMonth = new ArrayList<Integer>();
 		for(int i = 1; i < firstDay; i++){
@@ -247,11 +240,11 @@ public class ESECalendarUtil {
 	 */
 	public int firstMondayOfCurrentMonth(){
 
-		Date temp = cal.getTime(); //save original date		
-		cal.set(cal.DATE, 1);
-		int weekday = cal.get(cal.DAY_OF_WEEK);
-		int monday = ((8-weekday)%7)+2;//calculate date from weekday		
-		cal.setTime(temp); //setting pointer back
+		Date temp = calendar.getTime();	/*save original date*/		
+		calendar.set(calendar.DATE, 1);
+		int weekday = calendar.get(calendar.DAY_OF_WEEK);
+		int monday = ((8-weekday)%7)+2;	/*calculate date from weekday*/		
+		calendar.setTime(temp); 		/*setting pointer back*/
 		
 		return monday;
 	}
@@ -264,10 +257,10 @@ public class ESECalendarUtil {
 	 */
 	public int firstWeekdayOfCurrentMonth(){
 		
-		Date temp = cal.getTime(); //save original date
-		cal.set(cal.DATE, 1);
-		int weekday = cal.get(cal.DAY_OF_WEEK);	
-		cal.setTime(temp); //setting pointer back
+		Date temp = calendar.getTime();	/*save original date*/
+		calendar.set(calendar.DATE, 1);
+		int weekday = calendar.get(calendar.DAY_OF_WEEK);	
+		calendar.setTime(temp); 		/*setting pointer back*/
 		weekday = ((weekday + 5)%7)+1;
 		return weekday;
 	}
@@ -277,7 +270,7 @@ public class ESECalendarUtil {
 	 * All methods relating to "current" one month forth.
 	 */
 	public void setToNextMonth(){
-		cal.add(cal.MONTH, 1);
+		calendar.add(calendar.MONTH, 1);
 	}
 	
 	/**
@@ -285,7 +278,7 @@ public class ESECalendarUtil {
 	 * All methods relating to "current" one month back.
 	 */	
 	public void setToPreviousMonth(){
-		cal.add(cal.MONTH,-1);
+		calendar.add(calendar.MONTH,-1);
 	}
 	/**
 	 * Returns the day of month of the last Monday of the previous
@@ -300,9 +293,9 @@ public class ESECalendarUtil {
 	 */
 	public int lastMondayOfPreviousMonth(){
 		int weekdayCurrent = firstWeekdayOfCurrentMonth();
-		cal.add(cal.DAY_OF_MONTH, weekdayCurrent-1); //find out Monday
-		int lastMonday = cal.get(cal.DAY_OF_MONTH);
-		cal.add(cal.DAY_OF_MONTH, weekdayCurrent-1); //reset cal to default
+		calendar.add(calendar.DAY_OF_MONTH, weekdayCurrent-1); /*find out Monday*/
+		int lastMonday = calendar.get(calendar.DAY_OF_MONTH);
+		calendar.add(calendar.DAY_OF_MONTH, weekdayCurrent-1); /*reset to default*/
 		return lastMonday;
 		//TODO tests
 	}
@@ -318,37 +311,74 @@ public class ESECalendarUtil {
 	 * @return int day of month
 	 */
 	public int firstSundayOfNextMonth(){
-		Date temp = cal.getTime();
-		cal.add(cal.MONTH, 1);
+		Date temp = calendar.getTime();	/*save original date*/
+		calendar.add(calendar.MONTH, 1);
 		int weekday = firstWeekdayOfCurrentMonth();
 		int firstSunday = (8-(weekday)%7);
-		cal.setTime(temp);//set back 
+		calendar.setTime(temp);			/*setting pointer back*/
 		return firstSunday;
 		//TODO tests
 	}
 	
 	/**
-	 * Time stamp of util is put back to the current time.
+	 * Time stamp is set to now.
 	 * 
 	 */
 	public void reset(){
-		cal.setTime(new Date());
+		calendar.setTime(new Date());
 	}
 	
 	/**
-	 *TODO 
-	 * @return
+	 *Returns the full name of the current
+	 * month as a {@link String}.
+	 *
+	 *@see #monthToStringShort()
+	 *
+	 * @return month name
 	 */
 	public String monthToString(){
-		//TODO
-		return "";
+        Date today = calendar.getTime();
+		String monthName = new SimpleDateFormat("MMMM").format(today);
+		return monthName;
+		//TODO tests
 	}
+	
 	/**
-	 *TODO
+	 *Returns the abbreviation name of the current
+	 * month as a {@link String}.
+	 *
+	 *@see #monthToString()
+	 *
+	 * @return month name
+	 */
+	public String monthToStringShort(){
+        Date today = calendar.getTime();
+		String monthName = new SimpleDateFormat("MMM").format(today);
+		return monthName;
+		//TODO tests
+	}
+	
+	/**
+	 *Returns the full name of the current
+	 *weekday as a {@link String}.
 	 * @return
 	 */
 	public String weekDayToString(){
-		//TODO
-		return "";
+        Date today = calendar.getTime();
+		String weekDayName = new SimpleDateFormat("EEEE").format(today);
+		return weekDayName;
+		//TODO tests
+	}
+	
+	/**
+	 *Returns the abbreviation name of the current
+	 *weekday as a {@link String}.
+	 * @return
+	 */
+	public String weekDayToStringShort(){
+        Date today = calendar.getTime();
+		String weekDayName = new SimpleDateFormat("EEE").format(today);
+		return weekDayName;
+		//TODO tests
 	}
 }

@@ -56,10 +56,10 @@ public class ESEMessage
 	/**
 	 *	XXX: Getter/setter for this?  Don't know.
 	 */
-	public int y, m, d;		/* selected date */
+	public int y, m, d;			/* selected date */
 	public int cy, cm, cd;		/* current date */
 	public int mp, mn, yp, yn;	/* previous/next month/year */
-	public int cm_days;		/* number of days, current month */
+	public int cm_days;			/* number of days, current month */
 	public String cm_name;		/* name, current month */
 	public String[] cm_dow;		/* 1st day of week, current month */
 

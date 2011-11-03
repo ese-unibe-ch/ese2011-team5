@@ -14,7 +14,7 @@ public class ESEConversionHelper
 	private static final String inputFormat = "dd.MM.yyyy HH:mm";
 
 	/** Converts a {@link String} to a {@link Date} value.
-	 * @param userDateString The string in the form of "{@code dd.MM.yyyy HH:mm}" that should be parsed
+	 * @param userDateString The string in the form of "{@code dd.MM.yyyy HH:mm}" that is to be parsed
 	 * @return The date value
 	 */
 	public static Date convertStringToDate(String userDateString)
@@ -25,7 +25,7 @@ public class ESEConversionHelper
 	}
 
 	/** Converts a {@link Date} to a {@link String} value.
-	 * @param date The date that should be converted
+	 * @param date The date that is to be converted
 	 * @return The date as a string "{@code dd.MM.yyyy HH:mm}"
 	 */
 	public static String convertDateToString(Date date)
