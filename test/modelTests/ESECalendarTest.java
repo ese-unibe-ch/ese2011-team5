@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import models.*;
+import models.ESECalendar;
+import models.ESEEvent;
+import models.ESEFactory;
+import models.ESEUser;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
 import play.test.UnitTest;
 
@@ -27,7 +31,7 @@ public class ESECalendarTest extends UnitTest {
 				"21.10.2011 20:30", "false");
 		testCalendar.addEvent("TestEvent3", "22.10.2011 20:00",
 				"22.10.2011 20:30", "true");
-		
+
 		assertEquals(3, testCalendar.getAllEventsAsList().size());
 	}
 
@@ -35,11 +39,12 @@ public class ESECalendarTest extends UnitTest {
 	public void shouldReturnCorrectName() {
 		assertEquals(testCalendar.getCalendarName(), "TestCalendarName");
 	}
-	
+
 	@Test
 	public void shouldReturnCorrectOwner() {
-		ESECalendar testCalendar2 = ESEFactory.createCalendar("TestCalendarName", testUser);
-		assertEquals(testCalendar2.owner,testUser);
+		ESECalendar testCalendar2 = ESEFactory.createCalendar(
+				"TestCalendarName", testUser);
+		assertEquals(testCalendar2.owner, testUser);
 	}
 
 	@Test
@@ -51,122 +56,131 @@ public class ESECalendarTest extends UnitTest {
 	public void shouldAddAndReturnNewEvent() {
 		testCalendar.addEvent("TestEvent4", "25.10.2011 20:00",
 				"25.10.2011 20:30", "true");
-		assertTrue(testCalendar.eventList.get(3).getEventName().equals("TestEvent4"));
+		assertTrue(testCalendar.eventList.get(3).getEventName()
+				.equals("TestEvent4"));
 		assertTrue(testCalendar.eventList.get(3).isPublic = true);
 	}
 
 	@Test
 	public void shouldCorrectlyRenameCalendar() {
-		testCalendar.renameCalendar("RenamedTestCalendar");
+		testCalendar.editCalendarName("RenamedTestCalendar");
 		assertTrue(testCalendar.getCalendarName().equals("RenamedTestCalendar"));
 		assertFalse(testCalendar.getCalendarName().equals("TestCalendarName"));
 	}
 
 	@Test
-	public void shouldReturnAllEventsOfCertainDay(){
-		List<ESEEvent> testList = testCalendar
-		.getListOfEventsRunningAtDay("20.10.2011 13:00",false);
+	public void shouldReturnAllEventsOfCertainDay() {
+		List<ESEEvent> testList = testCalendar.getListOfEventsRunningAtDay(
+				"20.10.2011 13:00", false);
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent5", "20.10.2011 14:00",
 				"20.10.2011 15:00", "false");
-		testList = testCalendar.getListOfEventsRunningAtDay("20.10.2011 13:00",false);
+		testList = testCalendar.getListOfEventsRunningAtDay("20.10.2011 13:00",
+				false);
 		assertTrue(testList.size() == 2);
 		assertEquals(testList.get(0).getEventName(), "TestEvent1");
 		assertEquals(testList.get(1).getEventName(), "TestEvent5");
 	}
-	
+
 	@Test
-	public void shouldReturnAllAndOnlyPublicEventsOfCertainDay(){
-		List<ESEEvent> testList = testCalendar
-		.getListOfEventsRunningAtDay("20.10.2011 13:00",true);
+	public void shouldReturnAllAndOnlyPublicEventsOfCertainDay() {
+		List<ESEEvent> testList = testCalendar.getListOfEventsRunningAtDay(
+				"20.10.2011 13:00", true);
 		assertTrue(testList.size() == 1);
-		
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay("21.10.2011 13:00",true));
-		
+
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(
+				"21.10.2011 13:00", true));
+
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent5", "25.10.2011 14:00",
 				"25.10.2011 15:00", "false");
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay("25.10.2011 13:00",true));
-		
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(
+				"25.10.2011 13:00", true));
+
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent6", "26.10.2011 14:00",
 				"26.10.2011 15:00", "true");
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay("26.10.2011 13:00",true));
-		
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(
+				"26.10.2011 13:00", true));
+
 		assertTrue(testList.size() == 2);
-		
-		
+
 		assertEquals(testList.get(0).getEventName(), "TestEvent1");
 		assertEquals(testList.get(1).getEventName(), "TestEvent6");
 	}
-	
+
 	@Test
-	public void shouldReturnAllEventsOfCertainDayGivenDate(){
-		
-		Calendar compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 20, 15, 00);
+	public void shouldReturnAllEventsOfCertainDayGivenDate() {
+
+		Calendar compareDateCalendar = new GregorianCalendar(2011,
+				Calendar.OCTOBER, 20, 15, 00);
 		Date compareDate = compareDateCalendar.getTime();
-		
-		List<ESEEvent> testList = testCalendar
-		.getListOfEventsRunningAtDay(compareDate,false);
+
+		List<ESEEvent> testList = testCalendar.getListOfEventsRunningAtDay(
+				compareDate, false);
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent5", "20.10.2011 14:00",
 				"20.10.2011 15:00", "false");
-		testList = testCalendar.getListOfEventsRunningAtDay(compareDate,false);
+		testList = testCalendar.getListOfEventsRunningAtDay(compareDate, false);
 		assertTrue(testList.size() == 2);
 		assertEquals(testList.get(0).getEventName(), "TestEvent1");
 		assertEquals(testList.get(1).getEventName(), "TestEvent5");
 	}
-	
+
 	@Test
-	public void shouldReturnAllAndOnlyPublicEventsOfCertainDayGivenDate(){
-		
-		Calendar compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 21, 15, 00);
+	public void shouldReturnAllAndOnlyPublicEventsOfCertainDayGivenDate() {
+
+		Calendar compareDateCalendar = new GregorianCalendar(2011,
+				Calendar.OCTOBER, 21, 15, 00);
 		Date twentyfirst = compareDateCalendar.getTime();
-		compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 25, 15, 00);
+		compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 25,
+				15, 00);
 		Date twentyfifth = compareDateCalendar.getTime();
-		compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 26, 15, 00);
+		compareDateCalendar = new GregorianCalendar(2011, Calendar.OCTOBER, 26,
+				15, 00);
 		Date twentysixt = compareDateCalendar.getTime();
-		
-		
-		List<ESEEvent> testList = testCalendar
-		.getListOfEventsRunningAtDay("20.10.2011 13:00",true);
+
+		List<ESEEvent> testList = testCalendar.getListOfEventsRunningAtDay(
+				"20.10.2011 13:00", true);
 		assertTrue(testList.size() == 1);
-		
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentyfirst,true));
-		
+
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentyfirst,
+				true));
+
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent5", "25.10.2011 14:00",
 				"25.10.2011 15:00", "false");
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentyfifth,true));
-		
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentyfifth,
+				true));
+
 		assertTrue(testList.size() == 1);
-		
+
 		testCalendar.addEvent("TestEvent6", "26.10.2011 14:00",
 				"26.10.2011 15:00", "true");
-		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentysixt,true));
-		
+		testList.addAll(testCalendar.getListOfEventsRunningAtDay(twentysixt,
+				true));
+
 		assertTrue(testList.size() == 2);
-		
-		
+
 		assertEquals(testList.get(0).getEventName(), "TestEvent1");
 		assertEquals(testList.get(1).getEventName(), "TestEvent6");
 	}
-	
+
 	@Test
-	public void shouldReturnIteratorOfEventsOfCertainDay(){
-		// TODO	
-	}
-	
-	@Test
-	public void shouldReturnIteratorOfPublicEventsOfCertainDay(){
+	public void shouldReturnIteratorOfEventsOfCertainDay() {
 		// TODO
 	}
-	
+
+	@Test
+	public void shouldReturnIteratorOfPublicEventsOfCertainDay() {
+		// TODO
+	}
+
 	@Test
 	public void shouldReturnListOfAllEvents() {
 		assertTrue(testCalendar.getAllEventsAsList().get(0).getEventName()
