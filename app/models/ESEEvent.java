@@ -4,15 +4,48 @@ import java.util.Date;
 
 public class ESEEvent {
 	
+	private int eventID;
+	private String eventName;
 	private ESECalendar correspondingCalendar;
+	private Date startDate;
+	private Date endDate;
+	private boolean isPublic;
+	
 
 	public ESEEvent(int eventID, String eventName, ESECalendar correspondingCalendar,
 			Date startDate, Date endDate, boolean isPublic) {
-		// TODO Auto-generated constructor stub
+		this.eventID = eventID;
+		this.eventName = eventName;
+		this.correspondingCalendar = correspondingCalendar;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.isPublic = isPublic;
+		
 	}
 
-	public Object getOwner() {
+	
+	public int getEventID(){
+		return this.eventID;
+	}
+	
+	public String getEventName(){
+		return this.eventName;
+	}
+	
+	public ESECalendar getCorrespondingCalendar() {
 		return this.correspondingCalendar;
+	}
+	
+	public Date getStartDate(){
+		return this.startDate;
+	}
+	
+	public Date getEndDate(){
+		return this.endDate;
+	}
+	
+	public boolean isPublic(){
+		return this.isPublic;
 	}
 
 }

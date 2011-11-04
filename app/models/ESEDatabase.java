@@ -54,7 +54,7 @@ public class ESEDatabase {
 			if (correspondingCalendarID == calendar.getID()){
 				nbrOfEvents++;
 				ESEEvent eventToAdd = new ESEEvent(nbrOfEvents, eventName, getCalendarById(correspondingCalendarID), startDate, endDate, isPublic);
-				calendar.add(eventToAdd);
+				calendar.addEvent(eventToAdd);
 				eventList.add(eventToAdd);
 			}
 		}
@@ -105,18 +105,18 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
-	public static ArrayList<ESEEvent> getAllEventsOfUser(String userName){
+	public static ArrayList<ESEEvent> getAllEventsOfUserInCalendar(String userName, int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
-				return user.getAllEvents();
+				return user.getAllEvents(calendarID);
 		}
 		return null;
 	}
 	
-	public static ArrayList<ESEEvent> getAllowedEventsOfUser(String calendarOwner, String currentUser){
+	public static ArrayList<ESEEvent> getAllowedEventsOfUser(String calendarOwner, String currentUser, int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(calendarOwner))
-				return user.getAllowedEvents();
+				return user.getAllowedEvents(calendarOwner.equals(currentUser), calendarID);
 		}
 		return null;
 	}
