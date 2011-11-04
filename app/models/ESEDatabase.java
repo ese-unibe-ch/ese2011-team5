@@ -42,18 +42,23 @@ public class ESEDatabase {
 		for (ESEUser user : userList){
 			if (user.getName().equals(ownerName)){
 				nbrOfCalendars++;
-				ESECalendar calendarToAdd  = new ESECalendar(nbrOfCalendars, calendarName, getOwnerByName(ownerName));
+				ESECalendar calendarToAdd  = new ESECalendar(nbrOfCalendars, calendarName, 
+						getOwnerByName(ownerName));
 				user.addCalendar(calendarToAdd);
 				calendarList.add(calendarToAdd);
 			}
 		}
 	}
 
-	public static void addEvent(String eventName, int correspondingCalendarID, Date startDate, Date endDate, boolean isPublic){
+	public static void addEvent(String eventName, int correspondingCalendarID, 
+			String startDate, String endDate, boolean isPublic){
 		for (ESECalendar calendar : calendarList){
 			if (correspondingCalendarID == calendar.getID()){
 				nbrOfEvents++;
-				ESEEvent eventToAdd = new ESEEvent(nbrOfEvents, eventName, getCalendarById(correspondingCalendarID), startDate, endDate, isPublic);
+				ESEEvent eventToAdd = new ESEEvent(nbrOfEvents, eventName, 
+						getCalendarById(correspondingCalendarID), 
+						ESEConversionHelper.convertStringToDate(startDate), 
+						ESEConversionHelper.convertStringToDate(endDate), isPublic);
 				calendar.addEvent(eventToAdd);
 				eventList.add(eventToAdd);
 			}
@@ -64,7 +69,8 @@ public class ESEDatabase {
 		for (ESEUser user : userList){
 			if (user.getName().equals(ownerName)){
 				nbrOfGroups++;
-				ESEGroup groupToAdd = new ESEGroup(nbrOfGroups, groupName, getOwnerByName(ownerName));
+				ESEGroup groupToAdd = new ESEGroup(nbrOfGroups, groupName, 
+						getOwnerByName(ownerName));
 				user.addGroup(groupToAdd);
 				groupList.add(groupToAdd);
 			}
@@ -105,7 +111,8 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
-	public static ArrayList<ESEEvent> getAllEventsOfUserInCalendar(String userName, int calendarID){
+	public static ArrayList<ESEEvent> getAllEventsOfUserInCalendar(String userName, 
+			int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
 				return user.getAllEvents(calendarID);
@@ -113,10 +120,12 @@ public class ESEDatabase {
 		return null;
 	}
 	
-	public static ArrayList<ESEEvent> getAllowedEventsOfUser(String calendarOwner, String currentUser, int calendarID){
+	public static ArrayList<ESEEvent> getAllowedEventsOfUser(String calendarOwner, 
+			String currentUser, int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(calendarOwner))
-				return user.getAllowedEvents(calendarOwner.equals(currentUser), calendarID);
+				return user.getAllowedEvents(calendarOwner.equals(currentUser), 
+						calendarID);
 		}
 		return null;
 	}
