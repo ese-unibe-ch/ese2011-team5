@@ -3,9 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import controllers.Secure;
 
 import play.data.validation.Required;
@@ -58,7 +56,11 @@ public class ESEUser extends Model {
 		this.firstName = firstName;
 		this.familyName = familyName;
 
-		this.initialize();
+		this.calendarList = new ArrayList<ESECalendar>();
+		this.groupList = new ArrayList<ESEGroup>();
+
+		ESEGroup groupFriends = ESEFactory.createGroup("Friends", this);
+		this.groupList.add(groupFriends);
 	}
 
 	/** Constructor to create a new user. This constructor is not intended for direct use. Instead use </code>ESEFactory</code> for this.
@@ -67,8 +69,6 @@ public class ESEUser extends Model {
 	 */
 	public ESEUser(String username, String password) {
 		this(username, password, "", "");
-
-		this.initialize();
 	}
 
 	// --------------------- //
@@ -131,7 +131,7 @@ public class ESEUser extends Model {
 	 * @see ESECalendar
 	 */
 	public List<ESECalendar> getAllCalendars() {
-		return this.calendarList;
+		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class ESEUser extends Model {
 	 * @see ESEGroup
 	 */
 	public List<ESEGroup> getMyGroups() {
-		return this.groupList;
+		return new ArrayList<ESEGroup>(this.groupList);
 	}
 
 	/** Returns group with the given group name.
@@ -304,22 +304,6 @@ public class ESEUser extends Model {
 	// --------------- //
 	// PRIVATE METHODS //
 	// --------------- //
-
-	private void initialize() {
-		this.calendarList = new ArrayList<ESECalendar>();
-		this.groupList = new ArrayList<ESEGroup>();
-
-		ESEGroup groupFriends = ESEFactory.createGroup("Friends", this);
-		System.out.println("----------OK BIS HIER--------");
-		this.groupList.add(groupFriends);
-	}
-
-	/*
-	private void validateNewCalendar(String calendarName) {
-		// TODO check if a calendar with the name calendarName already
-		// exists
-	}
-	*/
 
 	private void validateNewGroup(String groupName) {
 		// TODO check if a group with the name groupName already

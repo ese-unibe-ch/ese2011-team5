@@ -3,8 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import play.data.validation.Required;
 import play.db.jpa.Model;
@@ -32,14 +31,10 @@ public class ESEGroup extends Model {
 	 * @see ESEUser
 	 */
 	public ESEGroup(String groupName, ESEUser owner) {
-		this.initialize();
+		this.userList = new ArrayList<ESEUser>();
 		this.groupName = groupName;
 		this.owner = owner;
 
-	}
-
-	private void initialize() {
-		this.userList = new ArrayList<ESEUser>();
 	}
 
 	/** Changes the group name.
@@ -147,15 +142,6 @@ public class ESEGroup extends Model {
 		ESEUser user = ESEUser.find("byUsername", userName).first();
 		return this.userList.contains(user);
 	}
-
-	// @Override
-	// public String toString() { // TODO: LK: correct?
-	// String strName = "Group " + this.groupName;
-	// String[] arrayUsers = (String[]) this.userList.toArray();
-	// String strUsers = "Users: " + Arrays.toString(arrayUsers);
-	//
-	// return strName + " " + strUsers;
-	// }
 
 	/** Returns the name of the group.
 	 * @return Name of the group

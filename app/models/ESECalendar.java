@@ -108,6 +108,7 @@ public class ESECalendar extends Model
 		long existingStartTime = existingEvent.getStartDate().getTime();
 		long existingEndTime = existingEvent.getEndDate().getTime();
 		long newEndTime = newEvent.getEndDate().getTime();
+
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
 	}
 
@@ -179,7 +180,7 @@ public class ESECalendar extends Model
 	}
 
 	/** Searches a calendar in the database.
-	 * @param id The Id the calendar was assigned when added to the database
+	 * @param calendarId The Id the calendar was assigned when added to the database
 	 * @return Matching {@link ESECalendar} from the database
 	 */
 	public static ESECalendar findCalendarById(long calendarId)
@@ -289,14 +290,11 @@ public class ESECalendar extends Model
 	}
 
 	/**
-	 *	XXX: need something like this..
+	 * @deprecated Es soll stattdessen {@link #findEventById(long)} verwendet werden
+	 * XXX: need something like this..
 	 */
-	public ESEEvent getEvent(Long id) {
-		for (ESEEvent e : this.eventList) {
-			if (id == e.getId()) {
-				return e;
-			}
-		}
-		return null;
+	public ESEEvent getEvent(Long id)
+	{
+		return ESEEvent.findEventById(id);
 	}
 }

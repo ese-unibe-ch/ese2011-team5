@@ -51,7 +51,7 @@ public class ESEUserTest extends UnitTest {
 	}
 
 	@Test
-	public void shouldCreatCalendarNewUser() {
+	public void shouldCreateCalendarNewUser() {
 		/*
 		 * TODO use method to get Calendar by String name instead of using index
 		 * as soon as it is available
