@@ -34,14 +34,14 @@ public class ESEDatabase {
 	
 	public static void createUser(String username, String password, String firstName,
 			String familyName){
-		nbrOfUsers;
+		nbrOfUsers++;
 		userList.add(new ESEUser(nbrOfUsers, username, password, firstName, familyName));		
 	}
 	
 	public static void addCalendar(String calendarName, String ownerName){
 		for (ESEUser user : userList){
 			if (user.getName().equals(ownerName)){
-				nbrOfCalendars;
+				nbrOfCalendars++;
 				ESECalendar calendarToAdd  = new ESECalendar(nbrOfCalendars, calendarName, getOwnerByName(ownerName));
 				user.addCalendar(calendarToAdd);
 				calendarList.add(calendarToAdd);
@@ -52,7 +52,7 @@ public class ESEDatabase {
 	public static void addEvent(String eventName, int correspondingCalendarID, Date startDate, Date endDate, boolean isPublic){
 		for (ESECalendar calendar : calendarList){
 			if (correspondingCalendarID == calendar.getID()){
-				nbrOfEvents;
+				nbrOfEvents++;
 				ESEEvent eventToAdd = new ESEEvent(nbrOfEvents, eventName, getCalendarById(correspondingCalendarID), startDate, endDate, isPublic);
 				calendar.add(eventToAdd);
 				eventList.add(eventToAdd);
@@ -63,7 +63,7 @@ public class ESEDatabase {
 	public static void addGroup(String groupName, String ownerName){
 		for (ESEUser user : userList){
 			if (user.getName().equals(ownerName)){
-				nbrOfGroups;
+				nbrOfGroups++;
 				ESEGroup groupToAdd = new ESEGroup(nbrOfGroups, groupName, getOwnerByName(ownerName));
 				user.addGroup(groupToAdd);
 				groupList.add(groupToAdd);
