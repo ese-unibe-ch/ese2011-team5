@@ -2,5 +2,3 @@
 
 require:
     - play
-    - play -> secure
-    - secure:ov -login
