@@ -123,7 +123,7 @@ public class ESEDatabase {
 		return null;
 	}
 	
-	public static ArrayList<ESEEvent> getAllowedEventsOfUser(String calendarOwner, 
+	public static ArrayList<ESEEvent> getAllowedEventsOfUserInCalendar(String calendarOwner, 
 			String currentUser, int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(calendarOwner))
@@ -132,6 +132,8 @@ public class ESEDatabase {
 		}
 		return null;
 	}
+	
+	
 	
 	
 	/*

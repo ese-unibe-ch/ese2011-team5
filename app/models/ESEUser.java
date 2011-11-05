@@ -80,7 +80,6 @@ public class ESEUser {
 		return null;
 	}
 	
-
 	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) {
 		for (ESECalendar calendar : calendarList){
 			if (calendar.getID() == calendarID){
