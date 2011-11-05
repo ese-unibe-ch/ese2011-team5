@@ -17,15 +17,15 @@ public class ESEGroupTests extends UnitTest{
 	
 	@Before
 	public void setUp(){
-		group1 = new ESEGroup("Testgroup1", dummyOwner);
+		this.group1 = new ESEGroup("Testgroup1", this.dummyOwner);
 	}
 	
 	@Test
 	public void shouldInitialize(){
-		assertTrue(group1 != null);
-		assertEquals(0, group1.getGroupID());
-		assertEquals("Testgroup1", group1.getGroupName());
-		assertEquals(dummyOwner, group1.getOwner());
+		assertTrue(this.group1 != null);
+		assertEquals(0, this.group1.getGroupID());
+		assertEquals("Testgroup1", this.group1.getGroupName());
+		assertEquals(this.dummyOwner, this.group1.getOwner());
 	}
 
 }

@@ -3,12 +3,9 @@ package modelTests;
 import java.util.Calendar;
 import java.util.Date;
 
-import models.ESECalendar;
-import models.ESEEvent;
-import models.ESEUser;
+import models.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import play.test.UnitTest;
 

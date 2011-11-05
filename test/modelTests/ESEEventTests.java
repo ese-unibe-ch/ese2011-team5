@@ -3,11 +3,9 @@ package modelTests;
 import java.util.Calendar;
 import java.util.Date;
 
-import models.ESECalendar;
-import models.ESEEvent;
+import models.*;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import play.test.UnitTest;
 
@@ -20,67 +18,67 @@ public class ESEEventTests extends UnitTest{
 	ESEEvent event1;
 	ESEEvent event2;
 	ESEEvent event3;
-	
-	ESECalendar dummyCal = new ESECalendar("Dummy", null); /*for the moment id = 0*/
+	ESEUser dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
+	ESECalendar dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
 	
 	@Before
 	public void setUp(){		/* Sets up three Events for testing purpose*/
-		cal.set(2011, 11, 24, 18, 00);
-		startDate = cal.getTime();
-		cal.set(2011, 11, 24, 23, 00);
-		endDate = cal.getTime();
-		event1 = new ESEEvent("Weihnachten", dummyCal,startDate ,endDate , false);
+		this.cal.set(2011, 11, 24, 18, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2011, 11, 24, 23, 00);
+		this.endDate = this.cal.getTime();
+		this.event1 = new ESEEvent("Weihnachten", this.dummyCal,this.startDate ,this.endDate , false);
 		
-		cal.set(2011, 11, 6, 18, 00);
-		startDate = cal.getTime();
-		cal.set(2011, 11, 24, 19, 00);
-		endDate = cal.getTime();
-		event2 = new ESEEvent("Samichlaus", dummyCal,startDate ,endDate , true);
+		this.cal.set(2011, 11, 6, 18, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2011, 11, 24, 19, 00);
+		this.endDate = this.cal.getTime();
+		this.event2 = new ESEEvent("Samichlaus", this.dummyCal,this.startDate ,this.endDate , true);
 		
-		cal.set(2011, 11, 24, 16, 00);
-		startDate = cal.getTime();
-		cal.set(2012, 01, 8, 18, 00);
-		endDate = cal.getTime();
-		event3 = new ESEEvent("Winter Ferien", dummyCal,startDate ,endDate , true);
+		this.cal.set(2011, 11, 24, 16, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2012, 01, 8, 18, 00);
+		this.endDate = this.cal.getTime();
+		this.event3 = new ESEEvent("Winter Ferien", this.dummyCal,this.startDate ,this.endDate , true);
 	}
 	
 	@Test
 	public void shouldBeInitialized(){
 		/*Event 1*/
-		assertTrue(event1 != null);
-		assertEquals(0, event1.getEventID());
-		assertTrue("Weihnachten".equals(event1.getEventName()));
-		cal.set(2011, 11, 24, 18, 00);
-		startDate = cal.getTime();
-		assertEquals(startDate, event1.getStartDate());
-		cal.set(2011, 11, 24, 23, 00);
-		endDate = cal.getTime();
-		assertEquals(endDate, event1.getEndDate());
-		assertEquals(dummyCal, event1.getCorrespondingCalendar());
+		assertTrue(this.event1 != null);
+		assertEquals(0, this.event1.getEventID());
+		assertTrue("Weihnachten".equals(this.event1.getEventName()));
+		this.cal.set(2011, 11, 24, 18, 00);
+		this.startDate = this.cal.getTime();
+		assertEquals(this.startDate, this.event1.getStartDate());
+		this.cal.set(2011, 11, 24, 23, 00);
+		this.endDate = this.cal.getTime();
+		assertEquals(this.endDate, this.event1.getEndDate());
+		assertEquals(this.dummyCal, this.event1.getCorrespondingCalendar());
 		
 		/*Event 2*/
-		assertTrue(event2 != null);
-		assertEquals(1, event2.getEventID());
-		assertTrue("Samichlaus".equals(event2.getEventName()));
-		cal.set(2011, 11, 6, 18, 00);
-		startDate = cal.getTime();
-		assertEquals(startDate, event2.getStartDate());
-		cal.set(2011, 11, 24, 19, 00);
-		endDate = cal.getTime();
-		assertEquals(endDate, event2.getEndDate());
-		assertEquals(dummyCal, event2.getCorrespondingCalendar());
+		assertTrue(this.event2 != null);
+		assertEquals(1, this.event2.getEventID());
+		assertTrue("Samichlaus".equals(this.event2.getEventName()));
+		this.cal.set(2011, 11, 6, 18, 00);
+		this.startDate = this.cal.getTime();
+		assertEquals(this.startDate, this.event2.getStartDate());
+		this.cal.set(2011, 11, 24, 19, 00);
+		this.endDate = this.cal.getTime();
+		assertEquals(this.endDate, this.event2.getEndDate());
+		assertEquals(this.dummyCal, this.event2.getCorrespondingCalendar());
 		
 		/*Event 3*/
-		assertTrue(event3 != null);
-		assertEquals(2, event3.getEventID());
-		assertTrue("Winter Ferien".equals(event3.getEventName()));
-		cal.set(2011, 11, 24, 16, 00);
-		startDate = cal.getTime();
-		assertEquals(startDate, event3.getStartDate());
-		cal.set(2012, 01, 8, 18, 00);
-		endDate = cal.getTime();
-		assertEquals(endDate, event3.getEndDate());
-		assertEquals(dummyCal, event3.getCorrespondingCalendar());
+		assertTrue(this.event3 != null);
+		assertEquals(2, this.event3.getEventID());
+		assertTrue("Winter Ferien".equals(this.event3.getEventName()));
+		this.cal.set(2011, 11, 24, 16, 00);
+		this.startDate = this.cal.getTime();
+		assertEquals(this.startDate, this.event3.getStartDate());
+		this.cal.set(2012, 01, 8, 18, 00);
+		this.endDate = this.cal.getTime();
+		assertEquals(this.endDate, this.event3.getEndDate());
+		assertEquals(this.dummyCal, this.event3.getCorrespondingCalendar());
 	}
 	
 }
