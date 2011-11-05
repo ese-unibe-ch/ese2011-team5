@@ -56,11 +56,11 @@ public class ESEUser {
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 	
-	public void addCalendar(String calendarName, ESEUser owner) {
+	public void addCalendar(String calendarName) {
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
-	public void addGroup(String groupName, ESEUser owner) {
+	public void addGroup(String groupName) {
 		this.groupList.add(new ESEGroup(groupName, this));
 	}
 

@@ -21,7 +21,7 @@ public class ESEGroupTests extends UnitTest{
 	
 	@Before
 	public void setUp(){
-		group1 = new ESEGroup(0, "Group 1", dummyOwner);
+		group1 = new ESEGroup("Testgroup1", dummyOwner);
 	}
 	
 	@Test

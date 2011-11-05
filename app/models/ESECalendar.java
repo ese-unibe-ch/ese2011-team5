@@ -35,10 +35,11 @@ public class ESECalendar {
 	}
 
 	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			Date startDate, Date endDate, boolean isPublic) {
+			String startDate, String endDate, boolean isPublic) {
 		
 		eventList.add(new ESEEvent(eventName, this,
-			startDate, endDate, isPublic));		
+			ESEConversionHelper.convertStringToDate(startDate), 
+			ESEConversionHelper.convertStringToDate(endDate), isPublic));		
 	}
 	
 	public void removeEvent(int eventID){

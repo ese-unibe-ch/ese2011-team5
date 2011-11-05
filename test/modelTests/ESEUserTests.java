@@ -42,32 +42,27 @@ public class ESEUserTests extends UnitTest{
 	
 	@Test
 	public void shouldAddCalendar(){
-		ESECalendar cal1 = new ESECalendar("cal 1", user1);
-		ESECalendar cal2 = new ESECalendar("cal 2", user1);
-		user1.addCalendar(cal1);
-		user1.addCalendar(cal2);
+		user1.addCalendar("calendar1");
+		user1.addCalendar("calendar2");
 		assertEquals(2, user1.getCalendarList().size());
-		assertTrue(user1.getCalendarList().contains(cal1));
-		assertTrue(user1.getCalendarList().contains(cal2));
-		
+		assertTrue(user1.getCalendarList().get(0).getCalendarName().equals("calendar1"));
+		assertTrue(user1.getCalendarList().get(1).getCalendarName().equals("calendar2"));	
 	}
 	
 	@Test
 	public void shouldAddGroup(){
-		ESEGroup group1 = new ESEGroup(0, "group1", user1);
-		ESEGroup group2 = new ESEGroup(1, "group2", user1);
-		user1.addGroup(group1);
-		user1.addGroup(group2);
+		user1.addGroup("group1");
+		user1.addGroup("group2");
 		assertEquals(2, user1.getGroupList().size());
-		assertTrue(user1.getGroupList().contains(group1));
-		assertTrue(user1.getGroupList().contains(group2));
+		assertTrue(user1.getGroupList().get(0).getGroupName().equals("group1"));
+		assertTrue(user1.getGroupList().get(1).getGroupName().equals("group2"));
 	}
 	
 	@Test
 	public void shouldGetAllEvents(){
 		/*prepare a ESECalendar */
 		ESECalendar cal1 = new ESECalendar("cal 1", user1);
-		user1.addCalendar(cal1);
+		user1.addCalendar("cal1");
 		
 		/*create some Events*/
 		Calendar cal = Calendar.getInstance();
