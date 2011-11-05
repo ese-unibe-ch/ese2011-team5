@@ -54,8 +54,7 @@ public class ESEDatabase {
 			String startDate, String endDate, boolean isPublic){
 		for (ESECalendar calendar : calendarList){
 			if (correspondingCalendarID == calendar.getID()){
-				nbrOfEvents++;
-				ESEEvent eventToAdd = new ESEEvent(nbrOfEvents, eventName, 
+				ESEEvent eventToAdd = new ESEEvent(eventName, 
 						getCalendarById(correspondingCalendarID), 
 						ESEConversionHelper.convertStringToDate(startDate), 
 						ESEConversionHelper.convertStringToDate(endDate), isPublic);

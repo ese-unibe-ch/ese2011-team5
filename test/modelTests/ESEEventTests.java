@@ -1,5 +1,9 @@
 package modelTests;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import models.ESECalendar;
 import models.ESEEvent;
 
 import org.junit.Before;
@@ -8,10 +12,18 @@ import play.test.UnitTest;
 
 public class ESEEventTests extends UnitTest{
 
-	public static int ids = 0;
+	Calendar cal = Calendar.getInstance();
+	Date startEvent;
+	Date endEvent;
+	
+	ESECalendar calendar = new ESECalendar(calendarID, "Dummy", null);
+	
 	@Before
 	public void setUp(){
-		ESEEvent event1 = new ESEEvent("Event 1", null, null, null, true);
+		cal.set(2011, 11, 24, 18, 00);
+		startEvent = cal.getTime();
+		cal.set(2011, 11, 24, 23, 00);
+		ESEEvent event1 = new ESEEvent("Weihnachten", startEvent, endEvent, null, true);
 	}
 	
 }
