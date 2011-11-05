@@ -28,6 +28,10 @@ public class ESEUser {
 		this.familyName = familyName;
 	}
 
+	/*
+	 * Methods with read only access
+	 */
+
 	public int getUserID(){
 		return this.userID;
 	}
@@ -56,18 +60,6 @@ public class ESEUser {
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 	
-	public void addCalendar(ESECalendar calendarToAdd) {
-		assert this.equals(calendarToAdd.getOwner());
-		//TODO: Inform DB
-		this.calendarList.add(calendarToAdd);
-	}
-
-	public void addGroup(ESEGroup groupToAdd) {
-		assert this.equals(groupToAdd.getOwner());
-		//TODO: Inform DB
-		this.groupList.add(groupToAdd);
-	}
-
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)
@@ -95,4 +87,22 @@ public class ESEUser {
 		}
 		throw new IllegalArgumentException("No calendar with this ID");
 	}
+
+	/*
+	 * Methods with read-write access
+	 * All following methods must inform the database about changes carried out here
+	 */
+
+	public void addCalendar(ESECalendar calendarToAdd) {
+		assert this.equals(calendarToAdd.getOwner());
+		//TODO: Inform DB
+		this.calendarList.add(calendarToAdd);
+	}
+
+	public void addGroup(ESEGroup groupToAdd) {
+		assert this.equals(groupToAdd.getOwner());
+		//TODO: Inform DB
+		this.groupList.add(groupToAdd);
+	}
+
 }

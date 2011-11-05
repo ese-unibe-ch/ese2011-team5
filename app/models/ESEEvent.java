@@ -15,9 +15,12 @@ public class ESEEvent {
 	
 
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
-			Date startDate, Date endDate, boolean isPublic) {
-		
-		assert(startDate.before(endDate));
+			Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException {
+
+		// This would prevent creation of events with zero duration
+		//assert(startDate.before(endDate));
+		assert(!endDate.after(startDate));
+		checkDateValidity(startDate, endDate);
 		assert(correspondingCalendar != null);
 		assert(eventName != "");
 		
@@ -29,6 +32,18 @@ public class ESEEvent {
 		this.isPublic = isPublic;
 		
 	}
+
+	private void checkDateValidity(Date startDate, Date endDate)
+	{
+		if (startDate.after(endDate))
+		{
+			throw new IllegalArgumentException("Invalid start and end date");
+		}
+	}
+
+	/*
+	 * Methods with read only access
+	 */
 
 	public int getEventID(){
 		return this.eventID;
@@ -54,5 +69,35 @@ public class ESEEvent {
 		return this.isPublic;
 	}
 
+	/*
+	 * Methods with read-write access
+	 * All following methods must inform the database about changes carried out here
+	 */
+
+	public void setEventName(String eventName)
+	{
+		this.eventName = eventName;
+		//TODO: Inform DB
+	}
+
+	public void setStartDate(Date startDate)
+	{
+		checkDateValidity(startDate, endDate);
+		this.startDate = startDate;
+		//TODO: Inform DB
+	}
+
+	public void setEndDate(Date endDate)
+	{
+		checkDateValidity(startDate, endDate);
+		this.endDate = endDate;
+		//TODO: Inform DB
+	}
+
+	public void setVisibility(boolean publiclyViewable)
+	{
+		this.isPublic = publiclyViewable;
+		//TODO: Inform DB
+	}
 }
 

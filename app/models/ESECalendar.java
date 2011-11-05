@@ -22,6 +22,9 @@ public class ESECalendar {
 		this.owner = owner;
 	}
 
+	/*
+	 * Methods with read only access
+	 */
 	public int getID() {
 		return this.calendarID;
 	}
@@ -34,20 +37,6 @@ public class ESECalendar {
 		return this.owner;
 	}
 
-	public void addEvent(ESEEvent eventToAdd) {
-		assert(eventToAdd != null);
-		//TODO: Inform DB
-		eventList.add(eventToAdd);		
-	}
-	
-	public void removeEvent(ESEEvent event){
-		//TODO
-		/*
-		 * Maybe with id?
-		 */
-		//TODO: Inform DB
-	}
-	
 	public ArrayList<ESEEvent> getAllEvents() {
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
@@ -61,4 +50,78 @@ public class ESECalendar {
 		return publicEventsList;
 	}
 
+	/*
+	 * Methods with read-write access
+	 * All following methods must inform the database about changes carried out here
+	 */
+
+	public void addEvent(ESEEvent eventToAdd) throws IllegalArgumentException
+	{
+		assert(eventToAdd != null);
+		for (ESEEvent existingEvent : this.eventList)
+		{
+			if (checkEventOverlaps(existingEvent, eventToAdd))
+			{
+				throw new IllegalArgumentException("New event overlaps with existing event");
+			}
+		}
+		//TODO: Inform DB
+		this.eventList.add(eventToAdd);		
+	}
+
+	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		boolean startDateOverlaps = startDateLiesInBetweenExistingEvent(existingEvent, newEvent);
+		boolean endDateOverlaps = endDateLiesInBetweenExistingEvent(existingEvent, newEvent);
+		boolean embracesEvent = eventIsSubsetOfExistingEvent(existingEvent, newEvent);
+		boolean isInEvent = eventContainsExistingEvent(existingEvent, newEvent);
+
+		return startDateOverlaps || endDateOverlaps || embracesEvent || isInEvent;
+	}
+
+	private boolean startDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newStartTime = newEvent.getStartDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newStartTime && newStartTime <= existingEndTime;
+	}
+
+	private boolean endDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newEndTime && newEndTime <= existingEndTime;
+	}
+
+	private boolean eventIsSubsetOfExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newStartTime = newEvent.getStartDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newStartTime && newEndTime <= existingEndTime;
+	}
+
+	private boolean eventContainsExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long newStartTime = newEvent.getStartDate().getTime();
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+
+		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
+	}
+
+	public void removeEvent(ESEEvent event){
+		//TODO
+		/*
+		 * Maybe with id?
+		 */
+		//TODO: Inform DB
+	}
 }
