@@ -114,7 +114,7 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
-	public static ArrayList<ESEEvent> getAllEventsOfUserInCalendar(String userName, 
+	public static ArrayList<ESEEvent> getAllEventsInCalendar(String userName, 
 			int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
@@ -123,7 +123,7 @@ public class ESEDatabase {
 		return null;
 	}
 	
-	public static ArrayList<ESEEvent> getAllowedEventsOfUserInCalendar(String calendarOwner, 
+	public static ArrayList<ESEEvent> getAllowedEventsInCalendar(String calendarOwner, 
 			String currentUser, int calendarID){
 		for (ESEUser user : userList){
 			if (user.getName().equals(calendarOwner))
@@ -131,10 +131,7 @@ public class ESEDatabase {
 						calendarID);
 		}
 		return null;
-	}
-	
-	
-	
+	}	
 	
 	/*
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
