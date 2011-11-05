@@ -6,15 +6,11 @@ import java.util.Date;
 public class ESEDatabase {
 
 	private static ESEUser currentUser;
-	private static ArrayList<ESEUser> userList;
-	private static ArrayList<ESECalendar> calendarList;
-	private static ArrayList<ESEGroup> groupList;
-	private static ArrayList<ESEEvent> eventList;
 	
-	private static int nbrOfUsers = 0;
-	private static int nbrOfCalendars = 0;
-	private static int nbrOfGroups = 0;
-	private static int nbrOfEvents = 0;
+	private static ArrayList<ESEUser> userList;
+	//private static ArrayList<ESECalendar> calendarList;
+	//private static ArrayList<ESEGroup> groupList;
+	//private static ArrayList<ESEEvent> eventList;
 	
 	/* 
 	 * Current user methods:
@@ -29,73 +25,30 @@ public class ESEDatabase {
 	}
 	
 	/*
-	 * Methods to create ESEUsers, ESECalendars, ESEGroups, ESEEvents
+	 * Methods to create ESEUsers
 	 */
 	
 	public static void createUser(String username, String password, String firstName,
 			String familyName){
-		nbrOfUsers++;
-		userList.add(new ESEUser(nbrOfUsers, username, password, firstName, familyName));		
-	}
-	
-	public static void addCalendar(String calendarName, String ownerName){
-		for (ESEUser user : userList){
-			if (user.getName().equals(ownerName)){
-				nbrOfCalendars++;
-				ESECalendar calendarToAdd  = new ESECalendar(nbrOfCalendars, calendarName, 
-						getOwnerByName(ownerName));
-				user.addCalendar(calendarToAdd);
-				calendarList.add(calendarToAdd);
-			}
-		}
-	}
-
-	public static void addEvent(String eventName, int correspondingCalendarID, 
-			String startDate, String endDate, boolean isPublic){
-		for (ESECalendar calendar : calendarList){
-			if (correspondingCalendarID == calendar.getID()){
-				ESEEvent eventToAdd = new ESEEvent(eventName, 
-						getCalendarById(correspondingCalendarID), 
-						ESEConversionHelper.convertStringToDate(startDate), 
-						ESEConversionHelper.convertStringToDate(endDate), isPublic);
-				calendar.addEvent(eventToAdd);
-				eventList.add(eventToAdd);
-			}
-		}
-	}
-
-	public static void addGroup(String groupName, String ownerName){
-		for (ESEUser user : userList){
-			if (user.getName().equals(ownerName)){
-				nbrOfGroups++;
-				ESEGroup groupToAdd = new ESEGroup(nbrOfGroups, groupName, 
-						getOwnerByName(ownerName));
-				user.addGroup(groupToAdd);
-				groupList.add(groupToAdd);
-			}
-		}
-	}
-	
-	public static void addUserToGroup(){
-		//TODO
+		userList.add(new ESEUser(username, password, firstName, familyName));		
 	}
 	
 	/*
-	 * Methods that return Users, Calendars etc. depending on some arguments
+	 * Methods that return Users
 	 */
 	
-	public static ESEUser getOwnerByName(String ownerName) {
+	public static ESEUser getUserByName(String userName) {
 		for (ESEUser user : userList){
-			if (user.getName().equals(ownerName))
+			if (user.getName().equals(userName))
 				return user;
 		}
 		return null;
 	}
 	
-	public static ESECalendar getCalendarById(int correspondingCalendarID) {
-		for (ESECalendar calendar : calendarList){
-			if (calendar.getID() == correspondingCalendarID)
-				return calendar;
+	public static ESEUser getUserByID(int userID) {
+		for (ESEUser user : userList){
+			if (user.getUserID() == userID)
+				return user;
 		}
 		return null;
 	}
@@ -114,24 +67,35 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
-	public static ArrayList<ESEEvent> getAllEventsInCalendar(String userName, 
-			int calendarID){
-		for (ESEUser user : userList){
-			if (user.getName().equals(userName))
-				return user.getAllEvents(calendarID);
-		}
-		return null;
+	/*
+	 * Methods to add or remove ESEUsers, ESECalendars, ESEEvents, ESEGroups
+	 */
+	
+	/*public static void addCalendarToDB(ESECalendar calendar){
+		calendarList.add(calendar);
 	}
 	
-	public static ArrayList<ESEEvent> getAllowedEventsInCalendar(String calendarOwner, 
-			String currentUser, int calendarID){
+	public static void addEventToDB(ESEEvent event){
+		eventList.add(event);
+	}
+	
+	public static void addGroupToDB(ESEGroup group){
+		groupList.add(group);
+	}*/
+	
+	public static void removeUserByName(String username){
 		for (ESEUser user : userList){
-			if (user.getName().equals(calendarOwner))
-				return user.getAllowedEvents(calendarOwner.equals(currentUser), 
-						calendarID);
+			if (user.getName().equals(username))
+				userList.remove(user);
 		}
-		return null;
-	}	
+	}
+	
+	public void removeUserByID(int userID){
+		for (ESEUser user : userList){
+			if (user.getUserID() == userID)
+				userList.remove(user);
+		}
+	}
 	
 	/*
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
@@ -141,7 +105,7 @@ public class ESEDatabase {
 		return userList;
 	}
 	
-	public static ArrayList<ESECalendar> getAllCalendars(){
+	/*public static ArrayList<ESECalendar> getAllCalendars(){
 		return calendarList;
 	}
 	
@@ -151,7 +115,7 @@ public class ESEDatabase {
 	
 	public static ArrayList<ESEGroup> getAllGroups(){
 		return groupList;
-	}
+	}*/
 	
 }
 

@@ -60,6 +60,14 @@ public class ESEUser {
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 	
+	public void addCalendar(String calendarName) {
+		this.calendarList.add(new ESECalendar(calendarName, this));
+	}
+
+	public void addGroup(String groupName) {
+		this.groupList.add(new ESEGroup(groupName, this));
+	}
+
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)
@@ -90,18 +98,15 @@ public class ESEUser {
 
 	/*
 	 * Methods with read-write access
-	 * All following methods must inform the database about changes carried out here
 	 */
 
 	public void addCalendar(ESECalendar calendarToAdd) {
 		assert this.equals(calendarToAdd.getOwner());
-		//TODO: Inform DB
 		this.calendarList.add(calendarToAdd);
 	}
 
 	public void addGroup(ESEGroup groupToAdd) {
 		assert this.equals(groupToAdd.getOwner());
-		//TODO: Inform DB
 		this.groupList.add(groupToAdd);
 	}
 

@@ -16,19 +16,19 @@ import play.test.UnitTest;
 public class ESEGroupTests extends UnitTest{
 	
 	ESEGroup group1;
-	ESEUser dummyOwner = new ESEUser(0, "dummy", "pw", "firstName", "familyName");
+	ESEUser dummyOwner = new ESEUser("dummy", "pw", "firstName", "familyName");
 	
 	
 	@Before
 	public void setUp(){
-		group1 = new ESEGroup(0, "Group 1", dummyOwner);
+		group1 = new ESEGroup("Testgroup1", dummyOwner);
 	}
 	
 	@Test
 	public void shouldInitialize(){
 		assertTrue(group1 != null);
 		assertEquals(0, group1.getGroupID());
-		assertEquals("Group 1", group1.getGroupName());
+		assertEquals("Testgroup1", group1.getGroupName());
 		assertEquals(dummyOwner, group1.getOwner());
 	}
 

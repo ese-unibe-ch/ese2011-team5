@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ESECalendar {
 
@@ -10,9 +11,8 @@ public class ESECalendar {
 	private String calendarName;
 	private ESEUser owner;
 	private ArrayList<ESEEvent> eventList;
-	
-	public ESECalendar(String calendarName,
-			ESEUser owner) {
+
+	public ESECalendar(String calendarName, ESEUser owner) {
 		assert calendarName != "";
 		assert(owner != null);
 		
@@ -22,9 +22,6 @@ public class ESECalendar {
 		this.owner = owner;
 	}
 
-	/*
-	 * Methods with read only access
-	 */
 	public int getID() {
 		return this.calendarID;
 	}
@@ -37,6 +34,30 @@ public class ESECalendar {
 		return this.owner;
 	}
 
+	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
+			String startDate, String endDate, boolean isPublic)
+	{
+		ESEEvent newEvent = new ESEEvent(eventName, this,
+			ESEConversionHelper.convertStringToDate(startDate), 
+			ESEConversionHelper.convertStringToDate(endDate), isPublic));		
+		for (ESEEvent existingEvent : this.eventList)
+		{
+			if (checkEventOverlaps(existingEvent, newEvent))
+			{
+				throw new IllegalArgumentException("New event overlaps with existing event");
+			}
+		}
+		eventList.add(newEvent);		
+	}
+	
+	public void removeEvent(int eventID){
+		//TODO
+		/*
+		 * Maybe with id?
+		 */
+		// TODO: Inform DB
+	}
+	
 	public ArrayList<ESEEvent> getAllEvents() {
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
@@ -49,25 +70,13 @@ public class ESECalendar {
 		}
 		return publicEventsList;
 	}
-
-	/*
-	 * Methods with read-write access
-	 * All following methods must inform the database about changes carried out here
-	 */
-
-	public void addEvent(ESEEvent eventToAdd) throws IllegalArgumentException
-	{
-		assert(eventToAdd != null);
-		for (ESEEvent existingEvent : this.eventList)
-		{
-			if (checkEventOverlaps(existingEvent, eventToAdd))
-			{
-				throw new IllegalArgumentException("New event overlaps with existing event");
-			}
-		}
-		//TODO: Inform DB
-		this.eventList.add(eventToAdd);		
-	}
+	
+	public ArrayList<ESEEvent> getAllAllowedEvents(){
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
+			return this.getAllEvents();
+		else
+			return this.getAllPublicEvents();
+	}	
 
 	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
 	{
