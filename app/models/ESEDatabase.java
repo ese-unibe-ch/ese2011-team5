@@ -8,9 +8,9 @@ public class ESEDatabase {
 	private static ESEUser currentUser;
 	
 	private static ArrayList<ESEUser> userList;
-	private static ArrayList<ESECalendar> calendarList;
-	private static ArrayList<ESEGroup> groupList;
-	private static ArrayList<ESEEvent> eventList;
+	//private static ArrayList<ESECalendar> calendarList;
+	//private static ArrayList<ESEGroup> groupList;
+	//private static ArrayList<ESEEvent> eventList;
 	
 	/* 
 	 * Current user methods:
@@ -71,7 +71,7 @@ public class ESEDatabase {
 	 * Methods to add or remove ESEUsers, ESECalendars, ESEEvents, ESEGroups
 	 */
 	
-	public static void addCalendarToDB(ESECalendar calendar){
+	/*public static void addCalendarToDB(ESECalendar calendar){
 		calendarList.add(calendar);
 	}
 	
@@ -81,7 +81,7 @@ public class ESEDatabase {
 	
 	public static void addGroupToDB(ESEGroup group){
 		groupList.add(group);
-	}
+	}*/
 	
 	public static void removeUserByName(String username){
 		for (ESEUser user : userList){
@@ -97,8 +97,6 @@ public class ESEDatabase {
 		}
 	}
 	
-	//etc. TODO
-	
 	/*
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
 	 */
@@ -107,7 +105,7 @@ public class ESEDatabase {
 		return userList;
 	}
 	
-	public static ArrayList<ESECalendar> getAllCalendars(){
+	/*public static ArrayList<ESECalendar> getAllCalendars(){
 		return calendarList;
 	}
 	
@@ -117,7 +115,7 @@ public class ESEDatabase {
 	
 	public static ArrayList<ESEGroup> getAllGroups(){
 		return groupList;
-	}
+	}*/
 	
 }
 

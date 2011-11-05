@@ -58,13 +58,11 @@ public class ESEUser {
 	
 	public void addCalendar(ESECalendar calendarToAdd) {
 		assert this.equals(calendarToAdd.getOwner());
-		//TODO: Inform DB
 		this.calendarList.add(calendarToAdd);
 	}
 
 	public void addGroup(ESEGroup groupToAdd) {
 		assert this.equals(groupToAdd.getOwner());
-		//TODO: Inform DB
 		this.groupList.add(groupToAdd);
 	}
 
