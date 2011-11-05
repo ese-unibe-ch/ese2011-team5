@@ -26,6 +26,13 @@ public class ESECalendar {
 		eventList.add(eventToAdd);		
 	}
 	
+	public void removeEvent(ESEEvent event){
+		//TODO
+		/*
+		 * Maybe with id?
+		 */
+	}
+	
 	public int getID() {
 		return this.calendarID;
 	}
@@ -43,7 +50,7 @@ public class ESECalendar {
 	}
 
 	public ArrayList<ESEEvent> getAllPublicEvents() {
-		ArrayList<ESEEvent> publicEventsList = null;
+		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
 		for (ESEEvent event : eventList){
 			if (event.isPublic() == true)
 				publicEventsList.add(event);

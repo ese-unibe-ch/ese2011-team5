@@ -39,22 +39,24 @@ public class ESECalendarTests extends UnitTest{
 		startDate = cal.getTime();
 		cal.set(2011, 11, 25, 23, 00);
 		endDate = cal.getTime();
-		event2 = new ESEEvent("Event2", cal1,startDate ,endDate , true);
+		event2 = new ESEEvent("Event2", cal1,startDate ,endDate , false);
 		
 		cal.set(2011, 11, 26, 18, 00);
 		startDate = cal.getTime();
 		cal.set(2011, 11, 26, 23, 00);
 		endDate = cal.getTime();
-		event3 = new ESEEvent("Event3", cal1,startDate ,endDate , true);
+		event3 = new ESEEvent("Event3", cal1,startDate ,endDate , false);
 	}
 	
 	@Test
 	public void shouldInitialize(){
 		assertTrue(cal1 != null);
+		assertTrue(cal1.getAllEvents() != null);
 		assertEquals(0, cal1.getID());
 		assertEquals(ownerDummy, cal1.getOwner());
 		
 		assertTrue(cal2 != null);
+		assertTrue(cal2.getAllEvents() != null);
 		assertEquals(1, cal2.getID());
 		assertEquals(ownerDummy, cal2.getOwner());
 	}
@@ -62,7 +64,17 @@ public class ESECalendarTests extends UnitTest{
 	@Test
 	public void shouldAddEvent(){
 		cal1.addEvent(event1);
-		assertTrue(cal1.getAllEvents() != null);
+		assertEquals(1, cal1.getAllEvents().size());
+		assertEquals(1, cal1.getAllPublicEvents().size());
+		cal1.addEvent(event2);
+		assertEquals(2, cal1.getAllEvents().size());
+		assertEquals(1, cal1.getAllPublicEvents().size());
+		
+		cal2.addEvent(event3);
+		assertEquals(1, cal2.getAllEvents().size());
+		assertEquals(0, cal2.getAllPublicEvents().size());
+		assertEquals(2, cal1.getAllEvents().size());
+		assertEquals(1, cal1.getAllPublicEvents().size());
 	}
 	@Test
 	public void shouldGetAllEvents(){
