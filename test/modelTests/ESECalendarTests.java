@@ -78,12 +78,29 @@ public class ESECalendarTests extends UnitTest{
 	}
 	@Test
 	public void shouldGetAllEvents(){
+		cal1.addEvent(event1);
+		cal1.addEvent(event2);
+		cal1.addEvent(event3);
 		
+		assertEquals(1, cal1.getAllPublicEvents().size());
+		assertEquals(3, cal1.getAllEvents().size());
+		
+		assertTrue(cal1.getAllEvents().contains(event1));
+		assertTrue(cal1.getAllEvents().contains(event2));
+		assertTrue(cal1.getAllEvents().contains(event3));
+
 	}
 	
 	@Test
 	public void shouldGetAllPublicEvents(){
+		cal1.addEvent(event1);
+		cal1.addEvent(event2);
+		cal1.addEvent(event3);
 		
+		assertEquals(1, cal1.getAllPublicEvents().size());
+		assertEquals(3, cal1.getAllEvents().size());
+		
+		assertTrue(cal1.getAllPublicEvents().contains(event1));
 	}
 	
 }
