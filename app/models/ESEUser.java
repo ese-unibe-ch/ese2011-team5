@@ -55,10 +55,12 @@ public class ESEUser {
 	}
 	
 	public void addCalendar(ESECalendar calendarToAdd) {
+		assert(calendarToAdd.getOwner() == this);
 		calendarList.add(calendarToAdd);
 	}
 
 	public void addGroup(ESEGroup groupToAdd) {
+		assert(groupToAdd.getOwner() == this);
 		groupList.add(groupToAdd);
 	}
 
