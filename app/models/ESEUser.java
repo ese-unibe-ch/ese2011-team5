@@ -56,14 +56,12 @@ public class ESEUser {
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 	
-	public void addCalendar(ESECalendar calendarToAdd) {
-		assert this.equals(calendarToAdd.getOwner());
-		this.calendarList.add(calendarToAdd);
+	public void addCalendar(String calendarName, ESEUser owner) {
+		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
-	public void addGroup(ESEGroup groupToAdd) {
-		assert this.equals(groupToAdd.getOwner());
-		this.groupList.add(groupToAdd);
+	public void addGroup(String groupName, ESEUser owner) {
+		this.groupList.add(new ESEGroup(groupName, this));
 	}
 
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {

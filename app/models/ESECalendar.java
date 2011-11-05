@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ESECalendar {
 
@@ -19,8 +20,6 @@ public class ESECalendar {
 		eventList = new ArrayList<ESEEvent>();
 		this.calendarName = calendarName;
 		this.owner = owner;
-
-		owner.addCalendar(this);
 	}
 
 	public int getID() {
@@ -35,9 +34,11 @@ public class ESECalendar {
 		return this.owner;
 	}
 
-	public void addEvent(ESEEvent eventToAdd) {
-		assert(eventToAdd != null);
-		eventList.add(eventToAdd);		
+	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
+			Date startDate, Date endDate, boolean isPublic) {
+		
+		eventList.add(new ESEEvent(eventName, this,
+			startDate, endDate, isPublic));		
 	}
 	
 	public void removeEvent(int eventID){

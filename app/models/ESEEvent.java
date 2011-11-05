@@ -27,7 +27,6 @@ public class ESEEvent {
 		this.endDate = endDate;
 		this.isPublic = isPublic;
 
-		this.correspondingCalendar.addEvent(this);
 	}
 
 	public int getEventID() {
