@@ -60,5 +60,11 @@ public class ESECalendar {
 		}
 		return publicEventsList;
 	}
-
+	
+	public ArrayList<ESEEvent> getAllAllowedEvents(){
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
+			return this.getAllEvents();
+		else
+			return this.getAllPublicEvents();
+	}	
 }

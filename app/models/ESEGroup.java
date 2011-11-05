@@ -1,10 +1,13 @@
 package models;
 
+import java.util.ArrayList;
+
 public class ESEGroup {
 	
 	private int groupID;
 	private String groupName;
 	private ESEUser owner;
+	private ArrayList<ESEUser> userList;
 
 	public ESEGroup(int groupID, String groupName, ESEUser owner) {
 		this.groupID = groupID;
@@ -22,5 +25,9 @@ public class ESEGroup {
 	
 	public ESEUser getOwner(){
 		return this.owner;
+	}
+
+	public void addUserToGroup(ESEUser user) {
+		this.userList.add(user);
 	}
 }
