@@ -16,6 +16,11 @@ public class ESEEvent {
 
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
 			Date startDate, Date endDate, boolean isPublic) {
+		
+		assert(startDate.before(endDate));
+		assert(correspondingCalendar != null);
+		assert(eventName != "");
+		
 		this.eventID = idCounter++;
 		this.eventName = eventName;
 		this.correspondingCalendar = correspondingCalendar;

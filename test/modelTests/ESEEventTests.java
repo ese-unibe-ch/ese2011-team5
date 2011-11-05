@@ -16,14 +16,14 @@ public class ESEEventTests extends UnitTest{
 	Date startEvent;
 	Date endEvent;
 	
-	ESECalendar calendar = new ESECalendar(calendarID, "Dummy", null);
+	ESECalendar dummyCal = new ESECalendar(0, "Dummy", null); /*for the moment id = 0*/
 	
 	@Before
 	public void setUp(){
 		cal.set(2011, 11, 24, 18, 00);
 		startEvent = cal.getTime();
 		cal.set(2011, 11, 24, 23, 00);
-		ESEEvent event1 = new ESEEvent("Weihnachten", startEvent, endEvent, null, true);
+		ESEEvent event1 = new ESEEvent("Weihnachten", dummyCal,startEvent ,endEvent , true);
 	}
 	
 }
