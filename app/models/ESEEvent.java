@@ -30,7 +30,6 @@ public class ESEEvent {
 		
 	}
 
-	
 	public int getEventID(){
 		return this.eventID;
 	}

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class ESEUser {
 	
+	private static int idCounter = 0;
+	
 	private int userID;
 	private String username;
 	private String password;
@@ -12,14 +14,14 @@ public class ESEUser {
 	private ArrayList<ESECalendar> calendarList;
 	private ArrayList<ESEGroup> groupList;
 
-	public ESEUser(int userID, String username, String password,
+	public ESEUser(String username, String password,
 			String firstName, String familyName) {
 		
 		assert(username != "");
-		calendarList = new ArrayList<ESECalendar>();
-		groupList = new ArrayList<ESEGroup>();
-		
-		this.userID = userID;
+
+		this.userID = idCounter++;
+		this.calendarList = new ArrayList<ESECalendar>();
+		this.groupList = new ArrayList<ESEGroup>();
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
@@ -47,41 +49,43 @@ public class ESEUser {
 	}
 
 	public ArrayList<ESEGroup> getGroupList(){
-		return groupList;
+		return new ArrayList<ESEGroup>(this.groupList);
 	}
 	
 	public ArrayList<ESECalendar> getCalendarList(){
-		return calendarList;
+		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 	
 	public void addCalendar(ESECalendar calendarToAdd) {
-		assert(calendarToAdd.getOwner() == this);
-		calendarList.add(calendarToAdd);
+		assert this.equals(calendarToAdd.getOwner());
+		//TODO: Inform DB
+		this.calendarList.add(calendarToAdd);
 	}
 
 	public void addGroup(ESEGroup groupToAdd) {
-		assert(groupToAdd.getOwner() == this);
-		groupList.add(groupToAdd);
+		assert this.equals(groupToAdd.getOwner());
+		//TODO: Inform DB
+		this.groupList.add(groupToAdd);
 	}
 
-	public ArrayList<ESEEvent> getAllEvents(int calendarID) {
-		for (ESECalendar calendar : calendarList){
+	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
+		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)
 				return calendar.getAllEvents();
 		}
-		return null;
+		throw new IllegalArgumentException("No calendar with this ID");
 	}
 	
-	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) {
-		for (ESECalendar calendar : calendarList){
+	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws IllegalArgumentException {
+		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)
 				return calendar.getAllPublicEvents();
 		}
-		return null;
+		throw new IllegalArgumentException("No calendar with this ID");
 	}
 	
-	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) {
-		for (ESECalendar calendar : calendarList){
+	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) throws IllegalArgumentException {
+		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID){
 				if (currentUserIsOwner)
 					return calendar.getAllEvents();
@@ -89,7 +93,6 @@ public class ESEUser {
 					return calendar.getAllPublicEvents();
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("No calendar with this ID");
 	}
-
 }
