@@ -11,6 +11,9 @@ public class ESECalendar {
 	
 	public ESECalendar(int calendarID, String calendarName,
 			ESEUser owner) {
+		assert(owner != null);
+		
+		eventList = new ArrayList<ESEEvent>();
 		this.calendarID = calendarID;
 		this.calendarName = calendarName;
 		this.owner = owner;
@@ -19,6 +22,7 @@ public class ESECalendar {
 	
 
 	public void addEvent(ESEEvent eventToAdd) {
+		assert(eventToAdd != null);
 		eventList.add(eventToAdd);		
 	}
 	
