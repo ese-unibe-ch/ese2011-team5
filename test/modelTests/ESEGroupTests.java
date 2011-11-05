@@ -16,7 +16,7 @@ import play.test.UnitTest;
 public class ESEGroupTests extends UnitTest{
 	
 	ESEGroup group1;
-	ESEUser dummyOwner = new ESEUser(0, "dummy", "pw", "firstName", "familyName");
+	ESEUser dummyOwner = new ESEUser("dummy", "pw", "firstName", "familyName");
 	
 	
 	@Before

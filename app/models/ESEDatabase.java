@@ -68,6 +68,38 @@ public class ESEDatabase {
 	}
 	
 	/*
+	 * Methods to add or remove ESEUsers, ESECalendars, ESEEvents, ESEGroups
+	 */
+	
+	public static void addCalendarToDB(ESECalendar calendar){
+		calendarList.add(calendar);
+	}
+	
+	public static void addEventToDB(ESEEvent event){
+		eventList.add(event);
+	}
+	
+	public static void addGroupToDB(ESEGroup group){
+		groupList.add(group);
+	}
+	
+	public static void removeUserByName(String username){
+		for (ESEUser user : userList){
+			if (user.getName().equals(username))
+				userList.remove(user);
+		}
+	}
+	
+	public void removeUserByID(int userID){
+		for (ESEUser user : userList){
+			if (user.getUserID() == userID)
+				userList.remove(user);
+		}
+	}
+	
+	//etc. TODO
+	
+	/*
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
 	 */
 	

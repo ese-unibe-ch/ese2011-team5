@@ -21,8 +21,8 @@ public class ESEUserTests extends UnitTest{
 	
 	@Before
 	public void setUp(){
-		user1 = new ESEUser(0, "user 1", "pw 1", "firstName 1", "familyName 1");
-		user2 = new ESEUser(1, "user 2", "pw 2", "firstName 2", "familyName 2");
+		user1 = new ESEUser("user 1", "pw 1", "firstName 1", "familyName 1");
+		user2 = new ESEUser("user 2", "pw 2", "firstName 2", "familyName 2");
 
 	}
 	
@@ -42,8 +42,8 @@ public class ESEUserTests extends UnitTest{
 	
 	@Test
 	public void shouldAddCalendar(){
-		ESECalendar cal1 = new ESECalendar(0, "cal 1", user1);
-		ESECalendar cal2 = new ESECalendar(1, "cal 2", user1);
+		ESECalendar cal1 = new ESECalendar("cal 1", user1);
+		ESECalendar cal2 = new ESECalendar("cal 2", user1);
 		user1.addCalendar(cal1);
 		user1.addCalendar(cal2);
 		assertEquals(2, user1.getCalendarList().size());
@@ -66,7 +66,7 @@ public class ESEUserTests extends UnitTest{
 	@Test
 	public void shouldGetAllEvents(){
 		/*prepare a ESECalendar */
-		ESECalendar cal1 = new ESECalendar(0, "cal 1", user1);
+		ESECalendar cal1 = new ESECalendar("cal 1", user1);
 		user1.addCalendar(cal1);
 		
 		/*create some Events*/
@@ -106,7 +106,7 @@ public class ESEUserTests extends UnitTest{
 		/*copy past setup from last test*/
 		
 		/*prepare a ESECalendar */
-		ESECalendar cal1 = new ESECalendar(0, "cal 1", user1);
+		ESECalendar cal1 = new ESECalendar("cal 1", user1);
 		user1.addCalendar(cal1);
 		
 		/*create some Events*/

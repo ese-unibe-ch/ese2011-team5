@@ -21,7 +21,7 @@ public class ESEEventTests extends UnitTest{
 	ESEEvent event2;
 	ESEEvent event3;
 	
-	ESECalendar dummyCal = new ESECalendar(0, "Dummy", null); /*for the moment id = 0*/
+	ESECalendar dummyCal = new ESECalendar("Dummy", null); /*for the moment id = 0*/
 	
 	@Before
 	public void setUp(){		/* Sets up three Events for testing purpose*/

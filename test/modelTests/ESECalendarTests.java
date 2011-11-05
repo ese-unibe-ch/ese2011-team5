@@ -14,7 +14,7 @@ import play.test.UnitTest;
 
 public class ESECalendarTests extends UnitTest{
 
-	ESEUser ownerDummy = new ESEUser(0, "dummy", "pw", "firstName", "familyName");
+	ESEUser ownerDummy = new ESEUser("dummy", "pw", "firstName", "familyName");
 	ESECalendar cal1;
 	ESECalendar cal2;
 	ESEEvent event1;
@@ -24,8 +24,8 @@ public class ESECalendarTests extends UnitTest{
 	@Before
 	public void setUp(){
 		
-		cal1 = new ESECalendar(0, "Cal1", ownerDummy);
-		cal2 = new ESECalendar(1, "Cal2", ownerDummy);
+		cal1 = new ESECalendar("Cal1", ownerDummy);
+		cal2 = new ESECalendar("Cal2", ownerDummy);
 		
 		Calendar cal = Calendar.getInstance();
 		/*create some Events*/
