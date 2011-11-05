@@ -28,7 +28,7 @@ public class ESEGroupTests extends UnitTest{
 	public void shouldInitialize(){
 		assertTrue(group1 != null);
 		assertEquals(0, group1.getGroupID());
-		assertEquals("Group 1", group1.getGroupName());
+		assertEquals("Testgroup1", group1.getGroupName());
 		assertEquals(dummyOwner, group1.getOwner());
 	}
 
