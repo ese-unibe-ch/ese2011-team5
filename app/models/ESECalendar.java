@@ -23,7 +23,7 @@ public class ESECalendar {
 	}
 	
 	public int getID() {
-		return this. calendarID;
+		return this.calendarID;
 	}
 	
 	public String getCalendarName(){

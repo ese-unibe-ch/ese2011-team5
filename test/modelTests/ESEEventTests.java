@@ -56,6 +56,7 @@ public class ESEEventTests extends UnitTest{
 		cal.set(2011, 11, 24, 23, 00);
 		endDate = cal.getTime();
 		assertEquals(endDate, event1.getEndDate());
+		assertEquals(dummyCal, event1.getCorrespondingCalendar());
 		
 		/*Event 2*/
 		assertTrue(event2 != null);
@@ -67,6 +68,7 @@ public class ESEEventTests extends UnitTest{
 		cal.set(2011, 11, 24, 19, 00);
 		endDate = cal.getTime();
 		assertEquals(endDate, event2.getEndDate());
+		assertEquals(dummyCal, event2.getCorrespondingCalendar());
 		
 		/*Event 3*/
 		assertTrue(event3 != null);
@@ -78,6 +80,7 @@ public class ESEEventTests extends UnitTest{
 		cal.set(2012, 01, 8, 18, 00);
 		endDate = cal.getTime();
 		assertEquals(endDate, event3.getEndDate());
+		assertEquals(dummyCal, event3.getCorrespondingCalendar());
 	}
 	
 }
