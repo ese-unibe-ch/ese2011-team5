@@ -36,16 +36,14 @@ public class ESECalendar {
 
 	public void addEvent(ESEEvent eventToAdd) {
 		assert(eventToAdd != null);
-		//TODO: Inform DB
 		eventList.add(eventToAdd);		
 	}
 	
-	public void removeEvent(ESEEvent event){
+	public void removeEvent(int eventID){
 		//TODO
 		/*
 		 * Maybe with id?
 		 */
-		//TODO: Inform DB
 	}
 	
 	public ArrayList<ESEEvent> getAllEvents() {
