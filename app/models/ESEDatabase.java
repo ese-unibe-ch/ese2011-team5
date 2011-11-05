@@ -76,6 +76,10 @@ public class ESEDatabase {
 		}
 	}
 	
+	public static void addUserToGroup(){
+		//TODO
+	}
+	
 	/*
 	 * Methods that return Users, Calendars etc. depending on some arguments
 	 */
