@@ -14,6 +14,11 @@ public class ESEUser {
 
 	public ESEUser(int userID, String username, String password,
 			String firstName, String familyName) {
+		
+		assert(username != "");
+		calendarList = new ArrayList<ESECalendar>();
+		groupList = new ArrayList<ESEGroup>();
+		
 		this.userID = userID;
 		this.username = username;
 		this.password = password;
@@ -41,6 +46,14 @@ public class ESEUser {
 		return this.familyName;
 	}
 
+	public ArrayList<ESEGroup> getGroupList(){
+		return groupList;
+	}
+	
+	public ArrayList<ESECalendar> getCalendarList(){
+		return calendarList;
+	}
+	
 	public void addCalendar(ESECalendar calendarToAdd) {
 		calendarList.add(calendarToAdd);
 	}
