@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 
 public class ESEGroup {
-	
+
 	private int groupID;
 	private String groupName;
 	private ESEUser owner;
@@ -13,17 +13,18 @@ public class ESEGroup {
 		this.groupID = groupID;
 		this.groupName = groupName;
 		this.owner = owner;
+		this.owner.addGroup(this);
 	}
-	
-	public int getGroupID(){
+
+	public int getGroupID() {
 		return this.groupID;
 	}
 
-	public String getGroupName(){
+	public String getGroupName() {
 		return this.groupName;
 	}
-	
-	public ESEUser getOwner(){
+
+	public ESEUser getOwner() {
 		return this.owner;
 	}
 
