@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class ESEEvent {
 	
+	private static int idCounter = 0;
+	
 	private int eventID;
 	private String eventName;
 	private ESECalendar correspondingCalendar;
@@ -12,9 +14,9 @@ public class ESEEvent {
 	private boolean isPublic;
 	
 
-	public ESEEvent(int eventID, String eventName, ESECalendar correspondingCalendar,
+	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
 			Date startDate, Date endDate, boolean isPublic) {
-		this.eventID = eventID;
+		this.eventID = idCounter++;
 		this.eventName = eventName;
 		this.correspondingCalendar = correspondingCalendar;
 		this.startDate = startDate;
