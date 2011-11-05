@@ -17,7 +17,7 @@ public class ESECalendar {
 		assert(owner != null);
 		
 		this.calendarID = idCounter++;
-		eventList = new ArrayList<ESEEvent>();
+		this.eventList = new ArrayList<ESEEvent>();
 		this.calendarName = calendarName;
 		this.owner = owner;
 	}
@@ -39,7 +39,7 @@ public class ESECalendar {
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 			ESEConversionHelper.convertStringToDate(startDate), 
-			ESEConversionHelper.convertStringToDate(endDate), isPublic));		
+			ESEConversionHelper.convertStringToDate(endDate), isPublic);		
 		for (ESEEvent existingEvent : this.eventList)
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
@@ -47,7 +47,7 @@ public class ESECalendar {
 				throw new IllegalArgumentException("New event overlaps with existing event");
 			}
 		}
-		eventList.add(newEvent);		
+		this.eventList.add(newEvent);		
 	}
 	
 	public void removeEvent(int eventID){
@@ -57,14 +57,22 @@ public class ESECalendar {
 		 */
 		// TODO: Inform DB
 	}
-	
+
+	public void removeEvent(ESEEvent event){
+		//TODO
+		/*
+		 * Maybe with id?
+		 */
+		//TODO: Inform DB
+	}
+
 	public ArrayList<ESEEvent> getAllEvents() {
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
 
 	public ArrayList<ESEEvent> getAllPublicEvents() {
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
-		for (ESEEvent event : eventList){
+		for (ESEEvent event : this.eventList){
 			if (event.isPublic() == true)
 				publicEventsList.add(event);
 		}
@@ -124,13 +132,5 @@ public class ESECalendar {
 		long newEndTime = newEvent.getEndDate().getTime();
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
-	}
-
-	public void removeEvent(ESEEvent event){
-		//TODO
-		/*
-		 * Maybe with id?
-		 */
-		//TODO: Inform DB
 	}
 }

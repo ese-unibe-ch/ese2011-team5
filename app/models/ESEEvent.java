@@ -18,7 +18,7 @@ public class ESEEvent {
 
 		// This would prevent creation of events with zero duration
 		//assert(startDate.before(endDate));
-		assert(!endDate.after(startDate));
+		assert(!startDate.after(endDate));
 		checkDateValidity(startDate, endDate);
 		assert (correspondingCalendar != null);
 		assert (eventName != "");
