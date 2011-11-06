@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class ESEEvent {
+public class ESEEvent implements Comparable<ESEEvent>{
 
 	private static int idCounter = 0;
 
@@ -92,5 +92,15 @@ public class ESEEvent {
 	public void setVisibility(boolean publiclyViewable)
 	{
 		this.isPublic = publiclyViewable;
+	}
+	
+	@Override
+	public int compareTo(ESEEvent compareEvent) {
+		if (this.getStartDate().getTime() > compareEvent.getStartDate().getTime())
+			return 1;
+		if (this.getStartDate().getTime() == compareEvent.getStartDate().getTime())
+			return 0;
+		else
+			return -1;
 	}
 }
