@@ -52,18 +52,11 @@ public class ESECalendar {
 	
 	public void removeEvent(int eventID){
 		//TODO
-		/*
-		 * Maybe with id?
-		 */
-		// TODO: Inform DB
 	}
 
 	public void removeEvent(ESEEvent event){
 		//TODO
-		/*
-		 * Maybe with id?
-		 */
-		//TODO: Inform DB
+		//maybe just one method with id?
 	}
 
 	public ArrayList<ESEEvent> getAllEvents() {
