@@ -87,10 +87,7 @@ public class ESEUser {
 	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID){
-				if (currentUserIsOwner)
-					return calendar.getAllEvents();
-				else
-					return calendar.getAllPublicEvents();
+				calendar.getAllAllowedEvents();
 			}
 		}
 		throw new IllegalArgumentException("No calendar with this ID");

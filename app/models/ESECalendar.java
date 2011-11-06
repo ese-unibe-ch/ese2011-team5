@@ -1,7 +1,9 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ESECalendar {
 
@@ -44,7 +46,7 @@ public class ESECalendar {
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
 			{
-				throw new IllegalArgumentException("New event overlaps with existing event");
+				//throw new IllegalArgumentException("New event overlaps with existing event");
 			}
 		}
 		this.eventList.add(newEvent);		
@@ -54,15 +56,13 @@ public class ESECalendar {
 		//TODO
 	}
 
-	public void removeEvent(ESEEvent event){
-		//TODO
-		//maybe just one method with id?
+	public ArrayList<ESEEvent> getAllAllowedEvents(){
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
+			return this.eventList;
+		else
+			return this.getAllPublicEvents();
 	}
-
-	public ArrayList<ESEEvent> getAllEvents() {
-		return new ArrayList<ESEEvent>(this.eventList);
-	}
-
+	
 	public ArrayList<ESEEvent> getAllPublicEvents() {
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
 		for (ESEEvent event : this.eventList){
@@ -72,12 +72,52 @@ public class ESECalendar {
 		return publicEventsList;
 	}
 	
-	public ArrayList<ESEEvent> getAllAllowedEvents(){
+	public ArrayList<ESEEvent> getAllEvents(){
+		return this.eventList;
+	}
+	
+	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
-			return this.getAllEvents();
+			return this.getAllEventsOfDay(date);
 		else
-			return this.getAllPublicEvents();
-	}	
+			return this.getAllPublicEventsOfDay(date);
+	} 
+
+	public ArrayList<ESEEvent> getAllEventsOfDay(String date) {
+		Date convertedDate = ESEConversionHelper.convertStringToDate(date);
+		Calendar dayAsCal = new GregorianCalendar();
+		
+		dayAsCal.setTime(convertedDate);
+		Calendar startCal = new GregorianCalendar();
+		Calendar endCal = new GregorianCalendar();
+		ArrayList<ESEEvent> eventsOfDay = new ArrayList<ESEEvent>();
+		for (ESEEvent event : eventList){
+			startCal.setTime(event.getStartDate());
+			endCal.setTime(event.getEndDate());
+			if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) && 
+					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR))
+				eventsOfDay.add(event);
+			else if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == endCal.get(startCal.DAY_OF_YEAR) && 
+					dayAsCal.get(dayAsCal.YEAR) == endCal.get(startCal.YEAR))
+				eventsOfDay.add(event);
+			else if ((dayAsCal.get(dayAsCal.DAY_OF_YEAR) > startCal.get(startCal.DAY_OF_YEAR) && 
+					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR)) &&
+					(dayAsCal.get(dayAsCal.DAY_OF_YEAR) < endCal.get(startCal.DAY_OF_YEAR) && 
+							dayAsCal.get(dayAsCal.YEAR) == endCal.get(startCal.YEAR)))
+				eventsOfDay.add(event);
+		}
+		return eventsOfDay;
+	}
+	
+	public ArrayList<ESEEvent> getAllPublicEventsOfDay(String date) {
+		ArrayList<ESEEvent> listOfPublicEvents = new ArrayList<ESEEvent>();
+		
+		for (ESEEvent event : this.getAllEventsOfDay(date)){
+			if (event.isPublic())
+				listOfPublicEvents.add(event);
+		}
+		return listOfPublicEvents;
+	}
 
 	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
 	{
@@ -126,4 +166,7 @@ public class ESECalendar {
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
 	}
+	
+	
+	
 }
