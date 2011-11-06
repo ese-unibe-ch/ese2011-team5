@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/register.css'}" />
+		<h1>Register new user</h1>
+	</head>
+	<hr>
+	<body>
+		<table id="registertable" border="1">
+			<tr>
+				<div id="register">
+					#{if flash.error}
+						<p style="color:#c00;text-align:center">
+							${flash.error}
+						</p>
+					#{/if}
+					#{form @Register.createNewUser()}
+						<tr>
+							<td>
+								<p id="username-field">
+									<label for="username">New &{'secure.username'}</label>
+								<input type="text" name="username" id="username" value="${flash.username}" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="password-field">
+									<label for="password">New &{'secure.password'}</label>
+								<input type="password" name="password" id="password" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="confirmpassword-field">
+									<label for="confirmpassword">Confirm new &{'secure.password'}</label>
+								<input type="password" name="confirmpassword" id="confirmpassword" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td>
+								<p id="register-field">
+									<input type="submit" id="register" value="&{'Register'}" />
+								</p>
+							</td>
+						</tr>
+					#{/form}
+				</div>
+			</tr>
+		</table>
+	</body>
+</html>

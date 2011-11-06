@@ -79,13 +79,13 @@ public class ESEEvent implements Comparable<ESEEvent>{
 
 	public void setStartDate(Date startDate)
 	{
-		checkDateValidity(startDate, endDate);
+		checkDateValidity(startDate, this.endDate);
 		this.startDate = startDate;
 	}
 
 	public void setEndDate(Date endDate)
 	{
-		checkDateValidity(startDate, endDate);
+		checkDateValidity(this.startDate, endDate);
 		this.endDate = endDate;
 	}
 

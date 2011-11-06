@@ -1,0 +1,42 @@
+html, body
+{
+  background-color: #FFFFFF;
+}
+
+h1
+{
+  text-align: center;
+}
+
+#login .error, #login .success 
+{
+  text-align: center;
+  font-weight: bold;
+}
+
+#login .error
+{
+  color: #FF0000;
+}
+
+#login .success
+{
+  color: #00FF00;
+}
+
+#logintable
+{
+  margin: 50px auto;
+  width: 300px;
+  text-align: center;
+}
+
+#username-field
+{
+  font-weight: bold;
+}
+
+#password-field
+{
+  font-weight: bold;
+}

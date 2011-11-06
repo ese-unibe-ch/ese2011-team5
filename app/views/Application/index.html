@@ -1,4 +1,24 @@
-#{extends 'main.html' /}
-#{set title:'Home' /}
-
-#{welcome /}
+<!DOCTYPE html>
+<html>
+	<body>
+	    <header>
+	        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/index.css'}" />
+    		<h1>Calendar application: Home of user <username>${username}</username> logged in</h1>
+	    </header>
+		<hr>
+		<nav>
+			<div id="logout">
+				<a href="@{Secure.logout()}">
+					Logout
+				</a>
+			</div>
+		</nav>
+	    <article>
+	    	<section>
+	    		<aside id="calendar">
+					Calendar
+	    		</aside>
+	    	</section>
+		</aricle>
+	</body>
+</html>

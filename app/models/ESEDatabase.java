@@ -37,20 +37,20 @@ public class ESEDatabase {
 	 * Methods that return Users
 	 */
 	
-	public static ESEUser getUserByName(String userName) {
+	public static ESEUser getUserByName(String userName) throws IllegalArgumentException {
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
 				return user;
 		}
-		return null;
+		throw new IllegalArgumentException("No such user exists");
 	}
 	
-	public static ESEUser getUserByID(int userID) {
+	public static ESEUser getUserByID(int userID) throws IllegalArgumentException {
 		for (ESEUser user : userList){
 			if (user.getUserID() == userID)
 				return user;
 		}
-		return null;
+		throw new IllegalArgumentException("No user with this ID");
 	}
 	
 	public static ArrayList<ESEUser> getOtherUsers(String userName){
@@ -114,7 +114,7 @@ public class ESEDatabase {
 	 */
 	
 	public static ArrayList<ESEUser> getAllUsers(){
-		return userList;
+		return new ArrayList<ESEUser>(userList);
 	}
 	
 	/*public static ArrayList<ESECalendar> getAllCalendars(){

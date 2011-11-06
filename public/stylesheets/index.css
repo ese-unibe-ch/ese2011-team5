@@ -1,0 +1,20 @@
+html, body
+{
+  background-color: #FFFFFF;
+}
+
+username
+{
+  color: red;
+  font-size: 48px;
+}
+
+div#logout
+{
+  float: right;
+}
+
+aside#calendar
+{
+  float: left;
+}
