@@ -51,13 +51,33 @@ public class ESECalendar {
 		}
 		this.eventList.add(newEvent);		
 	}
+	/*
+	 * Mir geht es einfach die Bootstrapt daten so einzugeben. Falls die methode
+	 * unerwünscht ist, bitte wieder löschen und Bootstrapt Events anpassen:
+	 * statt Date String übergeben.
+	 * 
+	 * by Judith
+	 */
+	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
+			Date startDate, Date endDate, boolean isPublic)
+	{
+		ESEEvent newEvent = new ESEEvent(eventName, this, startDate, endDate, isPublic);		
+		for (ESEEvent existingEvent : this.eventList)
+		{
+			if (checkEventOverlaps(existingEvent, newEvent))
+			{
+				//throw new IllegalArgumentException("New event overlaps with existing event");
+			}
+		}
+		this.eventList.add(newEvent);		
+	}	
 	
 	public void removeEvent(int eventID){
 		//TODO
 	}
 
 	public ArrayList<ESEEvent> getAllAllowedEvents(){
-		if (ESEDatabase.getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
 			return this.eventList;
 		else
 			return this.getAllPublicEvents();
@@ -77,7 +97,7 @@ public class ESECalendar {
 	}
 	
 	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
-		if (ESEDatabase.getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
 			return this.getAllEventsOfDay(date);
 		else
 			return this.getAllPublicEventsOfDay(date);

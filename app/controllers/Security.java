@@ -4,11 +4,12 @@ import models.*;
 
 public class Security extends Secure.Security
 {
+	private static ESEDatabase database = ESEDatabase.getInstance();
 	public static boolean authenticate(String username, String password)
 	{
 		try
 		{
-			ESEUser loginUser = ESEDatabase.getUserByName(username);
+			ESEUser loginUser = database.getUserByName(username);
 			return loginUser.getPassword().equals(password);
 		}
 		catch (IllegalArgumentException e)
@@ -19,8 +20,8 @@ public class Security extends Secure.Security
 
 	static void onAuthenticated()
 	{
-		ESEUser loggedInUser = ESEDatabase.getUserByName(Security.connected());
-		ESEDatabase.setCurrentUser(loggedInUser);
+		ESEUser loggedInUser = database.getUserByName(Security.connected());
+		database.setCurrentUser(loggedInUser);
 	}
 
 	static void onDisconnect()

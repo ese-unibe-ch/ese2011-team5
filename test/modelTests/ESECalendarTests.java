@@ -125,7 +125,7 @@ public class ESECalendarTests extends UnitTest {
 		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
 		
-		ESEDatabase.setCurrentUser(ownerDummy);
+		ESEDatabase.getInstance().setCurrentUser(ownerDummy);
 		
 		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("14.04.2011 13:50").size());
@@ -133,7 +133,7 @@ public class ESECalendarTests extends UnitTest {
 		assertEquals(2, this.cal1.getAllAllowedEventsOfDay("18.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("19.04.2011 13:50").size());
 		
-		ESEDatabase.setCurrentUser(ownerDummy2);
+		ESEDatabase.getInstance().setCurrentUser(ownerDummy2);
 		
 		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("14.04.2011 13:50").size());

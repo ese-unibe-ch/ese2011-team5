@@ -6,7 +6,8 @@ import models.*;
 
 public class Register extends Controller
 {
-
+	private static ESEDatabase database = ESEDatabase.getInstance();
+	
     public static void index()
     {
     	render();
@@ -27,7 +28,7 @@ public class Register extends Controller
             index();
         }
 
-    	ESEDatabase.createUser(username, password, "", "");
+    	database.createUser(username, password, "", "");
     	Secure.authenticate(username, password, false);
     	Application.index();
     }
