@@ -29,6 +29,6 @@ public class Register extends Controller
 
     	ESEDatabase.createUser(username, password, "", "");
     	Secure.authenticate(username, password, false);
-    	Application.index();
+    	Application.showCalendars();
     }
 }

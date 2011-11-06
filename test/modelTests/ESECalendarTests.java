@@ -61,14 +61,14 @@ public class ESECalendarTests extends UnitTest {
 
 	@Test
 	public void shouldAddEvent() {
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
 		assertEquals(1, this.cal1.getAllEvents().size());
 		assertEquals(1, this.cal1.getAllPublicEvents().size());
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
 		assertEquals(2, this.cal1.getAllEvents().size());
 		assertEquals(1, this.cal1.getAllPublicEvents().size());
 
-		this.cal2.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal2.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 		assertEquals(1, this.cal2.getAllEvents().size());
 		assertEquals(0, this.cal2.getAllPublicEvents().size());
 		assertEquals(2, this.cal1.getAllEvents().size());
@@ -77,9 +77,9 @@ public class ESECalendarTests extends UnitTest {
 
 	@Test
 	public void shouldGetAllEvents() {
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 
 		assertEquals(1, this.cal1.getAllPublicEvents().size());
 		assertEquals(3, this.cal1.getAllEvents().size());
@@ -91,10 +91,10 @@ public class ESECalendarTests extends UnitTest {
 	
 	@Test
 	public void shouldGetAllEventsOfDay(){
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		
 		assertEquals(1, this.cal1.getAllEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllEventsOfDay("14.04.2011 13:50").size());
@@ -105,10 +105,10 @@ public class ESECalendarTests extends UnitTest {
 	
 	@Test
 	public void shouldGetAllPublicEventsOfDay(){
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("14.04.2011 13:50").size());
@@ -120,10 +120,10 @@ public class ESECalendarTests extends UnitTest {
 	@Test
 	public void shouldGetAllAllowedEventsOfDay(){
 		
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		
 		ESEDatabase.setCurrentUser(ownerDummy);
 		
@@ -145,9 +145,9 @@ public class ESECalendarTests extends UnitTest {
 
 	@Test
 	public void shouldGetAllPublicEvents() {
-		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 
 		assertEquals(1, this.cal1.getAllPublicEvents().size());
 		assertEquals(3, this.cal1.getAllEvents().size());

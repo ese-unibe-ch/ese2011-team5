@@ -36,8 +36,8 @@ public class ESECalendar {
 		return this.owner;
 	}
 
-	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			String startDate, String endDate, boolean isPublic)
+	public void addEvent(String eventName, 	String startDate, 
+			String endDate, boolean isPublic)
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 			ESEConversionHelper.convertStringToDate(startDate), 

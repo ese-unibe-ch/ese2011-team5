@@ -9,7 +9,7 @@ public class ESEGroup {
 	private int groupID;
 	private String groupName;
 	private ESEUser owner;
-	private ArrayList<ESEUser> userList;
+	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
 	public ESEGroup(String groupName, ESEUser owner) {
 		
@@ -29,8 +29,13 @@ public class ESEGroup {
 	public ESEUser getOwner() {
 		return this.owner;
 	}
+	
+	public ArrayList<ESEUser> getUserList() {
+		return this.userList;
+	}
 
 	public void addUserToGroup(ESEUser user) {
-		this.userList.add(user);
+		if (!this.userList.contains(user))
+			this.userList.add(user);
 	}
 }

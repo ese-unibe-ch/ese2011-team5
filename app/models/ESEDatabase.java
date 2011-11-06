@@ -7,7 +7,7 @@ public class ESEDatabase {
 
 	private static ESEUser currentUser;
 	
-	private static ArrayList<ESEUser> userList;
+	private static ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 	//private static ArrayList<ESECalendar> calendarList;
 	//private static ArrayList<ESEGroup> groupList;
 	//private static ArrayList<ESEEvent> eventList;
@@ -16,8 +16,12 @@ public class ESEDatabase {
 	 * Current user methods:
 	 */
 	
-	static public void setCurrentUser(ESEUser loggedInUser){
-		currentUser = loggedInUser;
+	static public void setCurrentUser(String loggedIn){
+		currentUser = getUserByName(loggedIn);
+	}
+	
+	static public void setCurrentUser(ESEUser loggedIn){
+		currentUser = loggedIn;
 	}
 	
 	static public ESEUser getCurrentUser(){
@@ -30,7 +34,9 @@ public class ESEDatabase {
 	
 	public static void createUser(String username, String password, String firstName,
 			String familyName){
-		userList.add(new ESEUser(username, password, firstName, familyName));		
+		ESEUser userToAdd = new ESEUser(username, password, firstName, familyName);
+		System.out.println(userToAdd.getName());
+		userList.add(userToAdd);		
 	}
 	
 	/*
@@ -56,14 +62,20 @@ public class ESEDatabase {
 	public static ArrayList<ESEUser> getOtherUsers(String userName){
 		ArrayList<ESEUser> userListToReturn = (ArrayList<ESEUser>) userList.clone();
 
-		int i = 0;
+		/*int i = 0;
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
 				break;
 			else
 				i=1;
 		}
-		userListToReturn.remove(i);
+		userListToReturn.remove(i);*/
+		
+		for (ESEUser user : userList){
+			if (user.getName().equals(userName) || user.getName().equals("guest"))
+				userListToReturn.remove(user);
+		}
+		
 		return userListToReturn;
 	}
 	

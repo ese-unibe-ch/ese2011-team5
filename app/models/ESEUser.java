@@ -67,7 +67,23 @@ public class ESEUser {
 	public void addGroup(String groupName) {
 		this.groupList.add(new ESEGroup(groupName, this));
 	}
-
+	
+	public ESECalendar getCalendarByID(int id){
+		for (ESECalendar calendar : calendarList){
+			if (calendar.getID() == id)
+				return calendar;
+		}
+		throw new IllegalArgumentException("No calendar with this ID "+ id);
+	}
+	
+	public ESEGroup getGroupByID(int id){
+		for (ESEGroup group : groupList){
+			if (group.getGroupID() == id)
+				return group;
+		}
+		throw new IllegalArgumentException("No calendar with this ID "+ id);
+	}
+	
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)
@@ -78,10 +94,12 @@ public class ESEUser {
 	
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
+			System.out.println("SKALDJFLAJSFDLASJDFKAFD " +calendar.getID());
 			if (calendar.getID() == calendarID)
 				return calendar.getAllPublicEvents();
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		
+		throw new IllegalArgumentException("No Event with this ID");
 	}
 	
 	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) throws IllegalArgumentException {
@@ -90,7 +108,7 @@ public class ESEUser {
 				calendar.getAllAllowedEvents();
 			}
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		throw new IllegalArgumentException("No Group with this ID");
 	}
 
 	/*
