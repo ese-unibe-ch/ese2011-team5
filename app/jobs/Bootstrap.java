@@ -40,23 +40,23 @@ public class Bootstrap extends Job{
 			ESECalendar calJackPrivate = new ESECalendar("private", jack);
 			jack.addCalendar(calJackWork);
 			jack.addCalendar(calJackPrivate);
-			/*
+			
 			start.set(2011, 11, 6, 18, 0);
-			start.set(2011, 11, 6, 20, 0);
+			end.set(2011, 11, 6, 20, 0);
 			calJackWork.addEvent("Event1", calJackWork, start.getTime(), end.getTime(), true);
 			
 			start.set(2011, 10, 22, 12, 0);
-			start.set(2011, 10, 22, 20, 0);
+			end.set(2011, 10, 22, 20, 0);
 			calJackWork.addEvent("Event2", calJackWork, start.getTime(), end.getTime(), false);
 			
 			start.set(2012, 1, 10, 12, 0);
-			start.set(2012, 1, 12, 20, 0);
+			end.set(2012, 1, 12, 20, 0);
 			calJackWork.addEvent("Event3", calJackWork, start.getTime(), end.getTime(), true);
 			
 			ESEGroup jackTeam = new ESEGroup("team", jack);
 			jack.addGroup(jackTeam);
 			jackTeam.addUserToGroup(luke);
-			*/
+			
 		}
 		
 	}
