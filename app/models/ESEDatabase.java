@@ -67,6 +67,18 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
+	public static void setUserList(ArrayList<ESEUser> arrayList) throws IllegalAccessException
+	{
+		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
+		if(!stack[2].getClassName().equals("jobs.Bootstrap")
+				|| !stack[2].getFileName().equals("Bootstrap.java")
+				|| !stack[2].getMethodName().equals("doJob"))
+		{
+			throw new IllegalAccessException("Nefarious attempt to overwrite database!");
+		}
+		userList = new ArrayList<ESEUser>();
+	}
+	
 	/*
 	 * Methods to add or remove ESEUsers, ESECalendars, ESEEvents, ESEGroups
 	 */
