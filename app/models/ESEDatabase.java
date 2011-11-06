@@ -5,22 +5,34 @@ import java.util.Date;
 
 public class ESEDatabase {
 
-	private static ESEUser currentUser;
 	
+	private static ESEDatabase database;
+	private static ESEUser currentUser;
 	private static ArrayList<ESEUser> userList;
 	//private static ArrayList<ESECalendar> calendarList;
 	//private static ArrayList<ESEGroup> groupList;
 	//private static ArrayList<ESEEvent> eventList;
+
+	private ESEDatabase(){
+		userList = new ArrayList<ESEUser>();
+	}
+	
+	public static ESEDatabase getInstance(){
+		if(database == null){
+			database = new ESEDatabase();
+		}
+		return database;
+	}
 	
 	/* 
 	 * Current user methods:
 	 */
 	
-	static public void setCurrentUser(ESEUser loggedInUser){
+	public void setCurrentUser(ESEUser loggedInUser){
 		currentUser = loggedInUser;
 	}
 	
-	static public ESEUser getCurrentUser(){
+	public ESEUser getCurrentUser(){
 		return currentUser;
 	}
 	
@@ -28,7 +40,7 @@ public class ESEDatabase {
 	 * Methods to create ESEUsers
 	 */
 	
-	public static void createUser(String username, String password, String firstName,
+	public void createUser(String username, String password, String firstName,
 			String familyName){
 		userList.add(new ESEUser(username, password, firstName, familyName));		
 	}
@@ -37,7 +49,7 @@ public class ESEDatabase {
 	 * Methods that return Users
 	 */
 	
-	public static ESEUser getUserByName(String userName) {
+	public ESEUser getUserByName(String userName) {
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
 				return user;
@@ -45,7 +57,7 @@ public class ESEDatabase {
 		return null;
 	}
 	
-	public static ESEUser getUserByID(int userID) {
+	public ESEUser getUserByID(int userID) {
 		for (ESEUser user : userList){
 			if (user.getUserID() == userID)
 				return user;
@@ -53,7 +65,7 @@ public class ESEDatabase {
 		return null;
 	}
 	
-	public static ArrayList<ESEUser> getOtherUsers(String userName){
+	public ArrayList<ESEUser> getOtherUsers(String userName){
 		ArrayList<ESEUser> userListToReturn = (ArrayList<ESEUser>) userList.clone();
 
 		int i = 0;
@@ -67,7 +79,7 @@ public class ESEDatabase {
 		return userListToReturn;
 	}
 	
-	public static void setUserList(ArrayList<ESEUser> arrayList) throws IllegalAccessException
+	public void setUserList(ArrayList<ESEUser> arrayList) throws IllegalAccessException
 	{
 		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 		if(!stack[2].getClassName().equals("jobs.Bootstrap")
@@ -95,7 +107,7 @@ public class ESEDatabase {
 		groupList.add(group);
 	}*/
 	
-	public static void removeUserByName(String username){
+	public void removeUserByName(String username){
 		for (ESEUser user : userList){
 			if (user.getName().equals(username))
 				userList.remove(user);
@@ -113,8 +125,12 @@ public class ESEDatabase {
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
 	 */
 	
-	public static ArrayList<ESEUser> getAllUsers(){
+	public ArrayList<ESEUser> getAllUsers(){
 		return userList;
+	}
+
+	public boolean isEmpty() {
+		return this.userList.isEmpty();
 	}
 	
 	/*public static ArrayList<ESECalendar> getAllCalendars(){
