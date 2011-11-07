@@ -1,7 +1,7 @@
 <body>
-	<h3>logged in as ${_currentUser.getName()}</h3>
+	<h3>Welcome user ${_currentUser.getName()}!</h3>
 	
-	<h2>Calendars of ${_currentUser.getName()}</h2>
+	You have the following calendars:
 	
 	#{list items:_calendarList, as:'calendar'}
 		<p><a href=@{Application.showEvents(calendar.getID(),_currentUser.getName())}>${calendar.getCalendarName()}</a></p>
