@@ -35,6 +35,20 @@ public class ESECalendar {
 	public ESEUser getOwner(){
 		return this.owner;
 	}
+	
+	public ESEEvent getEventById(int id)
+	{
+		for(ESEEvent e: this.eventList)
+		{
+			if(e.getEventID()==id)
+			{
+				return e;
+			}
+		}
+		
+		return null;
+	}
+	
 
 	public void addEvent(String eventName, 	String startDate, 
 			String endDate, boolean isPublic)

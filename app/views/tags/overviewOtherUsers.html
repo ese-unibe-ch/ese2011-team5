@@ -3,15 +3,15 @@
 		<h3>Groups:</h3>
 		#{if !_groups.isEmpty()}
 			#{list items:_groups, as:'group'}
-			<p><a href=@{Application.showUsersInGroup(group.getGroupID())}>${group.getGroupName()}</a></p>
+				<p><a href=@{Application.showUsersInGroup(group.getGroupID())}>${group.getGroupName()}</a></p>
 			#{/list}
 		#{/if}
 		#{else}
 			You have no groups
 		#{/else}
+		<hr>
 	#{/if}
 	
-	<hr>
 	
 	<h3>Other Users:</h3>
 	

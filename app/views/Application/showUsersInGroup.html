@@ -19,8 +19,8 @@
 			You have the following Users in your group ${group.getGroupName()}
 			</br>
 			#{list items:userList, as:'user'}
-			<p><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a></p>
-			<p><a href=@{Application.removeUserFromGroup(user.getName())}>Remove</a></p>
+			<p><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
+			<a href=@{Application.removeUserFromGroup(user.getName())}>Remove</a></p>
 			#{/list}
 
 			Add user:

@@ -11,8 +11,8 @@ public class ESEGroup {
 	private ESEUser owner;
 	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
-	public ESEGroup(String groupName, ESEUser owner) {
-
+	public ESEGroup(String groupName, ESEUser owner) 
+	{
 		this.groupID = idCounter++;
 		this.groupName = groupName;
 		this.owner = owner;

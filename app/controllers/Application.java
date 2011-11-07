@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 import models.ESECalendar;
+import models.ESEConversionHelper;
 import models.ESEDatabase;
 import models.ESEEvent;
 import models.ESEGroup;
@@ -73,6 +74,28 @@ public class Application extends Controller {
 				calendarID);
 		calendar.addEvent(eventName, eventStart, eventEnd, isPublic);
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
+	}
+	
+	public static void doEditEvent(int calendarID, int eventID, String eventName,
+			String eventStart, String eventEnd, boolean isPublic)
+	{
+		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+		ESEEvent event=calendar.getEventById(eventID);
+		
+		event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
+		event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
+		event.setEventName(eventName);
+		event.setVisibility(isPublic);
+		
+	}
+	
+	public static void editEvent(int calendarID, int eventID)
+	{
+		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+		ESEEvent event = calendar.getEventById(eventID);
+//		System.out.println("EDIT");
+//		System.out.println("EDIT EVENT : " + e.getEventName());
+		render(event,calendar);//, calendar);
 	}
 
 	public static void showUsersInGroup(int groupID) {

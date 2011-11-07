@@ -21,38 +21,18 @@
 	<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
 	
 	#{list items:eventList, as:'event'}
+	
 		<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" </p>
+		<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
 	#{/list}
 	
 	#{if currentUser.equals(otherUser)}
 	
 		add event:
 		
-		#{form @Application.addEvent()}
-		    <p>
-		        <label for="eventName">Name of the Event: </label>
-		        <input type="text" name="eventName" id="eventName" />
-		    </p>
-		    <p>
-		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventStart" id="eventStart" />
-		    </p>
-		    <p>
-		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventEnd" id="eventEnd" />
-		    </p>
-		    <p>
-		    	<input type="hidden" name="calendarID" id="calendarID" value="${calendar.getID()}" />
-		    </p>
-		    <p>
-		    	<label for="isPrivate">Public Event</label>
-		    	<input type="checkbox" name="isPublic" id="isPublic" />
-		    </p>
-		    <p>
-		        <input type="submit" value="Submit your Event" />
-		    </p>
+		#{modEvent editMode:false , calendar:calendar /}
 		
-		#{/form}
+		
 	#{/if}
 		</section>
 	</article>
