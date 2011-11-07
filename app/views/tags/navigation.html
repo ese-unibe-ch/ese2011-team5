@@ -1,0 +1,14 @@
+<body>
+	<hr>
+	<p><a href="javascript:history.back()">Back</a></p>
+	
+	#{if !_currentUser.getName().equals("guest")}
+		Your are logged in as ${_currentUser.getName()}
+		</br>
+		<a href=@{Security.logout()}>logout</a>
+	#{/if}
+	<a href=@{Application.showCalendars()}>Home</a>
+	
+
+	<hr>
+</body>

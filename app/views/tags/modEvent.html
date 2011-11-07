@@ -1,0 +1,57 @@
+	
+	#{if _editMode}
+	
+		#{form @Application.doEditEvent()}
+		    <p>
+		        <label for="eventName">Name of the Event: </label>
+		        <input type="text" name="eventName" id="eventName" value=${_event.getEventName()} />
+		    </p>
+		    <p>
+		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventStart" id="eventStart" value=${_event.getStartDate()} />
+		    </p>
+		    <p>
+		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventEnd" id="eventEnd" value=${_event.getEndDate()} />
+		    </p>
+		    <p>
+		    	<input type="hidden" name="calendarID" id="calendarID" value=${_calendar.getID()} />
+		    </p>
+		    <p>
+		    	<label for="isPrivate">Public Event</label>
+		    	<input type="checkbox" name="isPublic" id="isPublic" />
+		    </p>
+		    <p>
+		        <input type="submit" value="Submit your Event" />
+		    </p>
+		
+		#{/form}
+	#{/if}
+	#{else}
+			#{form @Application.addEvent()}
+		    <p>
+		        <label for="eventName">Name of the Event: </label>
+		        <input type="text" name="eventName" id="eventName" />
+		    </p>
+		    <p>
+		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventStart" id="eventStart" />
+		    </p>
+		    <p>
+		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventEnd" id="eventEnd" />
+		    </p>
+		    <p>
+		    	<input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
+		    </p>
+		    <p>
+		    	<label for="isPrivate">Public Event</label>
+		    	<input type="checkbox" name="isPublic" id="isPublic" />
+		    </p>
+		    <p>
+		        <input type="submit" value="Submit your Event" />
+		    </p>
+		
+		#{/form}
+	#{/else}
+	

@@ -11,8 +11,14 @@ public class ESEGroup {
 	private ESEUser owner;
 	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
+<<<<<<< HEAD
+	public ESEGroup(String groupName, ESEUser owner) {
+		
+		this.userList = new ArrayList<ESEUser>();
+=======
 	public ESEGroup(String groupName, ESEUser owner) 
 	{
+>>>>>>> test
 		this.groupID = idCounter++;
 		this.groupName = groupName;
 		this.owner = owner;

@@ -35,9 +35,23 @@ public class ESECalendar {
 	public ESEUser getOwner(){
 		return this.owner;
 	}
+	
+	public ESEEvent getEventById(int id)
+	{
+		for(ESEEvent e: this.eventList)
+		{
+			if(e.getEventID()==id)
+			{
+				return e;
+			}
+		}
+		
+		return null;
+	}
+	
 
-	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			String startDate, String endDate, boolean isPublic)
+	public void addEvent(String eventName, 	String startDate, 
+			String endDate, boolean isPublic)
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 			ESEConversionHelper.convertStringToDate(startDate), 
@@ -77,7 +91,7 @@ public class ESECalendar {
 	}
 
 	public ArrayList<ESEEvent> getAllAllowedEvents(){
-		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.eventList;
 		else
 			return this.getAllPublicEvents();
@@ -97,7 +111,7 @@ public class ESECalendar {
 	}
 	
 	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
-		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.getAllEventsOfDay(date);
 		else
 			return this.getAllPublicEventsOfDay(date);
