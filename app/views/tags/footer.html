@@ -1,15 +1,13 @@
 <body>
-	<footer>
-		<hr>
-				NORMAL FOOTER
-				<p><a href="javascript:history.back()">Back</a></p>
+	<hr>
+	<p><a href="javascript:history.back()">Back</a></p>
 	
-				#{if !@{ESEDatabase.getCurrentUser()}.getName().equals("guest")}
-					<a href="/logout">log out</a>
-				#{/if}
-				#{else}
-					<a href="/login">log in</a>
-				#{/else}
-		<hr>
-	</footer>
+	#{if !_currentUser.getName().equals("guest")}
+		<a href="/logout">log out</a>
+	#{/if}
+	#{else}
+		<a href="/login">log in</a>
+	#{/else}
+
+	<hr>
 </body>

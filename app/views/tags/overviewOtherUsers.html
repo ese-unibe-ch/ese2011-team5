@@ -1,0 +1,16 @@
+<body>
+	<h3>Other Users:</h3>
+	
+	#{list items:_otherUsers, as:'otherUser'}
+		<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a></p>
+	#{/list}
+	
+	#{if !_currentUser.getName().equals("guest")}
+	<hr>
+	<h3>Groups:</h3>
+	
+	#{list items:_groups, as:'group'}
+		<p><a href=@{Application.showUsersInGroup(group.getGroupID())}>${group.getGroupName()}</a></p>
+	#{/list}
+	#{/if}
+<body>

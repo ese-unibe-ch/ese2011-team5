@@ -3,7 +3,7 @@
 
 <body>
 	<header>
-		Home
+		<h3>Home</h3>
 	</header>
 	
 	<nav>
@@ -11,8 +11,18 @@
 	</nav>
 	
 	<article>
+		<aside id="overview">
+			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
+		</aside>
+	
 		<section>
-		
+			#{if currentUser.getName().equals("guest")}
+				#{welcomeUnknown /}
+			#{/if}
+			#{else}
+				Current user is: ${currentUser.getName()}
+				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
+			#{/else}
 		</section>
 	</article>
 	
@@ -20,54 +30,7 @@
 	
 	</footer>
 
-	#{if currentUser.getName().equals("guest")}
-	<h3>not logged in</h3> 
-	#{/if}
-	#{else}
-	<h3>logged in as ${currentUser.getName()}</h3>
 	
 	
-	<h2>Calendars of ${currentUser.getName()}</h2>
-	
-	#{list items:calendarList, as:'calendar'}
-		<p><a href=@{Application.showEvents(calendar.getID(),currentUser.getName())}>${calendar.getCalendarName()}</a></p>
-	#{/list}
-	
-	add calendar:
-	
-	#{form @Application.addCalendar()}
-	    <p>
-	        <label for="calendarName">Name of the Calendar: </label>
-	        <input type="text" name="calendarName" id="calendarName" />
-	    </p>
-	    <p>
-	        <input type="submit" value="Submit your Calendar" />
-	    </p>
-	
-	#{/form}
-	#{/else}
-	
-	<h3>Other Users:</h3>
-	
-	#{list items:otherUsers, as:'otherUser'}
-		<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a></p>
-	#{/list}
-	#{if !currentUser.getName().equals("guest")}
-	<h3>Groups:</h3>
-	
-	#{list items:groups, as:'group'}
-		<p><a href=@{Application.showUsersInGroup(group.getGroupID())}>${group.getGroupName()}</a></p>
-	#{/list}
-	#{/if}
-	
-	<p><a href="javascript:history.back()">Back</a></p>
-	
-	#{if !currentUser.getName().equals("guest")}
-		<a href="/logout">log out</a>
-	#{/if}
-	#{else}
-		<a href="/login">log in</a>
-	#{/else}
-	
-	#{ footer/}
+	#{ footer currentUser: currentUser /}
 </body>
