@@ -16,8 +16,9 @@
 		</aside>
 	
 		<section>
+			
 			#{if currentUser.getName().equals("guest")}
-				#{welcomeUnknown /}
+				#{welcomeUnknown valid:valid /}
 			#{/if}
 			#{else}
 				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}

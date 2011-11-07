@@ -6,6 +6,7 @@ import java.util.List;
 import models.ESEDatabase;
 import models.ESEUser;
 import play.Play;
+import play.data.validation.Required;
 import play.utils.Java;
 
 public class Security extends Secure.Security {
@@ -21,16 +22,18 @@ public class Security extends Secure.Security {
 		ESEDatabase.setCurrentUser(loggedInUser);
 	}
 
-	static boolean authenticate(String username, String password) {
-
+	public static void ownAuthenticate(@Required String username,
+			String password) {
+		boolean valid = false;
 		for (ESEUser user : ESEDatabase.getAllUsers()) {
 			if (user.getName().equals(username)
 					&& user.getPassword().equals(password)) {
 				ESEDatabase.setCurrentUser(user.getName());
-				return true;
+				valid = true;
+				Application.showCalendars();
 			}
 		}
-		return false;
+		Application.setValid(valid);
 	}
 
 	static void onDisconnect() {

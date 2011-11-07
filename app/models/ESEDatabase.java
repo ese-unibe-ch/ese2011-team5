@@ -25,15 +25,6 @@ public class ESEDatabase {
 	}
 
 	static public ESEUser getCurrentUser() {
-		// String userNameCurrentUser = Security.connected();
-		// if (userNameCurrentUser == null) {
-		// System.out.println("LOGIN AS GUEST");
-		// setCurrentUser("guest");
-		//
-		// } else {
-		// System.out.println("LOGIN AS : " + currentUser.getName());
-		// }
-
 		return currentUser;
 	}
 
