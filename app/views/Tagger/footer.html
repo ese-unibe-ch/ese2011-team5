@@ -1,0 +1,15 @@
+<body>
+	<footer>
+		<hr>
+				TAGGER FOODER
+				<p><a href="javascript:history.back()">Back</a></p>
+	
+				#{if !currentUser.getName().equals("guest")}
+					<a href="/logout">log out</a>
+				#{/if}
+				#{else}
+					<a href="/login">log in</a>
+				#{/else}
+		<hr>
+	</footer>
+</body>
