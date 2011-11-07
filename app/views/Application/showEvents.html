@@ -1,57 +1,63 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'CalendarApp - Calendar of an other user'/}
 
-#{if currentUser.getName().equals("guest")}
-<h3>not logged in</h3> 
-#{/if}
-#{else}
-<h3>logged in as ${currentUser.getName()}</h3>
-#{/else}
-
-<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
-
-#{list items:eventList, as:'event'}
-	<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" </p>
-#{/list}
-
-#{if currentUser.equals(otherUser)}
-
-	add event:
+<body>
+	<header>
+		<h3>Home</h3>
+	</header>
 	
-	#{form @Application.addEvent()}
-	    <p>
-	        <label for="eventName">Name of the Event: </label>
-	        <input type="text" name="eventName" id="eventName" />
-	    </p>
-	    <p>
-	        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
-	        <input type="text" name="eventStart" id="eventStart" />
-	    </p>
-	    <p>
-	        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
-	        <input type="text" name="eventEnd" id="eventEnd" />
-	    </p>
-	    <p>
-	    	<input type="hidden" name="calendarID" id="calendarID" value="${calendar.getID()}" />
-	    </p>
-	    <p>
-	    	<label for="isPrivate">Public Event</label>
-	    	<input type="checkbox" name="isPublic" id="isPublic" />
-	    </p>
-	    <p>
-	        <input type="submit" value="Submit your Event" />
-	    </p>
+	<nav>
+		#{ navigation currentUser: currentUser /}
+	</nav>
 	
-	#{/form}
-#{/if}
-
-
-<p><a href="/">Home</a>
-<p><a href="javascript:history.back()">Back</a></p>
-
-#{if !currentUser.getName().equals("guest")}
-	<a href="/logout">log out</a>
-#{/if}
-#{else}
-	<a href="/login">log in</a>
-#{/else}
+	<article>
+		<aside id="overview">
+			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
+		</aside>
+	
+		<section>
+			
+			
+	<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
+	
+	#{list items:eventList, as:'event'}
+		<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" </p>
+	#{/list}
+	
+	#{if currentUser.equals(otherUser)}
+	
+		add event:
+		
+		#{form @Application.addEvent()}
+		    <p>
+		        <label for="eventName">Name of the Event: </label>
+		        <input type="text" name="eventName" id="eventName" />
+		    </p>
+		    <p>
+		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventStart" id="eventStart" />
+		    </p>
+		    <p>
+		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventEnd" id="eventEnd" />
+		    </p>
+		    <p>
+		    	<input type="hidden" name="calendarID" id="calendarID" value="${calendar.getID()}" />
+		    </p>
+		    <p>
+		    	<label for="isPrivate">Public Event</label>
+		    	<input type="checkbox" name="isPublic" id="isPublic" />
+		    </p>
+		    <p>
+		        <input type="submit" value="Submit your Event" />
+		    </p>
+		
+		#{/form}
+	#{/if}
+		</section>
+	</article>
+	
+	<footer>
+		#{ footer /}
+	</footer>
+</body>

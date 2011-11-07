@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+#{if currentUser.getName().equals("guest")}
+<h3>not logged in</h3> 
+#{/if}
+#{else}
+<h3>logged in as ${currentUser.getName()}</h3>
+#{/else}
+
+
+#{list items:userList, as:'user'}
+	<p><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a></p>
+#{/list}
+
+Add user:
+
+#{list items:otherUsers, as:'otherUser'}
+	<p><a href=@{Application.addUserToGroup(otherUser.getName(), group.getGroupID())}>${otherUser.getName()}</a></p>
+#{/list}
+
+<p><a href="/">Home</a>
+<p><a href="javascript:history.back()">Back</a></p>
+
+#{if !currentUser.getName().equals("guest")}
+	<a href="/logout">log out</a>
+#{/if}
+#{else}
+	<a href="/login">log in</a>
+#{/else}

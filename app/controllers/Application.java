@@ -40,9 +40,12 @@ public class Application extends Controller {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESECalendar> calendarList = otherUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
+				.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		for (ESECalendar calendar : calendarList)
 			System.out.println(calendar.getID());
-		render(currentUser, otherUser, calendarList);
+		render(currentUser, otherUser, otherUsers, calendarList, groups);
 	}
 
 	public static void addCalendar(String calendarName) {
@@ -52,12 +55,16 @@ public class Application extends Controller {
 	}
 
 	public static void showEvents(int calendarID, String username) {
+
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESEEvent> eventList = new ArrayList<ESEEvent>();
 		eventList = otherUser.getCalendarByID(calendarID).getAllAllowedEvents();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
+				.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = otherUser.getCalendarByID(calendarID);
-		render(calendar, currentUser, otherUser, eventList);
+		render(calendar, currentUser, otherUser, otherUsers, eventList, groups);
 	}
 
 	public static void addEvent(int calendarID, String eventName,
@@ -72,11 +79,12 @@ public class Application extends Controller {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEGroup group = currentUser.getGroupByID(groupID);
 		ArrayList userList = group.getUserList();
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
 				.getName());
 
-		render(currentUser, userList, group, otherUsers);
+		render(currentUser, userList, group, otherUsers, groups);
 	}
 
 	public static void addUserToGroup(String username, int groupID) {
@@ -84,6 +92,14 @@ public class Application extends Controller {
 		ESEUser userToAdd = ESEDatabase.getUserByName(username);
 		ESEGroup group = currentUser.getGroupByID(groupID);
 		group.addUserToGroup(userToAdd);
+		showUsersInGroup(groupID);
+	}
+
+	public static void removeUserFromGroup(String username, int groupID) {
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESEUser userToRemove = ESEDatabase.getUserByName(username);
+		ESEGroup group = currentUser.getGroupByID(groupID);
+		group.removeUserFromGroup(userToRemove);
 		showUsersInGroup(groupID);
 	}
 
