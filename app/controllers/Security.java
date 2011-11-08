@@ -25,6 +25,7 @@ public class Security extends Secure.Security {
 
 	public static void ownAuthenticate(@Required String username,
 			String password) {
+		System.out.println("Own Authenticat...");
 		boolean valid = false;
 		for (ESEUser user : ESEDatabase.getAllUsers()) {
 			if (user.getName().equals(username)
