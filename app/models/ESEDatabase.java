@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.regex.*;
 
 public class ESEDatabase {
 
@@ -49,18 +50,22 @@ public class ESEDatabase {
 	 * Methods that return Users
 	 */
 	
-	public ESEUser getUserByName(String userName) {
+	public ESEUser getUserByName(String userName) throws IllegalArgumentException {
 		for (ESEUser user : userList){
 			if (user.getName().equals(userName))
-				return user;
+			{
+				return user; 
+			}
 		}
 		throw new IllegalArgumentException("No such user exists");
 	}
 	
-	public ESEUser getUserByID(int userID) {
+	public ESEUser getUserByID(int userID) throws IllegalArgumentException {
 		for (ESEUser user : userList){
 			if (user.getUserID() == userID)
+			{
 				return user;
+			}
 		}
 		throw new IllegalArgumentException("No user with this ID");
 	}
@@ -107,26 +112,48 @@ public class ESEDatabase {
 		groupList.add(group);
 	}*/
 	
-	public void removeUserByName(String username){
-		for (ESEUser user : userList){
+	public void removeUserByName(String username) throws IllegalArgumentException {
+  		for (ESEUser user : userList){
 			if (user.getName().equals(username))
+			{
 				userList.remove(user);
+				return;
+			}
 		}
+		throw new IllegalArgumentException("No such user exists");
 	}
 	
-	public void removeUserByID(int userID){
+	public void removeUserByID(int userID) throws IllegalArgumentException {
 		for (ESEUser user : userList){
 			if (user.getUserID() == userID)
+			{
 				userList.remove(user);
+				return;
+			}
 		}
+		throw new IllegalArgumentException("No user with this ID");
 	}
-	
+
+	public ESEUser findUser(String username) throws IllegalArgumentException, PatternSyntaxException
+	{
+		Pattern searchPattern = Pattern.compile(username.toLowerCase());
+		for(ESEUser user : this.getAllUsers())
+		{
+			Matcher m = searchPattern.matcher(user.getName().toLowerCase());
+			if(m.matches())
+				{
+					return user;
+				}
+		}
+		throw new IllegalArgumentException("No user matches");
+	}
+
 	/*
 	 * Getters for ALL ESEUSers, ALL ESECalendars etc.
 	 */
 	
 	public ArrayList<ESEUser> getAllUsers(){
-		return userList;
+		return new ArrayList<ESEUser>(userList);
 	}
 
 	public boolean isEmpty() {

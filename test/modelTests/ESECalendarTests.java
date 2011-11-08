@@ -76,6 +76,38 @@ public class ESECalendarTests extends UnitTest {
 	}
 
 	@Test
+	public void shouldDeliberatelyAddEventToDifferentCalendar()
+	{
+		ESEUser user1 = new ESEUser("user1", "pw", "first", "family");
+		ESEUser user2 = new ESEUser("user2", "pass", "Name", "Name");
+		user1.addCalendar("First");
+		ESECalendar first = user1.getCalendarList().get(0);
+		System.out.println("first: "+first.getID());
+		user1.addCalendar("Second");
+		ESECalendar second = user1.getCalendarList().get(1);
+		System.out.println("second: "+second.getID());
+		user2.addCalendar("Other");
+		ESECalendar other = user2.getCalendarList().get(0);
+		System.out.println("other: "+other.getID());
+
+		// Error occurs here, when corresponding calendar is different
+		first.addEvent("FirstInSecond", second, "7.11.2001 18:00", "7.11.2001 18:00", true);
+		first.addEvent("FirstInOther", other, new Date(), new Date(), true);
+
+		assertEquals(0, second.getAllEvents().size());
+		assertEquals(0, other.getAllEvents().size());
+
+		assertEquals(2, user1.getAllEvents(first.getID()).size());
+
+		assertEquals(0, user1.getAllEvents(second.getID()).size());
+		assertEquals(0, user2.getAllEvents(other.getID()).size());
+
+		// These checks trigger the error
+		assertEquals(first.getCalendarName(), user1.getAllEvents(first.getID()).get(0).getCorrespondingCalendar().getCalendarName());
+		assertEquals(first.getCalendarName(), user1.getAllEvents(first.getID()).get(1).getCorrespondingCalendar().getCalendarName());
+	}
+
+	@Test
 	public void shouldGetAllEvents() {
 		this.cal1.addEvent("Testevent1", this.cal1, "13.04.2011 13:40", "14.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
@@ -95,12 +127,14 @@ public class ESECalendarTests extends UnitTest {
 		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
-		
+		this.cal1.addEvent("Testevent5", this.cal1, "19.04.2011 12:00", "21.04.2011 14:00", true);
+
 		assertEquals(1, this.cal1.getAllEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllEventsOfDay("14.04.2011 13:50").size());
 		assertEquals(2, this.cal1.getAllEventsOfDay("16.04.2011 13:50").size());
 		assertEquals(2, this.cal1.getAllEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(2, this.cal1.getAllEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(1, this.cal1.getAllEventsOfDay("20.04.2011 13:00").size());
 	}
 	
 	@Test
@@ -109,12 +143,17 @@ public class ESECalendarTests extends UnitTest {
 		this.cal1.addEvent("Testevent2", this.cal1, "15.04.2011 13:40", "16.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent3", this.cal1, "17.04.2011 13:40", "18.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent4", this.cal1, "16.04.2011 13:40", "19.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent5", this.cal1, "19.04.2011 12:00", "21.04.2011 14:00", true);
 		
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("14.04.2011 13:50").size());
 		assertEquals(0, this.cal1.getAllPublicEventsOfDay("15.04.2011 13:50").size());
+		assertEquals(1, this.cal1.getAllPublicEventsOfDay("16.04.2011 13:50").size());
+		assertEquals(1, this.cal1.getAllPublicEventsOfDay("17.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(2, this.cal1.getAllPublicEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(1, this.cal1.getAllPublicEventsOfDay("20.04.2011 13:50").size());
+		assertEquals(1, this.cal1.getAllPublicEventsOfDay("21.04.2011 13:50").size());
 	}
 	
 	@Test
@@ -155,4 +194,42 @@ public class ESECalendarTests extends UnitTest {
 		assertTrue(this.cal1.getAllPublicEvents().get(0).getEventName().equals("Testevent1"));
 	}
 
+	@Test
+	public void shouldAvoidOverlappingEvents()
+	{
+		ESECalendar testCal = new ESECalendar("OverlapTest", this.ownerDummy);
+		testCal.addEvent("Reference Event", testCal, "4.11.2011 16:00", "11.11.2011 18:00", true);
+
+		try
+		{
+			testCal.addEvent("StartDate conflict", testCal, "7.11.2011 16:00", "14.11.2011 18:00", true);
+			fail("StartDate conflict expected");
+		}
+		catch (IllegalArgumentException e)
+		{}
+		try
+		{		
+			testCal.addEvent("EndDate conflict", testCal, "1.11.2011 16:00", "7.11.2011 18:00", true);
+			fail("EndDate conflict expected");
+		}
+		catch (IllegalArgumentException e)
+		{}
+		try
+		{
+			testCal.addEvent("Contains conflict", testCal, "7.11.2011 16:00", "8.11.2011 18:00", true);
+			fail("Contains conflict expected");
+		}
+		catch (IllegalArgumentException e)
+		{}
+		try
+		{
+			testCal.addEvent("Subset conflict", testCal, "1.11.2011 16:00", "16.11.2011 18:00", true);
+			fail("Subset conflict expected");
+		}
+		catch (IllegalArgumentException e)
+		{}
+		assertEquals(1, testCal.getAllEvents().size());
+		assertEquals("Reference Event", testCal.getAllEventsOfDay("7.11.2011 17:00").get(0).getEventName());
+		assertEquals(testCal.getAllEventsOfDay("4.11.2011 15:00"), testCal.getAllEventsOfDay("11.11.2011 19:00"));
+	}
 }

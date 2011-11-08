@@ -32,7 +32,7 @@ public class ESEEvent implements Comparable<ESEEvent>{
 
 	}
 
-	private void checkDateValidity(Date startDate, Date endDate)
+	private void checkDateValidity(Date startDate, Date endDate) throws IllegalArgumentException
 	{
 		if (startDate.after(endDate))
 		{
@@ -77,13 +77,13 @@ public class ESEEvent implements Comparable<ESEEvent>{
 		this.eventName = eventName;
 	}
 
-	public void setStartDate(Date startDate)
+	public void setStartDate(Date startDate) throws IllegalArgumentException
 	{
 		checkDateValidity(startDate, this.endDate);
 		this.startDate = startDate;
 	}
 
-	public void setEndDate(Date endDate)
+	public void setEndDate(Date endDate) throws IllegalArgumentException
 	{
 		checkDateValidity(this.startDate, endDate);
 		this.endDate = endDate;

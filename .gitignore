@@ -61,6 +61,5 @@ tmp/**/*
 /tmp
 eclipse/*.launch
 
-# sync.sh
-/.git_old
-/.git_orig
+# cobertura
+cobertura.ser

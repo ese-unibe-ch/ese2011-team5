@@ -68,6 +68,16 @@ public class ESEUser {
 		this.groupList.add(new ESEGroup(groupName, this));
 	}
 
+	public void removeCalendarById(int calendarID)
+	{
+		//TODO
+	}
+
+	public void removeCalendarByName(String calendarname)
+	{
+		//TODO
+	}
+
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)

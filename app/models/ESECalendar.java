@@ -37,16 +37,16 @@ public class ESECalendar {
 	}
 
 	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			String startDate, String endDate, boolean isPublic)
+			String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
-		ESEEvent newEvent = new ESEEvent(eventName, this,
+		ESEEvent newEvent = new ESEEvent(eventName, correspondingCalendar,
 			ESEConversionHelper.convertStringToDate(startDate), 
 			ESEConversionHelper.convertStringToDate(endDate), isPublic);		
 		for (ESEEvent existingEvent : this.eventList)
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
 			{
-				//throw new IllegalArgumentException("New event overlaps with existing event");
+				throw new IllegalArgumentException("New event overlaps with existing event");
 			}
 		}
 		this.eventList.add(newEvent);		
@@ -59,17 +59,11 @@ public class ESECalendar {
 	 * by Judith
 	 */
 	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			Date startDate, Date endDate, boolean isPublic)
+			Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
-		ESEEvent newEvent = new ESEEvent(eventName, this, startDate, endDate, isPublic);		
-		for (ESEEvent existingEvent : this.eventList)
-		{
-			if (checkEventOverlaps(existingEvent, newEvent))
-			{
-				//throw new IllegalArgumentException("New event overlaps with existing event");
-			}
-		}
-		this.eventList.add(newEvent);		
+		this.addEvent(eventName, correspondingCalendar,
+				ESEConversionHelper.convertDateToString(startDate), 
+				ESEConversionHelper.convertDateToString(endDate), isPublic);		
 	}	
 	
 	public void removeEvent(int eventID){
@@ -86,14 +80,14 @@ public class ESECalendar {
 	public ArrayList<ESEEvent> getAllPublicEvents() {
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
 		for (ESEEvent event : this.eventList){
-			if (event.isPublic() == true)
+			if (event.isPublic())
 				publicEventsList.add(event);
 		}
 		return publicEventsList;
 	}
 	
 	public ArrayList<ESEEvent> getAllEvents(){
-		return this.eventList;
+		return new ArrayList<ESEEvent>(this.eventList);
 	}
 	
 	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
@@ -186,7 +180,4 @@ public class ESECalendar {
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
 	}
-	
-	
-	
 }
