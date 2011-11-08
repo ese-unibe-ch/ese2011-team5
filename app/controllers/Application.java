@@ -22,21 +22,20 @@ public class Application extends Controller {
 				.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
-		boolean valid;
-
-		if (validLogin) {
-			valid = true;
-		} else {
-			valid = false;
+		if (!validLogin) 
+		{
+			flash.error("You have to provide an username and a password!");
+	        params.flash();
 		}
 
-		render(currentUser, groups, otherUsers, calendarList, valid);
+		render(currentUser, groups, otherUsers, calendarList);//, valid);
 	}
 
-	public static void setValid(boolean valid) {
-		validLogin = valid;
+	public static void showCalendars(boolean valid) {
+		validLogin=valid;
 		showCalendars();
 	}
+	
 
 	public static void showOtherCalendars(String username) {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();

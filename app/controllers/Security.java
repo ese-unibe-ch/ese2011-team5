@@ -23,19 +23,29 @@ public class Security extends Secure.Security {
 		ESEDatabase.setCurrentUser(loggedInUser);
 	}
 
-	public static void ownAuthenticate(@Required String username,
-			String password) {
-		System.out.println("Own Authenticat...");
-		boolean valid = false;
-		for (ESEUser user : ESEDatabase.getAllUsers()) {
-			if (user.getName().equals(username)
-					&& user.getPassword().equals(password)) {
+	public static void ownAuthenticate(@Required String username,String password) 
+	{
+		try
+		{
+			ESEUser user=ESEDatabase.getUserByName(username);
+
+			if(user.getPassword().equals(password))
+			{
 				ESEDatabase.setCurrentUser(user.getName());
-				valid = true;
-				Application.showCalendars();
+			}
+			else
+			{
+				flash.error("Wrong password! Try it again");
+				params.flash();
 			}
 		}
-		Application.setValid(valid);
+		catch(IllegalArgumentException e)
+		{
+			  flash.error("No user with the given username exists!");
+	          params.flash();
+		}
+		
+		Application.showCalendars();
 	}
 
 	static void onDisconnect() {
