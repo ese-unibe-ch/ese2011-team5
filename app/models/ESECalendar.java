@@ -65,6 +65,8 @@ public class ESECalendar {
 		}
 		this.eventList.add(newEvent);		
 	}
+	
+	
 	/*
 	 * Mir geht es einfach die Bootstrapt daten so einzugeben. Falls die methode
 	 * unerwünscht ist, bitte wieder löschen und Bootstrapt Events anpassen:
@@ -86,9 +88,14 @@ public class ESECalendar {
 		this.eventList.add(newEvent);		
 	}	
 	
+	
+	
 	public void removeEvent(int eventID){
-		//TODO
+		ESEEvent eventToRemove=this.getEventById(eventID);
+		this.eventList.remove(eventToRemove);
 	}
+	
+	
 
 	public ArrayList<ESEEvent> getAllAllowedEvents(){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))

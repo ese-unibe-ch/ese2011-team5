@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import models.ESEDatabase;
+import models.ESEState;
 import models.ESEUser;
 import play.Play;
 import play.data.validation.Required;
@@ -52,13 +53,12 @@ public class Security extends Secure.Security {
 	// ////////////////////////
 
 	public static void logout() throws Throwable {
-		System.out.println("OWN LOGOUT...");
 		Security.invoke("onDisconnect");
 		session.clear();
 		response.removeCookie("rememberme");
 		Security.invoke("onDisconnected");
 		flash.success("secure.logout");
-
+		ESEDatabase.getCurrentUser().getProfile().changeState(ESEState.OFFLINE);
 		ESEDatabase.setCurrentUser("guest");
 
 		Application.showCalendars(); // go to the start screen, not to the login

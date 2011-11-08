@@ -1,0 +1,34 @@
+<body>
+#{if _currentUser.equals(_watchedUser)}
+	<h1>You are watching your own profile!</h1>
+#{/if}
+#{else}
+	<h1>You are watching ${_watchedUser.getName()}'s profile</h1>
+#{/else}
+
+	Username: ${_profile.getUsername()} </br>
+	Member since: ${_profile.getRegistrationDateString()} </br>
+	State message: ${_profile.getStateMessage()} </br>
+	State: ${_profile.getState()} </br>
+	Firstname: ${_profile.getFirstName()} </br>
+	Familyname: ${_profile.getFamilyName()} </br>
+	Em@il: ${_profile.getMail()} </br>
+	
+	#{if _profile.getBirthday()==null}
+		Birthday: - </br>
+	#{/if}
+	#{else}
+		Birthday: ${_profile.getBirthdayString()} </br>
+	#{/else}
+	
+	
+	Street: ${_profile.getStreet()} </br>
+	City: ${_profile.getCity()} </br>
+	Postcode: ${_profile.getPostCode()} </br>
+	
+
+#{if _currentUser.equals(_watchedUser)}
+	You can edit your profile. LINK
+#{/if}
+
+</body>

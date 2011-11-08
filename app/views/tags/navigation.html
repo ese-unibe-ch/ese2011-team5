@@ -4,6 +4,7 @@
 	
 	#{if !_currentUser.getName().equals("guest")}
 		Your are logged in as ${_currentUser.getName()}
+		<a href=@{Application.profile(_currentUser.getUserID())}>See your profile</a>
 		</br>
 		<a href=@{Security.logout()}>logout</a>
 	#{/if}

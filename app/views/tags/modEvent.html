@@ -1,25 +1,25 @@
 	
 	#{if _editMode}
-	
 		#{form @Application.doEditEvent()}
 		    <p>
 		        <label for="eventName">Name of the Event: </label>
-		        <input type="text" name="eventName" id="eventName" value=${_event.getEventName()} />
+		        <input type="text" name="eventName" id="eventName" value="${_event.getEventName()}" />
 		    </p>
 		    <p>
 		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventStart" id="eventStart" value=${_event.getStartDate()} />
+		        <input type="text" name="eventStart" id="eventStart" value="${_event.getStringStartDate()}"/>
 		    </p>
 		    <p>
 		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventEnd" id="eventEnd" value=${_event.getEndDate()} />
+		        <input type="text" name="eventEnd" id="eventEnd" value="${_event.getStringEndDate()}"/>
 		    </p>
 		    <p>
 		    	<input type="hidden" name="calendarID" id="calendarID" value=${_calendar.getID()} />
+		    	<input type="hidden" name="eventID" id="eventID" value=${_event.getEventID()} />
 		    </p>
 		    <p>
 		    	<label for="isPrivate">Public Event</label>
-		    	<input type="checkbox" name="isPublic" id="isPublic" />
+		    	<input type="checkbox" name="isPublic" id="${_event.isPublic()}"/>
 		    </p>
 		    <p>
 		        <input type="submit" value="Submit your Event" />

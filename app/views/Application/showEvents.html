@@ -15,26 +15,29 @@
 			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
 		</aside>
 	
-		<section>
+		<section id="EventList">
 			
 			
-	<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
+			<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
 	
-	#{list items:eventList, as:'event'}
+			#{list items:eventList, as:'event'}
 	
-		<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" </p>
-		<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
-	#{/list}
+				<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" </p>
+			
+				#{if calendar.getOwner().equals(currentUser)}
+					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
+					<a href="@{Application.removeEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Remove </a>
+				#{/if}
+
+			#{/list}
 	
-	#{if currentUser.equals(otherUser)}
-	
-		add event:
-		
-		#{modEvent editMode:false , calendar:calendar /}
-		
-		
-	#{/if}
 		</section>
+		#{if calendar.getOwner().equals(currentUser)}
+			<section id="AddEvent">
+				#{modEvent editMode:false , calendar:calendar, event:event, currentUser:currentUser /}
+			</section>
+		#{/if}
+		
 	</article>
 	
 	<footer>

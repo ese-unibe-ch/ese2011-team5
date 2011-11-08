@@ -1,11 +1,9 @@
-
-
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
 <body>
 	<header>
-		<h3>Home</h3>
+		<h3>Profile</h3>
 	</header>
 	
 	<nav>
@@ -18,13 +16,7 @@
 		</aside>
 	
 		<section>
-			
-			#{if currentUser.getName().equals("guest")}
-				#{welcomeUnknown valid:valid /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
+			#{profile profile:profile, watchedUser:watchedUser, currentUser:currentUser /}
 		</section>
 	</article>
 	

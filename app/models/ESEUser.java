@@ -7,10 +7,9 @@ public class ESEUser {
 	private static int idCounter = 0;
 	
 	private int userID;
-	private String username;
+	private ESEProfile profile;
 	private String password;
-	private String firstName;
-	private String familyName;
+	
 	private ArrayList<ESECalendar> calendarList;
 	private ArrayList<ESEGroup> groupList;
 
@@ -22,10 +21,11 @@ public class ESEUser {
 		this.userID = idCounter++;
 		this.calendarList = new ArrayList<ESECalendar>();
 		this.groupList = new ArrayList<ESEGroup>();
-		this.username = username;
+		ESEGroup friends=new ESEGroup("Friends",this);
+		this.groupList.add(friends);
+		this.profile=new ESEProfile(this,username, firstName, familyName);
+		
 		this.password = password;
-		this.firstName = firstName;
-		this.familyName = familyName;
 	}
 
 	/*
@@ -37,7 +37,7 @@ public class ESEUser {
 	}
 	
 	public String getName() {
-		return this.username;
+		return this.profile.getUsername();
 	}
 	
 	public String getPassword(){
@@ -45,12 +45,18 @@ public class ESEUser {
 	}
 	
 	public String getFirstName(){
-		return this.firstName;
+		return this.profile.getFirstName();
 	}
 	
 	public String getFamilyName(){
-		return this.familyName;
+		return this.profile.getFamilyName();
 	}
+	
+	public ESEProfile getProfile()
+	{
+		return this.profile;
+	}
+	
 
 	public ArrayList<ESEGroup> getGroupList(){
 		return new ArrayList<ESEGroup>(this.groupList);
@@ -81,7 +87,7 @@ public class ESEUser {
 			if (group.getGroupID() == id)
 				return group;
 		}
-		throw new IllegalArgumentException("No calendar with this ID "+ id);
+		throw new IllegalArgumentException("No group with this ID "+ id);
 	}
 	
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {

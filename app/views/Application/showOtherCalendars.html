@@ -16,7 +16,7 @@
 		</aside>
 	
 		<section>
-			<h2>Calendars of ${otherUser.getName()}</h2>
+			<h2>Calendars of ${otherUser.getName()}</h2> <a href=@{Application.profile(otherUser.getUserID())}>See ${otherUser.getName()}'s profile</a>
 
 			#{list items:calendarList, as:'calendar'}
 				<p><a href=@{Application.showEvents(calendar.getID(),otherUser.getName())}>${calendar.getCalendarName()}</a></p>

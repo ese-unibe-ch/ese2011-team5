@@ -17,11 +17,21 @@ public class ESEDatabase {
 	 */
 
 	static public void setCurrentUser(String loggedIn) {
+		if(currentUser!=null)
+		{
+			currentUser.getProfile().changeState(ESEState.OFFLINE);
+		}
 		currentUser = getUserByName(loggedIn);
+		currentUser.getProfile().changeState(ESEState.ONLINE);
 	}
 
 	static public void setCurrentUser(ESEUser loggedIn) {
+		if(currentUser!=null)
+		{
+			currentUser.getProfile().changeState(ESEState.OFFLINE);
+		}
 		currentUser = loggedIn;
+		currentUser.getProfile().changeState(ESEState.ONLINE);
 	}
 
 	static public ESEUser getCurrentUser() {
@@ -36,7 +46,6 @@ public class ESEDatabase {
 			String firstName, String familyName) {
 		ESEUser userToAdd = new ESEUser(username, password, firstName,
 				familyName);
-		System.out.println(userToAdd.getName());
 		userList.add(userToAdd);
 	}
 
@@ -124,7 +133,7 @@ public class ESEDatabase {
 	 */
 	
 	public static ArrayList<ESEUser> getAllUsers() {
-		return new ArrayList<ESEUser>(userList);
+		return userList;
 	}
 
 	/*
@@ -136,4 +145,6 @@ public class ESEDatabase {
 	 * public static ArrayList<ESEGroup> getAllGroups(){ return groupList; }
 	 */
 
+	
+		
 }

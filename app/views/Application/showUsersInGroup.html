@@ -20,7 +20,7 @@
 			</br>
 			#{list items:userList, as:'user'}
 			<p><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
-			<a href=@{Application.removeUserFromGroup(user.getName())}>Remove</a></p>
+			<a href=@{Application.removeUserFromGroup(user.getName(),group.getGroupID())}>Remove</a></p>
 			#{/list}
 
 			Add user:

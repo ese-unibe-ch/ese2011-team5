@@ -1,1 +1,26 @@
-#{modEvent editMode:true , calendar:calendar, event:event /}
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<body>
+	<header>
+		<h3>Home</h3>
+	</header>
+	
+	<nav>
+		#{ navigation currentUser: currentUser /}
+	</nav>
+	
+	<article>
+		<aside id="overview">
+			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
+		</aside>
+	
+		<section>
+			#{modEvent editMode:true , calendar:calendar, event:event, currentUser:currentUser /}
+		</section>
+	</article>
+	
+	<footer>
+		#{ footer /}
+	</footer>
+</body>

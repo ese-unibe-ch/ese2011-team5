@@ -7,6 +7,7 @@ import models.ESEConversionHelper;
 import models.ESEDatabase;
 import models.ESEEvent;
 import models.ESEGroup;
+import models.ESEProfile;
 import models.ESEUser;
 import play.mvc.Controller;
 
@@ -65,6 +66,12 @@ public class Application extends Controller {
 				.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = otherUser.getCalendarByID(calendarID);
+		
+		for(ESEEvent e:eventList)
+		{
+			System.out.println(e);
+		}
+		
 		render(calendar, currentUser, otherUser, otherUsers, eventList, groups);
 	}
 
@@ -73,6 +80,13 @@ public class Application extends Controller {
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(
 				calendarID);
 		calendar.addEvent(eventName, eventStart, eventEnd, isPublic);
+		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
+	}
+	
+	public static void removeEvent(int calendarID, int eventID)
+	{
+		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+		calendar.removeEvent(eventID);
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 	
@@ -87,15 +101,20 @@ public class Application extends Controller {
 		event.setEventName(eventName);
 		event.setVisibility(isPublic);
 		
+		
+		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 	
 	public static void editEvent(int calendarID, int eventID)
 	{
-		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESEUser otherUser = ESEDatabase.getUserByName(currentUser.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
+		System.out.println("USER ID: " + currentUser.getUserID() + " calendarID: " + calendar.getID());
 		ESEEvent event = calendar.getEventById(eventID);
-//		System.out.println("EDIT");
-//		System.out.println("EDIT EVENT : " + e.getEventName());
-		render(event,calendar);//, calendar);
+		render(event,calendar,currentUser,otherUser,otherUsers,groups);//, calendar);
 	}
 
 	public static void showUsersInGroup(int groupID) {
@@ -124,6 +143,20 @@ public class Application extends Controller {
 		ESEGroup group = currentUser.getGroupByID(groupID);
 		group.removeUserFromGroup(userToRemove);
 		showUsersInGroup(groupID);
+	}
+	
+	public static void profile(int userID)
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESEUser watchedUser=ESEDatabase.getUserByID(userID);
+		ESEProfile profile=watchedUser.getProfile();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		
+		render(currentUser, groups, otherUsers,watchedUser, profile);
+		
+		
 	}
 
 }
