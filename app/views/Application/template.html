@@ -3,7 +3,7 @@
 
 <body>
 	<header>
-		<h3>Register a new user</h3>
+		<h3>Home</h3>
 	</header>
 	
 	<nav>
@@ -16,7 +16,13 @@
 		</aside>
 	
 		<section>
-			#{register /}
+			
+			#{if currentUser.getName().equals("guest")}
+				#{welcomeUnknown valid:valid /}
+			#{/if}
+			#{else}
+				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
+			#{/else}
 		</section>
 	</article>
 	

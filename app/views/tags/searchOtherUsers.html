@@ -1,0 +1,23 @@
+Add a new group:	
+	
+	#{form @Application.searchUser()}
+		
+		#{if flash.error}
+			<p class="error">
+				&{flash.error}
+			</p>
+		#{/if}
+		#{if flash.success}
+			<p class="success">
+				&{flash.success}
+			</p>
+		#{/if}
+
+		<p id="searchName-field">
+			<label for="searchName">search userName:</label>
+			<input type="text" name="searchName" id="searchName" />
+		</p
+		<p id="signin-field">
+			<input type="submit" id="signin" value="Search" />
+		</p>
+	#{/form}

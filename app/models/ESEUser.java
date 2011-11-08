@@ -7,10 +7,12 @@ public class ESEUser {
 	private static int idCounter = 0;
 	
 	private int userID;
-	private String username;
+	private ESEProfile profile;
+	
 	private String password;
-	private String firstName;
-	private String familyName;
+	private String secureQuestion="Holy solution: ";
+	private String secureAnswer="42";
+	
 	private ArrayList<ESECalendar> calendarList;
 	private ArrayList<ESEGroup> groupList;
 
@@ -22,10 +24,27 @@ public class ESEUser {
 		this.userID = idCounter++;
 		this.calendarList = new ArrayList<ESECalendar>();
 		this.groupList = new ArrayList<ESEGroup>();
-		this.username = username;
+		ESEGroup friends=new ESEGroup("Friends",this);
+		this.groupList.add(friends);
+		this.profile=new ESEProfile(this,username, firstName, familyName);
+		
 		this.password = password;
-		this.firstName = firstName;
-		this.familyName = familyName;
+	}
+	
+	public ESEUser(String username, String password, String firstName, String familyName, String secureQuestion, String secureAnswer) 
+	{
+		assert(username != "");
+
+		this.userID = idCounter++;
+		this.calendarList = new ArrayList<ESECalendar>();
+		this.groupList = new ArrayList<ESEGroup>();
+		ESEGroup friends=new ESEGroup("Friends",this);
+		this.groupList.add(friends);
+		this.profile=new ESEProfile(this,username, firstName, familyName);
+		
+		this.secureQuestion=secureQuestion;
+		this.secureAnswer=secureAnswer;
+		this.password = password;
 	}
 
 	/*
@@ -37,7 +56,7 @@ public class ESEUser {
 	}
 	
 	public String getName() {
-		return this.username;
+		return this.profile.getUsername();
 	}
 	
 	public String getPassword(){
@@ -45,12 +64,28 @@ public class ESEUser {
 	}
 	
 	public String getFirstName(){
-		return this.firstName;
+		return this.profile.getFirstName();
 	}
 	
 	public String getFamilyName(){
-		return this.familyName;
+		return this.profile.getFamilyName();
 	}
+	
+	public ESEProfile getProfile()
+	{
+		return this.profile;
+	}
+	
+	public String getQuestion()
+	{
+		return this.secureQuestion;
+	}
+	
+	public String getAnswer()
+	{
+		return this.secureAnswer;
+	}
+	
 
 	public ArrayList<ESEGroup> getGroupList(){
 		return new ArrayList<ESEGroup>(this.groupList);
@@ -64,10 +99,36 @@ public class ESEUser {
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
-	public void addGroup(String groupName) {
-		this.groupList.add(new ESEGroup(groupName, this));
+	public void addGroup(String groupName) 
+	{
+		ESEGroup group=new ESEGroup(groupName, this);
+		this.groupList.add(group);
 	}
-
+		
+	public ESECalendar getCalendarByID(int id){
+		for (ESECalendar calendar : calendarList){
+			if (calendar.getID() == id)
+				return calendar;
+		}
+		throw new IllegalArgumentException("No calendar with this ID "+ id);
+	}
+	
+	public ESEGroup getGroupByID(int id){
+		for (ESEGroup group : groupList){
+			if (group.getGroupID() == id)
+				return group;
+		}
+		throw new IllegalArgumentException("No group with this ID "+ id);
+	}
+	
+	public ESEGroup getGroupByName(String name){
+		for (ESEGroup group : groupList){
+			if (group.getGroupName().equals(name))
+				return group;
+		}
+		throw new IllegalArgumentException("No group with this name "+ name);
+	}
+	
 	public void removeCalendarById(int calendarID)
 	{
 		//TODO
@@ -88,10 +149,12 @@ public class ESEUser {
 	
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
+			System.out.println("SKALDJFLAJSFDLASJDFKAFD " +calendar.getID());
 			if (calendar.getID() == calendarID)
 				return calendar.getAllPublicEvents();
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		
+		throw new IllegalArgumentException("No Event with this ID");
 	}
 	
 	public ArrayList<ESEEvent> getAllowedEvents(boolean currentUserIsOwner, int calendarID) throws IllegalArgumentException {
@@ -100,7 +163,7 @@ public class ESEUser {
 				calendar.getAllAllowedEvents();
 			}
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		throw new IllegalArgumentException("No Group with this ID");
 	}
 
 	/*
@@ -115,6 +178,11 @@ public class ESEUser {
 	public void addGroup(ESEGroup groupToAdd) {
 		assert this.equals(groupToAdd.getOwner());
 		this.groupList.add(groupToAdd);
+	}
+	
+	public void setPassword(String newPassword)
+	{
+		this.password=newPassword;
 	}
 
 }

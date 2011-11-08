@@ -63,6 +63,23 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	public Date getEndDate() {
 		return this.endDate;
 	}
+	
+	public String getStringEndDate()
+	{
+		String str= ESEConversionHelper.convertDateToString(this.endDate);
+		System.out.println("END DATE: " + str);
+		return str;
+	}
+	
+	public String toString()
+	{
+		return "ID: "+ this.idCounter +" Name: " + this.eventName + " StartDate: "+ getStringStartDate() + " EndDate: " + this.getStringEndDate();
+	}
+	
+	public String getStringStartDate()
+	{
+		return ESEConversionHelper.convertDateToString(this.startDate);
+	}
 
 	public boolean isPublic() {
 		return this.isPublic;
@@ -93,6 +110,8 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	{
 		this.isPublic = publiclyViewable;
 	}
+	
+	
 	
 	@Override
 	public int compareTo(ESEEvent compareEvent) {

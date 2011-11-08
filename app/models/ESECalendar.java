@@ -35,6 +35,20 @@ public class ESECalendar {
 	public ESEUser getOwner(){
 		return this.owner;
 	}
+	
+	public ESEEvent getEventById(int id)
+	{
+		for(ESEEvent e: this.eventList)
+		{
+			if(e.getEventID()==id)
+			{
+				return e;
+			}
+		}
+		
+		return null;
+	}
+	
 
 	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
 			String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
@@ -67,11 +81,12 @@ public class ESECalendar {
 	}	
 	
 	public void removeEvent(int eventID){
-		//TODO
+		ESEEvent eventToRemove=this.getEventById(eventID);
+		this.eventList.remove(eventToRemove);
 	}
 
 	public ArrayList<ESEEvent> getAllAllowedEvents(){
-		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.eventList;
 		else
 			return this.getAllPublicEvents();
@@ -91,7 +106,7 @@ public class ESECalendar {
 	}
 	
 	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
-		if (ESEDatabase.getInstance().getCurrentUser().equals(this.owner))
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.getAllEventsOfDay(date);
 		else
 			return this.getAllPublicEventsOfDay(date);
