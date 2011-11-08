@@ -152,6 +152,21 @@ public class ESEDatabase {
 	 * public static ArrayList<ESEGroup> getAllGroups(){ return groupList; }
 	 */
 
+	public static ArrayList<ESEUser> searchOtherUserByName(String name)
+	{
+		ArrayList<ESEUser> users=new ArrayList<ESEUser>();
+		
+		CharSequence sequence=new String(name);
+		
+		for(ESEUser user:userList)
+		{
+			if(user.getName().contains(sequence) && !user.equals(currentUser))
+			{
+				users.add(user);
+			}
+		}
+		return users;
+	}
 	
 		
 }

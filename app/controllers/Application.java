@@ -19,8 +19,7 @@ public class Application extends Controller {
 	public static void showCalendars() {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
-				.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		if (!validLogin) 
@@ -32,6 +31,7 @@ public class Application extends Controller {
 		render(currentUser, groups, otherUsers, calendarList);
 	}
 
+	
 	public static void showCalendars(boolean valid) {
 		validLogin=valid;
 		showCalendars();
@@ -226,6 +226,37 @@ public class Application extends Controller {
 				
 				showCalendars();
 		 }
+	}
+	
+	public static void createNewGroup(@Required String groupname)
+	{
+		ESEUser user=ESEDatabase.getCurrentUser();
+		
+		user.addGroup(groupname);
+		ESEGroup group=user.getGroupByName(groupname);
+		showUsersInGroup(group.getGroupID());
+	}
+	
+	public static void searchUser(@Required String searchName)
+	{
+		
+		System.out.println("SEARCH FOR: "+ searchName);
+		ArrayList<ESEUser> otherUsers = ESEDatabase.searchOtherUserByName(searchName);
+		
+		System.out.println("SEARCH RESULT:");
+		for(ESEUser user:otherUsers)
+		{
+			System.out.println("USER: " + user.getName());
+		}
+		
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+
+		render(currentUser, groups, otherUsers, calendarList);
+
+	
+		
 	}
 
 }

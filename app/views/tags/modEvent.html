@@ -19,8 +19,13 @@
 		    </p>
 		    <p>
 		    	<label for="isPrivate">Public Event</label>
-		    	<input type="checkbox" name="isPublic" id="${_event.isPublic()}"/>
-		    </p>
+		    	#{if _event.isPublic()}
+		    		<input type="checkbox" name="isPublic" id="isPublic" checked="checked"/>
+		    	#{/if}
+		    	#{else}
+		    		<input type="checkbox" name="isPublic" id="isPublic"/>
+		    	#{/else}
+		    </p>	
 		    <p>
 		        <input type="submit" value="Submit your Event" />
 		    </p>

@@ -9,6 +9,7 @@
 		#{else}
 			You have no groups
 		#{/else}
+		#{createNewGroup /}
 		<hr>
 	#{/if}
 	
@@ -19,6 +20,8 @@
 		<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a></p>
 	#{/list}
 	
+	#{searchOtherUsers /}
+
 
 	
 	
