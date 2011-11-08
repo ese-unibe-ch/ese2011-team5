@@ -9,6 +9,7 @@ import models.ESEEvent;
 import models.ESEGroup;
 import models.ESEProfile;
 import models.ESEUser;
+import play.data.validation.Required;
 import play.mvc.Controller;
 
 public class Application extends Controller {
@@ -28,7 +29,7 @@ public class Application extends Controller {
 	        params.flash();
 		}
 
-		render(currentUser, groups, otherUsers, calendarList);//, valid);
+		render(currentUser, groups, otherUsers, calendarList);
 	}
 
 	public static void showCalendars(boolean valid) {
@@ -141,6 +142,7 @@ public class Application extends Controller {
 		ESEUser userToRemove = ESEDatabase.getUserByName(username);
 		ESEGroup group = currentUser.getGroupByID(groupID);
 		group.removeUserFromGroup(userToRemove);
+		
 		showUsersInGroup(groupID);
 	}
 	
@@ -154,8 +156,76 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		
 		render(currentUser, groups, otherUsers,watchedUser, profile);
+	}
+	
+	public static void forgotPassword(String username)
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+	
+		ESEUser user=ESEDatabase.getUserByName(username);
+		String question=user.getQuestion();
 		
+		render(user, currentUser, calendarList, otherUsers, groups, question);
+	}
+	
+	public static void resetPassword(String username, String answer)
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		
+		ESEUser user=ESEDatabase.getUserByName(username);
+	
+		if(user.getAnswer().equals(answer))
+		{
+			render(user,username, currentUser,calendarList,otherUsers,groups);
+		}
+		else
+		{
+			flash.error("wrong answer!");
+			params.flash();
+			forgotPassword(username);
+		}
+	}
+	
+	/**
+	 * ONLY for if an error happend in changePassword!
+	 * @param username
+	 */
+	public static void resetPassword(String username)
+	{
+		
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		
+		ESEUser user=ESEDatabase.getUserByName(username);
+	
+		render(user, currentUser,calendarList,otherUsers,groups);
+	}
+	
+	public static void changePassword(@Required String username, @Required String password, @Required String confirmpassword)
+	{
+		 if(!password.equals(confirmpassword))
+	     {
+			 ESEUser user=ESEDatabase.getUserByName(username);
+			 flash.error("Passwords do not match!");
+	         params.flash();
+	         resetPassword(username,user.getAnswer());
+	     }
+		 else
+		 {
+				ESEUser user=ESEDatabase.getUserByName(username);
+				user.setPassword(password);
+				Security.ownAuthenticate(username, password);
+				
+				showCalendars();
+		 }
 	}
 
 }

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/register.css'}" />
+	</head>
+	<body>
+		<table id="registertable" border="1">
+			<tr>
+				<div id="register">
+					#{if flash.error}
+						<p style="color:#c00;text-align:center">
+							${flash.error}
+						</p>
+					#{/if}
+					#{form @Register.createNewUser()}
+						<tr>
+							<td>
+								<p id="username-field">
+									<label for="username">New &{'secure.username'}</label>
+								<input type="text" name="username" id="username" value="${flash.username}" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="password-field">
+									<label for="password">New &{'secure.password'}</label>
+								<input type="password" name="password" id="password" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="confirmpassword-field">
+									<label for="confirmpassword">Confirm new &{'secure.password'}</label>
+								<input type="password" name="confirmpassword" id="confirmpassword" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="question-field">
+									<label for="question">A question you have to answer if you forget the password:</label>
+								<input type="text" name="question" id="question" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="answer-field">
+									<label for="answer">The answer:</label>
+								<input type="password" name="answer" id="answer" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p id="confirmanswer-field">
+									<label for="confirmanswer">confirm the answer:</label>
+								<input type="password" name="confirmanswer" id="confirmanswer" value="" />
+								</p>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							</td>
+							<td>
+								<p id="register-field">
+									<input type="submit" id="register" value="&{'Register'}" />
+								</p>
+							</td>
+						</tr>
+					#{/form}
+				</div>
+			</tr>
+		</table>
+	</body>
+</html>

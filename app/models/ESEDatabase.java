@@ -48,6 +48,13 @@ public class ESEDatabase {
 				familyName);
 		userList.add(userToAdd);
 	}
+	
+	public static void createUser(String username, String password,
+			String firstName, String familyName, String question, String answer) {
+		ESEUser userToAdd = new ESEUser(username, password, firstName,
+				familyName, question, answer);
+		userList.add(userToAdd);
+	}
 
 	/*
 	 * Methods that return Users
@@ -59,7 +66,7 @@ public class ESEDatabase {
 			if (user.getName().equals(userName))
 				return user;
 		}
-		throw new IllegalArgumentException("No such user exists");
+		throw new IllegalArgumentException("user " + userName + " not found!");
 	}
 
 	public static ESEUser getUserByID(int userID)

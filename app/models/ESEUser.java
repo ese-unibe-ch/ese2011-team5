@@ -8,7 +8,10 @@ public class ESEUser {
 	
 	private int userID;
 	private ESEProfile profile;
+	
 	private String password;
+	private String secureQuestion="Holy solution: ";
+	private String secureAnswer="42";
 	
 	private ArrayList<ESECalendar> calendarList;
 	private ArrayList<ESEGroup> groupList;
@@ -25,6 +28,22 @@ public class ESEUser {
 		this.groupList.add(friends);
 		this.profile=new ESEProfile(this,username, firstName, familyName);
 		
+		this.password = password;
+	}
+	
+	public ESEUser(String username, String password, String firstName, String familyName, String secureQuestion, String secureAnswer) 
+	{
+		assert(username != "");
+
+		this.userID = idCounter++;
+		this.calendarList = new ArrayList<ESECalendar>();
+		this.groupList = new ArrayList<ESEGroup>();
+		ESEGroup friends=new ESEGroup("Friends",this);
+		this.groupList.add(friends);
+		this.profile=new ESEProfile(this,username, firstName, familyName);
+		
+		this.secureQuestion=secureQuestion;
+		this.secureAnswer=secureAnswer;
 		this.password = password;
 	}
 
@@ -55,6 +74,16 @@ public class ESEUser {
 	public ESEProfile getProfile()
 	{
 		return this.profile;
+	}
+	
+	public String getQuestion()
+	{
+		return this.secureQuestion;
+	}
+	
+	public String getAnswer()
+	{
+		return this.secureAnswer;
 	}
 	
 
@@ -129,6 +158,11 @@ public class ESEUser {
 	public void addGroup(ESEGroup groupToAdd) {
 		assert this.equals(groupToAdd.getOwner());
 		this.groupList.add(groupToAdd);
+	}
+	
+	public void setPassword(String newPassword)
+	{
+		this.password=newPassword;
 	}
 
 }

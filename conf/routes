@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                                       Application.showCalendars
+GET		/forgotPassword/{username}				Application.forgotPassword(username)
 
 # Ignore favicon requests
 GET     /favicon.ico                            404
