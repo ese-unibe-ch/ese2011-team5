@@ -18,6 +18,8 @@ import play.mvc.Controller;
 public class Application extends Controller {
 
 	private static boolean validLogin = true;
+	
+	private static int additionalMonthsCumulated = 0;
 
 	public static void showCalendars() {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
@@ -30,7 +32,7 @@ public class Application extends Controller {
 			flash.error("You have to provide an username and a password!");
 	        params.flash();
 		}
-
+		
 		render(currentUser, groups, otherUsers, calendarList);
 	}
 
@@ -59,11 +61,13 @@ public class Application extends Controller {
 		showCalendars();
 	}
 	
-	public static void showCalendarView(int calendarID, String username, int month, int selectedDay){
+	public static void showCalendarView(int calendarID, String username, int selectedDay, int additionalMonths){
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		
-		//int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		additionalMonthsCumulated += additionalMonths;
+		
+		int month = Calendar.getInstance().get(Calendar.MONTH) + additionalMonthsCumulated;
 		int currentDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
 		
@@ -76,7 +80,10 @@ public class Application extends Controller {
 		daysFromLastMonth =	calendar.getDaysFromLastMonth(month);
 		daysFromNextMonth = calendar.getDaysFromNextMonth(month);
 		List<Integer> daysFromThisMonth =  calendar.getDaysFromThisMonth(month);
-        int startOfLastMonth = daysFromLastMonth.get(0);
+        
+		int startOfLastMonth = 0; //NOCH ANPASSEN
+		if(!daysFromLastMonth.isEmpty())
+			startOfLastMonth = daysFromLastMonth.get(0);
         
         //List<ESEEvent> events = calendar.getAllAllowedEvents();
         
