@@ -1,6 +1,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.regex.*;
 
 public class ESEDatabase {
 
@@ -64,7 +65,9 @@ public class ESEDatabase {
 			throws IllegalArgumentException {
 		for (ESEUser user : userList) {
 			if (user.getName().equals(userName))
-				return user;
+			{
+				return user; 
+			}
 		}
 		throw new IllegalArgumentException("user " + userName + " not found!");
 	}
@@ -73,7 +76,9 @@ public class ESEDatabase {
 			throws IllegalArgumentException {
 		for (ESEUser user : userList) {
 			if (user.getUserID() == userID)
+			{
 				return user;
+			}
 		}
 		throw new IllegalArgumentException("No user with this ID");
 	}
@@ -101,9 +106,9 @@ public class ESEDatabase {
 		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
 		if (!stack[2].getClassName().equals("jobs.Bootstrap")
 				|| !stack[2].getFileName().equals("Bootstrap.java")
-				|| !stack[2].getMethodName().equals("doJob")) {
-			throw new IllegalAccessException(
-					"Nefarious attempt to overwrite database!");
+				|| !stack[2].getMethodName().equals("doJob"))
+		{
+			throw new IllegalAccessException("Nefarious attempt to overwrite database!");
 		}
 		userList = new ArrayList<ESEUser>();
 	}
@@ -121,18 +126,45 @@ public class ESEDatabase {
 	 * public static void addGroupToDB(ESEGroup group){ groupList.add(group); }
 	 */
 
-	public static void removeUserByName(String username) {
-		for (ESEUser user : userList) {
+	public static void removeUserByName(String username) throws IllegalArgumentException {
+  		for (ESEUser user : userList)
+  		{
 			if (user.getName().equals(username))
+			{
 				userList.remove(user);
+				return;
+			}
 		}
+		throw new IllegalArgumentException("No such user exists");
 	}
 
-	public void removeUserByID(int userID) {
+	public static void removeUserByID(int userID) throws IllegalArgumentException {
 		for (ESEUser user : userList) {
 			if (user.getUserID() == userID)
+			{
 				userList.remove(user);
+				return;
+			}
 		}
+		throw new IllegalArgumentException("No user with this ID");
+	}
+
+	public static ArrayList<ESEUser> findUser(String username) throws PatternSyntaxException
+	{
+		Pattern searchPattern = Pattern.compile(username.toLowerCase());
+		//Pattern searchPattern = Pattern.compile(username.toLowerCase().replaceAll("\\?", "\\.").replaceAll("\\*", "\\.\\*"));
+		
+		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
+		for(ESEUser user : userList)
+		{
+			Matcher m = searchPattern.matcher(user.getName().toLowerCase());
+			if(m.matches())
+			//if(user.getName().toLowerCase().matches(searchPattern))
+			{
+				matchingUsers.add(user);
+			}
+		}
+		return matchingUsers;
 	}
 
 	/*
@@ -140,7 +172,7 @@ public class ESEDatabase {
 	 */
 	
 	public static ArrayList<ESEUser> getAllUsers() {
-		return userList;
+		return new ArrayList<ESEUser>(userList);
 	}
 
 	/*
@@ -167,6 +199,4 @@ public class ESEDatabase {
 		}
 		return users;
 	}
-	
-		
 }

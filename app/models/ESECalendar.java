@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ESECalendar {
 
@@ -50,8 +51,7 @@ public class ESECalendar {
 	}
 	
 
-	public void addEvent(String eventName, 	String startDate, 
-			String endDate, boolean isPublic)
+	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 			ESEConversionHelper.convertStringToDate(startDate), 
@@ -60,13 +60,11 @@ public class ESECalendar {
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
 			{
-				//throw new IllegalArgumentException("New event overlaps with existing event");
+				throw new IllegalArgumentException("New event overlaps with existing event");
 			}
 		}
 		this.eventList.add(newEvent);		
 	}
-	
-	
 	/*
 	 * Mir geht es einfach die Bootstrapt daten so einzugeben. Falls die methode
 	 * unerwünscht ist, bitte wieder löschen und Bootstrapt Events anpassen:
@@ -74,18 +72,10 @@ public class ESECalendar {
 	 * 
 	 * by Judith
 	 */
-	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			Date startDate, Date endDate, boolean isPublic)
+	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
-		ESEEvent newEvent = new ESEEvent(eventName, this, startDate, endDate, isPublic);		
-		for (ESEEvent existingEvent : this.eventList)
-		{
-			if (checkEventOverlaps(existingEvent, newEvent))
-			{
-				//throw new IllegalArgumentException("New event overlaps with existing event");
-			}
-		}
-		this.eventList.add(newEvent);		
+		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate), 
+				ESEConversionHelper.convertDateToString(endDate), isPublic);		
 	}	
 	
 	public void addEvent(ESEEvent event)
@@ -99,8 +89,6 @@ public class ESECalendar {
 		ESEEvent eventToRemove=this.getEventById(eventID);
 		this.eventList.remove(eventToRemove);
 	}
-	
-	
 
 	public ArrayList<ESEEvent> getAllAllowedEvents(){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
@@ -112,14 +100,14 @@ public class ESECalendar {
 	public ArrayList<ESEEvent> getAllPublicEvents() {
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
 		for (ESEEvent event : this.eventList){
-			if (event.isPublic() == true)
+			if (event.isPublic())
 				publicEventsList.add(event);
 		}
 		return publicEventsList;
 	}
 	
 	public ArrayList<ESEEvent> getAllEvents(){
-		return this.eventList;
+		return new ArrayList<ESEEvent>(this.eventList);
 	}
 	
 	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date){
@@ -143,13 +131,13 @@ public class ESECalendar {
 			if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) && 
 					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR))
 				eventsOfDay.add(event);
-			else if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == endCal.get(startCal.DAY_OF_YEAR) && 
-					dayAsCal.get(dayAsCal.YEAR) == endCal.get(startCal.YEAR))
+			else if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR) && 
+					dayAsCal.get(dayAsCal.YEAR) == endCal.get(endCal.YEAR))
 				eventsOfDay.add(event);
 			else if ((dayAsCal.get(dayAsCal.DAY_OF_YEAR) > startCal.get(startCal.DAY_OF_YEAR) && 
 					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR)) &&
-					(dayAsCal.get(dayAsCal.DAY_OF_YEAR) < endCal.get(startCal.DAY_OF_YEAR) && 
-							dayAsCal.get(dayAsCal.YEAR) == endCal.get(startCal.YEAR)))
+					(dayAsCal.get(dayAsCal.DAY_OF_YEAR) < endCal.get(endCal.DAY_OF_YEAR) && 
+							dayAsCal.get(dayAsCal.YEAR) == endCal.get(endCal.YEAR)))
 				eventsOfDay.add(event);
 		}
 		return eventsOfDay;
@@ -163,6 +151,97 @@ public class ESECalendar {
 				listOfPublicEvents.add(event);
 		}
 		return listOfPublicEvents;
+	}
+	
+	public List<Integer> getDaysFromThisMonth(int month) {
+		Calendar cal = new GregorianCalendar();
+		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		List<Integer> daysFromThisMonth = new ArrayList<Integer>();
+		for (int i=0; i < max; i++) {
+			daysFromThisMonth.add(i+1);
+		}
+		return daysFromThisMonth;
+	}
+	
+	public List<Integer> getDaysFromLastMonth(int month) {
+		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
+		Calendar thisMonth = new GregorianCalendar();
+		Calendar lastMonth = new GregorianCalendar();
+		thisMonth.set(Calendar.MONTH, month);
+		lastMonth.set(Calendar.MONTH, month-1);
+		
+		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
+		thisMonth.setFirstDayOfWeek(Calendar.MONDAY);
+		int start = thisMonth.get(Calendar.DAY_OF_WEEK);
+		
+		for (int i=max-start+1; i < max; i++) {
+			daysFromLastMonth.add(i+1);
+		}
+		return daysFromLastMonth;
+	}
+	
+	public List<Integer> getDaysFromNextMonth(int month) {
+		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
+		Calendar thisMonth = new GregorianCalendar();
+		Calendar nextMonth = new GregorianCalendar();
+		thisMonth.set(Calendar.MONTH, month);
+		nextMonth.set(Calendar.MONTH, month+1);
+		
+		int start = nextMonth.get(Calendar.DAY_OF_WEEK);
+		int max = 7-start;
+		
+		for (int i=0; i <= max; i++) {
+			daysFromNextMonth.add(i+1);
+		}
+		return daysFromNextMonth;
+	}
+	
+	public ArrayList<Integer> getEventDaysOfMonth(int month){
+		
+		System.out.println("IN DER METHODE");
+		
+		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
+		
+		for (ESEEvent event : this.getAllAllowedEvents()){
+			
+			Calendar startCal = new GregorianCalendar();
+			Calendar endCal = new GregorianCalendar();
+			startCal.setTime(event.getStartDate());
+			endCal.setTime(event.getEndDate());
+			
+			System.out.println(startCal.get(startCal.MONTH));
+			
+			if (startCal.get(startCal.MONTH) == month){
+				int startDay = startCal.get(startCal.DAY_OF_MONTH);
+				int endDay = endCal.get(endCal.DAY_OF_MONTH);
+				
+				int addDay = startDay;
+				while (addDay <= endDay){
+					eventDaysList.add(addDay);
+					addDay+=1;
+				}
+			}
+			else if (endCal.get(endCal.MONTH) == month){
+				int startDay = startCal.get(startCal.DAY_OF_MONTH);
+				int endDay = endCal.get(endCal.DAY_OF_MONTH);
+				
+				int addDay = endDay;
+				while (addDay >= startDay){
+					eventDaysList.add(addDay);
+					addDay-=1;
+				}
+			}
+			else if (startCal.get(startCal.MONTH) < month && endCal.get(endCal.MONTH) > month){
+				int addDay = 0;//= endDay;
+				while (addDay <= 31){ // if a month has only 28/30 days, it does not matter for the output, when 29,30,31 are included
+					eventDaysList.add(addDay);
+					addDay+=1;
+				}
+			}
+		}
+		
+		return eventDaysList;
 	}
 
 	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
@@ -212,7 +291,4 @@ public class ESECalendar {
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
 	}
-	
-	
-	
 }

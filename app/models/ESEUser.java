@@ -21,6 +21,14 @@ public class ESEUser {
 		
 		assert(username != "");
 
+		for(ESEUser user : ESEDatabase.getAllUsers())
+		{
+			if(username.equals(user.getName()))
+			{
+				throw new IllegalArgumentException("This username is already in the database");
+			}
+		}
+
 		this.userID = idCounter++;
 		this.calendarList = new ArrayList<ESECalendar>();
 		this.groupList = new ArrayList<ESEGroup>();
@@ -139,6 +147,16 @@ public class ESEUser {
 		throw new IllegalArgumentException("No group with this name "+ name);
 	}
 	
+	public void removeCalendarById(int calendarID)
+	{
+		//TODO
+	}
+
+	public void removeCalendarByName(String calendarname)
+	{
+		//TODO
+	}
+
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
 		for (ESECalendar calendar : this.calendarList){
 			if (calendar.getID() == calendarID)

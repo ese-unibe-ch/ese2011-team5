@@ -7,6 +7,12 @@
 		<p><a href=@{Application.showEvents(calendar.getID(),_currentUser.getName())}>${calendar.getCalendarName()} , ${calendar.getID()}</a></p>
 	#{/list}
 	
+	<--! just for testing purposes !-->
+	
+	#{list items:_calendarList, as:'calendar'}
+		<p><a href="@{Application.showCalendarView(calendar.getID(),_currentUser.getName(),11,0)}">${calendar.getCalendarName()}</a></p>
+	#{/list}
+	
 	add calendar:
 	
 	#{form @Application.addCalendar()}
