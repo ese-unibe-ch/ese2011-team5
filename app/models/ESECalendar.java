@@ -88,6 +88,11 @@ public class ESECalendar {
 		this.eventList.add(newEvent);		
 	}	
 	
+	public void addEvent(ESEEvent event)
+	{
+		this.eventList.add(event);
+	}
+	
 	
 	
 	public void removeEvent(int eventID){

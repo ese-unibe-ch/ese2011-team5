@@ -113,6 +113,16 @@ public class ESEUser {
 		throw new IllegalArgumentException("No calendar with this ID "+ id);
 	}
 	
+	public ESECalendar getCalendarByName(String name){
+		for (ESECalendar calendar : calendarList){
+			if (calendar.getCalendarName().equals(name))
+				System.out.println("FOUND CALENDAR!");
+				return calendar;
+		}
+		System.out.println("FOUND NO CALENDAR!");
+		throw new IllegalArgumentException("No calendar with this name "+ name);
+	} 
+	
 	public ESEGroup getGroupByID(int id){
 		for (ESEGroup group : groupList){
 			if (group.getGroupID() == id)

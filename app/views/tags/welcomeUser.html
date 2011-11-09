@@ -4,7 +4,7 @@
 	You have the following calendars:
 	
 	#{list items:_calendarList, as:'calendar'}
-		<p><a href=@{Application.showEvents(calendar.getID(),_currentUser.getName())}>${calendar.getCalendarName()}</a></p>
+		<p><a href=@{Application.showEvents(calendar.getID(),_currentUser.getName())}>${calendar.getCalendarName()} , ${calendar.getID()}</a></p>
 	#{/list}
 	
 	add calendar:

@@ -254,9 +254,38 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		render(currentUser, groups, otherUsers, calendarList);
-
+	}
+	/**
+	 * 
+	 * @param eventID
+	 * @param userID Of the other user
+	 * @param calendarID of the other user's calendar
+	 */
+	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2)
+	{
+//		ESEUser user=ESEDatabase.getUserByID(userID);
+//		ESECalendar calendar=user.getCalendarByID(calendarID);
+//		ESEEvent event=calendar.getEventById(eventID);
+		ESEUser currentUser=ESEDatabase.getCurrentUser();
+		int userID=userID2;
+		int eventID=eventID2;
+		int otherUserCalendarID=otherUserCalendarID2;
+		render(userID,otherUserCalendarID,eventID);
+	}
 	
-		
+	public static void doCopyEvent(int otherUserID , int otherUserCalendarID, int eventID, String selectedCalendarName)
+	{
+		System.out.println("selected calendarName: " + selectedCalendarName);
+		System.out.println("eventID " + eventID);
+		ESEUser user=ESEDatabase.getCurrentUser();
+		ESEUser otherUser=ESEDatabase.getUserByID(otherUserID);
+		ESECalendar selectedCalendar=user.getCalendarByName(selectedCalendarName);
+		ESECalendar otherCalendar=otherUser.getCalendarByID(otherUserCalendarID);
+		ESEEvent event=otherCalendar.getEventById(eventID);
+		System.out.println("cal" + selectedCalendar.getCalendarName() + "iD " + selectedCalendar.getID());
+		System.out.println("event " + event.getEventName());
+		event.addCorrespondingCalendar(selectedCalendar);
+		selectedCalendar.addEvent(event);
 	}
 
 }
