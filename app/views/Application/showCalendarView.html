@@ -1,0 +1,54 @@
+#{extends 'calendar.html' /}
+
+<body>
+<div id="wrapper">
+
+    <div id="centerCol">
+     
+	<h1>${monthString}</h1>
+	<h2>${calendar.getCalendarName()}</h2>
+	
+	
+	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getUserName(), month, selectedDay}">last Month</a>
+	
+	<ol class="calendar" start="6">
+		<li id="lastmonth">
+			<ul start="${startOfLastMonth}">
+				#{list items:daysFromLastMonth, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
+		</li>
+		<li id="thismonth">
+			<ul>
+				#{list items:daysFromThisMonth, as:'day'}
+				<!-- Unterscheidung des Layouts: normal | selektiert | heute -->
+					#{if day == selectedDay} 
+						<li class="selected">
+					#{/if}
+					#{elseif day == currentDay}
+						<li class="today">
+					#{/elseif}
+					#{else}
+						<li>
+					#{/else}
+							<!-- Unterscheidung vom Inhalt: Tag mit Events | Tag ohne Events -->
+							#{if eventDaysOfMonth.contains(day)}
+								<b>${day}</b>	
+							#{/if}
+							#{else}
+								${day}
+							#{/else}
+						</li>
+				#{/list}
+			</ul>
+		</li>
+		<li id="nextmonth">
+			<ul>
+				#{list items:daysFromNextMonth, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
+		</li>
+	</ol>
+		
