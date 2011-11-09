@@ -9,8 +9,8 @@
 	<h2>${calendar.getCalendarName()}</h2>
 	
 	
-	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getUserName(), month, selectedDay}">last Month</a>
-	
+	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getName(), month, selectedDay)}">last Month</a>
+
 	<ol class="calendar" start="6">
 		<li id="lastmonth">
 			<ul start="${startOfLastMonth}">
