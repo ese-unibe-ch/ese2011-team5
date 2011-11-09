@@ -2,6 +2,7 @@ package controllers;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -31,7 +32,14 @@ public class Application extends Controller {
 	        params.flash();
 		}
 		
+		
 		render(currentUser, groups, otherUsers, calendarList);
+	}
+	
+	public static void betweenShowCalendarsAndShowCalendarView(int calendarID, String currentUser){
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+		showCalendarView(calendarID, currentUser,100,currentMonth,currentYear);		
 	}
 
 	
@@ -59,13 +67,22 @@ public class Application extends Controller {
 		showCalendars();
 	}
 	
-	public static void showCalendarView(int calendarID, String username, int selectedDay, int month, int year){
+	public static void showCalendarView(int calendarID, String username, int selectedDay, 
+			int month, int year){
+		
+		if (month == 12){
+			month = 0;
+			year++;
+		}
+		if (month == -1){
+			month = 11;
+			year--;
+		}
+		
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		
-		//month = Calendar.getInstance().get(Calendar.MONTH); /////////////////////////////////////////////////7
 		int currentDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		
 		
 		SimpleDateFormat dfs = new SimpleDateFormat();
     	String monthString = dfs.getDateFormatSymbols().getMonths()[month];
@@ -81,14 +98,14 @@ public class Application extends Controller {
 		if(!daysFromLastMonth.isEmpty())
 			startOfLastMonth = daysFromLastMonth.get(0);
         
-        //List<ESEEvent> events = calendar.getAllAllowedEvents();
-        
+		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
         ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
+        ArrayList<String> weekdays = getWeekDays();
         
-        
-        render(currentUser, calendar, month, monthString, 
+        render(currentUser, calendar, events, month, monthString, 
         		startOfLastMonth, daysFromLastMonth, daysFromThisMonth, 
-        		daysFromNextMonth, currentDay, eventDaysOfMonth, selectedDay);
+        		daysFromNextMonth, eventDaysOfMonth, selectedDay,
+        		weekdays, currentDay, year);
 		
 	}
 
@@ -283,9 +300,13 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		render(currentUser, groups, otherUsers, calendarList);
-
+	}
 	
-		
+	private static ArrayList<String> getWeekDays(){
+		String[] weekdaysArray = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
+		//List<String> weekdays = new ArrayList<String>();
+		ArrayList<String> weekdays = new ArrayList(Arrays.asList(weekdaysArray));
+		return weekdays;
 	}
 
 }
