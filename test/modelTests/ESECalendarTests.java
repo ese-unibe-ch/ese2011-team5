@@ -47,15 +47,13 @@ public class ESECalendarTests extends UnitTest {
 	}
 
 	@Test
-	public void shouldInitialize() {
+	public void shouldInitialize() {		
 		assertTrue(this.cal1 != null);
 		assertTrue(this.cal1.getAllEvents() != null);
-		assertEquals(0, this.cal1.getID());
 		assertEquals(this.ownerDummy, this.cal1.getOwner());
 
 		assertTrue(this.cal2 != null);
 		assertTrue(this.cal2.getAllEvents() != null);
-		assertEquals(1, this.cal2.getID());
 		assertEquals(this.ownerDummy, this.cal2.getOwner());
 	}
 
@@ -155,4 +153,19 @@ public class ESECalendarTests extends UnitTest {
 		assertTrue(this.cal1.getAllPublicEvents().get(0).getEventName().equals("Testevent1"));
 	}
 
+	@Test
+	public void shouldGetAllDaysWithEvents() {
+		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
+		
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(13));
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(14));
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(15));
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(16));
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(17));
+		assertTrue(cal1.getEventDaysOfMonth(3).contains(18));
+	}
+
+	
 }

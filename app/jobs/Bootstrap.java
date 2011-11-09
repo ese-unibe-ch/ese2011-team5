@@ -44,17 +44,17 @@ public class Bootstrap extends Job
 		
 		/*Add events*/
 		ArrayList<ESECalendar> cals1 = user1.getCalendarList();
-		cals1.get(0).addEvent("E1ofUser1pub", "13.04.2011 14:00", "14.04.2011 13:00", true);
-		cals1.get(1).addEvent("E2ofUser1pub", "14.04.2011 14:00", "15.04.2011 13:00", true);
-		cals1.get(1).addEvent("E3ofUser1priv", "15.04.2011 14:00", "16.04.2011 13:00", false);
+		cals1.get(0).addEvent("E1ofUser1pub", "13.11.2011 14:00", "14.11.2011 13:00", true);
+		cals1.get(1).addEvent("E2ofUser1pub", "14.11.2011 14:00", "15.11.2011 13:00", true);
+		cals1.get(1).addEvent("E3ofUser1priv", "15.11.2011 14:00", "16.11.2011 13:00", false);
 		ArrayList<ESECalendar> cals2 = user2.getCalendarList();
-		cals2.get(0).addEvent("E1ofUser2pub", "13.04.2011 14:00", "14.04.2011 13:00", true);
-		cals2.get(1).addEvent("E2ofUser2pub", "14.04.2011 14:00", "15.04.2011 13:00", true);
-		cals2.get(1).addEvent("E3ofUser2priv", "15.04.2011 14:00", "16.04.2011 13:00", false);
+		cals2.get(0).addEvent("E1ofUser2pub", "13.11.2011 14:00", "14.11.2011 13:00", true);
+		cals2.get(1).addEvent("E2ofUser2pub", "14.11.2011 14:00", "15.11.2011 13:00", true);
+		cals2.get(1).addEvent("E3ofUser2priv", "15.11.2011 14:00", "16.11.2011 13:00", false);
 		ArrayList<ESECalendar> cals3 = user3.getCalendarList();
-		cals3.get(0).addEvent("E1ofUser3pub", "23.04.2011 14:00", "24.04.2011 13:00", true);
-		cals3.get(1).addEvent("E2ofUser3pub", "24.04.2011 14:00", "25.04.2011 13:00", true);
-		cals3.get(1).addEvent("E3ofUser3priv", "25.04.2011 14:00", "26.04.2011 13:00", false);
+		cals3.get(0).addEvent("E1ofUser3pub", "23.11.2011 14:00", "24.11.2011 13:00", true);
+		cals3.get(1).addEvent("E2ofUser3pub", "24.11.2011 14:00", "25.11.2011 13:00", true);
+		cals3.get(1).addEvent("E3ofUser3priv", "25.11.2011 14:00", "26.11.2011 13:00", false);
 		
 		/*Add groups*/
 		user1.addGroup("1Testgroup1");
