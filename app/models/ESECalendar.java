@@ -50,10 +50,9 @@ public class ESECalendar {
 	}
 	
 
-	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
+	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
-		ESEEvent newEvent = new ESEEvent(eventName, correspondingCalendar,
+		ESEEvent newEvent = new ESEEvent(eventName, this,
 			ESEConversionHelper.convertStringToDate(startDate), 
 			ESEConversionHelper.convertStringToDate(endDate), isPublic);		
 		for (ESEEvent existingEvent : this.eventList)
@@ -72,11 +71,9 @@ public class ESECalendar {
 	 * 
 	 * by Judith
 	 */
-	public void addEvent(String eventName, ESECalendar correspondingCalendar, 
-			Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
+	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
 	{
-		this.addEvent(eventName, correspondingCalendar,
-				ESEConversionHelper.convertDateToString(startDate), 
+		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate), 
 				ESEConversionHelper.convertDateToString(endDate), isPublic);		
 	}	
 	

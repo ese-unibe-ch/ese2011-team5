@@ -21,6 +21,14 @@ public class ESEUser {
 		
 		assert(username != "");
 
+		for(ESEUser user : ESEDatabase.getAllUsers())
+		{
+			if(username.equals(user.getName()))
+			{
+				throw new IllegalArgumentException("This username is already in the database");
+			}
+		}
+
 		this.userID = idCounter++;
 		this.calendarList = new ArrayList<ESECalendar>();
 		this.groupList = new ArrayList<ESEGroup>();

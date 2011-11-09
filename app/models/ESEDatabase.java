@@ -138,7 +138,7 @@ public class ESEDatabase {
 		throw new IllegalArgumentException("No such user exists");
 	}
 
-	public void removeUserByID(int userID) throws IllegalArgumentException {
+	public static void removeUserByID(int userID) throws IllegalArgumentException {
 		for (ESEUser user : userList) {
 			if (user.getUserID() == userID)
 			{
@@ -149,18 +149,22 @@ public class ESEDatabase {
 		throw new IllegalArgumentException("No user with this ID");
 	}
 
-	public ESEUser findUser(String username) throws IllegalArgumentException, PatternSyntaxException
+	public static ArrayList<ESEUser> findUser(String username) throws PatternSyntaxException
 	{
 		Pattern searchPattern = Pattern.compile(username.toLowerCase());
-		for(ESEUser user : this.getAllUsers())
+		//Pattern searchPattern = Pattern.compile(username.toLowerCase().replaceAll("\\?", "\\.").replaceAll("\\*", "\\.\\*"));
+		
+		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
+		for(ESEUser user : userList)
 		{
 			Matcher m = searchPattern.matcher(user.getName().toLowerCase());
 			if(m.matches())
-				{
-					return user;
-				}
+			//if(user.getName().toLowerCase().matches(searchPattern))
+			{
+				matchingUsers.add(user);
+			}
 		}
-		throw new IllegalArgumentException("No user matches");
+		return matchingUsers;
 	}
 
 	/*
@@ -195,6 +199,4 @@ public class ESEDatabase {
 		}
 		return users;
 	}
-	
-		
 }

@@ -62,4 +62,4 @@ tmp/**/*
 eclipse/*.launch
 
 # cobertura
-cobertura.ser
+/cobertura.ser

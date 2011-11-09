@@ -91,8 +91,8 @@ public class ESECalendarTests extends UnitTest {
 		System.out.println("other: "+other.getID());
 
 		// Error occurs here, when corresponding calendar is different
-		first.addEvent("FirstInSecond", second, "7.11.2001 18:00", "7.11.2001 18:00", true);
-		first.addEvent("FirstInOther", other, new Date(), new Date(), true);
+		first.addEvent("FirstInSecond", "7.11.2001 18:00", "7.11.2001 18:00", true);
+		first.addEvent("FirstInOther", new Date(), new Date(), true);
 
 		assertEquals(0, second.getAllEvents().size());
 		assertEquals(0, other.getAllEvents().size());
@@ -127,7 +127,7 @@ public class ESECalendarTests extends UnitTest {
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent5", this.cal1, "19.04.2011 12:00", "21.04.2011 14:00", true);
+		this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 
 		assertEquals(1, this.cal1.getAllEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllEventsOfDay("14.04.2011 13:50").size());
@@ -143,7 +143,7 @@ public class ESECalendarTests extends UnitTest {
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 		this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent5", this.cal1, "19.04.2011 12:00", "21.04.2011 14:00", true);
+		this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 		
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("13.04.2011 13:50").size());
 		assertEquals(1, this.cal1.getAllPublicEventsOfDay("14.04.2011 13:50").size());
@@ -198,32 +198,32 @@ public class ESECalendarTests extends UnitTest {
 	public void shouldAvoidOverlappingEvents()
 	{
 		ESECalendar testCal = new ESECalendar("OverlapTest", this.ownerDummy);
-		testCal.addEvent("Reference Event", testCal, "4.11.2011 16:00", "11.11.2011 18:00", true);
+		testCal.addEvent("Reference Event", "4.11.2011 16:00", "11.11.2011 18:00", true);
 
 		try
 		{
-			testCal.addEvent("StartDate conflict", testCal, "7.11.2011 16:00", "14.11.2011 18:00", true);
+			testCal.addEvent("StartDate conflict", "7.11.2011 16:00", "14.11.2011 18:00", true);
 			fail("StartDate conflict expected");
 		}
 		catch (IllegalArgumentException e)
 		{}
 		try
 		{		
-			testCal.addEvent("EndDate conflict", testCal, "1.11.2011 16:00", "7.11.2011 18:00", true);
+			testCal.addEvent("EndDate conflict", "1.11.2011 16:00", "7.11.2011 18:00", true);
 			fail("EndDate conflict expected");
 		}
 		catch (IllegalArgumentException e)
 		{}
 		try
 		{
-			testCal.addEvent("Contains conflict", testCal, "7.11.2011 16:00", "8.11.2011 18:00", true);
+			testCal.addEvent("Contains conflict", "7.11.2011 16:00", "8.11.2011 18:00", true);
 			fail("Contains conflict expected");
 		}
 		catch (IllegalArgumentException e)
 		{}
 		try
 		{
-			testCal.addEvent("Subset conflict", testCal, "1.11.2011 16:00", "16.11.2011 18:00", true);
+			testCal.addEvent("Subset conflict", "1.11.2011 16:00", "16.11.2011 18:00", true);
 			fail("Subset conflict expected");
 		}
 		catch (IllegalArgumentException e)
