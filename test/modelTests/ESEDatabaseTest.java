@@ -11,19 +11,6 @@ public class ESEDatabaseTest
 	ESEDatabase DBInstance;
 	ESEUser setupUser;
 
-	@Before
-	public void setUp()
-	{
-		this.DBInstance = ESEDatabase.getInstance();
-		assert this.DBInstance != null;
-		if(this.DBInstance.isEmpty())
-		{
-			this.DBInstance.createUser("DB User", "pw", "firstName", "familyName");
-			assertEquals(1, this.DBInstance.getAllUsers().size());
-		}
-		this.setupUser = this.DBInstance.getAllUsers().get(0);
-	}
-
 	@Test
 	public void shouldReturnCorrectUser()
 	{
