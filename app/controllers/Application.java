@@ -19,8 +19,6 @@ public class Application extends Controller {
 
 	private static boolean validLogin = true;
 	
-	private static int additionalMonthsCumulated = 0;
-
 	public static void showCalendars() {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -61,13 +59,11 @@ public class Application extends Controller {
 		showCalendars();
 	}
 	
-	public static void showCalendarView(int calendarID, String username, int selectedDay, int additionalMonths){
+	public static void showCalendarView(int calendarID, String username, int selectedDay, int month, int year){
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		
-		additionalMonthsCumulated += additionalMonths;
-		
-		int month = Calendar.getInstance().get(Calendar.MONTH) + additionalMonthsCumulated;
+		//month = Calendar.getInstance().get(Calendar.MONTH); /////////////////////////////////////////////////7
 		int currentDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
 		
@@ -77,9 +73,9 @@ public class Application extends Controller {
 		
 		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-		daysFromLastMonth =	calendar.getDaysFromLastMonth(month);
-		daysFromNextMonth = calendar.getDaysFromNextMonth(month);
-		List<Integer> daysFromThisMonth =  calendar.getDaysFromThisMonth(month);
+		daysFromLastMonth =	calendar.getDaysFromLastMonth(month, year);
+		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
+		List<Integer> daysFromThisMonth =  calendar.getDaysFromThisMonth(month, year);
         
 		int startOfLastMonth = 0; //NOCH ANPASSEN
 		if(!daysFromLastMonth.isEmpty())

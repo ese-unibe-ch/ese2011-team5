@@ -146,7 +146,7 @@ public class ESECalendar {
 		return listOfPublicEvents;
 	}
 	
-	public List<Integer> getDaysFromThisMonth(int month) {
+	public List<Integer> getDaysFromThisMonth(int month, int year) {
 		Calendar cal = new GregorianCalendar();
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		
@@ -157,42 +157,35 @@ public class ESECalendar {
 		return daysFromThisMonth;
 	}
 	
-	public List<Integer> getDaysFromLastMonth(int month) {
+	public List<Integer> getDaysFromLastMonth(int month, int year) {
 		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
 		Calendar thisMonth = new GregorianCalendar();
 		Calendar lastMonth = new GregorianCalendar();
 		thisMonth.set(Calendar.MONTH, month);
+		thisMonth.set(Calendar.YEAR, 2011);
 		lastMonth.set(Calendar.MONTH, month-1);
 		
-		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		thisMonth.setFirstDayOfWeek(Calendar.MONDAY);
+		thisMonth.set(Calendar.DAY_OF_MONTH,1);
+		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int start = thisMonth.get(Calendar.DAY_OF_WEEK);
 		
-		for (int i=max-start+1; i < max; i++) {
+		for (int i=max-start+2; i < max; i++) {
 			daysFromLastMonth.add(i+1);
 		}
 		return daysFromLastMonth;
 	}
 	
-	public List<Integer> getDaysFromNextMonth(int month) {
+	public List<Integer> getDaysFromNextMonth(int month, int year) {
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-		Calendar thisMonth = new GregorianCalendar();
-		Calendar nextMonth = new GregorianCalendar();
-		thisMonth.set(Calendar.MONTH, month);
-		nextMonth.set(Calendar.MONTH, month+1);
-		
-		int start = nextMonth.get(Calendar.DAY_OF_WEEK);
-		int max = 7-start;
-		
-		for (int i=0; i <= max; i++) {
-			daysFromNextMonth.add(i+1);
-		}
+		int daysToAdd = 7 - (this.getDaysFromThisMonth(month, year).size() 
+				+ this.getDaysFromLastMonth(month, year).size())%7 ;
+		for(int i=1; i <= daysToAdd; i++)
+			daysFromNextMonth.add(i);
 		return daysFromNextMonth;
 	}
 	
 	public ArrayList<Integer> getEventDaysOfMonth(int month){
-		
-		System.out.println("IN DER METHODE");
 		
 		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
 		
@@ -202,8 +195,6 @@ public class ESECalendar {
 			Calendar endCal = new GregorianCalendar();
 			startCal.setTime(event.getStartDate());
 			endCal.setTime(event.getEndDate());
-			
-			System.out.println(startCal.get(startCal.MONTH));
 			
 			if (startCal.get(startCal.MONTH) == month){
 				int startDay = startCal.get(startCal.DAY_OF_MONTH);
