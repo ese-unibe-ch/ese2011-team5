@@ -99,10 +99,12 @@ public class ESEUser {
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
-	public void addGroup(String groupName) {
-		this.groupList.add(new ESEGroup(groupName, this));
+	public void addGroup(String groupName) 
+	{
+		ESEGroup group=new ESEGroup(groupName, this);
+		this.groupList.add(group);
 	}
-	
+		
 	public ESECalendar getCalendarByID(int id){
 		for (ESECalendar calendar : calendarList){
 			if (calendar.getID() == id)
@@ -111,12 +113,30 @@ public class ESEUser {
 		throw new IllegalArgumentException("No calendar with this ID "+ id);
 	}
 	
+	public ESECalendar getCalendarByName(String name){
+		for (ESECalendar calendar : calendarList){
+			if (calendar.getCalendarName().equals(name))
+				System.out.println("FOUND CALENDAR!");
+				return calendar;
+		}
+		System.out.println("FOUND NO CALENDAR!");
+		throw new IllegalArgumentException("No calendar with this name "+ name);
+	} 
+	
 	public ESEGroup getGroupByID(int id){
 		for (ESEGroup group : groupList){
 			if (group.getGroupID() == id)
 				return group;
 		}
 		throw new IllegalArgumentException("No group with this ID "+ id);
+	}
+	
+	public ESEGroup getGroupByName(String name){
+		for (ESEGroup group : groupList){
+			if (group.getGroupName().equals(name))
+				return group;
+		}
+		throw new IllegalArgumentException("No group with this name "+ name);
 	}
 	
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException {
