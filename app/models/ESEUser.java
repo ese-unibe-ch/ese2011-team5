@@ -144,7 +144,7 @@ public class ESEUser
 	{
 		for (ESEGroup group : groupList)
 		{
-			if (group.getGroupname().equals(name))
+			if (group.getGroupName().equals(name))
 				return group;
 		}
 		throw new IllegalArgumentException("No group with this name " + name);
