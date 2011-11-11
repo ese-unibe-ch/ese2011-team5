@@ -28,10 +28,16 @@ public class ESEProfile
 	private String city = "-";
 	private String postCode = "-";
 
-	public ESEProfile(ESEUser owner, String username, String firstName, String familyName)
+	public ESEProfile(ESEUser owner, String username, String firstName, String familyName) throws ESEException
 	{
-		assert username != "";
-		assert(owner != null);
+		if(username == "")
+		{
+			throw new ESEException("Profile user name must not be empty!");
+		}
+		if(owner == null)
+		{
+			throw new ESEException("Profile is not assigned to any user!");
+		}
 
 		this.profileID = idCounter++;
 		this.owner = owner;
@@ -144,7 +150,7 @@ public class ESEProfile
 	
 	public void setBirthday(String birthday)
 	{
-		Date birthdayDate=ESEConversionHelper.convertBirthdayStringToDate(birthday);
+		Date birthdayDate = ESEConversionHelper.convertBirthdayStringToDate(birthday);
 		this.setBirthday(birthdayDate);
 	}
 

@@ -2,8 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 
-import models.ESECalendar;
-import models.ESEEvent;
+import models.*;
 
 import play.*;
 import play.mvc.*;
@@ -16,5 +15,4 @@ public class CalendarController extends Controller{
 		eventList = calendar.getAllAllowedEvents();
 		render(eventList);
 	}
-
 }

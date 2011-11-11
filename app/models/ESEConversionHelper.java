@@ -29,19 +29,18 @@ public class ESEConversionHelper
 	
 	public static Date convertBirthdayStringToDate(String userDateString) 
 	{
-				
 		String birthdayFormat = "dd.MM.yyyy";
 
 		DateTimeFormatter dateTimeConvert = DateTimeFormat.forPattern(birthdayFormat);
-		try{
+		try
+		{
 			DateTime dateTimeParser = dateTimeConvert.parseDateTime(userDateString);
 			return dateTimeParser.toDate();
 		}
-		catch(Exception e)
+		catch(IllegalArgumentException e)
 		{
 			return null;
 		}
-		
 	}
 
 	/** Converts a {@link Date} to a {@link String} value.

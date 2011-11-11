@@ -11,7 +11,7 @@ public class ESEGroupTests
 	ESEGroup group1, group2;
 
 	@Before
-	public void setUp()
+	public void setUp() throws ESEException
 	{
 		if(ESEDatabase.getAllUsers().size() == 0)
 		{
@@ -41,14 +41,14 @@ public class ESEGroupTests
 		assertTrue(this.group2 != null);
 		assertEquals(5, this.group1.getGroupID());
 		assertEquals(6, this.group2.getGroupID());
-		assertEquals("Testgroup1", this.group1.getGroupname());
-		assertEquals("Testgroup2", this.group2.getGroupname());
+		assertEquals("Testgroup1", this.group1.getGroupName());
+		assertEquals("Testgroup2", this.group2.getGroupName());
 		assertEquals(this.dummyOwner, this.group1.getOwner());
 		assertEquals(this.otherDummyOwner, this.group2.getOwner());
 	}
 
 	@Test
-	public void shouldAddUserToGroup()
+	public void shouldAddUserToGroup() throws ESEException
 	{
 		assertEquals(0, this.group1.getUserList().size());
 		assertEquals(0, this.group2.getUserList().size());
@@ -71,7 +71,7 @@ public class ESEGroupTests
 	}
 
 	@Test
-	public void shouldRemoveUserFromGroup()
+	public void shouldRemoveUserFromGroup() throws ESEException
 	{
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());

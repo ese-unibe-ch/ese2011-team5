@@ -15,10 +15,16 @@ public class ESECalendar
 	private ESEUser owner;
 	private ArrayList<ESEEvent> eventList;
 
-	public ESECalendar(String calendarName, ESEUser owner)
+	public ESECalendar(String calendarName, ESEUser owner) throws ESEException
 	{
-		assert calendarName != "";
-		assert(owner != null);
+		if(calendarName == "")
+		{
+			throw new ESEException("Calendar name must not be empty!");
+		}
+		if(owner == null)
+		{
+			throw new ESEException("Calendar is not assigned to any user!");
+		}
 
 		this.calendarID = idCounter++;
 		this.eventList = new ArrayList<ESEEvent>();
@@ -41,7 +47,7 @@ public class ESECalendar
 		return this.owner;
 	}
 
-	public ESEEvent getEventByID(int id)
+	public ESEEvent getEventByID(int id) throws ESEException
 	{
 		for(ESEEvent e: this.eventList)
 		{
@@ -50,11 +56,12 @@ public class ESECalendar
 				return e;
 			}
 		}
-		throw new IllegalArgumentException("No event with this ID");
+		throw new ESEException("No event with this ID");
 	}
 
-	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
+	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
 	{
+		Boolean eventOverlaps = false;
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 				ESEConversionHelper.convertStringToDate(startDate),
 				ESEConversionHelper.convertStringToDate(endDate), isPublic);
@@ -62,13 +69,18 @@ public class ESECalendar
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
 			{
-				throw new IllegalArgumentException("New event overlaps with existing event");
+				eventOverlaps = true;
 			}
 		}
 		this.eventList.add(newEvent);
+		if(eventOverlaps)
+		{
+			throw new ESEException("New event overlaps with existing event");
+		}
 	}
 
-	public void addOverlappingEvent(String eventName, String startDate, String endDate, boolean isPublic) throws AssertionError
+	/*
+	public void addOverlappingEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 				ESEConversionHelper.convertStringToDate(startDate),
@@ -77,11 +89,12 @@ public class ESECalendar
 		{
 			addEvent(eventName, startDate, endDate, isPublic);
 		}
-		catch(IllegalArgumentException e)
+		catch(ESEException e)
 		{
 			this.eventList.add(newEvent);
 		}
 	}
+	*/
 
 	/*
 	 * Mir geht es einfacher die Bootstrap Daten so einzugeben. Falls die Methode
@@ -90,7 +103,7 @@ public class ESECalendar
 	 *
 	 * by Judith
 	 */
-	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException
+	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws ESEException
 	{
 		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate),
 				ESEConversionHelper.convertDateToString(endDate), isPublic);
@@ -104,7 +117,7 @@ public class ESECalendar
 		}
 	}
 
-	public void removeEvent(int eventID)
+	public void removeEvent(int eventID) throws ESEException
 	{
 		ESEEvent eventToRemove = this.getEventByID(eventID);
 		this.eventList.remove(eventToRemove);
