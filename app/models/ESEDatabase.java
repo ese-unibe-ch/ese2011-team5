@@ -154,25 +154,6 @@ public class ESEDatabase
 		throw new IllegalArgumentException("No user with this ID");
 	}
 
-	public static ArrayList<ESEUser> findUser(String username) throws PatternSyntaxException
-	{
-		Pattern searchPattern = Pattern.compile(username.toLowerCase());
-		//Pattern searchPattern = Pattern.compile(username.toLowerCase().replaceAll("\\?", "\\.").replaceAll("\\*", "\\.\\*"));
-
-		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
-		for(ESEUser user : userList)
-		{
-			Matcher m = searchPattern.matcher(user.getName().toLowerCase());
-			if(m.matches())
-			//if(user.getName().toLowerCase().matches(searchPattern))
-			//if(user.getName().toLowerCase().matches(username.toLowerCase()))
-			{
-				matchingUsers.add(user);
-			}
-		}
-		return matchingUsers;
-	}
-
 	/*
 	 * Getters for ALL ESEUsers, ALL ESECalendars etc.
 	 */
@@ -182,24 +163,15 @@ public class ESEDatabase
 		return new ArrayList<ESEUser>(userList);
 	}
 
-	/*
-	 * public static ArrayList<ESECalendar> getAllCalendars(){ return
-	 * calendarList; }
-	 *
-	 * public static ArrayList<ESEEvent> getAllEvents(){ return eventList; }
-	 *
-	 * public static ArrayList<ESEGroup> getAllGroups(){ return groupList; }
-	 */
-
-	public static ArrayList<ESEUser> searchOtherUserByName(String name)
+	public static ArrayList<ESEUser> findUser(String username)
 	{
 		ArrayList<ESEUser> users = new ArrayList<ESEUser>();
 
-		CharSequence sequence = new String(name);
+		CharSequence sequence = new String(username.toLowerCase());
 
 		for(ESEUser user:userList)
 		{
-			if(user.getName().contains(sequence) && !user.equals(currentUser))
+			if(user.getName().toLowerCase().contains(sequence) && !user.equals(currentUser))
 			{
 				users.add(user);
 			}
