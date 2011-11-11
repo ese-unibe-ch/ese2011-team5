@@ -121,11 +121,19 @@ public class ESEUser
 		}
 		throw new IllegalArgumentException("No calendar with this ID " + id);
 	}
-
-	public ESEGroup getGroupByID(int id)
-	{
-		for (ESEGroup group : groupList)
-		{
+	
+	public ESECalendar getCalendarByName(String name){
+		for (ESECalendar calendar : calendarList){
+			if (calendar.getCalendarName().equals(name))
+				System.out.println("FOUND CALENDAR!");
+				return calendar;
+		}
+		System.out.println("FOUND NO CALENDAR!");
+		throw new IllegalArgumentException("No calendar with this name "+ name);
+	} 
+	
+	public ESEGroup getGroupByID(int id){
+		for (ESEGroup group : groupList){
 			if (group.getGroupID() == id)
 				return group;
 		}
@@ -136,7 +144,7 @@ public class ESEUser
 	{
 		for (ESEGroup group : groupList)
 		{
-			if (group.getGroupname().equals(name))
+			if (group.getGroupName().equals(name))
 				return group;
 		}
 		throw new IllegalArgumentException("No group with this name " + name);
@@ -192,4 +200,15 @@ public class ESEUser
 	{
 		this.password = newPassword;
 	}
+	
+	public void setQuestion(String newQuestion)
+	{
+		this.secureQuestion=newQuestion;
+	}
+	
+	public void setAnswer(String newAnswer)
+	{
+		this.secureAnswer=newAnswer;
+	}
+
 }

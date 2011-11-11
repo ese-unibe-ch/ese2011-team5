@@ -12,7 +12,9 @@ public class ESEEvent implements Comparable<ESEEvent>
 
 	private int eventID;
 	private String eventName;
-	private ESECalendar correspondingCalendar;
+	private ArrayList<ESECalendar> correspondingCalendars;
+	private ESECalendar originsCalendar;
+	private ArrayList<ESEUser> participants;
 	private Date startDate;
 	private Date endDate;
 	private boolean isPublic;
@@ -30,10 +32,15 @@ public class ESEEvent implements Comparable<ESEEvent>
 
 		this.eventID = idCounter++;
 		this.eventName = eventName;
-		this.correspondingCalendar = correspondingCalendar;
+		this.correspondingCalendars=new ArrayList<ESECalendar>();
+		this.correspondingCalendars.add(correspondingCalendar);
+		this.originsCalendar=correspondingCalendar;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.isPublic = isPublic;
+		
+		this.participants=new ArrayList<ESEUser>();
+		this.participants.add(correspondingCalendar.getOwner());
 
 	}
 	
@@ -85,9 +92,28 @@ public class ESEEvent implements Comparable<ESEEvent>
 		return this.eventName;
 	}
 
-	public ESECalendar getCorrespondingCalendar()
+	public ESECalendar getCorrespondingCalendar() {
+		return this.originsCalendar;
+	}
+	
+	public void addCorrespondingCalendar(ESECalendar calendar)
 	{
-		return this.correspondingCalendar;
+		if(!this.correspondingCalendars.contains(calendar))
+		{
+			this.correspondingCalendars.add(calendar);
+		}
+	}
+	
+	public ESECalendar getOneCorresponding(int id)
+	{
+		for(ESECalendar calendar:this.correspondingCalendars)
+		{
+			if(calendar.getID()==id)
+			{
+				return calendar;
+			}
+		}
+		return null;
 	}
 
 	public Date getStartDate()
@@ -99,7 +125,26 @@ public class ESEEvent implements Comparable<ESEEvent>
 	{
 		return this.endDate;
 	}
-
+	
+	public void copyEvent(ESECalendar correspondingCalendar)
+	{
+		if(!this.correspondingCalendars.contains(correspondingCalendar));
+		{
+				this.correspondingCalendars.add(correspondingCalendar);
+		}
+	
+	}
+	
+	public void removeCopiedEvent(ESECalendar correspondingCalendar)
+	{
+		if(this.correspondingCalendars.contains(correspondingCalendar));
+		{
+				this.correspondingCalendars.remove(correspondingCalendar);
+		}
+	}
+	
+	
+	
 	public String getStringEndDate()
 	{
 		return ESEConversionHelper.convertDateToString(this.endDate);

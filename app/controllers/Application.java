@@ -20,6 +20,8 @@ public class Application extends Controller {
 
 	private static boolean validLogin = true;
 	
+	private static int additionalMonthsCumulated = 0;
+
 	public static void showCalendars() {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -57,7 +59,7 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		for (ESECalendar calendar : calendarList)
 			System.out.println(calendar.getID());
-		render(currentUser, otherUsers, calendarList, groups);
+		render(currentUser, otherUsers, otherUser, calendarList, groups);
 	}
 
 	public static void addCalendar(String calendarName) {
@@ -289,7 +291,8 @@ public class Application extends Controller {
 	{
 		
 		System.out.println("SEARCH FOR: "+ searchName);
-		ArrayList<ESEUser> otherUsers = ESEDatabase.searchOtherUserByName(searchName);
+		//ArrayList<ESEUser> otherUsers = ESEDatabase.searchOtherUserByName(searchName); OLD VERSION
+		ArrayList<ESEUser> otherUsers = ESEDatabase.findUser(searchName);
 		
 		System.out.println("SEARCH RESULT:");
 		for(ESEUser user:otherUsers)
@@ -303,11 +306,132 @@ public class Application extends Controller {
 
 		render(currentUser, groups, otherUsers, calendarList);
 	}
+	/**
+	 * 
+	 * @param eventID
+	 * @param userID Of the other user
+	 * @param calendarID of the other user's calendar
+	 */
+	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2)
+	{
+//		ESEUser user=ESEDatabase.getUserByID(userID);
+//		ESECalendar calendar=user.getCalendarByID(calendarID);
+//		ESEEvent event=calendar.getEventById(eventID);
+		ESEUser currentUser=ESEDatabase.getCurrentUser();
+		int userID=userID2;
+		int eventID=eventID2;
+		int otherUserCalendarID=otherUserCalendarID2;
+		render(userID,otherUserCalendarID,eventID);
+	}
+	
+	public static void doCopyEvent(int otherUserID , int otherUserCalendarID, int eventID, String selectedCalendarName)
+	{
+		System.out.println("selected calendarName: " + selectedCalendarName);
+		System.out.println("eventID " + eventID);
+		ESEUser user=ESEDatabase.getCurrentUser();
+		ESEUser otherUser=ESEDatabase.getUserByID(otherUserID);
+		ESECalendar selectedCalendar=user.getCalendarByName(selectedCalendarName);
+		ESECalendar otherCalendar=otherUser.getCalendarByID(otherUserCalendarID);
+		ESEEvent event=otherCalendar.getEventByID(eventID);
+		System.out.println("cal" + selectedCalendar.getCalendarName() + "iD " + selectedCalendar.getID());
+		System.out.println("event " + event.getEventName());
+		event.addCorrespondingCalendar(selectedCalendar);
+		selectedCalendar.addEvent(event);
+	}
+
 	
 	private static ArrayList<String> getWeekDays(){
 		String[] weekdaysArray = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
 		//List<String> weekdays = new ArrayList<String>();
 		ArrayList<String> weekdays = new ArrayList(Arrays.asList(weekdaysArray));
 		return weekdays;
+	}
+
+	public static void editProfile()
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		
+		render(currentUser, groups, otherUsers, calendarList);
+	}
+	
+	public static void doEditProfile(@Required int userID, String firstName, String familyName, String birthday, String mail,String stateMessage, String street, String city, String postcode, String password, String confirmpassword, String question, String answer )
+	{
+		ESEUser user=ESEDatabase.getUserByID(userID);
+		ESEProfile profile=user.getProfile();
+
+		
+		System.out.println("BIRTHDAY IS: " + birthday);
+		
+		if(isStringNotEmpty(birthday))
+		{
+			profile.setBirthday(birthday);
+		}
+		if(isStringNotEmpty(city))
+		{
+		profile.setCity(city);
+		}
+		if(isStringNotEmpty(familyName))
+		{
+			profile.setFamilyName(familyName);
+		}
+		if(isStringNotEmpty(firstName))
+		{
+			profile.setFirstName(firstName);
+		}
+		if(isStringNotEmpty(mail))
+		{
+			System.out.println("CHANGE EMAIL: " + mail);
+			profile.setMail(mail);
+		}
+		if(isStringNotEmpty(postcode))
+		{
+			profile.setPostCode(postcode);
+		}
+		if(isStringNotEmpty(stateMessage))
+		{
+			profile.setStateMessage(stateMessage);
+		}
+		if(isStringNotEmpty(street))
+		{
+			profile.setStreet(street);
+		}
+		if(isStringNotEmpty(question))
+		{
+			user.setQuestion(question);
+		}
+		if(isStringNotEmpty(answer))
+		{
+			user.setAnswer(answer);
+		}
+		
+		changePassword(userID, password, confirmpassword);
+		
+		profile(userID);
+		
+		
+	}
+	
+	private static void changePassword(int userID, String password, String confirmpassword)
+	{
+		if(!password.equals(confirmpassword))
+	    {
+			 flash.error("Passwords do not match!");
+	         params.flash();
+	         
+	         editProfile();
+	     }
+		 else
+		 {
+			 ESEUser user=ESEDatabase.getUserByID(userID);
+			 user.setPassword(password);
+		 }
+	}
+	
+	private static boolean isStringNotEmpty(String input)
+	{
+		return input!="";
 	}
 }

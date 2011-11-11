@@ -95,6 +95,14 @@ public class ESECalendar
 		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate),
 				ESEConversionHelper.convertDateToString(endDate), isPublic);
 	}
+	
+	public void addEvent(ESEEvent event)
+	{
+		if(!this.eventList.contains(event))
+		{
+			this.eventList.add(event);
+		}
+	}
 
 	public void removeEvent(int eventID)
 	{

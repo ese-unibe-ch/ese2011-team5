@@ -19,7 +19,7 @@ public class ESEGroup
 
 		for(ESEGroup group : owner.getGroupList())
 		{
-			if(groupname.equals(group.getGroupname()))
+			if(groupname.equals(group.getGroupName()))
 			{
 				throw new IllegalArgumentException("This group is already in the database");
 			}
@@ -35,7 +35,7 @@ public class ESEGroup
 		return this.groupID;
 	}
 
-	public String getGroupname()
+	public String getGroupName()
 	{
 		return this.groupname;
 	}
