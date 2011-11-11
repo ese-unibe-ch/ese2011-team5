@@ -90,7 +90,7 @@ public class ESECalendarTests
 	}
 
 	@Test
-	public void shouldGetAllEventsOfDay()
+	public void shouldGetAllEventsOfMonth()
 	{
 		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
@@ -98,16 +98,11 @@ public class ESECalendarTests
 		this.cal1.addOverlappingEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		this.cal1.addOverlappingEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 
-		assertEquals(1, this.cal1.getAllEventsOfDay("13.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllEventsOfDay("14.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllEventsOfDay("16.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllEventsOfDay("19.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllEventsOfDay("20.04.2011 13:00").size());
+		assertEquals(5, this.cal1.getAllEventsOfMonth(3).size());
 	}
 
 	@Test
-	public void shouldGetAllPublicEventsOfDay()
+	public void shouldGetAllPublicEventsOfMonth()
 	{
 		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
@@ -115,19 +110,11 @@ public class ESECalendarTests
 		this.cal1.addOverlappingEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		this.cal1.addOverlappingEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("13.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("14.04.2011 13:50").size());
-		assertEquals(0, this.cal1.getAllPublicEventsOfDay("15.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("16.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("17.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllPublicEventsOfDay("19.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("20.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllPublicEventsOfDay("21.04.2011 13:50").size());
+		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3).size());
 	}
 
 	@Test
-	public void shouldGetAllAllowedEventsOfDay()
+	public void shouldGetAllAllowedEventsOfMonth()
 	{
 		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
@@ -136,19 +123,11 @@ public class ESECalendarTests
 
 		ESEDatabase.setCurrentUser(ownerDummy);
 
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("13.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("14.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllAllowedEventsOfDay("16.04.2011 13:50").size());
-		assertEquals(2, this.cal1.getAllAllowedEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3).size());
 
 		ESEDatabase.setCurrentUser(ownerDummy2);
 
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("13.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("14.04.2011 13:50").size());
-		assertEquals(0, this.cal1.getAllAllowedEventsOfDay("15.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("18.04.2011 13:50").size());
-		assertEquals(1, this.cal1.getAllAllowedEventsOfDay("19.04.2011 13:50").size());
+		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3).size());
 	}
 
 
@@ -199,8 +178,6 @@ public class ESECalendarTests
 		catch (IllegalArgumentException e)
 		{}
 		assertEquals(1, testCal.getAllEvents().size());
-		assertEquals("Reference Event", testCal.getAllEventsOfDay("7.11.2011 17:00").get(0).getEventName());
-		assertEquals(testCal.getAllEventsOfDay("4.11.2011 15:00"), testCal.getAllEventsOfDay("11.11.2011 19:00"));
 	}
 
 	@Test

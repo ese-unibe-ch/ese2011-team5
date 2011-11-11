@@ -139,40 +139,6 @@ public class ESECalendar
 			return this.getAllPublicEventsOfMonth(month);
 	} 
 
-	public ArrayList<ESEEvent> getAllEventsOfDay(String date)
-	{
-		Date convertedDate = ESEConversionHelper.convertStringToDate(date);
-		Calendar dayAsCal = new GregorianCalendar();
-
-		dayAsCal.setTime(convertedDate);
-		Calendar startCal = new GregorianCalendar();
-		Calendar endCal = new GregorianCalendar();
-		ArrayList<ESEEvent> eventsOfDay = new ArrayList<ESEEvent>();
-		for (ESEEvent event : eventList)
-		{
-			startCal.setTime(event.getStartDate());
-			endCal.setTime(event.getEndDate());
-			if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) &&
-					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR))
-			{
-				eventsOfDay.add(event);
-			}
-			else if (dayAsCal.get(dayAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR) &&
-					dayAsCal.get(dayAsCal.YEAR) == endCal.get(endCal.YEAR))
-			{
-				eventsOfDay.add(event);
-			}
-			else if ((dayAsCal.get(dayAsCal.DAY_OF_YEAR) > startCal.get(startCal.DAY_OF_YEAR) &&
-					dayAsCal.get(dayAsCal.YEAR) == startCal.get(startCal.YEAR)) &&
-					(dayAsCal.get(dayAsCal.DAY_OF_YEAR) < endCal.get(endCal.DAY_OF_YEAR) &&
-							dayAsCal.get(dayAsCal.YEAR) == endCal.get(endCal.YEAR)))
-			{
-				eventsOfDay.add(event);
-			}
-		}
-		return eventsOfDay;
-	}
-
 	public ArrayList<ESEEvent> getAllEventsOfMonth(int month) {
 		Calendar monthAsCal = new GregorianCalendar();
 		monthAsCal.set(Calendar.MONTH,month);

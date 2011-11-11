@@ -99,11 +99,12 @@ public class ESEUserTests
 
 		ESEDatabase.setCurrentUser(this.user1);
 		ArrayList<ESEEvent> publicEvents = this.user1.getAllPublicEvents(testCalendar1.getID());
-		ArrayList<ESEEvent> allowedEvents = this.user1.getAllowedEvents(true, testCalendar1.getID());
-		ArrayList<ESEEvent> disallowedEvents = this.user1.getAllowedEvents(false, testCalendar1.getID());
+		ArrayList<ESEEvent> allowedEvents = testCalendar1.getAllAllowedEvents();
+		ESEDatabase.setCurrentUser(this.user2);
+		ArrayList<ESEEvent> onlyAllowedEvents = testCalendar1.getAllAllowedEvents();
 
-		assertNotSame(allowedEvents, disallowedEvents);
+		assertNotSame(allowedEvents, onlyAllowedEvents);
 		assertEquals(testCalendar1.getAllEvents(), allowedEvents);
-		assertEquals(publicEvents, disallowedEvents);
+		assertEquals(publicEvents, onlyAllowedEvents);
 	}
 }
