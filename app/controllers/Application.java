@@ -47,8 +47,7 @@ public class Application extends Controller {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESECalendar> calendarList = otherUser.getCalendarList();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
-				.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		for (ESECalendar calendar : calendarList)
 			System.out.println(calendar.getID());
@@ -128,7 +127,7 @@ public class Application extends Controller {
 			String eventStart, String eventEnd, boolean isPublic)
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
-		ESEEvent event=calendar.getEventById(eventID);
+		ESEEvent event=calendar.getEventByID(eventID);
 		
 		event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
 		event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
@@ -147,7 +146,7 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		System.out.println("USER ID: " + currentUser.getUserID() + " calendarID: " + calendar.getID());
-		ESEEvent event = calendar.getEventById(eventID);
+		ESEEvent event = calendar.getEventByID(eventID);
 		render(event,calendar,currentUser,otherUser,otherUsers,groups);//, calendar);
 	}
 
@@ -226,7 +225,7 @@ public class Application extends Controller {
 	}
 	
 	/**
-	 * ONLY for if an error happend in changePassword!
+	 * ONLY used if an error happens in changePassword!
 	 * @param username
 	 */
 	public static void resetPassword(String username)
@@ -287,9 +286,5 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		render(currentUser, groups, otherUsers, calendarList);
-
-	
-		
 	}
-
 }

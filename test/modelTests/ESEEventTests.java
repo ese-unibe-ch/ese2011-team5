@@ -1,49 +1,49 @@
 package modelTests;
 
+import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.Date;
-
 import models.*;
-
 import org.junit.*;
 
-import play.test.UnitTest;
-
-public class ESEEventTests extends UnitTest{
+public class ESEEventTests
+{
 
 	Calendar cal = Calendar.getInstance();
 	Date startDate;
 	Date endDate;
-	
+
 	ESEEvent event1;
 	ESEEvent event2;
 	ESEEvent event3;
 	ESEUser dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
 	ESECalendar dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
-	
+
 	@Before
-	public void setUp(){		/* Sets up three Events for testing purpose*/
+	public void setUp()		/* Sets up three Events for testing purposes */
+	{
 		this.cal.set(2011, 11, 24, 18, 00);
 		this.startDate = this.cal.getTime();
 		this.cal.set(2011, 11, 24, 23, 00);
 		this.endDate = this.cal.getTime();
-		this.event1 = new ESEEvent("Weihnachten", this.dummyCal,this.startDate ,this.endDate , false);
-		
+		this.event1 = new ESEEvent("Weihnachten", this.dummyCal, this.startDate, this.endDate, false);
+
 		this.cal.set(2011, 11, 6, 18, 00);
 		this.startDate = this.cal.getTime();
 		this.cal.set(2011, 11, 24, 19, 00);
 		this.endDate = this.cal.getTime();
-		this.event2 = new ESEEvent("Samichlaus", this.dummyCal,this.startDate ,this.endDate , true);
-		
+		this.event2 = new ESEEvent("Samichlaus", this.dummyCal, this.startDate, this.endDate, true);
+
 		this.cal.set(2011, 11, 24, 16, 00);
 		this.startDate = this.cal.getTime();
 		this.cal.set(2012, 01, 8, 18, 00);
 		this.endDate = this.cal.getTime();
-		this.event3 = new ESEEvent("Winter Ferien", this.dummyCal,this.startDate ,this.endDate , true);
+		this.event3 = new ESEEvent("Winter Ferien", this.dummyCal, this.startDate, this.endDate, true);
 	}
-	
+
 	@Test
-	public void shouldBeInitialized(){
+	public void shouldBeInitialized()
+	{
 		/*Event 1*/
 		assertTrue(this.event1 != null);
 		assertEquals(0, this.event1.getEventID());
@@ -55,7 +55,7 @@ public class ESEEventTests extends UnitTest{
 		this.endDate = this.cal.getTime();
 		assertEquals(this.endDate, this.event1.getEndDate());
 		assertEquals(this.dummyCal, this.event1.getCorrespondingCalendar());
-		
+
 		/*Event 2*/
 		assertTrue(this.event2 != null);
 		assertEquals(1, this.event2.getEventID());
@@ -67,7 +67,7 @@ public class ESEEventTests extends UnitTest{
 		this.endDate = this.cal.getTime();
 		assertEquals(this.endDate, this.event2.getEndDate());
 		assertEquals(this.dummyCal, this.event2.getCorrespondingCalendar());
-		
+
 		/*Event 3*/
 		assertTrue(this.event3 != null);
 		assertEquals(2, this.event3.getEventID());
@@ -80,5 +80,4 @@ public class ESEEventTests extends UnitTest{
 		assertEquals(this.endDate, this.event3.getEndDate());
 		assertEquals(this.dummyCal, this.event3.getCorrespondingCalendar());
 	}
-	
 }

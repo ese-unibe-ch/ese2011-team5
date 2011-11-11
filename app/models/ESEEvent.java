@@ -2,7 +2,8 @@ package models;
 
 import java.util.Date;
 
-public class ESEEvent implements Comparable<ESEEvent>{
+public class ESEEvent implements Comparable<ESEEvent>
+{
 
 	private static int idCounter = 0;
 
@@ -44,44 +45,48 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	 * Methods with read only access
 	 */
 
-	public int getEventID() {
+	public int getEventID()
+	{
 		return this.eventID;
 	}
 
-	public String getEventName() {
+	public String getEventName()
+	{
 		return this.eventName;
 	}
 
-	public ESECalendar getCorrespondingCalendar() {
+	public ESECalendar getCorrespondingCalendar()
+	{
 		return this.correspondingCalendar;
 	}
 
-	public Date getStartDate() {
+	public Date getStartDate()
+	{
 		return this.startDate;
 	}
 
-	public Date getEndDate() {
+	public Date getEndDate()
+	{
 		return this.endDate;
 	}
-	
+
 	public String getStringEndDate()
 	{
-		String str= ESEConversionHelper.convertDateToString(this.endDate);
-		System.out.println("END DATE: " + str);
-		return str;
+		return ESEConversionHelper.convertDateToString(this.endDate);
 	}
-	
+
 	public String toString()
 	{
 		return "ID: "+ this.idCounter +" Name: " + this.eventName + " StartDate: "+ getStringStartDate() + " EndDate: " + this.getStringEndDate();
 	}
-	
+
 	public String getStringStartDate()
 	{
 		return ESEConversionHelper.convertDateToString(this.startDate);
 	}
 
-	public boolean isPublic() {
+	public boolean isPublic()
+	{
 		return this.isPublic;
 	}
 
@@ -110,11 +115,10 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	{
 		this.isPublic = publiclyViewable;
 	}
-	
-	
-	
+
 	@Override
-	public int compareTo(ESEEvent compareEvent) {
+	public int compareTo(ESEEvent compareEvent)
+	{
 		if (this.getStartDate().getTime() > compareEvent.getStartDate().getTime())
 			return 1;
 		if (this.getStartDate().getTime() == compareEvent.getStartDate().getTime())
