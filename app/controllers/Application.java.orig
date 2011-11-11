@@ -20,8 +20,6 @@ public class Application extends Controller {
 
 	private static boolean validLogin = true;
 	
-	private static int additionalMonthsCumulated = 0;
-
 	public static void showCalendars() {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -69,49 +67,47 @@ public class Application extends Controller {
 		showCalendars();
 	}
 	
-	public static void showCalendarView(int calendarID, String username, int selectedDay,
+	public static void showCalendarView(int calendarID, String username, int selectedDay, 
 			int month, int year){
-
-			if (month == 12){
+		
+		if (month == 12){
 			month = 0;
 			year++;
-			}
-			if (month == -1){
+		}
+		if (month == -1){
 			month = 11;
 			year--;
-			}
-
-			ESEUser currentUser = ESEDatabase.getCurrentUser();
-			ESECalendar calendar = currentUser.getCalendarByID(calendarID);
-
-			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-
-			SimpleDateFormat dfs = new SimpleDateFormat();
-			     String monthString = dfs.getDateFormatSymbols().getMonths()[month];
-			    
-
-			List<Integer> daysFromLastMonth = new ArrayList<Integer>();
-			List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-			daysFromLastMonth = calendar.getDaysFromLastMonth(month, year);
-			daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
-			List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month, year);
-			        
-			int startOfLastMonth = 0; //NOCH ANPASSEN
-			if(!daysFromLastMonth.isEmpty())
+		}
+		
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
+		
+		int currentDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		SimpleDateFormat dfs = new SimpleDateFormat();
+    	String monthString = dfs.getDateFormatSymbols().getMonths()[month];
+    	
+		
+		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
+		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
+		daysFromLastMonth =	calendar.getDaysFromLastMonth(month, year);
+		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
+		List<Integer> daysFromThisMonth =  calendar.getDaysFromThisMonth(month, year);
+        
+		int startOfLastMonth = 0; //NOCH ANPASSEN
+		if(!daysFromLastMonth.isEmpty())
 			startOfLastMonth = daysFromLastMonth.get(0);
-			        
-			ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
-			        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
-			        ArrayList<String> weekdays = getWeekDays();
-			        
-			        render(currentUser, calendar, events, month, monthString,
-			         startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
-			         daysFromNextMonth, eventDaysOfMonth, selectedDay,
-			         weekdays, currentDay, year);
-
-			}
-
-
+        
+		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
+        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
+        ArrayList<String> weekdays = getWeekDays();
+        
+        render(currentUser, calendar, events, month, monthString, 
+        		startOfLastMonth, daysFromLastMonth, daysFromThisMonth, 
+        		daysFromNextMonth, eventDaysOfMonth, selectedDay,
+        		weekdays, currentDay, year);
+		
+	}
 
 	public static void showEvents(int calendarID, String username) {
 
@@ -306,6 +302,7 @@ public class Application extends Controller {
 
 		render(currentUser, groups, otherUsers, calendarList);
 	}
+<<<<<<< HEAD
 	/**
 	 * 
 	 * @param eventID
@@ -339,14 +336,6 @@ public class Application extends Controller {
 		selectedCalendar.addEvent(event);
 	}
 
-	
-	private static ArrayList<String> getWeekDays(){
-		String[] weekdaysArray = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
-		//List<String> weekdays = new ArrayList<String>();
-		ArrayList<String> weekdays = new ArrayList(Arrays.asList(weekdaysArray));
-		return weekdays;
-	}
-
 	public static void editProfile()
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
@@ -355,6 +344,14 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		
 		render(currentUser, groups, otherUsers, calendarList);
+=======
+	
+	private static ArrayList<String> getWeekDays(){
+		String[] weekdaysArray = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
+		//List<String> weekdays = new ArrayList<String>();
+		ArrayList<String> weekdays = new ArrayList(Arrays.asList(weekdaysArray));
+		return weekdays;
+>>>>>>> 2f1af42096c323f0c47922ccbfb6a328d3253bc2
 	}
 	
 	public static void doEditProfile(@Required int userID, String firstName, String familyName, String birthday, String mail,String stateMessage, String street, String city, String postcode, String password, String confirmpassword, String question, String answer )
