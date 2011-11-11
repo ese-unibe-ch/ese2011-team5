@@ -17,20 +17,25 @@ public class ESEUser
 	private ArrayList<ESECalendar> calendarList;
 	private ArrayList<ESEGroup> groupList;
 
-	public ESEUser(String username, String password, String firstName, String familyName)
+	public ESEUser(String username, String password, String firstName, String familyName) throws ESEException
 	{
 		this(username, password, firstName, familyName, "Holy solution", "42");
 	}
 
-	public ESEUser(String username, String password, String firstName, String familyName, String secureQuestion, String secureAnswer)
+	public ESEUser(String username, String password,
+			String firstName, String familyName,
+			String secureQuestion, String secureAnswer) throws ESEException
 	{
-		assert(username != "");
+		if(username == "")
+		{
+			throw new ESEException("User name must not be empty!");
+		}
 
 		for(ESEUser user : ESEDatabase.getAllUsers())
 		{
 			if(username.equals(user.getName()))
 			{
-				throw new IllegalArgumentException("This username is already in the database");
+				throw new ESEException("This user name is already in the database");
 			}
 		}
 
@@ -99,18 +104,18 @@ public class ESEUser
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 
-	public void addCalendar(String calendarName)
+	public void addCalendar(String calendarName) throws ESEException
 	{
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
-	public void addGroup(String groupName)
+	public void addGroup(String groupName) throws ESEException
 	{
 		ESEGroup group = new ESEGroup(groupName, this);
 		this.groupList.add(group);
 	}
 
-	public ESECalendar getCalendarByID(int id) throws IllegalArgumentException
+	public ESECalendar getCalendarByID(int id) throws ESEException
 	{
 		for (ESECalendar calendar : calendarList)
 		{
@@ -119,44 +124,50 @@ public class ESEUser
 				return calendar;
 			}
 		}
-		throw new IllegalArgumentException("No calendar with this ID " + id);
+		throw new ESEException("No calendar with ID \"" + id + " \"!");
 	}
 	
-	public ESECalendar getCalendarByName(String name){
-		for (ESECalendar calendar : calendarList){
+	public ESECalendar getCalendarByName(String name) throws ESEException
+	{
+		for (ESECalendar calendar : calendarList)
+		{
 			if (calendar.getCalendarName().equals(name))
-				System.out.println("FOUND CALENDAR!");
+			{
 				return calendar;
+			}
 		}
-		System.out.println("FOUND NO CALENDAR!");
-		throw new IllegalArgumentException("No calendar with this name "+ name);
+		throw new ESEException("No calendar with name \"" + name + "\"!");
 	} 
 	
-	public ESEGroup getGroupByID(int id){
-		for (ESEGroup group : groupList){
+	public ESEGroup getGroupByID(int id) throws ESEException
+	{
+		for (ESEGroup group : groupList)
+		{
 			if (group.getGroupID() == id)
+			{
 				return group;
+			}
 		}
-		throw new IllegalArgumentException("No group with this ID " + id);
+		throw new ESEException("No group with ID \"" + id + "\"!");
 	}
 
-	public ESEGroup getGroupByName(String name)
+	public ESEGroup getGroupByName(String name) throws ESEException
 	{
 		for (ESEGroup group : groupList)
 		{
 			if (group.getGroupName().equals(name))
 				return group;
 		}
-		throw new IllegalArgumentException("No group with this name " + name);
+		throw new ESEException("No group with name \"" + name + "\"!");
 	}
 
-	public void removeCalendar(int calendarID) throws IllegalArgumentException
+	public void removeCalendar(int calendarID) throws ESEException
 	{
 		ESECalendar calendarToRemove = this.getCalendarByID(calendarID);
 		this.calendarList.remove(calendarToRemove);
 	}
 
-	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws IllegalArgumentException
+	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException
 	{
 		for (ESECalendar calendar : this.calendarList)
 		{
@@ -165,10 +176,10 @@ public class ESEUser
 				return calendar.getAllEvents();
 			}
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		throw new ESEException("No calendar with this ID");
 	}
 
-	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws IllegalArgumentException
+	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws ESEException
 	{
 		for (ESECalendar calendar : this.calendarList)
 		{
@@ -177,22 +188,28 @@ public class ESEUser
 				return calendar.getAllPublicEvents();
 			}
 		}
-		throw new IllegalArgumentException("No calendar with this ID");
+		throw new ESEException("No calendar with this ID");
 	}
 
 	/*
 	 * Methods with read-write access
 	 */
 
-	public void addCalendar(ESECalendar calendarToAdd)
+	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
 	{
-		assert this.equals(calendarToAdd.getOwner());
+		if(!this.equals(calendarToAdd.getOwner()))
+		{
+			throw new ESEException("Taking a foreign calendar is not allowed!");
+		}
 		this.calendarList.add(calendarToAdd);
 	}
 
-	public void addGroup(ESEGroup groupToAdd)
+	public void addGroup(ESEGroup groupToAdd) throws ESEException
 	{
-		assert this.equals(groupToAdd.getOwner());
+		if(!this.equals(groupToAdd.getOwner()))
+		{
+			throw new ESEException("Taking a foreign group is not allowed!");
+		}
 		this.groupList.add(groupToAdd);
 	}
 
@@ -203,12 +220,12 @@ public class ESEUser
 	
 	public void setQuestion(String newQuestion)
 	{
-		this.secureQuestion=newQuestion;
+		this.secureQuestion = newQuestion;
 	}
 	
 	public void setAnswer(String newAnswer)
 	{
-		this.secureAnswer=newAnswer;
+		this.secureAnswer = newAnswer;
 	}
 
 }

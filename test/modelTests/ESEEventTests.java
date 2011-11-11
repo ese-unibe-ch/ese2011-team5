@@ -16,12 +16,15 @@ public class ESEEventTests
 	ESEEvent event1;
 	ESEEvent event2;
 	ESEEvent event3;
-	ESEUser dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
-	ESECalendar dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
+	ESEUser dummyUser;
+	ESECalendar dummyCal;
 
 	@Before
-	public void setUp()		/* Sets up three Events for testing purposes */
+	public void setUp() throws ESEException		/* Sets up three Events for testing purposes */
 	{
+		this.dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
+		this.dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
+
 		this.cal.set(2011, 11, 24, 18, 00);
 		this.startDate = this.cal.getTime();
 		this.cal.set(2011, 11, 24, 23, 00);
@@ -79,5 +82,10 @@ public class ESEEventTests
 		this.endDate = this.cal.getTime();
 		assertEquals(this.endDate, this.event3.getEndDate());
 		assertEquals(this.dummyCal, this.event3.getCorrespondingCalendar());
+	}
+
+	public void isEventDay()
+	{
+		//TODO: ESEEvent.isEventDay();
 	}
 }

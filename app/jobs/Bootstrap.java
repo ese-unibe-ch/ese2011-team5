@@ -9,7 +9,7 @@ import models.*;
 @OnApplicationStart
 public class Bootstrap extends Job
 {
-	public void doJob()
+	public void doJob() throws ESEException
 	{
 
 		ESEDatabase.createUser("guest", "guest", "guest", "guest");

@@ -10,6 +10,7 @@ import models.ESECalendar;
 import models.ESEConversionHelper;
 import models.ESEDatabase;
 import models.ESEEvent;
+import models.ESEException;
 import models.ESEGroup;
 import models.ESEProfile;
 import models.ESEUser;
@@ -37,7 +38,7 @@ public class Application extends Controller {
 		render(currentUser, groups, otherUsers, calendarList);
 	}
 	
-	public static void betweenShowCalendarsAndShowCalendarView(int calendarID, String currentUser)
+	public static void betweenShowCalendarsAndShowCalendarView(int calendarID, String currentUser) throws ESEException
 	{
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
@@ -51,7 +52,7 @@ public class Application extends Controller {
 	}
 	
 
-	public static void showOtherCalendars(String username) {
+	public static void showOtherCalendars(String username) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESECalendar> calendarList = otherUser.getCalendarList();
@@ -62,14 +63,14 @@ public class Application extends Controller {
 		render(currentUser, otherUsers, otherUser, calendarList, groups);
 	}
 
-	public static void addCalendar(String calendarName) {
+	public static void addCalendar(String calendarName) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		currentUser.addCalendar(calendarName);
 		showCalendars();
 	}
 	
 	public static void showCalendarView(int calendarID, String username, int selectedDay, 
-			int month, int year)
+			int month, int year) throws ESEException
 	{
 		
 		if (month == 12)
@@ -113,7 +114,7 @@ public class Application extends Controller {
 		
 	}
 
-	public static void showEvents(int calendarID, String username) {
+	public static void showEvents(int calendarID, String username) throws ESEException {
 
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
@@ -127,14 +128,14 @@ public class Application extends Controller {
 	}
 
 	public static void addEvent(int calendarID, String eventName,
-			String eventStart, String eventEnd, boolean isPublic) {
+			String eventStart, String eventEnd, boolean isPublic) throws ESEException {
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(
 				calendarID);
 		calendar.addEvent(eventName, eventStart, eventEnd, isPublic);
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 	
-	public static void removeEvent(int calendarID, int eventID)
+	public static void removeEvent(int calendarID, int eventID) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		calendar.removeEvent(eventID);
@@ -142,7 +143,7 @@ public class Application extends Controller {
 	}
 	
 	public static void doEditEvent(int calendarID, int eventID, String eventName,
-			String eventStart, String eventEnd, boolean isPublic)
+			String eventStart, String eventEnd, boolean isPublic) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		ESEEvent event=calendar.getEventByID(eventID);
@@ -156,7 +157,7 @@ public class Application extends Controller {
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 	
-	public static void editEvent(int calendarID, int eventID)
+	public static void editEvent(int calendarID, int eventID) throws ESEException
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(currentUser.getName());
@@ -168,7 +169,7 @@ public class Application extends Controller {
 		render(event,calendar,currentUser,otherUser,otherUsers,groups);//, calendar);
 	}
 
-	public static void showUsersInGroup(int groupID) {
+	public static void showUsersInGroup(int groupID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEGroup group = currentUser.getGroupByID(groupID);
 		ArrayList userList = group.getUserList();
@@ -180,7 +181,7 @@ public class Application extends Controller {
 		render(currentUser, userList, group, otherUsers, groups);
 	}
 
-	public static void addUserToGroup(String username, int groupID) {
+	public static void addUserToGroup(String username, int groupID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser userToAdd = ESEDatabase.getUserByName(username);
 		ESEGroup group = currentUser.getGroupByID(groupID);
@@ -188,7 +189,7 @@ public class Application extends Controller {
 		showUsersInGroup(groupID);
 	}
 
-	public static void removeUserFromGroup(String username, int groupID) {
+	public static void removeUserFromGroup(String username, int groupID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser userToRemove = ESEDatabase.getUserByName(username);
 		ESEGroup group = currentUser.getGroupByID(groupID);
@@ -197,7 +198,7 @@ public class Application extends Controller {
 		showUsersInGroup(groupID);
 	}
 	
-	public static void profile(int userID)
+	public static void profile(int userID) throws ESEException
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser watchedUser=ESEDatabase.getUserByID(userID);
@@ -208,7 +209,7 @@ public class Application extends Controller {
 		render(currentUser, groups, otherUsers,watchedUser, profile);
 	}
 	
-	public static void forgotPassword(String username)
+	public static void forgotPassword(String username) throws ESEException
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -221,7 +222,7 @@ public class Application extends Controller {
 		render(user, currentUser, calendarList, otherUsers, groups, question);
 	}
 	
-	public static void resetPassword(String username, String answer)
+	public static void resetPassword(String username, String answer) throws ESEException
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -245,8 +246,9 @@ public class Application extends Controller {
 	/**
 	 * ONLY used if an error happens in changePassword!
 	 * @param username
+	 * @throws ESEException 
 	 */
-	public static void resetPassword(String username)
+	public static void resetPassword(String username) throws ESEException
 	{
 		
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
@@ -259,7 +261,7 @@ public class Application extends Controller {
 		render(user, currentUser,calendarList,otherUsers,groups);
 	}
 	
-	public static void changePassword(@Required String username, @Required String password, @Required String confirmpassword)
+	public static void changePassword(@Required String username, @Required String password, @Required String confirmpassword) throws ESEException
 	{
 		 if(!password.equals(confirmpassword))
 	     {
@@ -278,7 +280,7 @@ public class Application extends Controller {
 		 }
 	}
 	
-	public static void createNewGroup(@Required String groupname)
+	public static void createNewGroup(@Required String groupname) throws ESEException
 	{
 		ESEUser user=ESEDatabase.getCurrentUser();
 		
@@ -324,7 +326,7 @@ public class Application extends Controller {
 		render(userID,otherUserCalendarID,eventID);
 	}
 	
-	public static void doCopyEvent(int otherUserID , int otherUserCalendarID, int eventID, String selectedCalendarName)
+	public static void doCopyEvent(int otherUserID , int otherUserCalendarID, int eventID, String selectedCalendarName) throws ESEException
 	{
 		System.out.println("selected calendarName: " + selectedCalendarName);
 		System.out.println("eventID " + eventID);
@@ -357,7 +359,7 @@ public class Application extends Controller {
 		render(currentUser, groups, otherUsers, calendarList);
 	}
 	
-	public static void doEditProfile(@Required int userID, String firstName, String familyName, String birthday, String mail,String stateMessage, String street, String city, String postcode, String password, String confirmpassword, String question, String answer )
+	public static void doEditProfile(@Required int userID, String firstName, String familyName, String birthday, String mail,String stateMessage, String street, String city, String postcode, String password, String confirmpassword, String question, String answer ) throws ESEException
 	{
 		ESEUser user=ESEDatabase.getUserByID(userID);
 		ESEProfile profile=user.getProfile();
@@ -414,7 +416,7 @@ public class Application extends Controller {
 		
 	}
 	
-	private static void changePassword(int userID, String password, String confirmpassword)
+	private static void changePassword(int userID, String password, String confirmpassword) throws ESEException
 	{
 		if(!password.equals(confirmpassword))
 	    {

@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.regex.*;
 
 public class ESEDatabase
 {
@@ -18,7 +17,7 @@ public class ESEDatabase
 	 * Current user methods:
 	 */
 
-	public static void setCurrentUser(String loggedIn)
+	public static void setCurrentUser(String loggedIn) throws ESEException
 	{
 		setCurrentUser(getUserByName(loggedIn));
 	}
@@ -42,14 +41,14 @@ public class ESEDatabase
 	 * Methods to create ESEUsers
 	 */
 
-	public static void createUser(String username, String password, String firstName, String familyName)
+	public static void createUser(String username, String password, String firstName, String familyName) throws ESEException
 	{
 		ESEUser userToAdd = new ESEUser(username, password, firstName, familyName);
 		userList.add(userToAdd);
 	}
 
 	public static void createUser(String username, String password,
-			String firstName, String familyName, String question, String answer)
+			String firstName, String familyName, String question, String answer) throws ESEException
 	{
 		ESEUser userToAdd = new ESEUser(username, password, firstName, familyName, question, answer);
 		userList.add(userToAdd);
@@ -59,7 +58,7 @@ public class ESEDatabase
 	 * Methods that return Users
 	 */
 
-	public static ESEUser getUserByName(String username) throws IllegalArgumentException
+	public static ESEUser getUserByName(String username) throws ESEException
 	{
 		for (ESEUser user : userList)
 		{
@@ -68,10 +67,10 @@ public class ESEDatabase
 				return user;
 			}
 		}
-		throw new IllegalArgumentException("user " + username + " not found!");
+		throw new ESEException("user " + username + " not found!");
 	}
 
-	public static ESEUser getUserByID(int userID) throws IllegalArgumentException
+	public static ESEUser getUserByID(int userID) throws ESEException
 	{
 		for (ESEUser user : userList)
 		{
@@ -80,7 +79,7 @@ public class ESEDatabase
 				return user;
 			}
 		}
-		throw new IllegalArgumentException("No user with this ID");
+		throw new ESEException("No user with this ID");
 	}
 
 	public static ArrayList<ESEUser> getOtherUsers(String username)
@@ -128,7 +127,7 @@ public class ESEDatabase
 	 * public static void addGroupToDB(ESEGroup group){ groupList.add(group); }
 	 */
 
-	public static void removeUserByName(String username) throws IllegalArgumentException
+	public static void removeUserByName(String username) throws ESEException
 	{
   		for (ESEUser user : userList)
   		{
@@ -138,10 +137,10 @@ public class ESEDatabase
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No such user exists");
+		throw new ESEException("No such user exists");
 	}
 
-	public static void removeUserByID(int userID) throws IllegalArgumentException
+	public static void removeUserByID(int userID) throws ESEException
 	{
 		for (ESEUser user : userList)
 		{
@@ -151,7 +150,7 @@ public class ESEDatabase
 				return;
 			}
 		}
-		throw new IllegalArgumentException("No user with this ID");
+		throw new ESEException("No user with this ID");
 	}
 
 	/*
@@ -165,17 +164,17 @@ public class ESEDatabase
 
 	public static ArrayList<ESEUser> findUser(String username)
 	{
-		ArrayList<ESEUser> users = new ArrayList<ESEUser>();
-
+		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
 		CharSequence sequence = new String(username.toLowerCase());
 
 		for(ESEUser user:userList)
 		{
+			//if(user.getName().toLowerCase().matches(".*"+username.toLowerCase()+".*") && !user.equals(currentUser))
 			if(user.getName().toLowerCase().contains(sequence) && !user.equals(currentUser))
 			{
-				users.add(user);
+				matchingUsers.add(user);
 			}
 		}
-		return users;
+		return matchingUsers;
 	}
 }

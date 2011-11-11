@@ -12,16 +12,22 @@ public class ESEGroup
 	private ESEUser owner;
 	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
-	public ESEGroup(String groupname, ESEUser owner)
+	public ESEGroup(String groupname, ESEUser owner) throws ESEException
 	{
-		assert(groupname != "");
-		assert(owner != null);
+		if(groupname == "")
+		{
+			throw new ESEException("Group name must not be empty!");
+		}
+		if(owner == null)
+		{
+			throw new ESEException("Group is not assigned to any user!");
+		}
 
 		for(ESEGroup group : owner.getGroupList())
 		{
 			if(groupname.equals(group.getGroupName()))
 			{
-				throw new IllegalArgumentException("This group is already in the database");
+				throw new ESEException("This group is already in the database");
 			}
 		}
 
@@ -50,23 +56,23 @@ public class ESEGroup
 		return new ArrayList<ESEUser>(this.userList);
 	}
 
-	public void addUserToGroup(ESEUser user)
+	public void addUserToGroup(ESEUser user) throws ESEException
 	{
 		if (!this.userList.contains(user))
 		{
 			this.userList.add(user);
 			return;
 		}
-		throw new IllegalArgumentException("This user is already in the group");
+		throw new ESEException("This user is already in the group");
 	}
 
-	public void removeUserFromGroup(ESEUser user)
+	public void removeUserFromGroup(ESEUser user) throws ESEException
 	{
 		if (this.userList.contains(user))
 		{
 			this.userList.remove(user);
 			return;
 		}
-		throw new IllegalArgumentException("No such user exists");
+		throw new ESEException("No such user exists");
 	}
 }

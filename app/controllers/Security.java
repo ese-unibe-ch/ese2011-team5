@@ -3,43 +3,31 @@ package controllers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import models.ESEDatabase;
-import models.ESEState;
-import models.ESEUser;
+import models.*;
 import play.Play;
 import play.data.validation.Required;
 import play.utils.Java;
 
-public class Security extends Secure.Security {
-	/*
-	 * public static boolean authenticate(String username, String password) {
-	 * 
-	 * try { ESEUser loginUser = ESEDatabase.getUserByName(username); return
-	 * loginUser.getPassword().equals(password); } catch
-	 * (IllegalArgumentException e) { return false; } }
-	 */
-	static void onAuthenticated() {
-		ESEUser loggedInUser = ESEDatabase.getUserByName(Security.connected());
-		ESEDatabase.setCurrentUser(loggedInUser);
-	}
+public class Security extends Secure.Security
+{
 
-	public static void ownAuthenticate(@Required String username,String password) 
+	public static void ownAuthenticate(@Required String username, String password) 
 	{
 		try
 		{
-			ESEUser user=ESEDatabase.getUserByName(username);
+			ESEUser loginUser = ESEDatabase.getUserByName(username);
 
-			if(user.getPassword().equals(password))
+			if(loginUser.getPassword().equals(password))
 			{
-				ESEDatabase.setCurrentUser(user.getName());
+				ESEDatabase.setCurrentUser(loginUser.getName());
 			}
 			else
 			{
-				flash.error("Wrong password! Try it again! <a href=forgotPassword/" + username +"> Do you forgot your password? - Don't worry be happy: there is a solution </a>");
+				flash.error("Wrong password! Try it again! <a href=forgotPassword/" + username +"> Did you forgot your password? - Don't worry be happy: There is a solution </a>");
 				params.flash();
 			}
 		}
-		catch(IllegalArgumentException e)
+		catch(ESEException e)
 		{
 			  flash.error("No user with the given username exists!");
 	          params.flash();
@@ -48,14 +36,8 @@ public class Security extends Secure.Security {
 		Application.showCalendars();
 	}
 
-	static void onDisconnect() {
-	}
-
-	static void onDisconnected() {
-
-	}
-
-	public static String connected() {
+	public static String connected()
+	{
 		return session.get("username");
 	}
 
@@ -73,13 +55,11 @@ public class Security extends Secure.Security {
 		ESEDatabase.setCurrentUser("guest");
 
 		Application.showCalendars(); // go to the start screen, not to the login
-
 	}
 
 	private static Object invoke(String m, Object... args) throws Throwable {
 		Class security = null;
-		List<Class> classes = Play.classloader
-				.getAssignableClasses(Security.class);
+		List<Class> classes = Play.classloader.getAssignableClasses(Security.class);
 		if (classes.size() == 0) {
 			security = Security.class;
 		} else {
@@ -91,5 +71,4 @@ public class Security extends Secure.Security {
 			throw e.getTargetException();
 		}
 	}
-
 }

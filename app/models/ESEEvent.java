@@ -21,14 +21,18 @@ public class ESEEvent implements Comparable<ESEEvent>
 	
 
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
-			Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException {
+			Date startDate, Date endDate, boolean isPublic) throws ESEException
+		{
 
-		// This would prevent creation of events with zero duration
-		//assert(startDate.before(endDate));
-		assert(!startDate.after(endDate));
 		checkDateValidity(startDate, endDate);
-		assert (correspondingCalendar != null);
-		assert (eventName != "");
+		if(correspondingCalendar == null)
+		{
+			throw new ESEException("Event is not assigned to any calendar!");
+		}
+		if(eventName == "")
+		{
+			throw new ESEException("Event name must not be empty!");
+		}
 
 		this.eventID = idCounter++;
 		this.eventName = eventName;
@@ -86,11 +90,11 @@ public class ESEEvent implements Comparable<ESEEvent>
 			return false;
 	}
 
-	private void checkDateValidity(Date startDate, Date endDate) throws IllegalArgumentException
+	private void checkDateValidity(Date startDate, Date endDate) throws ESEException
 	{
 		if (startDate.after(endDate))
 		{
-			throw new IllegalArgumentException("Invalid start and end date");
+			throw new ESEException("Invalid start and end date");
 		}
 	}
 
@@ -186,13 +190,13 @@ public class ESEEvent implements Comparable<ESEEvent>
 		this.eventName = eventName;
 	}
 
-	public void setStartDate(Date startDate) throws IllegalArgumentException
+	public void setStartDate(Date startDate) throws ESEException
 	{
 		checkDateValidity(startDate, this.endDate);
 		this.startDate = startDate;
 	}
 
-	public void setEndDate(Date endDate) throws IllegalArgumentException
+	public void setEndDate(Date endDate) throws ESEException
 	{
 		checkDateValidity(this.startDate, endDate);
 		this.endDate = endDate;

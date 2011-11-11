@@ -3,6 +3,7 @@ package modelTests;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import models.*;
 import org.junit.*;
 
@@ -12,7 +13,7 @@ public class ESEDatabaseTest
 	ESEUser setupUser;
 
 	@Before
-	public void setUp()
+	public void setUp() throws ESEException
 	{
 		if(ESEDatabase.getAllUsers().size() == 0)
 		{
@@ -23,20 +24,20 @@ public class ESEDatabaseTest
 	}
 
 	@Test
-	public void shouldReturnCorrectUser()
+	public void shouldReturnCorrectUser() throws ESEException
 	{
 		assertEquals(this.setupUser, ESEDatabase.getUserByID(0));
 		assertEquals(this.setupUser, ESEDatabase.getUserByName("DB User"));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void usernameShouldbeCaseSensitive()
+	public void usernameShouldbeCaseSensitive() throws ESEException
 	{
 		ESEDatabase.getUserByName("db User");
 	}
 
 	@Test
-	public void testUserRemoval()
+	public void testUserRemoval() throws ESEException
 	{
 		assertEquals(1, ESEDatabase.getAllUsers().size());
 		ESEDatabase.createUser("SecondUser", "pass", "", "");
@@ -59,7 +60,7 @@ public class ESEDatabaseTest
 	}
 
 	@Test
-	public void shouldReturnOtherUsers()
+	public void shouldReturnOtherUsers() throws ESEException
 	{
 		ESEDatabase.createUser("SecondUser", "pass", "", "");
 		ESEDatabase.createUser("ThirdTestUser", "word", "", "");
@@ -70,7 +71,7 @@ public class ESEDatabaseTest
 	}
 
 	@Test
-	public void shouldFindUserByName()
+	public void shouldFindUserByName() throws ESEException
 	{
 		ESEUser newUser, testUser, someone, registered;
 
@@ -93,24 +94,6 @@ public class ESEDatabaseTest
 			assertEquals(new ArrayList<ESEUser>(Arrays.asList(this.setupUser)), searchResults);
 		}
 
-		assertEquals(new ArrayList<ESEUser>(), ESEDatabase.findUser("user"));
-
-		searchResults = ESEDatabase.findUser(".*\\ user.*");
-		assertEquals(new ArrayList<ESEUser>(Arrays.asList(this.setupUser, newUser, testUser, someone, registered)), searchResults);
-	}
-
-	@Test
-	public void shouldSearchOtherUserByName()
-	{
-		ESEUser newUser, testUser, someone, registered;
-
-		newUser = ESEDatabase.getUserByName("New User");
-		testUser = ESEDatabase.getUserByName("Test User");
-		someone = ESEDatabase.getUserByName("Calendar User");
-		registered = ESEDatabase.getUserByName("Registered User");
-
-		ESEDatabase.setCurrentUser(this.setupUser);
-		ArrayList<ESEUser> otherUserList = ESEDatabase.searchOtherUserByName(" User");
-		assertEquals(new ArrayList<ESEUser>(Arrays.asList(newUser, testUser, someone, registered)), otherUserList);
+		assertEquals(new ArrayList<ESEUser>(Arrays.asList(this.setupUser, newUser, testUser, someone, registered)), ESEDatabase.findUser(" Use"));
 	}
 }
