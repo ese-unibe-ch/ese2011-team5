@@ -81,7 +81,7 @@ public class ESEProfile {
 	
 	public String getBirthdayString()
 	{
-		return ESEConversionHelper.convertDateToString(this.birthday);
+		return ESEConversionHelper.convertBirthdayDateToString(this.birthday);
 	}
 	
 	public Date getRegistrationDate()
@@ -139,6 +139,12 @@ public class ESEProfile {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+	
+	public void setBirthday(String birthday)
+	{
+		Date birthdayDate=ESEConversionHelper.convertBirthdayStringToDate(birthday);
+		this.setBirthday(birthdayDate);
 	}
 
 	public void setMail(String eMail) {

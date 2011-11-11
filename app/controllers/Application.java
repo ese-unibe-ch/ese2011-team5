@@ -322,4 +322,91 @@ public class Application extends Controller {
 		selectedCalendar.addEvent(event);
 	}
 
+	public static void editProfile()
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		
+		render(currentUser, groups, otherUsers, calendarList);
+	}
+	
+	public static void doEditProfile(@Required int userID, String firstName, String familyName, String birthday, String mail,String stateMessage, String street, String city, String postcode, String password, String confirmpassword, String question, String answer )
+	{
+		ESEUser user=ESEDatabase.getUserByID(userID);
+		ESEProfile profile=user.getProfile();
+
+		
+		System.out.println("BIRTHDAY IS: " + birthday);
+		
+		if(isStringNotEmpty(birthday))
+		{
+			profile.setBirthday(birthday);
+		}
+		if(isStringNotEmpty(city))
+		{
+		profile.setCity(city);
+		}
+		if(isStringNotEmpty(familyName))
+		{
+			profile.setFamilyName(familyName);
+		}
+		if(isStringNotEmpty(firstName))
+		{
+			profile.setFirstName(firstName);
+		}
+		if(isStringNotEmpty(mail))
+		{
+			System.out.println("CHANGE EMAIL: " + mail);
+			profile.setMail(mail);
+		}
+		if(isStringNotEmpty(postcode))
+		{
+			profile.setPostCode(postcode);
+		}
+		if(isStringNotEmpty(stateMessage))
+		{
+			profile.setStateMessage(stateMessage);
+		}
+		if(isStringNotEmpty(street))
+		{
+			profile.setStreet(street);
+		}
+		if(isStringNotEmpty(question))
+		{
+			user.setQuestion(question);
+		}
+		if(isStringNotEmpty(answer))
+		{
+			user.setAnswer(answer);
+		}
+		
+		changePassword(userID, password, confirmpassword);
+		
+		profile(userID);
+		
+		
+	}
+	
+	private static void changePassword(int userID, String password, String confirmpassword)
+	{
+		if(!password.equals(confirmpassword))
+	    {
+			 flash.error("Passwords do not match!");
+	         params.flash();
+	         
+	         editProfile();
+	     }
+		 else
+		 {
+			 ESEUser user=ESEDatabase.getUserByID(userID);
+			 user.setPassword(password);
+		 }
+	}
+	
+	private static boolean isStringNotEmpty(String input)
+	{
+		return input!="";
+	}
 }

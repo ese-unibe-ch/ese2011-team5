@@ -17,11 +17,31 @@ public class ESEConversionHelper
 	 * @param userDateString The string in the form of "{@code dd.MM.yyyy HH:mm}" that should be parsed
 	 * @return The date value
 	 */
-	public static Date convertStringToDate(String userDateString)
+	public static Date convertStringToDate(String userDateString) 
 	{
+		System.out.println("INPUT DATE: " + userDateString);
+		
 		DateTimeFormatter dateTimeConvert = DateTimeFormat.forPattern(inputFormat);
+		
 		DateTime dateTimeParser = dateTimeConvert.parseDateTime(userDateString);
 		return dateTimeParser.toDate();
+	}
+	
+	public static Date convertBirthdayStringToDate(String userDateString) 
+	{
+				
+		String birthdayFormat = "dd.MM.yyyy";
+
+		DateTimeFormatter dateTimeConvert = DateTimeFormat.forPattern(birthdayFormat);
+		try{
+			DateTime dateTimeParser = dateTimeConvert.parseDateTime(userDateString);
+			return dateTimeParser.toDate();
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
 	}
 
 	/** Converts a {@link Date} to a {@link String} value.
@@ -41,7 +61,21 @@ public class ESEConversionHelper
 		}
 	}
 	
-
 	
+	
+	public static String convertBirthdayDateToString(Date date)
+	{
+		String birthdayFormat = "dd.MM.yyyy";
+		
+		SimpleDateFormat simpleDateConverter = new SimpleDateFormat(birthdayFormat);
+		if(date!=null)
+		{
+			return simpleDateConverter.format(date);
+		}
+		else
+		{
+			return "-";
+		}
+	}
 	
 }

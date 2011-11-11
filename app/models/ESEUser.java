@@ -202,5 +202,15 @@ public class ESEUser {
 	{
 		this.password=newPassword;
 	}
+	
+	public void setQuestion(String newQuestion)
+	{
+		this.secureQuestion=newQuestion;
+	}
+	
+	public void setAnswer(String newAnswer)
+	{
+		this.secureAnswer=newAnswer;
+	}
 
 }
