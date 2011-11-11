@@ -208,6 +208,9 @@ public class ESECalendar
 		thisMonth.set(Calendar.DAY_OF_MONTH,1);
 		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int start = thisMonth.get(Calendar.DAY_OF_WEEK);
+		
+		if (start==1)
+			start = 8;
 
 		for (int i=max-start+2; i < max; i++)
 		{
@@ -226,7 +229,7 @@ public class ESECalendar
 		return daysFromNextMonth;
 	}
 
-	public ArrayList<Integer> getEventDaysOfMonth(int month)
+	public ArrayList<Integer> getEventDaysOfMonth(int month, int year)
 	{
 		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
 
@@ -236,37 +239,51 @@ public class ESECalendar
 			Calendar endCal = new GregorianCalendar();
 			startCal.setTime(event.getStartDate());
 			endCal.setTime(event.getEndDate());
-
+			
 			int startDay = startCal.get(startCal.DAY_OF_MONTH);
-			int endDay = endCal.get(endCal.DAY_OF_MONTH);
-
-			if (startCal.get(startCal.MONTH) == month)
-			{
-				int addDay = startDay;
-				while (addDay <= endDay)
-				{
-					eventDaysList.add(addDay);
-					addDay+=1;
+			int endDay = endCal.get(endCal.DAY_OF_MONTH);	
+			
+			if (startCal.get(startCal.YEAR) == endCal.get(endCal.YEAR) 
+					&& startCal.get(startCal.YEAR) == year){
+				if (startCal.get(startCal.MONTH) == endCal.get(endCal.MONTH)
+						&& startCal.get(startCal.MONTH) == month){
+					int addDay = startDay;
+					while (addDay <= endDay)
+					{
+						eventDaysList.add(addDay);
+						addDay+=1;
+					}
+				}
+				else if (endCal.get(endCal.MONTH) == month
+						&& endCal.get(endCal.MONTH) > startCal.get(startCal.MONTH)){
+					int addDay = endDay;
+					while (addDay >= 1)
+					{
+						eventDaysList.add(addDay);
+						addDay-=1;
+					}
+				}
+				else if (startCal.get(startCal.MONTH) == month
+						&& endCal.get(endCal.MONTH) > startCal.get(startCal.MONTH)){
+					int addDay = startDay;
+					while (addDay <= 31)
+					{
+						eventDaysList.add(addDay);
+						addDay+=1;
+					}
+				}
+				else if ((startCal.get(startCal.MONTH) < month)
+						&& endCal.get(endCal.MONTH) > month){
+					int addDay = 0;//= endDay;
+					while (addDay <= 31) // if a month has only 28/30 days, it does not matter for the output, when 29,30,31 are included
+					{
+						eventDaysList.add(addDay);
+						addDay+=1;
+					}
 				}
 			}
-			else if (endCal.get(endCal.MONTH) == month)
-			{
-				int addDay = endDay;
-				while (addDay >= startDay)
-				{
-					eventDaysList.add(addDay);
-					addDay-=1;
-				}
-			}
-			else if (startCal.get(startCal.MONTH) < month && endCal.get(endCal.MONTH) > month)
-			{
-				int addDay = 0;//= endDay;
-				while (addDay <= 31) // if a month has only 28/30 days, it does not matter for the output, when 29,30,31 are included
-				{
-					eventDaysList.add(addDay);
-					addDay+=1;
-				}
-			}
+			////+ YEAR-DIFFERENZEN
+			
 		}
 		return eventDaysList;
 	}

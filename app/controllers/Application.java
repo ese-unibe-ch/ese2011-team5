@@ -103,7 +103,7 @@ public class Application extends Controller {
 			startOfLastMonth = daysFromLastMonth.get(0);
         
 		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
-        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
+        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month, year);
         ArrayList<String> weekdays = getWeekDays();
         
         render(currentUser, calendar, events, month, monthString, 
