@@ -10,7 +10,7 @@
 	<--! just for testing purposes !-->
 	
 	#{list items:_calendarList, as:'calendar'}
-		<p><a href="@{Application.showCalendarView(calendar.getID(),_currentUser.getName(),11,0)}">${calendar.getCalendarName()}</a></p>
+		<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),_currentUser.getName())}">${calendar.getCalendarName()}</a></p>
 	#{/list}
 	
 	add calendar:

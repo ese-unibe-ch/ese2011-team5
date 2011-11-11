@@ -5,16 +5,21 @@
 
     <div id="centerCol">
      
-	<h1>${monthString}</h1>
+	<h1>${monthString} ${year}</h1>
 	<h2>${calendar.getCalendarName()}</h2>
 	
 	
-	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getName(), selectedDay, -1)}">last Month</a>
+	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getName(), selectedDay, month-1, year)}">last Month</a>
 	          
-	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getName(), selectedDay, +1)}">next Month</a>
+	<a href="@{Application.showCalendarView(calendar.getID(), calendar.getOwner().getName(), selectedDay, month+1, year)}">next Month</a>
 
 	<ol class="calendar" start="6">
 		<li id="lastmonth">
+			<ul>
+				#{list items:weekdays, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
 			<ul start="${startOfLastMonth}">
 				#{list items:daysFromLastMonth, as:'day'}
 					<li>${day}</li>
@@ -36,7 +41,7 @@
 					#{/else}
 							<!-- Unterscheidung vom Inhalt: Tag mit Events | Tag ohne Events -->
 							#{if eventDaysOfMonth.contains(day)}
-								<b>${day}</b>	
+								<b><a href="@{Application.showCalendarView(calendar.getID(),calendar.getOwner().getName(),day,month,year)}">${day}</a></b>
 							#{/if}
 							#{else}
 								${day}
@@ -53,4 +58,13 @@
 			</ul>
 		</li>
 	</ol>
+	
+	<h3>Events today:</h3>
+	
+	#{list items:events, as:'event'}
+		#{if event.isEventDay(selectedDay,month,year)} 
+		<p> ${event.toString()} </p>
+		#{/if}
+	#{/list}
+	
 		

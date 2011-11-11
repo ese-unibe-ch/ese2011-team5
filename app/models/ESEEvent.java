@@ -1,6 +1,9 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class ESEEvent implements Comparable<ESEEvent>
 {
@@ -13,6 +16,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 	private Date startDate;
 	private Date endDate;
 	private boolean isPublic;
+	
 
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
 			Date startDate, Date endDate, boolean isPublic) throws AssertionError, IllegalArgumentException {
@@ -31,6 +35,32 @@ public class ESEEvent implements Comparable<ESEEvent>
 		this.endDate = endDate;
 		this.isPublic = isPublic;
 
+	}
+	
+	public boolean isEventDay(int day, int month, int year)
+	{
+		Calendar dateAsCal = new GregorianCalendar();
+		dateAsCal.set(dateAsCal.DAY_OF_MONTH, day);
+		dateAsCal.set(dateAsCal.MONTH, month);
+		dateAsCal.set(dateAsCal.YEAR, year);
+		
+		Calendar startCal = new GregorianCalendar();
+		Calendar endCal = new GregorianCalendar();
+		
+		startCal.setTime(startDate);
+		endCal.setTime(endDate);
+		
+		if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) && 
+					dateAsCal.get(dateAsCal.YEAR) == startCal.get(startCal.YEAR))
+				return true;
+		else if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR) && 
+					dateAsCal.get(dateAsCal.YEAR) == endCal.get(endCal.YEAR))
+				return true;
+		else if (startCal.get(startCal.MILLISECOND) < dateAsCal.get(dateAsCal.MILLISECOND)
+					&& endCal.get(endCal.MILLISECOND) > dateAsCal.get(dateAsCal.MILLISECOND))
+				return true;
+		else
+			return false;
 	}
 
 	private void checkDateValidity(Date startDate, Date endDate) throws IllegalArgumentException
@@ -75,10 +105,6 @@ public class ESEEvent implements Comparable<ESEEvent>
 		return ESEConversionHelper.convertDateToString(this.endDate);
 	}
 
-	public String toString()
-	{
-		return "ID: "+ this.idCounter +" Name: " + this.eventName + " StartDate: "+ getStringStartDate() + " EndDate: " + this.getStringEndDate();
-	}
 
 	public String getStringStartDate()
 	{
@@ -114,6 +140,11 @@ public class ESEEvent implements Comparable<ESEEvent>
 	public void setVisibility(boolean publiclyViewable)
 	{
 		this.isPublic = publiclyViewable;
+	}
+	
+	public String toString(){
+		return eventName+": From "+ESEConversionHelper.convertDateToString(startDate)
+				+" to "+ESEConversionHelper.convertDateToString(endDate);
 	}
 
 	@Override

@@ -132,17 +132,12 @@ public class ESECalendar
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
 
-	public ArrayList<ESEEvent> getAllAllowedEventsOfDay(String date)
-	{
+	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
-		{
-			return this.getAllEventsOfDay(date);
-		}
+			return this.getAllEventsOfMonth(month);
 		else
-		{
-			return this.getAllPublicEventsOfDay(date);
-		}
-	}
+			return this.getAllPublicEventsOfMonth(month);
+	} 
 
 	public ArrayList<ESEEvent> getAllEventsOfDay(String date)
 	{
@@ -178,21 +173,41 @@ public class ESECalendar
 		return eventsOfDay;
 	}
 
-	public ArrayList<ESEEvent> getAllPublicEventsOfDay(String date)
-	{
+	public ArrayList<ESEEvent> getAllEventsOfMonth(int month) {
+		Calendar monthAsCal = new GregorianCalendar();
+		monthAsCal.set(Calendar.MONTH,month);
+		Calendar startCal = new GregorianCalendar();
+		Calendar endCal = new GregorianCalendar();
+		ArrayList<ESEEvent> eventsOfMonth = new ArrayList<ESEEvent>();
+		for (ESEEvent event : eventList){
+			startCal.setTime(event.getStartDate());
+			endCal.setTime(event.getEndDate());
+			if (monthAsCal.get(monthAsCal.MONTH) == startCal.get(startCal.MONTH) && 
+					monthAsCal.get(monthAsCal.YEAR) == startCal.get(startCal.YEAR))
+				eventsOfMonth.add(event);
+			else if (monthAsCal.get(monthAsCal.MONTH) == endCal.get(endCal.MONTH) && 
+					monthAsCal.get(monthAsCal.YEAR) == endCal.get(endCal.YEAR))
+				eventsOfMonth.add(event);
+			else if ((monthAsCal.get(monthAsCal.MONTH) > startCal.get(startCal.MONTH) && 
+					monthAsCal.get(monthAsCal.YEAR) == startCal.get(startCal.YEAR)) &&
+					(monthAsCal.get(monthAsCal.MONTH) < endCal.get(endCal.MONTH) && 
+							monthAsCal.get(monthAsCal.YEAR) == endCal.get(endCal.YEAR)))
+				eventsOfMonth.add(event);
+		}
+		return eventsOfMonth;
+	}
+	
+	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month) {
 		ArrayList<ESEEvent> listOfPublicEvents = new ArrayList<ESEEvent>();
-
-		for (ESEEvent event : this.getAllEventsOfDay(date))
-		{
+		
+		for (ESEEvent event : this.getAllEventsOfMonth(month)){
 			if (event.isPublic())
-			{
 				listOfPublicEvents.add(event);
-			}
 		}
 		return listOfPublicEvents;
-	}
+	}	
 
-	public List<Integer> getDaysFromThisMonth(int month)
+	public List<Integer> getDaysFromThisMonth(int month, int year)
 	{
 		Calendar cal = new GregorianCalendar();
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -205,40 +220,35 @@ public class ESECalendar
 		return daysFromThisMonth;
 	}
 
-	public List<Integer> getDaysFromLastMonth(int month)
+	public List<Integer> getDaysFromLastMonth(int month, int year)
 	{
 		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
 		Calendar thisMonth = new GregorianCalendar();
 		Calendar lastMonth = new GregorianCalendar();
 		thisMonth.set(Calendar.MONTH, month);
+		thisMonth.set(Calendar.YEAR, year);
 		lastMonth.set(Calendar.MONTH, month-1);
+		lastMonth.set(Calendar.YEAR, year);
 
-		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		thisMonth.setFirstDayOfWeek(Calendar.MONDAY);
+		thisMonth.set(Calendar.DAY_OF_MONTH,1);
+		int max = lastMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int start = thisMonth.get(Calendar.DAY_OF_WEEK);
 
-		for (int i=max-start+1; i < max; i++)
+		for (int i=max-start+2; i < max; i++)
 		{
 			daysFromLastMonth.add(i+1);
 		}
 		return daysFromLastMonth;
 	}
 
-	public List<Integer> getDaysFromNextMonth(int month)
+	public List<Integer> getDaysFromNextMonth(int month, int year)
 	{
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-		Calendar thisMonth = new GregorianCalendar();
-		Calendar nextMonth = new GregorianCalendar();
-		thisMonth.set(Calendar.MONTH, month);
-		nextMonth.set(Calendar.MONTH, month+1);
-
-		int start = nextMonth.get(Calendar.DAY_OF_WEEK);
-		int max = 7-start;
-
-		for (int i=0; i <= max; i++)
-		{
-			daysFromNextMonth.add(i+1);
-		}
+		int daysToAdd = 7 - (this.getDaysFromThisMonth(month, year).size() 
+				+ this.getDaysFromLastMonth(month, year).size())%7 ;
+		for(int i=1; i <= daysToAdd; i++)
+			daysFromNextMonth.add(i);
 		return daysFromNextMonth;
 	}
 
