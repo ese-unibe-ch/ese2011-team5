@@ -34,11 +34,11 @@ public class Application extends Controller {
 	        params.flash();
 		}
 		
-		
 		render(currentUser, groups, otherUsers, calendarList);
 	}
 	
-	public static void betweenShowCalendarsAndShowCalendarView(int calendarID, String currentUser){
+	public static void betweenShowCalendarsAndShowCalendarView(int calendarID, String currentUser)
+	{
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		showCalendarView(calendarID, currentUser,100,currentMonth,currentYear);		
@@ -55,8 +55,7 @@ public class Application extends Controller {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESECalendar> calendarList = otherUser.getCalendarList();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
-				.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		for (ESECalendar calendar : calendarList)
 			System.out.println(calendar.getID());
@@ -69,49 +68,50 @@ public class Application extends Controller {
 		showCalendars();
 	}
 	
-	public static void showCalendarView(int calendarID, String username, int selectedDay,
-			int month, int year){
-
-			if (month == 12){
+	public static void showCalendarView(int calendarID, String username, int selectedDay, 
+			int month, int year)
+	{
+		
+		if (month == 12)
+		{
 			month = 0;
 			year++;
-			}
-			if (month == -1){
+		}
+		if (month == -1)
+		{
 			month = 11;
 			year--;
-			}
-
-			ESEUser currentUser = ESEDatabase.getCurrentUser();
-			ESECalendar calendar = currentUser.getCalendarByID(calendarID);
-
-			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-
-			SimpleDateFormat dfs = new SimpleDateFormat();
-			     String monthString = dfs.getDateFormatSymbols().getMonths()[month];
-			    
-
-			List<Integer> daysFromLastMonth = new ArrayList<Integer>();
-			List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-			daysFromLastMonth = calendar.getDaysFromLastMonth(month, year);
-			daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
-			List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month, year);
-			        
-			int startOfLastMonth = 0; //NOCH ANPASSEN
-			if(!daysFromLastMonth.isEmpty())
+		}
+		
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
+		
+		int currentDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		
+		SimpleDateFormat dfs = new SimpleDateFormat();
+    	String monthString = dfs.getDateFormatSymbols().getMonths()[month];
+    	
+		
+		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
+		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
+		daysFromLastMonth =	calendar.getDaysFromLastMonth(month, year);
+		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
+		List<Integer> daysFromThisMonth =  calendar.getDaysFromThisMonth(month, year);
+        
+		int startOfLastMonth = 0; //NOCH ANPASSEN
+		if(!daysFromLastMonth.isEmpty())
 			startOfLastMonth = daysFromLastMonth.get(0);
-			        
-			ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
-			        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
-			        ArrayList<String> weekdays = getWeekDays();
-			        
-			        render(currentUser, calendar, events, month, monthString,
-			         startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
-			         daysFromNextMonth, eventDaysOfMonth, selectedDay,
-			         weekdays, currentDay, year);
-
-			}
-
-
+        
+		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
+        ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month);
+        ArrayList<String> weekdays = getWeekDays();
+        
+        render(currentUser, calendar, events, month, monthString, 
+        		startOfLastMonth, daysFromLastMonth, daysFromThisMonth, 
+        		daysFromNextMonth, eventDaysOfMonth, selectedDay,
+        		weekdays, currentDay, year);
+		
+	}
 
 	public static void showEvents(int calendarID, String username) {
 
@@ -145,7 +145,7 @@ public class Application extends Controller {
 			String eventStart, String eventEnd, boolean isPublic)
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
-		ESEEvent event=calendar.getEventById(eventID);
+		ESEEvent event=calendar.getEventByID(eventID);
 		
 		event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
 		event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
@@ -164,7 +164,7 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		System.out.println("USER ID: " + currentUser.getUserID() + " calendarID: " + calendar.getID());
-		ESEEvent event = calendar.getEventById(eventID);
+		ESEEvent event = calendar.getEventByID(eventID);
 		render(event,calendar,currentUser,otherUser,otherUsers,groups);//, calendar);
 	}
 
@@ -243,7 +243,7 @@ public class Application extends Controller {
 	}
 	
 	/**
-	 * ONLY for if an error happend in changePassword!
+	 * ONLY used if an error happens in changePassword!
 	 * @param username
 	 */
 	public static void resetPassword(String username)
@@ -332,7 +332,7 @@ public class Application extends Controller {
 		ESEUser otherUser=ESEDatabase.getUserByID(otherUserID);
 		ESECalendar selectedCalendar=user.getCalendarByName(selectedCalendarName);
 		ESECalendar otherCalendar=otherUser.getCalendarByID(otherUserCalendarID);
-		ESEEvent event=otherCalendar.getEventById(eventID);
+		ESEEvent event=otherCalendar.getEventByID(eventID);
 		System.out.println("cal" + selectedCalendar.getCalendarName() + "iD " + selectedCalendar.getID());
 		System.out.println("event " + event.getEventName());
 		event.addCorrespondingCalendar(selectedCalendar);

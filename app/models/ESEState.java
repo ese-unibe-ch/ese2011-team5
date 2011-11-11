@@ -1,7 +1,7 @@
 package models;
 
-public enum ESEState 
+public enum ESEState
 {
-		ONLINE,
-		OFFLINE;
+	ONLINE,
+	OFFLINE;
 }

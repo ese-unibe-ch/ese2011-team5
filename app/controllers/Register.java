@@ -28,6 +28,7 @@ public class Register extends Controller
             index();
            
         }
+
         if(!password.equals(confirmpassword))
         {
             flash.error("Passwords do not match!");
@@ -46,7 +47,5 @@ public class Register extends Controller
         ESEDatabase.createUser(username, password, "", "", question, answer);
         Security.ownAuthenticate(username, password);
         Application.showCalendars();
-
-    
     }
 }

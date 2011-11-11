@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 /** Helper class for conversions between String and Date
  */
-public class ESEConversionHelper 
+public class ESEConversionHelper
 {
 	private static final String inputFormat = "dd.MM.yyyy HH:mm";
 
@@ -17,7 +17,7 @@ public class ESEConversionHelper
 	 * @param userDateString The string in the form of "{@code dd.MM.yyyy HH:mm}" that should be parsed
 	 * @return The date value
 	 */
-	public static Date convertStringToDate(String userDateString) 
+	public static Date convertStringToDate(String userDateString)
 	{
 		System.out.println("INPUT DATE: " + userDateString);
 		
@@ -51,7 +51,7 @@ public class ESEConversionHelper
 	public static String convertDateToString(Date date)
 	{
 		SimpleDateFormat simpleDateConverter = new SimpleDateFormat(inputFormat);
-		if(date!=null)
+		if(date != null)
 		{
 			return simpleDateConverter.format(date);
 		}

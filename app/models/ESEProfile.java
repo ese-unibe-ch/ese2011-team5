@@ -5,139 +5,140 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class ESEProfile {
+public class ESEProfile
+{
 
 	private static int idCounter = 0;
 
 	private int profileID;
 	private ESEUser owner;
 	private Date registrationDate;
-	private String stateMessage="Hi there!";
-	private ESEState state=ESEState.OFFLINE;
-	
-	
+	private String stateMessage = "Hi there!";
+	private ESEState state = ESEState.OFFLINE;
+
 	private String username;
-	private String firstName="-";
-	private String familyName="-";
-	
+	private String firstName = "-";
+	private String familyName = "-";
+
 	private Date birthday;
-	
 
-	private String eMail="-";
-		
-	private String street="-";
-	private String city="-";
-	private String postCode="-";
-	
+	private String eMail = "-";
 
-	public ESEProfile(ESEUser owner, String username) {
-		assert username != "";
-		assert(owner != null);
-		
-		this.profileID = idCounter++;
-		this.owner = owner;
-		this.username=username;
-		
-		this.registrationDate=new Date();
-	}
-	
+	private String street = "-";
+	private String city = "-";
+	private String postCode = "-";
+
 	public ESEProfile(ESEUser owner, String username, String firstName, String familyName)
 	{
 		assert username != "";
 		assert(owner != null);
-		
+
 		this.profileID = idCounter++;
 		this.owner = owner;
-		this.username=username;
-		this.firstName=firstName;
-		this.familyName=familyName;
-		
-		this.registrationDate=new Date();
+		this.username = username;
+		this.firstName = firstName;
+		this.familyName = familyName;
+
+		this.registrationDate = new Date();
 	}
 
-	public int getID() {
+	public int getID()
+	{
 		return this.profileID;
 	}
-	
-	public ESEUser getOwner(){
+
+	public ESEUser getOwner()
+	{
 		return this.owner;
 	}
-	
-	public String getUsername() {
+
+	public String getUsername()
+	{
 		return username;
 	}
 
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return firstName;
 	}
 
-	public String getFamilyName() {
+	public String getFamilyName()
+	{
 		return familyName;
 	}
 
-	public Date getBirthday() {
+	public Date getBirthday()
+	{
 		return birthday;
 	}
-	
+
 	public String getBirthdayString()
 	{
 		return ESEConversionHelper.convertBirthdayDateToString(this.birthday);
 	}
-	
+
 	public Date getRegistrationDate()
 	{
 		return this.registrationDate;
 	}
-	
+
 	public String getRegistrationDateString()
 	{
 		return ESEConversionHelper.convertDateToString(this.registrationDate);
 	}
 
-	public String getMail() {
+	public String getMail()
+	{
 		return eMail;
 	}
 
-	public String getStreet() {
+	public String getStreet()
+	{
 		return street;
 	}
 
-	public String getCity() {
+	public String getCity()
+	{
 		return city;
 	}
 
-	public String getPostCode() {
+	public String getPostCode()
+	{
 		return postCode;
 	}
-	
+
 	public String getState()
 	{
 		return this.state.toString();
 	}
-	
+
 	public String getStateMessage()
 	{
 		return this.stateMessage;
 	}
-	
+
 	public void setStateMessage(String stateMessage)
 	{
 		this.stateMessage=stateMessage;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(String username)
+	{
 		this.username = username;
 	}
 
-	public void setFirstName(String firstName) {
+	public void setFirstName(String firstName)
+	{
 		this.firstName = firstName;
 	}
 
-	public void setFamilyName(String familyName) {
+	public void setFamilyName(String familyName)
+	{
 		this.familyName = familyName;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(Date birthday)
+	{
 		this.birthday = birthday;
 	}
 	
@@ -147,30 +148,28 @@ public class ESEProfile {
 		this.setBirthday(birthdayDate);
 	}
 
-	public void setMail(String eMail) {
+	public void setMail(String eMail)
+	{
 		this.eMail = eMail;
 	}
 
-	public void setStreet(String street) {
+	public void setStreet(String street)
+	{
 		this.street = street;
 	}
 
-	public void setCity(String city) {
+	public void setCity(String city)
+	{
 		this.city = city;
 	}
 
-	public void setPostCode(String postCode) {
+	public void setPostCode(String postCode)
+	{
 		this.postCode = postCode;
 	}
-	
+
 	public void changeState(ESEState state)
 	{
 		this.state=state;
 	}
-	
-
-	
-	
-	
-	
 }

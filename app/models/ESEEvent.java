@@ -5,7 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class ESEEvent implements Comparable<ESEEvent>{
+public class ESEEvent implements Comparable<ESEEvent>
+{
 
 	private static int idCounter = 0;
 
@@ -43,7 +44,8 @@ public class ESEEvent implements Comparable<ESEEvent>{
 
 	}
 	
-	public boolean isEventDay(int day, int month, int year){
+	public boolean isEventDay(int day, int month, int year)
+	{
 		Calendar dateAsCal = new GregorianCalendar();
 		dateAsCal.set(dateAsCal.DAY_OF_MONTH, day);
 		dateAsCal.set(dateAsCal.MONTH, month);
@@ -80,11 +82,13 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	 * Methods with read only access
 	 */
 
-	public int getEventID() {
+	public int getEventID()
+	{
 		return this.eventID;
 	}
 
-	public String getEventName() {
+	public String getEventName()
+	{
 		return this.eventName;
 	}
 
@@ -112,11 +116,13 @@ public class ESEEvent implements Comparable<ESEEvent>{
 		return null;
 	}
 
-	public Date getStartDate() {
+	public Date getStartDate()
+	{
 		return this.startDate;
 	}
 
-	public Date getEndDate() {
+	public Date getEndDate()
+	{
 		return this.endDate;
 	}
 	
@@ -141,17 +147,17 @@ public class ESEEvent implements Comparable<ESEEvent>{
 	
 	public String getStringEndDate()
 	{
-		String str= ESEConversionHelper.convertDateToString(this.endDate);
-		System.out.println("END DATE: " + str);
-		return str;
+		return ESEConversionHelper.convertDateToString(this.endDate);
 	}
-	
+
+
 	public String getStringStartDate()
 	{
 		return ESEConversionHelper.convertDateToString(this.startDate);
 	}
 
-	public boolean isPublic() {
+	public boolean isPublic()
+	{
 		return this.isPublic;
 	}
 
@@ -185,11 +191,10 @@ public class ESEEvent implements Comparable<ESEEvent>{
 		return eventName+": From "+ESEConversionHelper.convertDateToString(startDate)
 				+" to "+ESEConversionHelper.convertDateToString(endDate);
 	}
-	
-	
-	
+
 	@Override
-	public int compareTo(ESEEvent compareEvent) {
+	public int compareTo(ESEEvent compareEvent)
+	{
 		if (this.getStartDate().getTime() > compareEvent.getStartDate().getTime())
 			return 1;
 		if (this.getStartDate().getTime() == compareEvent.getStartDate().getTime())
