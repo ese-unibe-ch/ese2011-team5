@@ -52,7 +52,7 @@ public class Application extends Controller {
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		for (ESECalendar calendar : calendarList)
 			System.out.println(calendar.getID());
-		render(currentUser, otherUsers, calendarList, groups);
+		render(currentUser, otherUsers, otherUser, calendarList, groups);
 	}
 
 	public static void addCalendar(String calendarName) {
@@ -274,7 +274,8 @@ public class Application extends Controller {
 	{
 		
 		System.out.println("SEARCH FOR: "+ searchName);
-		ArrayList<ESEUser> otherUsers = ESEDatabase.searchOtherUserByName(searchName);
+		//ArrayList<ESEUser> otherUsers = ESEDatabase.searchOtherUserByName(searchName); OLD VERSION
+		ArrayList<ESEUser> otherUsers = ESEDatabase.findUser(searchName);
 		
 		System.out.println("SEARCH RESULT:");
 		for(ESEUser user:otherUsers)

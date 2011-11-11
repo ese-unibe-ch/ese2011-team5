@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.regex.*;
 
 public class ESEDatabase {
 
@@ -149,17 +148,12 @@ public class ESEDatabase {
 		throw new IllegalArgumentException("No user with this ID");
 	}
 
-	public static ArrayList<ESEUser> findUser(String username) throws PatternSyntaxException
+	public static ArrayList<ESEUser> findUser(String username)
 	{
-		Pattern searchPattern = Pattern.compile(username.toLowerCase());
-		//Pattern searchPattern = Pattern.compile(username.toLowerCase().replaceAll("\\?", "\\.").replaceAll("\\*", "\\.\\*"));
-		
 		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
 		for(ESEUser user : userList)
 		{
-			Matcher m = searchPattern.matcher(user.getName().toLowerCase());
-			if(m.matches())
-			//if(user.getName().toLowerCase().matches(searchPattern))
+			if(user.getName().toLowerCase().matches(".*" + username + ".*") && !user.getName().equals("guest"))
 			{
 				matchingUsers.add(user);
 			}
