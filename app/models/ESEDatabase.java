@@ -67,7 +67,7 @@ public class ESEDatabase
 				return user;
 			}
 		}
-		throw new ESEException("user " + username + " not found!");
+		throw new ESEException("User \"" + username + "\" not found!");
 	}
 
 	public static ESEUser getUserByID(int userID) throws ESEException
@@ -79,7 +79,7 @@ public class ESEDatabase
 				return user;
 			}
 		}
-		throw new ESEException("No user with this ID");
+		throw new ESEException("No user with this ID!");
 	}
 
 	public static ArrayList<ESEUser> getOtherUsers(String username)
@@ -137,7 +137,7 @@ public class ESEDatabase
 				return;
 			}
 		}
-		throw new ESEException("No such user exists");
+		throw new ESEException("No such user exists!");
 	}
 
 	public static void removeUserByID(int userID) throws ESEException
@@ -150,7 +150,7 @@ public class ESEDatabase
 				return;
 			}
 		}
-		throw new ESEException("No user with this ID");
+		throw new ESEException("No user with this ID!");
 	}
 
 	/*

@@ -23,7 +23,7 @@ public class Security extends Secure.Security
 			}
 			else
 			{
-				flash.error("Wrong password! Try it again! <a href=forgotPassword/" + username +"> Did you forgot your password? - Don't worry be happy: There is a solution </a>");
+				flash.error("Wrong password! Try it again! <a href=forgotPassword/" + username +"> Did you forget your password? - Don't worry be happy: There is a solution </a>");
 				params.flash();
 			}
 		}

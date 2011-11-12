@@ -19,8 +19,6 @@ public class ESEConversionHelper
 	 */
 	public static Date convertStringToDate(String userDateString)
 	{
-		System.out.println("INPUT DATE: " + userDateString);
-		
 		DateTimeFormatter dateTimeConvert = DateTimeFormat.forPattern(inputFormat);
 		
 		DateTime dateTimeParser = dateTimeConvert.parseDateTime(userDateString);
@@ -59,15 +57,13 @@ public class ESEConversionHelper
 			return "-";
 		}
 	}
-	
-	
-	
+
 	public static String convertBirthdayDateToString(Date date)
 	{
 		String birthdayFormat = "dd.MM.yyyy";
 		
 		SimpleDateFormat simpleDateConverter = new SimpleDateFormat(birthdayFormat);
-		if(date!=null)
+		if(date != null)
 		{
 			return simpleDateConverter.format(date);
 		}
@@ -76,5 +72,4 @@ public class ESEConversionHelper
 			return "-";
 		}
 	}
-	
 }

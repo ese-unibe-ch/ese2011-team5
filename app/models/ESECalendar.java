@@ -17,13 +17,21 @@ public class ESECalendar
 
 	public ESECalendar(String calendarName, ESEUser owner) throws ESEException
 	{
-		if(calendarName == "")
+		if(calendarName.isEmpty())
 		{
 			throw new ESEException("Calendar name must not be empty!");
 		}
 		if(owner == null)
 		{
 			throw new ESEException("Calendar is not assigned to any user!");
+		}
+
+		for(ESECalendar calendar : owner.getCalendarList())
+		{
+			if(calendarName.equals(calendar.getCalendarName()))
+			{
+				throw new ESEException("A calendar with this name already exists!");
+			}
 		}
 
 		this.calendarID = idCounter++;
@@ -56,7 +64,7 @@ public class ESECalendar
 				return e;
 			}
 		}
-		throw new ESEException("No event with this ID");
+		throw new ESEException("No event with this ID!");
 	}
 
 	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
@@ -75,7 +83,7 @@ public class ESECalendar
 		this.eventList.add(newEvent);
 		if(eventOverlaps)
 		{
-			throw new ESEException("New event overlaps with existing event");
+			throw new ESEException("New event \""+newEvent.getEventName()+"\" overlaps with existing event!");
 		}
 	}
 

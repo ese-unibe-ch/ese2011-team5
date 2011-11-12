@@ -22,7 +22,9 @@
 			#{list items:eventList, as:'event'}
 	
 				<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" , Event ID: "${event.getEventID()}" </p>
-				<p><a href="@{Application.copyEvent(event.getEventID(),calendar.getOwner().getUserID(), calendar.getID())}"> Copy the event in your own calendar </a></p>
+				#{if !calendar.getOwner().equals(currentUser)}
+					<p><a href="@{Application.copyEvent(event.getEventID(),calendar.getOwner().getUserID(), calendar.getID())}"> Copy the event in your own calendar </a></p>
+				#{/if}
 				#{if calendar.getOwner().equals(currentUser)}
 					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
 					<a href="@{Application.removeEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Remove </a>

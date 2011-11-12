@@ -29,7 +29,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 		{
 			throw new ESEException("Event is not assigned to any calendar!");
 		}
-		if(eventName == "")
+		if(eventName.isEmpty())
 		{
 			throw new ESEException("Event name must not be empty!");
 		}
@@ -78,7 +78,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 	{
 		if (startDate.after(endDate))
 		{
-			throw new ESEException("Invalid start and end date");
+			throw new ESEException("Invalid start and end date!");
 		}
 	}
 

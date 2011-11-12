@@ -14,7 +14,7 @@ public class ESEGroup
 
 	public ESEGroup(String groupname, ESEUser owner) throws ESEException
 	{
-		if(groupname == "")
+		if(groupname.isEmpty())
 		{
 			throw new ESEException("Group name must not be empty!");
 		}
@@ -27,7 +27,7 @@ public class ESEGroup
 		{
 			if(groupname.equals(group.getGroupName()))
 			{
-				throw new ESEException("This group is already in the database");
+				throw new ESEException("This group is already in the database!");
 			}
 		}
 
@@ -63,7 +63,7 @@ public class ESEGroup
 			this.userList.add(user);
 			return;
 		}
-		throw new ESEException("This user is already in the group");
+		throw new ESEException("This user is already in the group!");
 	}
 
 	public void removeUserFromGroup(ESEUser user) throws ESEException
@@ -73,6 +73,6 @@ public class ESEGroup
 			this.userList.remove(user);
 			return;
 		}
-		throw new ESEException("No such user exists");
+		throw new ESEException("No such user exists!");
 	}
 }

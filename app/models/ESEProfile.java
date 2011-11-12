@@ -30,7 +30,7 @@ public class ESEProfile
 
 	public ESEProfile(ESEUser owner, String username, String firstName, String familyName) throws ESEException
 	{
-		if(username == "")
+		if(username.isEmpty())
 		{
 			throw new ESEException("Profile user name must not be empty!");
 		}

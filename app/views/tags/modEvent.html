@@ -36,15 +36,15 @@
 			#{form @Application.addEvent()}
 		    <p>
 		        <label for="eventName">Name of the Event: </label>
-		        <input type="text" name="eventName" id="eventName" />
+		        <input type="text" name="eventName" id="eventName" value="${flash.eventName}"  />
 		    </p>
 		    <p>
 		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventStart" id="eventStart" />
+		        <input type="text" name="eventStart" id="eventStart" value="${flash.eventStart}" />
 		    </p>
 		    <p>
 		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
-		        <input type="text" name="eventEnd" id="eventEnd" />
+		        <input type="text" name="eventEnd" id="eventEnd" value="${flash.eventEnd}" />
 		    </p>
 		    <p>
 		    	<input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />

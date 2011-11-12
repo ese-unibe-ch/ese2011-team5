@@ -30,7 +30,7 @@ public class ESEDatabaseTest
 		assertEquals(this.setupUser, ESEDatabase.getUserByName("DB User"));
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = ESEException.class)
 	public void usernameShouldbeCaseSensitive() throws ESEException
 	{
 		ESEDatabase.getUserByName("db User");

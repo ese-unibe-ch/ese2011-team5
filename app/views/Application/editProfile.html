@@ -17,7 +17,7 @@
 	
 		<section>
 			#{if currentUser.getName().equals("guest")}
-				You can not edit a profile, because you are not logged in!
+				You cannot edit a profile, because you are not logged in!
 			#{/if}
 			#{else}
 				#{editProfile currentUser:currentUser, profile:currentUser.getProfile() /}

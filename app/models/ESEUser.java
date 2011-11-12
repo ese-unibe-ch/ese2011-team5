@@ -26,7 +26,7 @@ public class ESEUser
 			String firstName, String familyName,
 			String secureQuestion, String secureAnswer) throws ESEException
 	{
-		if(username == "")
+		if(username.isEmpty())
 		{
 			throw new ESEException("User name must not be empty!");
 		}
@@ -35,7 +35,7 @@ public class ESEUser
 		{
 			if(username.equals(user.getName()))
 			{
-				throw new ESEException("This user name is already in the database");
+				throw new ESEException("This user name is already in the database!");
 			}
 		}
 
@@ -176,7 +176,7 @@ public class ESEUser
 				return calendar.getAllEvents();
 			}
 		}
-		throw new ESEException("No calendar with this ID");
+		throw new ESEException("No calendar with this ID!");
 	}
 
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws ESEException
@@ -188,7 +188,7 @@ public class ESEUser
 				return calendar.getAllPublicEvents();
 			}
 		}
-		throw new ESEException("No calendar with this ID");
+		throw new ESEException("No calendar with this ID!");
 	}
 
 	/*
