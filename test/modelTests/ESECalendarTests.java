@@ -215,12 +215,12 @@ public class ESECalendarTests
 		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent4", "18.04.2011 13:40", "19.04.2011 13:00", false);
  
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(13));
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(14));
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(15));
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(16));
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(17));
-		assertTrue(cal1.getEventDaysOfMonth(3).contains(18));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(13));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(14));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(15));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(16));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(17));
+		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(18));
 
 		ArrayList<ESEEvent> publicEventsList = cal1.getAllAllowedEvents();
 		assertEquals(3, publicEventsList.size());

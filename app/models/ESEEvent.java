@@ -61,14 +61,30 @@ public class ESEEvent implements Comparable<ESEEvent>
 		startCal.setTime(startDate);
 		endCal.setTime(endDate);
 		
+		System.out.println(ESEConversionHelper.convertDateToString(startDate));
+		System.out.println(ESEConversionHelper.convertDateToString(endDate));
+		
+		System.out.println(dateAsCal.get(dateAsCal.DAY_OF_MONTH));
+		System.out.println(dateAsCal.get(dateAsCal.MONTH));
+		System.out.println(dateAsCal.get(dateAsCal.YEAR));
+		
+		System.out.println(day);
+		System.out.println(month);
+		System.out.println(year);
+		
+		System.out.println(startCal.getTimeInMillis());
+		System.out.println(dateAsCal.getTimeInMillis());
+		System.out.println(endCal.getTimeInMillis());
+		
+		
 		if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) && 
 					dateAsCal.get(dateAsCal.YEAR) == startCal.get(startCal.YEAR))
 				return true;
 		else if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR) && 
 					dateAsCal.get(dateAsCal.YEAR) == endCal.get(endCal.YEAR))
 				return true;
-		else if (startCal.get(startCal.MILLISECOND) < dateAsCal.get(dateAsCal.MILLISECOND)
-					&& endCal.get(endCal.MILLISECOND) > dateAsCal.get(dateAsCal.MILLISECOND))
+		else if (startCal.getTimeInMillis() < dateAsCal.getTimeInMillis()
+					&& endCal.getTimeInMillis() > dateAsCal.getTimeInMillis())
 				return true;
 		else
 			return false;

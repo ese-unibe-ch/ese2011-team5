@@ -15,10 +15,11 @@
 	
 	
 	<h3>Other Users:</h3>
-	
-	#{list items:_otherUsers, as:'otherUser'}
-		<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a></p>
-	#{/list}
+	#{if !_groups.isEmpty()}
+		#{list items:_otherUsers, as:'otherUser'}
+			<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a> add to Friends</p>
+		#{/list}
+	#{/if}
 	
 	#{searchOtherUsers /}
 
