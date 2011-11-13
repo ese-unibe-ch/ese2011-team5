@@ -1,5 +1,69 @@
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 	</head>
 
-<h1>${_monthString} ${year}</h1>
-<h2>${_calendar.getCalendarName()}</h2>
+<div id="wrapper">
+
+    <div id="centerCol">
+     
+	<h1>${_monthString} ${_year}</h1>
+	<h2>${_calendar.getCalendarName()}</h2>
+	
+	<a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(), _selectedDay, _month-1, _year)}">last Month</a>
+	          
+	<a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(), _selectedDay, _month+1, _year)}">next Month</a>
+
+
+	<ol class="calendar" start="6">
+		<li id="lastmonth">
+			<ul>
+				#{list items:_weekdays, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
+			<ul start="${startOfLastMonth}">
+				#{list items:_daysFromLastMonth, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
+		</li>
+		<li id="thismonth">
+			<ul>
+				#{list items:_daysFromThisMonth, as:'day'}
+				<!-- Unterscheidung des Layouts: normal | selektiert | heute -->
+					#{if day == _selectedDay} 
+						<li class="selected">
+					#{/if}
+					#{elseif day == _currentDay}
+						<li class="today">
+					#{/elseif}
+					#{else}
+						<li>
+					#{/else}
+							<!-- Unterscheidung vom Inhalt: Tag mit Events | Tag ohne Events -->
+							#{if _eventDaysOfMonth.contains(day)}
+								<b><a href="@{Application.showCalendarView(_calendar.getID(),_calendar.getOwner().getName(),_day,_month,_year)}">${day}</a></b>
+							#{/if}
+							#{else}
+								${day}
+							#{/else}
+						</li>
+				#{/list}
+			</ul>
+		</li>
+		<li id="nextmonth">
+			<ul>
+				#{list items:_daysFromNextMonth, as:'day'}
+					<li>${day}</li>
+				#{/list}
+			</ul>
+		</li>
+	</ol>
+	
+	<h3>Events today:</h3>
+	
+	#{list items:events, as:'event'}
+		#{if event.isEventDay(selectedDay,month,year)} 
+		<p> ${event.toString()} </p>
+		#{/if}
+	#{/list}
+	
