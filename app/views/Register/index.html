@@ -1,0 +1,25 @@
+#{extends 'main.html' /}
+
+<body>
+	<header>
+		<h3>ESECalendar: Register a new user</h3>
+	</header>
+	
+	<nav>
+		#{ navigation currentUser: currentUser /}
+	</nav>
+	
+	<article>
+		<aside id="overview">
+			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
+		</aside>
+	
+		<section>
+			#{register /}
+		</section>
+	</article>
+	
+	<footer>
+		#{ footer /}
+	</footer>
+</body>
