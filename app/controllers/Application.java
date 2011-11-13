@@ -151,7 +151,23 @@ public class Application extends Controller
 	public static void removeEvent(int calendarID, int eventID) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+		System.out.println("EVENT ID " + eventID);
+		ESEEvent event=calendar.getEventByID(eventID);
+//		if(event.getCorrespondingCalendar().equals(calendar)) //if the origin calendar is the same as the current user's calendar
+//		{
+//			event.eventRemoveInCorrespondingCalendars();			//TODO FIX THIS!
+//			System.out.println("REMOVE EVENT EVERYWHERE");
+//		}
+		
+	
 		calendar.removeEvent(eventID);
+		
+		
+	
+		
+		
+	
+//		
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 
@@ -358,6 +374,13 @@ public class Application extends Controller
 		try
 		{
 			selectedCalendar = user.getCalendarByName(selectedCalendarName);
+			ESECalendar otherCalendar = otherUser.getCalendarByID(otherUserCalendarID);
+			ESEEvent event = otherCalendar.getEventByID(eventID);
+			System.out.println("cal" + selectedCalendar.getCalendarName() + "ID " + selectedCalendar.getID());
+			System.out.println("event " + event.getEventName());
+			event.addCorrespondingCalendar(selectedCalendar);
+			selectedCalendar.addEvent(event);
+			showEvents(selectedCalendar.getID(), user.getName());
 		}
 		catch (ESEException e)
 		{
@@ -365,12 +388,7 @@ public class Application extends Controller
 			params.flash();
 			showCalendars();
 		}
-		ESECalendar otherCalendar = otherUser.getCalendarByID(otherUserCalendarID);
-		ESEEvent event = otherCalendar.getEventByID(eventID);
-		System.out.println("cal" + selectedCalendar.getCalendarName() + "ID " + selectedCalendar.getID());
-		System.out.println("event " + event.getEventName());
-		event.addCorrespondingCalendar(selectedCalendar);
-		selectedCalendar.addEvent(event);
+	
 	}
 
 	private static ArrayList<String> getWeekDays(){

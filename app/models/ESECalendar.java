@@ -59,12 +59,13 @@ public class ESECalendar
 	{
 		for(ESEEvent e: this.eventList)
 		{
+			System.out.println("EVENT: " + e.getEventID() + " name " + e.getEventName());
 			if(e.getEventID() == id)
 			{
 				return e;
 			}
 		}
-		throw new ESEException("No event with this ID!");
+		throw new ESEException("No event with this ID! IN CALENDAR" +this.getCalendarName());
 	}
 
 	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
@@ -129,6 +130,7 @@ public class ESECalendar
 	{
 		ESEEvent eventToRemove = this.getEventByID(eventID);
 		this.eventList.remove(eventToRemove);
+		
 	}
 
 	public ArrayList<ESEEvent> getAllAllowedEvents()

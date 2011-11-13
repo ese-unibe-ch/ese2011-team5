@@ -20,14 +20,16 @@
 			<h3>Events in Calendar "${calendar.getCalendarName()}" (Owner: ${calendar.getOwner().getName()})</h3>
 	
 			#{list items:eventList, as:'event'}
-	
+			
 				<p>Start Date: "${event.getStartDate()}", End Date: "${event.getEndDate()}", Event Name: "${event.getEventName()}" , Event ID: "${event.getEventID()}" </p>
-				#{if !calendar.getOwner().equals(currentUser)}
+				#{if !calendar.getOwner().equals(currentUser) && currentUser.getName()!="guest"}
 					<p><a href="@{Application.copyEvent(event.getEventID(),calendar.getOwner().getUserID(), calendar.getID())}"> Copy the event in your own calendar </a></p>
 				#{/if}
+				#{if event.getCorrespondingCalendar().getOwner().equals(currentUser)}
+						<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
+				#{/if}
 				#{if calendar.getOwner().equals(currentUser)}
-					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Edit </a>
-					<a href="@{Application.removeEvent(event.getCorrespondingCalendar().getID(), event.getEventID())}"> Remove </a>
+					<a href="@{Application.removeEvent(calendar.getID(), event.getEventID())}"> Remove </a>
 				#{/if}
 
 			#{/list}

@@ -222,4 +222,14 @@ public class ESEEvent implements Comparable<ESEEvent>
 		else
 			return -1;
 	}
+	
+	public void eventRemoveInCorrespondingCalendars() throws ESEException
+	{
+		for(ESECalendar calendar:this.correspondingCalendars)
+		{
+			calendar.removeEvent(this.eventID);
+		}
+		
+		this.correspondingCalendars.clear();
+	}
 }

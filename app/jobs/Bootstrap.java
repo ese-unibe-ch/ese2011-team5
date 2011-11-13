@@ -44,6 +44,7 @@ public class Bootstrap extends Job
 		cals1.get(1).addEvent("E3ofUser1priv", "15.11.2011 14:00", "16.11.2011 13:00", false);
 		ArrayList<ESECalendar> cals2 = user2.getCalendarList();
 		cals2.get(0).addEvent("E1ofUser2pub", "13.11.2011 14:00", "14.11.2011 13:00", true);
+		cals2.get(0).addEvent("ESE", "11.11.2011 11:11", "12.11.2011 11:11", true);
 		cals2.get(1).addEvent("E2ofUser2pub", "14.11.2011 14:00", "15.11.2011 13:00", true);
 		cals2.get(1).addEvent("E3ofUser2priv", "15.11.2011 14:00", "16.11.2011 13:00", false);
 		ArrayList<ESECalendar> cals3 = user3.getCalendarList();
