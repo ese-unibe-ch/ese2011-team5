@@ -6,6 +6,7 @@ aside#login
 aside#search
 {
 	float: right;
+	padding: 10px 20px 0 10px; 
 }
 
 article#main
@@ -23,6 +24,19 @@ p{
 	color: #000;
 }
 
+div#login
+{
+	color: #000;
+	padding: 10px 20px 0 10px; 
+}
+
+h1#title			{
+color:#E0E0E0; 
+font:4em Verdana, Arial, Helvetica, sans-serif; 
+padding: 10px 0 0 10px; 
+display: block; 
+text-align:left;
+}
 					
 	
 	/*
@@ -73,7 +87,10 @@ text-underline: none;
 h1			{
 color:#E0E0E0; 
 font:4em Verdana, Arial, Helvetica, sans-serif; 
-				padding: 20px 0 0 30px; display: block; text-align:center;}
+padding: 20px 0 0 30px; 
+display: block; 
+text-align:center;
+}
 
 
 /*
