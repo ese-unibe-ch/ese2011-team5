@@ -20,7 +20,13 @@
 		</aside>
 		
 		<article>
-			Article
+			#{if currentUser.getName().equals("guest")}
+				#{login /}
+			#{/if}
+			#{else}
+				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
+			#{/else}
+			
 		<article>
 	
 	</section>
