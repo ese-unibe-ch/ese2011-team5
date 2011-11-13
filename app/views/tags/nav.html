@@ -5,13 +5,11 @@
 
 <div id="nav">
 	<a href=@{Application.showCalendars()}>Home</a>
-	<p><a href="javascript:history.back()">Back</a></p>
+	 <a href="javascript:history.back()">Back</a>
 		
 		#{if !_currentUser.getName().equals("guest")}
 			<a href=@{Application.profile(_currentUser.getUserID())}>Profile</a>
-			</br>
 			<a href=@{Security.logout()}>logout</a>
-			</br>
 			<a href=@{Application.showGroups()}>Groups</a>
 		#{/if}
 	

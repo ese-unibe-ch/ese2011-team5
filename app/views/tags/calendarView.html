@@ -61,7 +61,7 @@
 	
 	<h3>Events today:</h3>
 	
-	#{list items:events, as:'event'}
+	#{list items:_events, as:'event'}
 		#{if event.isEventDay(selectedDay,month,year)} 
 		<p> ${event.toString()} </p>
 		#{/if}

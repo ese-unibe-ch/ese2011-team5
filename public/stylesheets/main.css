@@ -6,13 +6,13 @@ aside#login
 aside#search
 {
 	float: right;
-	padding: 10px 20px 0 10px; 
+	padding: 10px;
 }
 
 div#nav
 {
 	float: right;
-	padding: 10px 20px 0 10px; 
+	padding: 10px;
 }
 
 div#contentFooter
@@ -45,11 +45,7 @@ div#login
 
 h1#title
 {
-	color:#E0E0E0; 
-	font:4em Verdana, Arial, Helvetica, sans-serif; 
-	padding: 10px 0 0 10px; 
-	display: block; 
-	text-align:left;
+	
 }
 					
 	
@@ -67,9 +63,6 @@ h1#title
 }
 body
 {
-color: #383838; 
-font:1.1em Verdana, Arial, Helvetica, sans-serif; 
-background: url(images/bg.jpg) top center no-repeat #545454;
 }
 /*body *              	{display:inline;}*/
 ol.calendar
@@ -85,13 +78,8 @@ li
 list-style: none;
 }
 p.link{
-text-align: center;
-display: block;
 }
 a
-{color:#000000;
-text-decoration: none; 
-text-underline: none;
 }
 
 
