@@ -255,28 +255,28 @@ public class ESECalendarTests
 	{
 		this.cal2.addEvent("Long event", "14.10.2011 13:40", "17.12.2011 13:00", true);
 
-		ArrayList<Integer> eventsInSeptember = this.cal2.getEventDaysOfMonth(8);
+		ArrayList<Integer> eventsInSeptember = this.cal2.getEventDaysOfMonth(8, 2011);
 		assertEquals(0, eventsInSeptember.size());
 
-		ArrayList<Integer> eventsInOctober = this.cal2.getEventDaysOfMonth(9);
-		assertEquals(18, eventsInOctober.size()); // Expect [14, 15, ..., 30, 31]
+		ArrayList<Integer> eventsInOctober = this.cal2.getEventDaysOfMonth(9, 2011);
+		assertEquals(18, eventsInOctober.size());
 		for (int i = 14; i <= 31; i++)
 		{
-			assert i == eventsInOctober.get(i);
+			assertEquals(String.valueOf(i), String.valueOf(eventsInOctober.get(i-14)));
 		}
 
-		ArrayList<Integer> eventsInNovember = this.cal2.getEventDaysOfMonth(10);
-		assertEquals(30, eventsInNovember.size()); // Expect [1, 2, ..., 29, 30]
-		for (int i = 1; i <= 30; i++)
+		ArrayList<Integer> eventsInNovember = this.cal2.getEventDaysOfMonth(10, 2011);
+		assertEquals(32, eventsInNovember.size()); // First day is 0 and last day is 31 regardless of month
+		for (int i = 0; i <= 30; i++)
 		{
-			assert i == eventsInNovember.get(i);
+			assertEquals(String.valueOf(i), String.valueOf(eventsInNovember.get(i)));
 		}
 
-		ArrayList<Integer> eventsInDecember = this.cal2.getEventDaysOfMonth(11);
-		assertEquals(17, eventsInDecember.size()); // Expect [1, 2, ..., 16, 17]
+		ArrayList<Integer> eventsInDecember = this.cal2.getEventDaysOfMonth(11, 2011);
+		assertEquals(17, eventsInDecember.size());
 		for (int i = 1; i <= 17; i++)
 		{
-			assert i == eventsInDecember.get(i);
+			assertEquals(String.valueOf(18-i), String.valueOf(eventsInDecember.get(i-1))); // List is inverted
 		}
 	}
 }
