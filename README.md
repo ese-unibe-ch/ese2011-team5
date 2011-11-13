@@ -24,6 +24,9 @@ If you want to test the application with preregistered users you may use the fol
 
 ###Using with Eclipse
 To use this project with eclipse, execute
+
 	play eclipsify
+
 	play dependencies
+
 After that you can import the application as an eclipse project.
