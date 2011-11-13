@@ -12,7 +12,10 @@
 
 	<section id="section">
 		<aside id="search">
-			TODO: SEARCH
+		
+			#{searchUserForm/}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser/}
+			
 		</aside>
 		
 		<article>
@@ -21,7 +24,7 @@
 			#{if calendar.getOwner().equals(currentUser)}
 			Add event:
 			<section id="AddEvent">
-				#{editEvent editMode:false , event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
+				#{addEvent event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
 			</section>
 			#{/if}
 		

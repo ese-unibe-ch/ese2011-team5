@@ -1,16 +1,15 @@
-#{if !_editMode}
-	#{form @Application.addEvent()}
+#{form @Application.addEvent()}
 			    <p>
 			        <label for="eventName">Name of the Event: </label>
-			        <input type="text" name="eventName" id="eventName" value="${flash.eventName}"  />
+			        <input type="text" name="eventName" id="eventName" value=""  />
 			    </p>
 			    <p>
 			        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
-			        <input type="text" name="eventStart" id="eventStart" value="${flash.eventStart}" />
+			        <input type="text" name="eventStart" id="eventStart" value="${_selectedDay}.${_month+1}.${_year}" />
 			    </p>
 			    <p>
 			        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
-			        <input type="text" name="eventEnd" id="eventEnd" value="${flash.eventEnd}" />
+			        <input type="text" name="eventEnd" id="eventEnd" value="${_selectedDay}.${_month+1}.${_year}" />
 			    </p>
 			    <p>
 			    	<input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
@@ -27,4 +26,3 @@
 			    </p>
 			
 	#{/form}
-#{/if}

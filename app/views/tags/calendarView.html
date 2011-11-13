@@ -62,7 +62,7 @@
 	<ol class="calendar" start="6">
 	
 	<br>
-	<h3>Events today:</h3>
+	<h3>Events at selected Day:</h3>
 	
 	#{list items:_events, as:'event'}
 		#{if event.isEventDay(_selectedDay,_month,_year)} 
@@ -71,7 +71,9 @@
 		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser.getName()!="guest"}
 				<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), calendar.getID())}"> Copy the event in your own calendar </a></p>
 			#{/if}
-			
+			#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
+					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"> Edit </a>
+			#{/if}
 			#{if _calendar.getOwner().equals(_currentUser)}
 				"  "<a href="@{Application.removeEvent(_calendar.getID(), event.getEventID(), _selectedDay, _month, _year)}">Remove </a>
 			#{/if}

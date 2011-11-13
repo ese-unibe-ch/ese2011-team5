@@ -1,10 +1,8 @@
-#{if !_otherUsers.isEmpty()}
-	#{list items:_otherUsers, as:'otherUser'}
-		<p>
-			<a href=@{Application.showOtherCalendars(otherUser.getName())}>
-				${otherUser.getName()}
-			</a> add to Friends
-		</p>
-	#{/list}
-#{/if}
-#{searchUserForm /}
+<body>
+	<h3>Search results:</h3>
+
+#{list items:_otherUsersList, as:'user'}
+	<li>${user.getName()}  <a href="@{Application.addUserToGroup(user.getName(), _currentUser.getGroupList().get(0).getGroupID())}">add</a></li> 
+#{/list}
+
+<body>
