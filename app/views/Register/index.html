@@ -1,31 +1,21 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
 	<header>
 		<aside id="login">
 			TODO: LOGIN & CO
 		</aside>
-		<h1 id="title"> ESECalendar <h1>
+		<h1 id="title"> ESECalendar: Register <h1>
 		<hr>
 	</header>
 
 	<section id="section">
 		<aside id="search">
-		
 			<a id="t"> TODO: SEARCH</a>
-		
-		
-			
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
-				#{login /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
+			#{register /}
 			
 		<article>
 	
