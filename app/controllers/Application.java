@@ -90,6 +90,8 @@ public class Application extends Controller
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 
 		int currentDay	= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		if (month != Calendar.getInstance().get(Calendar.MONTH))
+			currentDay = 100;
 
 		SimpleDateFormat dfs = new SimpleDateFormat();
 		String monthString = dfs.getDateFormatSymbols().getMonths()[month];
@@ -128,7 +130,8 @@ public class Application extends Controller
 	}
 
 	public static void addEvent(int calendarID, String eventName,
-			String eventStart, String eventEnd, boolean isPublic) throws ESEException
+			String eventStart, String eventEnd, boolean isPublic, int selectedDay,
+			int month, int year) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		try
@@ -145,7 +148,7 @@ public class Application extends Controller
 			flash.error(e.getMessage());
 			params.flash();
 		}
-		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
+		showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 	}
 
 	public static void removeEvent(int calendarID, int eventID, int selectedDay, int month, int year) throws ESEException
@@ -172,7 +175,8 @@ public class Application extends Controller
 	}
 
 	public static void doEditEvent(int calendarID, int eventID, String eventName,
-			String eventStart, String eventEnd, boolean isPublic) throws ESEException
+			String eventStart, String eventEnd, boolean isPublic,
+			int selectedDay, int month, int year) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		ESEEvent event=calendar.getEventByID(eventID);
@@ -183,7 +187,7 @@ public class Application extends Controller
 		event.setVisibility(isPublic);
 
 
-		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
+		showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 	}
 
 	public static void editEvent(int calendarID, int eventID) throws ESEException

@@ -18,6 +18,13 @@
 		<article>
 			#{calendarView currentUser:currentUser, calendar:calendar, monthString:monthString, startOfLastMonth:startOfLastMonth, daysFromLastMonth:daysFromLastMonth, daysFromThisMonth:daysFromThisMonth, daysFromNextMonth:daysFromNextMonth, eventDaysOfMonth:eventDaysOfMonth, selectedDay:selectedDay, weekdays:weekdays, currentDay:currentDay, year:year, month:month, events:events /}	
 			
+			#{if calendar.getOwner().equals(currentUser)}
+			Add event:
+			<section id="AddEvent">
+				#{editEvent editMode:false , event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
+			</section>
+			#{/if}
+		
 		<article>
 	
 	</section>
