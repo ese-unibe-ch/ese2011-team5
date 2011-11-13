@@ -1,0 +1,14 @@
+<body>
+	<h3>Search users:</h3>
+	#{form @Application.searchUser()}
+				<p id="searchName-field">
+			<label for="searchName">Search for user:</label>
+			<input type="text" name="searchName" id="searchName" />
+		</p>
+		<p id="signin-field">
+			<input type="submit" id="signin" value="Search" />
+		</p>
+	#{/form}
+	<h3>Search results:</h3>
+	#{searchResults otherUsers:otherUsers /}
+<body>
