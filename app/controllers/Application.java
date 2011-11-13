@@ -100,7 +100,7 @@ public class Application extends Controller
 		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
 		List<Integer> daysFromThisMonth =	calendar.getDaysFromThisMonth(month, year);
 		
-		int startOfLastMonth = 0; //NOCH ANPASSEN
+		int startOfLastMonth = 0; 
 		if(!daysFromLastMonth.isEmpty())
 		{
 			startOfLastMonth = daysFromLastMonth.get(0);
@@ -148,7 +148,7 @@ public class Application extends Controller
 		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
 	}
 
-	public static void removeEvent(int calendarID, int eventID) throws ESEException
+	public static void removeEvent(int calendarID, int eventID, int selectedDay, int month, int year) throws ESEException
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		System.out.println("EVENT ID " + eventID);
@@ -168,7 +168,7 @@ public class Application extends Controller
 		
 	
 //		
-		showEvents(calendarID, ESEDatabase.getCurrentUser().getName());
+		showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 	}
 
 	public static void doEditEvent(int calendarID, int eventID, String eventName,
