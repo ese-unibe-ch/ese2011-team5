@@ -237,6 +237,17 @@ public class Application extends Controller
 
 		render(currentUser, groups, otherUsers,watchedUser, profile);
 	}
+	
+	public static void showAndEditProfile(int userID) throws ESEException
+	{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESEUser watchedUser=ESEDatabase.getUserByID(userID);
+		ESEProfile profile=watchedUser.getProfile();
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+
+		render(currentUser, groups, otherUsers,watchedUser, profile);
+	}
 
 	public static void forgotPassword(String username) throws ESEException
 	{
@@ -398,7 +409,7 @@ public class Application extends Controller
 		return weekdays;
 	}
 
-	public static void editProfile()
+	public static void showAndEditProfile()
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
@@ -460,7 +471,7 @@ public class Application extends Controller
 
 		changePassword(userID, password, confirmpassword);
 
-		profile(userID);
+		showAndEditProfile(userID);
 	}
 
 	private static void changePassword(int userID, String password, String confirmpassword) throws ESEException
@@ -469,7 +480,7 @@ public class Application extends Controller
 		{
 			flash.error("Passwords do not match!");
 			params.flash();
-			editProfile();
+			showAndEditProfile();
 		}
 		 else
 		 {

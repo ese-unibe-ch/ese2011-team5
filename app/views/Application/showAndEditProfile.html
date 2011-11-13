@@ -1,0 +1,31 @@
+#{extends 'main.html' /}
+#{set title:'ESECalendar' /}
+
+<body>
+	<header>
+		<aside id="login">
+			#{nav currentUser:currentUser/}
+		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+
+	<section id="section">
+		<aside id="search">
+		
+			<a id="t"> TODO: SEARCH</a>
+
+		</aside>
+		
+		<article>
+			#{profile profile:profile, watchedUser:watchedUser, currentUser:currentUser /}
+			#{editProfile currentUser:currentUser, profile:currentUser.getProfile() /}
+		<article>
+	
+	</section>
+	
+	<footer>
+		#{footer /}
+	</footer>
+
+</body>

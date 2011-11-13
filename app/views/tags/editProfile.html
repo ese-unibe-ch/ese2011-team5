@@ -1,0 +1,84 @@
+#{form @Application.doEditProfile()}
+			#{if flash.error}
+				<p class="error">
+					&{flash.error}
+				</p>
+			#{/if}
+			#{if flash.success}
+				<p class="success">
+					&{flash.success}
+				</p>
+			#{/if}
+		
+			<p id="userID-field">
+				<input type="hidden" name="userID" id="userID" value="${_currentUser.getUserID()}"/>
+			</p>
+			
+			<p id="stateMessage-field">
+				<label for="stateMessage">stateMessage</label>
+				<input type="text" name="stateMessage" id="stateMessage" value="${_profile.getStateMessage()}"/>
+			</p>
+		
+			<p id="firstName-field">
+				<label for="firstName">firstName</label>
+				<input type="text" name="firstName" id="firstName" value="${_profile.getFirstName()}"/>
+			</p>
+			
+			<p id="familyName-field">
+				<label for="familyName">familyName</label>
+				<input type="text" name="familyName" id="familyName" value="${_profile.getFamilyName()}"/>
+			</p>
+			
+			<p id="mail-field">
+				<label for="mail">eM@il</label>
+				<input type="text" name="mail" id="mail" value="${_profile.getMail()}"/>
+			</p>
+			
+			<p id="birthday-field">
+				<label for="birthday">birthday</label>
+				<input type="text" name="birthday" id="birthday" value="${_profile.getBirthdayString()}"/>
+			</p>
+			
+			<p id="street-field">
+				<label for="street">street</label>
+				<input type="text" name="street" id="street" value="${_profile.getStreet()}"/>
+			</p>
+			
+			<p id="city-field">
+				<label for="city">city</label>
+				<input type="text" name="city" id="city" value="${_profile.getCity()}"/>
+			</p>
+			
+			<p id="postcode-field">
+				<label for="postcode">postcode</label>
+				<input type="text" name="postcode" id="postcode" value="${_profile.getPostCode()}"/>
+			</p>
+			
+			<p id="password-field">
+				<label for="password">password</label>
+				<input type="password" name="password" id="password" value="${_currentUser.getPassword()}"/>
+			</p>
+		
+			<p id="confirmpassword-field">
+				<label for="confirmpassword">confirmpassword</label>
+				<input type="password" name="confirmpassword" id="confirmpassword" value="${_currentUser.getPassword()}"/>
+			</p>
+			
+			<p id="question-field">
+				<label for="question">secret question</label>
+				<input type="text" name="question" id="question" value="${_currentUser.getQuestion()}"/>
+			</p>
+			
+			<p id="answer-field">
+				<label for="answer">secret answer</label>
+				<input type="text" name="answer" id="answer" value="${_currentUser.getAnswer()}"/>
+			</p>
+			
+		
+			<p id="check-field">
+				<input type="submit" id="check" value="OK" />
+			</p>
+			
+			
+		
+		#{/form}
