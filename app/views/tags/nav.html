@@ -8,9 +8,9 @@
 	 <a href="javascript:history.back()">Back</a>
 		
 		#{if !_currentUser.getName().equals("guest")}
-			<a href=@{Application.profile(_currentUser.getUserID())}>Profile</a>
-			<a href=@{Security.logout()}>logout</a>
-			<a href=@{Application.showGroups()}>Groups</a>
+			 <a href=@{Application.profile(_currentUser.getUserID())}>Profile</a>
+			 <a href=@{Security.logout()}>logout</a>
+			 <a href=@{Application.showGroups()}>Groups</a>
 		#{/if}
 	
 	#{else}
