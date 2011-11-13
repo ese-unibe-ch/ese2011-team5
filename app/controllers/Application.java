@@ -482,4 +482,12 @@ public class Application extends Controller
 	{
 		return !input.isEmpty();
 	}
+	
+	public static void showGroups()
+	{
+		ESEUser currentUser=ESEDatabase.getCurrentUser();
+		List<ESEGroup> groupList= currentUser.getGroupList();
+		
+		render(groupList, currentUser);
+	}
 }

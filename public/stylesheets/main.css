@@ -9,6 +9,19 @@ aside#search
 	padding: 10px 20px 0 10px; 
 }
 
+div#nav
+{
+	float: right;
+	padding: 10px 20px 0 10px; 
+}
+
+div#contentFooter
+{
+	position:relative;
+	float: center;
+	padding: 100px 20px 0 10px; 
+}
+
 article#main
 {
 	float: left;
@@ -30,12 +43,13 @@ div#login
 	padding: 10px 20px 0 10px; 
 }
 
-h1#title			{
-color:#E0E0E0; 
-font:4em Verdana, Arial, Helvetica, sans-serif; 
-padding: 10px 0 0 10px; 
-display: block; 
-text-align:left;
+h1#title
+{
+	color:#E0E0E0; 
+	font:4em Verdana, Arial, Helvetica, sans-serif; 
+	padding: 10px 0 0 10px; 
+	display: block; 
+	text-align:left;
 }
 					
 	
