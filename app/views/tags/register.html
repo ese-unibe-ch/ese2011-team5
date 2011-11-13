@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/register.css'}" />
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 	</head>
 	<body>
-		<table id="registertable" border="1">
+		<table id="registertable" border="0">
 			<tr>
-				<div id="register">
 					#{if flash.error}
 						<p id="error">
 							${flash.error}
@@ -18,50 +17,50 @@
 							<td>
 								<p id="username-field">
 									<label for="username">New &{'secure.username'}</label>
-								<input type="text" name="username" id="username" value="${flash.username}" />
 								</p>
 							</td>
 							<td>
+								<input type="text" name="username" id="username" value="${flash.username}" />
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<p id="password-field">
 									<label for="password">New &{'secure.password'}</label>
-								<input type="password" name="password" id="password" value="" />
 								</p>
 							</td>
 							<td>
+								<input type="password" name="password" id="password" value="" />
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<p id="confirmpassword-field">
 									<label for="confirmpassword">Confirm new &{'secure.password'}</label>
-								<input type="password" name="confirmpassword" id="confirmpassword" value="" />
 								</p>
 							</td>
 							<td>
+								<input type="password" name="confirmpassword" id="confirmpassword" value="" />
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<p id="question-field">
 									<label for="question">A question you have to answer if you forget the password:</label>
-								<input type="text" name="question" id="question" value="${flash.question}" />
 								</p>
 							</td>
 							<td>
+								<input type="text" name="question" id="question" value="${flash.question}" />
 							</td>
 						</tr>
 						<tr>
 							<td>
 								<p id="answer-field">
 									<label for="answer">The answer:</label>
-								<input type="text" name="answer" id="answer" value="" />
 								</p>
 							</td>
 							<td>
+								<input type="text" name="answer" id="answer" value="" />
 							</td>
 						</tr>
 						<tr>
@@ -74,7 +73,6 @@
 							</td>
 						</tr>
 					#{/form}
-				</div>
 			</tr>
 		</table>
 	</body>

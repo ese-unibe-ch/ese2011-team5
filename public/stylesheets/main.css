@@ -19,8 +19,11 @@ p#error
 	text-align:center;
 }
 
+p{
+	color: #000;
+}
 
-						
+					
 	
 	/*
  * Rafael Breu
