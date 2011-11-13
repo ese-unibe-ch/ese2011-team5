@@ -6,24 +6,26 @@ aside#login
 aside#search
 {
 	float: right;
-	
+	padding: 10px 20px 0 10px; 
 }
 
 div#nav
 {
 	float: right;
-	
+	padding: 10px 20px 0 10px; 
 }
 
 div#contentFooter
 {
 	position:relative;
-	
+	float: center;
+	padding: 100px 20px 0 10px; 
 }
 
 article#main
 {
-	float: left;
+	float: left; 
+	
 }
 
 p#error
@@ -44,7 +46,9 @@ div#login
 
 h1#title
 {
-	
+	padding: 10px 0 10px 10px; 
+	display: block; 
+	text-align:left;
 }
 					
 	
