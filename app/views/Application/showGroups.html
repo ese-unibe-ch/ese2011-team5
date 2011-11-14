@@ -13,17 +13,14 @@
 	<section id="section">
 		<aside id="search">
 		
-			<a id="t"> TODO: SEARCH</a>
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
 
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
-				Sorry, but you have to log you in to see your groups!
-			#{/if}
-			#{else}
+			
 				#{groupList groupList:groupList, currentUser:currentUser /}
-			#{/else}
 			
 		<article>
 	
