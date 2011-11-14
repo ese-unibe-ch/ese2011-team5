@@ -1,7 +1,7 @@
 #{list items:_groupList, as:'group'}
 	<b><li>${group.getGroupName()}</li></b>
 			#{list items:group.getUserList(), as: 'userInList'}
-				<li><a href="@{Application.showOtherCalendars(userInList.getName())}">${userInList.getName()}</a>  <a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}">remove</a> (add to: #{list items:_groupList, as:'groupp'} #{if !groupp.groupName.equals("Friends")}<a href="@{Application.addUserToGroup(userInList.getName(), groupp.getGroupID())}">${groupp.getGroupName()}#{/if}#{/list})</a></li>
+				<li><a href="@{Application.showOtherCalendars(userInList.getName())}">${userInList.getName()}</a>  <a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}">remove</a> #{if group.getGroupName().equals("Friends")}(add to:#{list items:_groupList, as:'groupp'} #{if !groupp.groupName.equals("Friends")}<a href="@{Application.addUserToGroup(userInList.getName(), groupp.getGroupID())}">${groupp.getGroupName()}#{/if} #{/list})#{/if}</a></li>
 			#{/list}
 			
 			

@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+#{set title:'ESECalendar' /}
+
+<body>
+	<header>
+		<aside id="login">
+			#{nav currentUser:currentUser/}
+		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+
+	<section id="section">
+		<aside id="search">
+		
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
+			
+		</aside>
+		
+		<article>
+		
+			Calendars of ${otherUser.getName()}:<br>
+			
+			#{list items:calendarList, as:'calendarToShow'}
+				<p><a href="@{Application.showCalendarView(calendarToShow.getID(), calendarToShow.getOwner().getName(),15,10,10)}">${calendarToShow.getCalendarName()}</a></p>
+			#{/list}
+		<article>
+	
+	</section>
+	
+	<footer>
+		#{footer /}
+	</footer>
+
+</body>
