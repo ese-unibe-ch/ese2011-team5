@@ -3,6 +3,11 @@
 </head>
 
 #{form @Application.addEvent()}
+				#{if flash.error}
+					<p id="error">
+						${flash.error}
+					</p>
+				#{/if}
 			    <p>
 			        <label for="eventName">Name of the Event: </label>
 			        <input type="text" name="eventName" id="eventName" value=""  />
