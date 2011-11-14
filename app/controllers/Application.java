@@ -75,7 +75,7 @@ public class Application extends Controller {
 		ArrayList<ESEUser> otherUsersList = otherUsers;
 
 		render(currentUser, otherUsers, otherUser, calendarList, groups,
-				otherUsers);
+				otherUsersList);
 	}
 
 	public static void addCalendar(String calendarName) {
@@ -130,7 +130,7 @@ public class Application extends Controller {
 
 		ArrayList<ESEUser> otherUsersList = otherUsers;
 
-		render(currentUser, calendar, events, month, monthString,
+		render(calendarUser, currentUser, calendar, events, month, monthString,
 				startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
 				daysFromNextMonth, eventDaysOfMonth, selectedDay, weekdays,
 				currentDay, year, otherUsersList);
@@ -358,10 +358,14 @@ public class Application extends Controller {
 		System.out.println("SEARCH FOR: " + searchName);
 		ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		otherUsersLocal = ESEDatabase.findUser(searchName);
+		
+		for (ESEUser u : otherUsersLocal){
+			if (u.getName().equals("guest"))
+				otherUsersLocal.remove(u);
+		}
 
 		otherUsers = otherUsersLocal;
 
-		System.out.println(otherUsersLocal);
 		showCalendars();
 	}
 
@@ -402,7 +406,9 @@ public class Application extends Controller {
 			System.out.println("event " + event.getEventName());
 			event.addCorrespondingCalendar(selectedCalendar);
 			selectedCalendar.addEvent(event);
-			showEvents(selectedCalendar.getID(), user.getName());
+			
+			betweenShowCalendarsAndShowCalendarView(ESEDatabase.getCurrentUser().getCalendarList().get(0).getID(),
+					ESEDatabase.getCurrentUser().getName());
 		} catch (ESEException e) {
 			flash.error(e.getMessage());
 			params.flash();

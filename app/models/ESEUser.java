@@ -117,9 +117,6 @@ public class ESEUser
 
 	public ESECalendar getCalendarByID(int id) throws ESEException
 	{
-		System.out.println("In getCalendarByID, user name: "+this.getName());
-		System.out.println("In getCalendarByID, user name: "+this.getName());
-		
 		for (ESECalendar calendar : calendarList)
 		{
 			if (calendar.getID() == id)

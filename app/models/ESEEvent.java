@@ -59,23 +59,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 		Calendar endCal = new GregorianCalendar();
 		
 		startCal.setTime(startDate);
-		endCal.setTime(endDate);
-		
-		System.out.println(ESEConversionHelper.convertDateToString(startDate));
-		System.out.println(ESEConversionHelper.convertDateToString(endDate));
-		
-		System.out.println(dateAsCal.get(dateAsCal.DAY_OF_MONTH));
-		System.out.println(dateAsCal.get(dateAsCal.MONTH));
-		System.out.println(dateAsCal.get(dateAsCal.YEAR));
-		
-		System.out.println(day);
-		System.out.println(month);
-		System.out.println(year);
-		
-		System.out.println(startCal.getTimeInMillis());
-		System.out.println(dateAsCal.getTimeInMillis());
-		System.out.println(endCal.getTimeInMillis());
-		
+		endCal.setTime(endDate);	
 		
 		if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR) && 
 					dateAsCal.get(dateAsCal.YEAR) == startCal.get(startCal.YEAR))

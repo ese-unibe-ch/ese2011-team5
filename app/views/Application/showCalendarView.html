@@ -19,7 +19,7 @@
 		</aside>
 		
 		<article>
-			#{calendarView currentUser:currentUser, calendar:calendar, monthString:monthString, startOfLastMonth:startOfLastMonth, daysFromLastMonth:daysFromLastMonth, daysFromThisMonth:daysFromThisMonth, daysFromNextMonth:daysFromNextMonth, eventDaysOfMonth:eventDaysOfMonth, selectedDay:selectedDay, weekdays:weekdays, currentDay:currentDay, year:year, month:month, events:events /}	
+			#{calendarView calendarUser:calendarUser, currentUser:currentUser, calendar:calendar, monthString:monthString, startOfLastMonth:startOfLastMonth, daysFromLastMonth:daysFromLastMonth, daysFromThisMonth:daysFromThisMonth, daysFromNextMonth:daysFromNextMonth, eventDaysOfMonth:eventDaysOfMonth, selectedDay:selectedDay, weekdays:weekdays, currentDay:currentDay, year:year, month:month, events:events /}	
 			
 			#{if calendar.getOwner().equals(currentUser)}
 			Add event:
