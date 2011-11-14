@@ -52,7 +52,8 @@ public class Application extends Controller {
 			String currentUser) throws ESEException {
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-		showCalendarView(calendarID, currentUser, 100, currentMonth,
+		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		showCalendarView(calendarID, currentUser, currentDay, currentMonth,
 				currentYear);
 	}
 
@@ -100,7 +101,8 @@ public class Application extends Controller {
 		}
 
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
+		ESEUser calendarUser = ESEDatabase.getUserByName(username);
+		ESECalendar calendar = calendarUser.getCalendarByID(calendarID);
 
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		if (month != Calendar.getInstance().get(Calendar.MONTH))
