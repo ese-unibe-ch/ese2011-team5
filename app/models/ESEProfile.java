@@ -72,10 +72,10 @@ public class ESEProfile
 	 * All String values, that are not passed as parameters, are set to default: "-".
 	 * The registrationDate is set to the current time.
 	 * 
-	 * @param owner {@link ESEUser} that relates to this ESEProfile.
-	 * @param username {@link String} to login. Must not be empty.
-	 * @param firstName {@link String}
-	 * @param familyName {@link String}
+	 * @param owner ESEUser that relates to this ESEProfile.
+	 * @param username String to login. Must not be empty.
+	 * @param firstName String first name.
+	 * @param familyName String family name.
 	 * 
 	 * @throws ESEException thrown if username is empty, or owner <code>null</code>.
 	 * 
@@ -149,7 +149,7 @@ public class ESEProfile
 	/**
 	 * @return String {@link #birthday} representation of this ESEProfile, 
 	 * with the following format: "dd.MM.yyyy HH:mm".<br>
-	 * If not initialized, a {@link RuntimeException} is thrown.
+	 * If not initialized "-" is returned instead.
 	 */
 	public String getBirthdayString()
 	{
