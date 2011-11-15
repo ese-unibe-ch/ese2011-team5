@@ -1,0 +1,11 @@
+#{selenium }
+    // Open the home page, and check that no error occured
+    clearSession()
+    open('/')
+ 
+	type('searchName-field', 'User1')
+	clickAndWait('signin')
+	open('/User1')
+	
+
+#{/selenium}

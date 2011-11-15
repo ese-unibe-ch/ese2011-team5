@@ -19,13 +19,8 @@
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
-				#{login /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
-			
+			#{profile profile:profile, watchedUser:watchedUser, currentUser:currentUser /}
+			#{editProfile currentUser:currentUser, profile:currentUser.getProfile() /}
 		<article>
 	
 	</section>

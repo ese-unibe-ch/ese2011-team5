@@ -27,12 +27,12 @@ public class Register extends Controller
 			index();
 		}
 
-		if (validation.hasErrors())
-		{
-			flash.error("You have to provide an username, a password, a secret question and the answer!");
-			params.flash();
-			index();
-		}
+//		if (validation.hasErrors())
+//		{
+//			flash.error("You have to provide an username, a password, a secret question and the answer!");
+//			params.flash();
+//			index();
+//		}
 
 		ESEDatabase.createUser(username, password, "", "", question, answer);
 		Security.ownAuthenticate(username, password);

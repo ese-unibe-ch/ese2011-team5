@@ -15,16 +15,12 @@
 		
 			#{searchUserForm /}
 			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
-			
+
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
-				#{login /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
+			
+				#{groupList groupList:groupList, currentUser:currentUser /}
 			
 		<article>
 	

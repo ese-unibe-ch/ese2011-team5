@@ -1,0 +1,25 @@
+<head>
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+</head>
+<body>
+	<h3>Welcome user ${_currentUser.getName()}!</h3>
+	
+	<b>Your calendars:</b>
+	
+	#{list items:_calendarList, as:'calendar'}
+		<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),_currentUser.getName())}">${calendar.getCalendarName()}</a></p>
+	#{/list}
+	
+	<b>Add a calendar:</b>
+	
+	#{form @Application.addCalendar()}
+	    <p>
+	        <label for="calendarName">Name of the Calendar: </label>
+	        <input type="text" name="calendarName" id="calendarName" />
+	    </p>
+	    <p>
+	        <input type="submit" value="Submit your Calendar" />
+	    </p>
+	
+	#{/form}
+</body>

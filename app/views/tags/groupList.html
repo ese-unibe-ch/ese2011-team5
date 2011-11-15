@@ -1,0 +1,59 @@
+#{list items:_groupList, as:'group'}
+	<b><li>${group.getGroupName()}</li></b>
+			#{list items:group.getUserList(), as: 'userInList'}
+				<li>
+					<a href="@{Application.showOtherCalendars(userInList.getName())}">${userInList.getName()}</a>  
+					<a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}">remove</a>
+					#{if group.getGroupName().equals("Friends")}
+					 	(add to:
+					 	#{list items:_groupList, as:'groupp'} 
+							#{if !groupp.groupName.equals("Friends") && !groupp.userAlreadyInGroup(userInList.getName())}
+							
+					 			<a href="@{Application.addUserToGroup(userInList.getName(), groupp.getGroupID())}">${groupp.getGroupName()}</a>  
+					 		#{/if}
+					 	 #{/list}
+					 	 )
+					  #{/if}
+				 </li>
+			#{/list}
+			
+			
+			
+#{/list}
+
+Add a new group:
+	
+	#{form @Application.createNewGroup()}
+		
+		#{if flash.error}
+			<p class="error">
+				&{flash.error}
+			</p>
+		#{/if}
+		#{if flash.success}
+			<p class="success">
+				&{flash.success}
+			</p>
+		#{/if}
+
+		<p id="groupname-field">
+			<label for="groupname">Groupname:</label>
+			<input type="text" name="groupname" id="groupname" />
+		</p>
+		<p id="signin-field">
+			<input type="submit" id="signin" value="Create new group" />
+		</p>
+	#{/form}
+
+<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>	
