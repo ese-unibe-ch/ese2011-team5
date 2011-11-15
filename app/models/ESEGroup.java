@@ -1,14 +1,41 @@
+/*
+ * Project: ESECalendar team 5
+ * Authors:
+ * 		Rafael Breu
+ * 		Renato Corti
+ * 		Lukas Keller
+ * Last Change:
+ * 	by:		xxx
+ * 	date:	xxx
+ */
+
 package models;
 
 import java.util.ArrayList;
-
+/**
+ * TODO
+ *
+ */
 public class ESEGroup
 {
-
+	/**
+	 * static counter to determine uniquely groupId.<br>
+	 * Increased after initialization of an new ESEGroup.
+	 */
 	private static int idCounter = 0;
-
+	/**
+	 * Number to distinct different ESEGroup within one application.
+	 */
 	private int groupID;
+	/**
+	 * String name by which this ESEGroup is associated.<br> It might be
+	 * that different ESEGroups have the same <code>groupename</code>. To
+	 * distinguish use {@link #groupID}.
+	 */
 	private String groupname;
+	/**
+	 * The {@link ESEUser} to whom this ESEGroup belongs.
+	 */
 	private ESEUser owner;
 	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 

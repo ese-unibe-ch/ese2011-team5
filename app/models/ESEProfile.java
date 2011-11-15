@@ -15,8 +15,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 /**
+ * A ESEProfile always relates to exactly one ESEUser. A profile describes different
+ * attributes of an ESEUser, such as names, birth date and current state.<br>
+ * ESEProfile contains almost no logic since all its responsibilities lies by 
+ * setting and getting values.
  * 
- * TODO
+ * @see ESEUser
+ * @see ESEState
+ * 
  */
 public class ESEProfile
 {
