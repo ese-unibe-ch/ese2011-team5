@@ -69,7 +69,11 @@
 		<p> ${event.toString()} </p>
 		
 		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser.getName()!="guest"}
-				<p><a href="@{Application.doCopyEvent(_calendar.getOwner().getUserID(), _calendar.getID(), event.getEventID(), _currentUser.getCalendarList().get(0).getCalendarName())}"> Copy the event in your own calendar </a></p>
+				<p><a href="@{Application.doCopyEvent(_calendar.getOwner().getUserID(), _calendar.getID(), event.getEventID(), _currentUser.getCalendarList().get(0).getCalendarName())}"> WRONG Copy the event in your own calendar </a></p>
+				</br>
+				<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> CORRECT Copy the event in your own calendar </a></p>
+				
+					
 			#{/if}
 			#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
 					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"> Edit </a>

@@ -19,7 +19,11 @@
 		</aside>
 		
 		<article>
-
+		#{if flash.error}
+					<p id="error">
+						${flash.error}
+					</p>
+		#{/if}
 #{form @Application.doEditEvent()}
 		    <p>
 		        <label for="eventName">Name of the Event: </label>

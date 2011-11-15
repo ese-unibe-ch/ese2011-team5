@@ -56,6 +56,15 @@ public class Application extends Controller {
 		showCalendarView(calendarID, currentUser, currentDay, currentMonth,
 				currentYear);
 	}
+	
+	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
+			String currentUser,int day, int month, int year) throws ESEException {
+		int currentMonth = month;
+		int currentYear = year;
+		int currentDay = day;
+		showCalendarView(calendarID, currentUser, currentDay, currentMonth,
+				currentYear);
+	}
 
 	public static void showCalendars(boolean valid) {
 		validLogin = valid;
@@ -189,19 +198,35 @@ public class Application extends Controller {
 
 	public static void doEditEvent(int calendarID, int eventID,
 			String eventName, String eventStart, String eventEnd,
-			boolean isPublic, int selectedDay, int month, int year)
-			throws ESEException {
-		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(
-				calendarID);
-		ESEEvent event = calendar.getEventByID(eventID);
+			boolean isPublic, int selectedDay, int month, int year) {
+		ESECalendar calendar;
+		try 
+		{
+			calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
+			ESEEvent event = calendar.getEventByID(eventID);
 
-		event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
-		event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
-		event.setEventName(eventName);
-		event.setVisibility(isPublic);
+			event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
+			event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
+			event.setEventName(eventName);
+			event.setVisibility(isPublic);
 
-		showCalendarView(calendarID, calendar.getOwner().getName(),
-				selectedDay, month, year);
+			showCalendarView(calendarID, calendar.getOwner().getName(),selectedDay, month, year);
+		} 
+		catch (ESEException e) 
+		{
+			try 
+			{
+				flash.error(e.getMessage());
+				params.flash();
+				editEvent(calendarID,eventID, selectedDay, month, year);
+			} 
+			catch (ESEException e1) 
+			{
+				flash.error(e.getMessage());		//TODO: get a better error
+				params.flash();
+			}
+		}
+	
 	}
 
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
@@ -353,19 +378,24 @@ public class Application extends Controller {
 		showUsersInGroup(group.getGroupID());
 	}
 
-	public static void searchUser(@Required String searchName) {
+	public static void searchUser(@Required String searchName)
+	{
 
 		System.out.println("SEARCH FOR: " + searchName);
 		ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		otherUsersLocal = ESEDatabase.findUser(searchName);
+		ArrayList<ESEUser> otherUserLocalOriginal= new ArrayList<ESEUser>(otherUsersLocal);
 		
-		for (ESEUser u : otherUsersLocal){
+		for (ESEUser u : otherUserLocalOriginal)
+		{
 			if (u.getName().equals("guest"))
+			{
 				otherUsersLocal.remove(u);
+			}
 		}
 
 		otherUsers = otherUsersLocal;
-
+		
 		showCalendars();
 	}
 
@@ -386,7 +416,8 @@ public class Application extends Controller {
 		int userID = userID2;
 		int eventID = eventID2;
 		int otherUserCalendarID = otherUserCalendarID2;
-		render(userID, otherUserCalendarID, eventID);
+		List<ESECalendar> calendarList=currentUser.getCalendarList();
+		render(userID, otherUserCalendarID, eventID,calendarList,currentUser );
 	}
 
 	public static void doCopyEvent(int otherUserID, int otherUserCalendarID,
@@ -396,7 +427,8 @@ public class Application extends Controller {
 		ESEUser user = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByID(otherUserID);
 		ESECalendar selectedCalendar = null;
-		try {
+		try 
+		{
 			selectedCalendar = user.getCalendarByName(selectedCalendarName);
 			ESECalendar otherCalendar = otherUser
 					.getCalendarByID(otherUserCalendarID);
@@ -407,8 +439,12 @@ public class Application extends Controller {
 			event.addCorrespondingCalendar(selectedCalendar);
 			selectedCalendar.addEvent(event);
 			
-			betweenShowCalendarsAndShowCalendarView(ESEDatabase.getCurrentUser().getCalendarList().get(0).getID(),
-					ESEDatabase.getCurrentUser().getName());
+//			betweenShowCalendarsAndShowCalendarView(ESEDatabase.getCurrentUser().getCalendarList().get(0).getID(),
+//					ESEDatabase.getCurrentUser().getName());
+			int day=ESEConversionHelper.getDay(event.getStartDate());
+			int month=ESEConversionHelper.getMonth(event.getStartDate());
+			int year=ESEConversionHelper.getYear(event.getStartDate());
+			betweenShowCalendarsAndShowCalendarView(selectedCalendar.getID(),ESEDatabase.getCurrentUser().getName(),day,month,year);
 		} catch (ESEException e) {
 			flash.error(e.getMessage());
 			params.flash();

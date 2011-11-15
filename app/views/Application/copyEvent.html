@@ -1,0 +1,38 @@
+#{extends 'main.html' /}
+#{set title:'ESECalendar' /}
+
+<body>
+	<header>
+		<aside id="login">
+			#{nav currentUser:currentUser/}
+		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+	
+	<section id="section">
+		<aside id="search">
+		
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
+			
+		</aside>
+		
+		<article>
+			#{if flash.error}
+						<p id="error">
+							${flash.error}
+						</p>
+			#{/if}
+		
+			#{copyEvent calendarList:calendarList, userID:userID, otherUserCalendarID:otherUserCalendarID, eventID:eventID /}
+		
+		<article>
+	
+	</section>
+	
+	<footer>
+		#{footer /}
+	</footer>
+
+</body>

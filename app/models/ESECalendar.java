@@ -363,4 +363,9 @@ public class ESECalendar
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
 	}
+	
+	public String toString()
+	{
+		return calendarName;
+	}
 }
