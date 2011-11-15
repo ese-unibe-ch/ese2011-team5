@@ -3,8 +3,9 @@ package modelTests;
 import static org.junit.Assert.*;
 import models.*;
 import org.junit.*;
+import play.test.UnitTest;
 
-public class ESEGroupTests
+public class ESEGroupTests extends UnitTest
 {
 
 	ESEUser dummyOwner, otherDummyOwner, friend1, friend2, friend3;
@@ -13,18 +14,17 @@ public class ESEGroupTests
 	@Before
 	public void setUp() throws ESEException
 	{
-		if(ESEDatabase.getAllUsers().size() == 0)
-		{
-			ESEDatabase.createUser("dummy", "pw", "firstName", "familyName");
-			ESEDatabase.createUser("otherdummy", "pw", "firstName", "familyName");
-			ESEDatabase.createUser("Friend1", "", "", "");
-			ESEDatabase.createUser("Friend2", "", "", "");
-			ESEDatabase.createUser("Friend3", "", "", "");
-			this.dummyOwner = ESEDatabase.getUserByName("dummy");
-			this.otherDummyOwner = ESEDatabase.getUserByName("otherdummy");
-			this.dummyOwner.addGroup("Testgroup1");
-			this.otherDummyOwner.addGroup("Testgroup2");
-			}
+		ESEDatabase.clearAll();
+
+		ESEDatabase.createUser("dummy", "pw", "firstName", "familyName");
+		ESEDatabase.createUser("otherdummy", "pw", "firstName", "familyName");
+		ESEDatabase.createUser("Friend1", "", "", "");
+		ESEDatabase.createUser("Friend2", "", "", "");
+		ESEDatabase.createUser("Friend3", "", "", "");
+		this.dummyOwner = ESEDatabase.getUserByName("dummy");
+		this.otherDummyOwner = ESEDatabase.getUserByName("otherdummy");
+		this.dummyOwner.addGroup("Testgroup1");
+		this.otherDummyOwner.addGroup("Testgroup2");
 		this.dummyOwner = ESEDatabase.getUserByName("dummy");
 		this.otherDummyOwner = ESEDatabase.getUserByName("otherdummy");
 		this.friend1 = ESEDatabase.getUserByName("Friend1");
@@ -59,10 +59,12 @@ public class ESEGroupTests
 		assertEquals(1, this.group2.getUserList().size());
 	}
 
-
 	@Test
-	public void shouldReturnFriendsList()
+	public void shouldReturnFriendsList() throws ESEException
 	{
+		this.group1.addUserToGroup(this.friend1);
+		this.group1.addUserToGroup(this.friend3);
+		this.group2.addUserToGroup(this.friend3);
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
 		assertEquals(this.friend1, this.group1.getUserList().get(0));
@@ -73,6 +75,9 @@ public class ESEGroupTests
 	@Test
 	public void shouldRemoveUserFromGroup() throws ESEException
 	{
+		this.group1.addUserToGroup(this.friend1);
+		this.group1.addUserToGroup(this.friend3);
+		this.group2.addUserToGroup(this.friend3);
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
 		
