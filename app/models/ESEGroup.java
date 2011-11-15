@@ -36,6 +36,12 @@ public class ESEGroup
 		this.owner = owner;
 	}
 
+	// Usage only intended for testing purposes
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
+
 	public int getGroupID()
 	{
 		return this.groupID;

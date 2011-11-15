@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import models.*;
 import org.junit.*;
+import play.test.UnitTest;
 
-public class ESEUserTests
+public class ESEUserTests extends UnitTest
 {
 
 	ESEUser user1;
@@ -14,11 +15,10 @@ public class ESEUserTests
 	@Before
 	public void setUp() throws ESEException
 	{
-		if(ESEDatabase.getAllUsers().size() == 0)
-		{
-			ESEDatabase.createUser("user 1", "pw 1", "firstName 1", "familyName 1");
-			ESEDatabase.createUser("user 2", "pw 2", "firstName 2", "familyName 2");
-		}
+		ESEDatabase.clearAll();
+
+		ESEDatabase.createUser("user 1", "pw 1", "firstName 1", "familyName 1");
+		ESEDatabase.createUser("user 2", "pw 2", "firstName 2", "familyName 2");
 		this.user1 = ESEDatabase.getUserByName("user 1");
 		this.user2 = ESEDatabase.getUserByName("user 2");
 	}
@@ -60,8 +60,10 @@ public class ESEUserTests
 	}
 
 	@Test
-	public void shouldReturnCorrectCalendar()
+	public void shouldReturnCorrectCalendar() throws ESEException
 	{
+		this.user1.addCalendar("calendar1");
+		this.user1.addCalendar("calendar2");
 		ESECalendar testCalendar1 = this.user1.getCalendarList().get(0);
 		ESECalendar testCalendar2 = this.user1.getCalendarList().get(1);
 		ArrayList<ESECalendar> calendars = user1.getCalendarList();
@@ -73,6 +75,8 @@ public class ESEUserTests
 	@Test
 	public void shouldGetGroupByName() throws ESEException
 	{
+		this.user1.addGroup("group1");
+		this.user1.addGroup("group2");
 		ESEGroup groupFriends = this.user1.getGroupByName("Friends");
 		ESEGroup group1 = this.user1.getGroupByName("group1");
 		ESEGroup group2 = this.user1.getGroupByName("group2");
@@ -84,6 +88,8 @@ public class ESEUserTests
 	@Test
 	public void shouldRemoveCalendar() throws ESEException
 	{
+		this.user1.addCalendar("calendar1");
+		this.user1.addCalendar("calendar2");
 		int testCalendar2ID = this.user1.getCalendarList().get(1).getID();
 		this.user1.removeCalendar(testCalendar2ID);
 		assertEquals(1, this.user1.getCalendarList().size());
@@ -93,7 +99,9 @@ public class ESEUserTests
 	@Test
 	public void shouldGetAllowedEvents() throws ESEException
 	{
- 		ESECalendar testCalendar1 = this.user1.getCalendarList().get(0);
+		this.user1.addCalendar("calendar1");
+		this.user1.addCalendar("calendar2");
+		ESECalendar testCalendar1 = this.user1.getCalendarList().get(0);
 		testCalendar1.addEvent("testEvent1", "12.11.2011 16:00", "14.11.2011 18:00", true);
 		testCalendar1.addEvent("testEvent2", "15.11.2011 13:40", "16.11.2011 13:00", false);
 

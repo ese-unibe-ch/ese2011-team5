@@ -48,6 +48,12 @@ public class ESEProfile
 		this.registrationDate = new Date();
 	}
 
+	// Usage only intended for testing purposes
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
+
 	public int getID()
 	{
 		return this.profileID;

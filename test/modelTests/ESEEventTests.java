@@ -5,8 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import models.*;
 import org.junit.*;
+import play.test.UnitTest;
 
-public class ESEEventTests
+public class ESEEventTests extends UnitTest
 {
 
 	Calendar cal = Calendar.getInstance();
@@ -22,6 +23,8 @@ public class ESEEventTests
 	@Before
 	public void setUp() throws ESEException		/* Sets up three Events for testing purposes */
 	{
+		ESEDatabase.clearAll();
+
 		this.dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
 		this.dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
 
@@ -84,8 +87,17 @@ public class ESEEventTests
 		assertEquals(this.dummyCal, this.event3.getCorrespondingCalendar());
 	}
 
+	@Test
 	public void isEventDay()
 	{
-		//TODO: ESEEvent.isEventDay();
+		dummyCal.addEvent(event1);
+		dummyCal.addEvent(event2);
+		dummyCal.addEvent(event3);
+		assertTrue(dummyCal.getAllEvents().get(0).isEventDay(24, 11, 2011));
+		assertTrue(dummyCal.getAllEvents().get(1).isEventDay(24, 11, 2011));
+		assertFalse(dummyCal.getAllEvents().get(1).isEventDay(1, 11, 2011));
+		assertFalse(dummyCal.getAllEvents().get(1).isEventDay(25, 11, 2011));
+		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(24, 11, 2011));
+		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(25, 11, 2011));
 	}
 }

@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.util.Date;
 import models.*;
 import org.junit.*;
+import play.test.UnitTest;
 
-public class ESEDatabaseTest
+public class ESEDatabaseTest extends UnitTest
 {
 
 	ESEUser setupUser;
@@ -15,11 +16,10 @@ public class ESEDatabaseTest
 	@Before
 	public void setUp() throws ESEException
 	{
-		if(ESEDatabase.getAllUsers().size() == 0)
-		{
-			ESEDatabase.createUser("DB User", "pw", "firstName", "familyName");
-			assertEquals(1, ESEDatabase.getAllUsers().size());
-		}
+		ESEDatabase.clearAll();
+
+		ESEDatabase.createUser("DB User", "pw", "firstName", "familyName");
+		assertEquals(1, ESEDatabase.getAllUsers().size());
 		this.setupUser = ESEDatabase.getAllUsers().get(0);
 	}
 

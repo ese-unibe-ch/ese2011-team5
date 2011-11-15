@@ -13,6 +13,17 @@ public class ESEDatabase
 	// private static ArrayList<ESEGroup> groupList;
 	// private static ArrayList<ESEEvent> eventList;
 
+	// Usage only intended for testing purposes
+	public static void clearAll()
+	{
+		userList.clear();
+		ESEUser.resetIdCounter();
+		ESECalendar.resetIdCounter();
+		ESEEvent.resetIdCounter();
+		ESEGroup.resetIdCounter();
+		ESEProfile.resetIdCounter();
+	}
+
 	/*
 	 * Current user methods:
 	 */
@@ -100,18 +111,6 @@ public class ESEDatabase
 			}
 		}
 		return userListToReturn;
-	}
-
-	public static void setUserList(ArrayList<ESEUser> arrayList) throws IllegalAccessException
-	{
-		StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-		if (!stack[2].getClassName().equals("jobs.Bootstrap")
-				|| !stack[2].getFileName().equals("Bootstrap.java")
-				|| !stack[2].getMethodName().equals("doJob"))
-		{
-			throw new IllegalAccessException("Nefarious attempt to overwrite database!");
-		}
-		userList = new ArrayList<ESEUser>();
 	}
 
 	/*

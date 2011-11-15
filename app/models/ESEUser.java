@@ -133,6 +133,12 @@ public class ESEUser
 		this.password = password;
 	}
 
+	// Usage only intended for testing purposes
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
+
 	/*
 	 * Methods with read only access
 	 */
