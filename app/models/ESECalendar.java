@@ -39,6 +39,11 @@ public class ESECalendar
 		this.calendarName = calendarName;
 		this.owner = owner;
 	}
+	
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
 
 	public int getID()
 	{

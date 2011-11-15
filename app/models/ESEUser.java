@@ -228,4 +228,9 @@ public class ESEUser
 		this.secureAnswer = newAnswer;
 	}
 
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
+
 }

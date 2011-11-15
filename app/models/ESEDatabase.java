@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ESEDatabase
 {
-
+	
 	private static ESEUser currentUser;
 
 	private static ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
@@ -16,6 +16,15 @@ public class ESEDatabase
 	/*
 	 * Current user methods:
 	 */
+	public static void clearAll()
+	{
+		userList.clear();
+		ESEUser.resetIdCounter();
+		ESECalendar.resetIdCounter();
+		ESEEvent.resetIdCounter();
+		ESEGroup.resetIdCounter();
+		ESEProfile.resetIdCounter();
+	}
 
 	public static void setCurrentUser(String loggedIn) throws ESEException
 	{

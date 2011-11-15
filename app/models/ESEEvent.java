@@ -48,6 +48,11 @@ public class ESEEvent implements Comparable<ESEEvent>
 
 	}
 	
+	public static void resetIdCounter()
+	{
+		idCounter = 0;
+	}
+	
 	public boolean isEventDay(int day, int month, int year)
 	{
 		Calendar dateAsCal = new GregorianCalendar();

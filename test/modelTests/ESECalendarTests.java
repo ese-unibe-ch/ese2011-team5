@@ -6,8 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 import models.*;
 import org.junit.*;
+import play.test.UnitTest;
 
-public class ESECalendarTests
+public class ESECalendarTests extends UnitTest
 {
 
 	ESEUser ownerDummy;
@@ -21,13 +22,16 @@ public class ESECalendarTests
 	@Before
 	public void setUp() throws ESEException
 	{
+		ESEDatabase.clearAll();
+
 		this.ownerDummy = new ESEUser("dummy", "pw", "firstName", "familyName");
 		this.ownerDummy2 = new ESEUser("dummy2", "pw2", "firstName", "familyName");
 		this.cal1 = new ESECalendar("Cal1", this.ownerDummy);
 		this.cal2 = new ESECalendar("Cal2", this.ownerDummy);
 
-		Calendar cal = Calendar.getInstance();
+		//Calendar cal = Calendar.getInstance();
 		/* create some Events */
+		/*
 		cal.set(2011, 11, 24, 18, 00);
 		Date startDate = cal.getTime();
 		cal.set(2011, 11, 24, 23, 00);
@@ -45,6 +49,7 @@ public class ESECalendarTests
 		cal.set(2011, 11, 26, 23, 00);
 		endDate = cal.getTime();
 		this.event3 = new ESEEvent("Event3", this.cal1, startDate, endDate, false);
+		*/
 	}
 
 	@Test
@@ -233,20 +238,21 @@ public class ESECalendarTests
 	@Test
 	public void shouldRemoveEvent() throws ESEException
 	{
-		this.cal1.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
-		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
-		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
+		ESECalendar cal3 = new ESECalendar("Cal3", this.ownerDummy);
+		cal3.addEvent("Testevent1", "13.04.2011 13:40", "14.04.2011 13:00", true);
+		cal3.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", false);
+		cal3.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", false);
 		try
 		{
-			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
+			cal3.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
 		catch (ESEException e)
 		{}
-		this.cal1.removeEvent(65);
-		assertEquals(3, this.cal1.getAllEvents().size());
-		assertEquals("Testevent1", this.cal1.getAllEvents().get(0).getEventName());
-		assertEquals("Testevent2", this.cal1.getAllEvents().get(1).getEventName());
-		assertEquals("Testevent3", this.cal1.getAllEvents().get(2).getEventName());
+		cal3.removeEvent(3);
+		assertEquals(3, cal3.getAllEvents().size());
+		assertEquals("Testevent1", cal3.getAllEvents().get(0).getEventName());
+		assertEquals("Testevent2", cal3.getAllEvents().get(1).getEventName());
+		assertEquals("Testevent3", cal3.getAllEvents().get(2).getEventName());
 		
 	}
 
