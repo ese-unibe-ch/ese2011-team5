@@ -251,13 +251,24 @@ public class Application extends Controller {
 		showGroups();
 	}
 
-	public static void addUserToGroup(String username, int groupID)
-			throws ESEException {
+	public static void addUserToGroup(String username, int groupID) throws ESEException
+	{
+		try 
+		{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser userToAdd = ESEDatabase.getUserByName(username);
 		ESEGroup group = currentUser.getGroupByID(groupID);
-		group.addUserToGroup(userToAdd);
-		showUsersInGroup(groupID);
+		
+			group.addUserToGroup(userToAdd);
+			showUsersInGroup(groupID);
+		} 
+		catch (ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			showUsersInGroup(groupID);
+		}
+		
 	}
 
 	public static void removeUserFromGroup(String username, int groupID)

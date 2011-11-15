@@ -80,4 +80,22 @@ public class ESEGroup
 		}
 		throw new ESEException("No such user exists!");
 	}
+	
+	public boolean userAlreadyInGroup(String userName)
+	{
+		try 
+		{
+			ESEUser user=ESEDatabase.getUserByName(userName);
+			return this.userList.contains(user);
+			
+		} 
+		catch (ESEException e) 
+		{
+			return false;
+		}
+		
+		
+		
+		
+	}
 }
