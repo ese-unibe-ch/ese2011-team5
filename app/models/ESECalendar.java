@@ -65,16 +65,17 @@ public class ESECalendar
 	{
 		for(ESEEvent e: this.eventList)
 		{
-			System.out.println("EVENT: " + e.getEventID() + " name " + e.getEventName());
 			if(e.getEventID() == id)
 			{
 				return e;
 			}
 		}
-		throw new ESEException("No event with ID \""+id+"\" in calendar \""+this.getCalendarName()+"\"!");
+		throw new ESEException("No event with ID \""+id+"\" in calendar \""
+		+this.getCalendarName()+"\"!");
 	}
 
-	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
+	public void addEvent(String eventName, String startDate, String endDate, 
+			boolean isPublic) throws ESEException
 	{
 		Boolean eventOverlaps = false;
 		ESEEvent newEvent = new ESEEvent(eventName, this,
@@ -90,12 +91,14 @@ public class ESECalendar
 		this.eventList.add(newEvent);
 		if(eventOverlaps)
 		{
-			throw new ESEException("New event \""+newEvent.getEventName()+"\" overlaps with existing event!");
+			throw new ESEException("New event \""+newEvent.getEventName()
+					+"\" overlaps with existing event!");
 		}
 	}
 
 	/*
-	public void addOverlappingEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
+	public void addOverlappingEvent(String eventName, String startDate, 
+	String endDate, boolean isPublic) throws ESEException
 	{
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 				ESEConversionHelper.convertStringToDate(startDate),
@@ -118,7 +121,8 @@ public class ESECalendar
 	 *
 	 * by Judith
 	 */
-	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws ESEException
+	public void addEvent(String eventName, Date startDate, Date endDate, 
+			boolean isPublic) throws ESEException
 	{
 		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate),
 				ESEConversionHelper.convertDateToString(endDate), isPublic);

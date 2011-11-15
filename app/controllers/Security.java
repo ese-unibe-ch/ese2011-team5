@@ -23,7 +23,8 @@ public class Security extends Secure.Security
 			}
 			else
 			{
-				flash.error("Wrong password! Try it again! <a href=forgotPassword/" + username +"> Did you forget your password? - Don't worry be happy: There is a solution </a>");
+				flash.error("Wrong password! Try it again! <a href=forgotPassword/" 
+			+ username +"> Did you forget your password? - Don't worry, be happy: There is a solution! </a>");
 				params.flash();
 			}
 		}
@@ -41,11 +42,11 @@ public class Security extends Secure.Security
 		return session.get("username");
 	}
 
-	// ////////////////////////
-	// OVERWRITTING OF LOGOUT//
-	// ////////////////////////
-
-	public static void logout() throws Throwable {
+	/*
+	 * Overwriting of the play-provided #logout method
+	 */
+	public static void logout() throws Throwable 
+	{
 		Security.invoke("onDisconnect");
 		session.clear();
 		response.removeCookie("rememberme");
@@ -57,7 +58,8 @@ public class Security extends Secure.Security
 		Application.showCalendars(); // go to the start screen, not to the login
 	}
 
-	private static Object invoke(String m, Object... args) throws Throwable {
+	private static Object invoke(String m, Object... args) throws Throwable 
+	{
 		Class security = null;
 		List<Class> classes = Play.classloader.getAssignableClasses(Security.class);
 		if (classes.size() == 0) {

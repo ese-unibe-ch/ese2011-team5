@@ -8,8 +8,7 @@ import models.*;
 public class Register extends Controller
 {
 
-	public static void index()
-	{
+	public static void index(){
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
@@ -18,8 +17,9 @@ public class Register extends Controller
 		render(currentUser, calendarList, otherUsers, groups);
 	}
 
-	public static void createNewUser(@Required String username, @Required String password, @Required String confirmpassword, @Required String question, @Required String answer, @Required String confirmanswer) throws Throwable
-	{
+	public static void createNewUser(@Required String username, @Required String password, 
+			@Required String confirmpassword, @Required String question, 
+			@Required String answer, @Required String confirmanswer) throws Throwable {
 		if (!password.equals(confirmpassword))
 		{
 			flash.error("Passwords do not match!");

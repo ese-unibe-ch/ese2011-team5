@@ -77,7 +77,6 @@ public class ESEConversionHelper
 	{
 		String str=convertDateToString(date);
 		String dayStr=str.substring(0,2);
-		System.out.println("Day: " + dayStr);
 		return Integer.parseInt(dayStr);
 	}
 	
@@ -85,7 +84,6 @@ public class ESEConversionHelper
 	{
 		String str=convertDateToString(date);
 		String monthStr=str.substring(3,5);
-		System.out.println("MONTH: " + monthStr);
 		return Integer.parseInt(monthStr);
 	}
 
@@ -93,7 +91,6 @@ public class ESEConversionHelper
 	{
 		String str=convertDateToString(date);
 		String yearStr=str.substring(6,10);
-		System.out.println("Year: " +yearStr);
 		return Integer.parseInt(yearStr);
 	}
 }
