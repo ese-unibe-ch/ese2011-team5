@@ -1,4 +1,15 @@
-aside#overview
+aside#login
 {
   float: right;
 }
+
+aside#search
+{
+	float: right;
+}
+
+article#main
+{
+	float: left;
+}
+	

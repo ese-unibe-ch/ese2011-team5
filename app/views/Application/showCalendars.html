@@ -1,32 +1,28 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'ESECalendar' /}
 
 <body>
 	<header>
-		<h3>Home</h3>
-	</header>
-	
-	<nav>
-		#{ navigation currentUser: currentUser /}
-	</nav>
-	
-	<article>
-		<aside id="overview">
-			#{overviewOtherUsers otherUsers:otherUsers, currentUser:currentUser, groups:groups /}
+		<aside id="login">
+			TODO: LOGIN & CO
 		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+
+	<section id="section">
+		<aside id="search">
+			TODO: SEARCH
+		</aside>
+		
+		<article>
+			Article
+		<article>
 	
-		<section>
-			
-			#{if currentUser.getName().equals("guest")}
-				#{welcomeUnknown /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
-		</section>
-	</article>
+	</section>
 	
 	<footer>
-		#{ footer /}
+		#{footer /}
 	</footer>
+
 </body>
