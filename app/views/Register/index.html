@@ -1,22 +1,25 @@
 #{extends 'main.html' /}
+#{set title:'ESECalendar' /}
 
 <body>
 	<header>
 		<aside id="login">
-			TODO: LOGIN & CO
+			#{nav currentUser:currentUser/}
 		</aside>
-		<h1 id="title"> ESECalendar: Register <h1>
+		<h1 id="title"> ESECalendar <h1>
 		<hr>
 	</header>
 
 	<section id="section">
 		<aside id="search">
-			<a id="t"> TODO: SEARCH</a>
+		
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
+			
 		</aside>
 		
 		<article>
-			#{register /}
-			
+				#{register /}
 		<article>
 	
 	</section>

@@ -39,7 +39,8 @@ public class ESECalendar
 		this.calendarName = calendarName;
 		this.owner = owner;
 	}
-	
+
+	// Usage only intended for testing purposes
 	public static void resetIdCounter()
 	{
 		idCounter = 0;
@@ -70,7 +71,7 @@ public class ESECalendar
 				return e;
 			}
 		}
-		throw new ESEException("No event with this ID! IN CALENDAR" +this.getCalendarName());
+		throw new ESEException("No event with ID \""+id+"\" in calendar \""+this.getCalendarName()+"\"!");
 	}
 
 	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException

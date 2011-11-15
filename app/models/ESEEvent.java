@@ -47,12 +47,13 @@ public class ESEEvent implements Comparable<ESEEvent>
 		this.participants.add(correspondingCalendar.getOwner());
 
 	}
-	
+
+	// Usage only intended for testing purposes
 	public static void resetIdCounter()
 	{
 		idCounter = 0;
 	}
-	
+
 	public boolean isEventDay(int day, int month, int year)
 	{
 		Calendar dateAsCal = new GregorianCalendar();
@@ -113,7 +114,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 		}
 	}
 	
-	public ESECalendar getOneCorresponding(int id)
+	public ESECalendar getOneCorresponding(int id) throws ESEException
 	{
 		for(ESECalendar calendar:this.correspondingCalendars)
 		{
@@ -122,7 +123,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 				return calendar;
 			}
 		}
-		return null;
+		throw new ESEException("No calendar with ID \""+id+"\"!");
 	}
 
 	public Date getStartDate()
