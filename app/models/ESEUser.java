@@ -221,8 +221,10 @@ public class ESEUser
 	}
 	
 	/**
-	 *TODO
-	 * @param calendarName
+	 *Creates an new {@link ESECalendar} for this ESEUser. <br>
+	 *
+	 * @param calendarName Must not be empty.
+	 * 
 	 * @throws ESEException
 	 */
 	public void addCalendar(String calendarName) throws ESEException
@@ -230,8 +232,9 @@ public class ESEUser
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 	/**
+	 * Creates an new {@link ESEGroup} for this ESEUser. <br>
 	 * 
-	 * @param groupName
+	 * @param groupName Must not be empty.
 	 * @throws ESEException
 	 */
 	public void addGroup(String groupName) throws ESEException
@@ -240,10 +243,14 @@ public class ESEUser
 		this.groupList.add(group);
 	}
 	/**
+	 * Returns the corresponding ESECalendar of this ESEUser.
 	 * 
-	 * @param id
-	 * @return
+	 * @param id unique 
+	 * @return {@link ESECalendar} with corresponding ID of this ESEUser.
 	 * @throws ESEException
+	 * 
+	 * @see {@link #getCalendarByName(String)} to search by Calendar name.
+	 * @see {@link #getCalendarList()} to get all Calendars.
 	 */
 	public ESECalendar getCalendarByID(int id) throws ESEException
 	{
@@ -257,10 +264,13 @@ public class ESEUser
 		throw new ESEException("No calendar with ID \"" + id + " \"!");
 	}
 	/**
+	 * Returns the corresponding ESECalendar of this ESEUser.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name of searched ESECalendar.
+	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
+	 * @see {@link #getCalendarByID(int)} to search by Calendar ID.
+	 * @see {@link #getCalendarList()} to get all Calendars.
 	 */
 	public ESECalendar getCalendarByName(String name) throws ESEException
 	{
@@ -274,10 +284,13 @@ public class ESEUser
 		throw new ESEException("No calendar with name \"" + name + "\"!");
 	} 
 	/**
+	 * Returns the corresponding ESEGroup to this <code>id</code>.
 	 * 
-	 * @param id
-	 * @return
+	 * @param id of searched ESEGroup
+	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
+	 * @see {@link #getGroupByName(String)}
+	 * @see {@link #getGroupList()}
 	 */
 	public ESEGroup getGroupByID(int id) throws ESEException
 	{
@@ -291,10 +304,13 @@ public class ESEUser
 		throw new ESEException("No group with ID \"" + id + "\"!");
 	}
 	/**
+	 * Returns the corresponding ESEGroup to this <code>name</code>.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name of searched ESEGroup
+	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
+	 * @see {@link #getGroupByID(String)}
+	 * @see {@link #getGroupList()}
 	 */
 	public ESEGroup getGroupByName(String name) throws ESEException
 	{
@@ -312,10 +328,14 @@ public class ESEUser
 		this.calendarList.remove(calendarToRemove);
 	}
 	/**
+	 * Returns all ESEEvents of the ESECalendar with the corresponding ID.<br>
 	 * 
-	 * @param calendarID
-	 * @return
+	 * @param calendarID 
+	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
+	 * 
+	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
+	 * @see {@link ESEEvent}
 	 */
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException
 	{
@@ -329,10 +349,16 @@ public class ESEUser
 		throw new ESEException("No calendar with this ID!");
 	}
 	/**
+	 * Returns all public ESEEvents of the ESECalendar with the corresponding ID. <br>
 	 * 
 	 * @param calendarID
-	 * @return
+	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
+	 * 
+	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
+	 * @see {@link ESEEvent}
+	 * 
+
 	 */
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws ESEException
 	{
