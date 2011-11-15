@@ -10,6 +10,10 @@
 		<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),_currentUser.getName())}">${calendar.getCalendarName()}</a></p>
 	#{/list}
 	
+	#{if _calendarList.size()<3}
+	<br><br><br>
+	#{/if}
+	
 	<b>Add a calendar:</b>
 	
 	#{form @Application.addCalendar()}

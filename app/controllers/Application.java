@@ -14,8 +14,6 @@ public class Application extends Controller {
 
 	private static boolean validLogin = true;
 
-	private static int additionalMonthsCumulated = 0;
-
 	private static ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 
 	public static void showCalendars() {
@@ -78,9 +76,7 @@ public class Application extends Controller {
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
 				.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
-		for (ESECalendar calendar : calendarList)
-			System.out.println(calendar.getID());
-
+		
 		ArrayList<ESEUser> otherUsersList = otherUsers;
 
 		render(currentUser, otherUsers, otherUser, calendarList, groups,
@@ -132,7 +128,7 @@ public class Application extends Controller {
 			startOfLastMonth = daysFromLastMonth.get(0);
 		}
 
-		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month);
+		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month, year);
 		ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(
 				month, year);
 		ArrayList<String> weekdays = getWeekDays();
@@ -180,18 +176,10 @@ public class Application extends Controller {
 			int selectedDay, int month, int year) throws ESEException {
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(
 				calendarID);
-		System.out.println("EVENT ID " + eventID);
-		ESEEvent event = calendar.getEventByID(eventID);
-		// if(event.getCorrespondingCalendar().equals(calendar)) //if the origin
-		// calendar is the same as the current user's calendar
-		// {
-		// event.eventRemoveInCorrespondingCalendars(); //TODO FIX THIS!
-		// System.out.println("REMOVE EVENT EVERYWHERE");
-		// }
+
 
 		calendar.removeEvent(eventID);
 
-		//
 		showCalendarView(calendarID, calendar.getOwner().getName(),
 				selectedDay, month, year);
 	}
@@ -232,13 +220,9 @@ public class Application extends Controller {
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
 			int month, int year) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ESEUser otherUser = ESEDatabase.getUserByName(currentUser.getName());
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
 				.getName());
-		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
-		System.out.println("USER ID: " + currentUser.getUserID()
-				+ " calendarID: " + calendar.getID());
 		ESEEvent event = calendar.getEventByID(eventID);
 
 		ArrayList<ESEUser> otherUsersList = otherUsers;
@@ -392,19 +376,22 @@ public class Application extends Controller {
 	public static void searchUser(@Required String searchName)
 	{
 
-		System.out.println("SEARCH FOR: " + searchName);
 		ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
-		otherUsersLocal = ESEDatabase.findUser(searchName);
-		ArrayList<ESEUser> otherUserLocalOriginal= new ArrayList<ESEUser>(otherUsersLocal);
-		
-		for (ESEUser u : otherUserLocalOriginal)
-		{
-			if (u.getName().equals("guest"))
-			{
-				otherUsersLocal.remove(u);
-			}
+		if (!searchName.equals("")){
+			otherUsersLocal = ESEDatabase.findUser(searchName);
 		}
-
+		else
+			otherUsersLocal = ESEDatabase.getAllUsers();
+		
+		ArrayList<ESEUser> otherUserLocalOriginal= new ArrayList<ESEUser>(otherUsersLocal);
+		for (ESEUser u : otherUserLocalOriginal)
+			{
+				if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
+				{
+					otherUsersLocal.remove(u);
+				}
+			}
+		
 		otherUsers = otherUsersLocal;
 		
 		showCalendars();
@@ -433,8 +420,6 @@ public class Application extends Controller {
 
 	public static void doCopyEvent(int otherUserID, int otherUserCalendarID,
 			int eventID, String selectedCalendarName) throws ESEException {
-		System.out.println("selected calendarName: " + selectedCalendarName);
-		System.out.println("eventID " + eventID);
 		ESEUser user = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByID(otherUserID);
 		ESECalendar selectedCalendar = null;
@@ -444,9 +429,6 @@ public class Application extends Controller {
 			ESECalendar otherCalendar = otherUser
 					.getCalendarByID(otherUserCalendarID);
 			ESEEvent event = otherCalendar.getEventByID(eventID);
-			System.out.println("cal" + selectedCalendar.getCalendarName()
-					+ "ID " + selectedCalendar.getID());
-			System.out.println("event " + event.getEventName());
 			event.addCorrespondingCalendar(selectedCalendar);
 			selectedCalendar.addEvent(event);
 			
@@ -490,8 +472,6 @@ public class Application extends Controller {
 		ESEUser user = ESEDatabase.getUserByID(userID);
 		ESEProfile profile = user.getProfile();
 
-		System.out.println("BIRTHDAY IS: " + birthday);
-
 		if (isStringNotEmpty(birthday)) {
 			profile.setBirthday(birthday);
 		}
@@ -505,7 +485,6 @@ public class Application extends Controller {
 			profile.setFirstName(firstName);
 		}
 		if (isStringNotEmpty(mail)) {
-			System.out.println("CHANGE EMAIL: " + mail);
 			profile.setMail(mail);
 		}
 		if (isStringNotEmpty(postcode)) {
