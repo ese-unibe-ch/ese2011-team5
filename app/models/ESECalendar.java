@@ -1,3 +1,10 @@
+/*
+ * Project: ESECalendar team 5
+ * Authors:
+ * 		Rafael Breu
+ * 		Renato Corti
+ * 		Lukas Keller
+ */
 package models;
 
 import java.util.ArrayList;
@@ -5,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import com.mysql.jdbc.Util;
 
 public class ESECalendar
 {
@@ -45,22 +54,36 @@ public class ESECalendar
 	{
 		idCounter = 0;
 	}
-
+	/**
+	 * 
+	 * @return int calendarID. The value ranges from 0 to {@link #idCounter}.
+	 */
 	public int getID()
 	{
 		return this.calendarID;
 	}
-
+	/**
+	 * 
+	 * @return String name of this ESECalendar.
+	 */
 	public String getCalendarName()
 	{
 		return this.calendarName;
 	}
-
+	/**
+	 * 
+	 * @return {@link ESEUser} owner of this ESECalendar.
+	 */
 	public ESEUser getOwner()
 	{
 		return this.owner;
 	}
-
+	/**
+	 * 
+	 * @param id of the searched {@link ESEEvent}.
+	 * @return searched ESEEvent.
+	 * @throws ESEException if there is no such ESEEvent in this Calendar.
+	 */
 	public ESEEvent getEventByID(int id) throws ESEException
 	{
 		for(ESEEvent e: this.eventList)
@@ -73,7 +96,18 @@ public class ESECalendar
 		}
 		throw new ESEException("No event with ID \""+id+"\" in calendar \""+this.getCalendarName()+"\"!");
 	}
-
+	/**
+	 * Adds a new ESEEvent to this ESECalendar.
+	 * 
+	 * @param eventName of the new ESEEvent.
+	 * @param startDate of the new ESEEvent.
+	 * @param endDate of the new ESEEvent.
+	 * @param isPublic shall all ESEUser be able to see this ESEEvent.
+	 * @throws ESEException if this new ESEEvent overlapps with in existing ESEEvent in the same ESECalendar.
+	 * 
+	 * @see ESEUser
+	 * @see ESECalendar
+	 */
 	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
 	{
 		Boolean eventOverlaps = false;
@@ -94,36 +128,11 @@ public class ESECalendar
 		}
 	}
 
-	/*
-	public void addOverlappingEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
-	{
-		ESEEvent newEvent = new ESEEvent(eventName, this,
-				ESEConversionHelper.convertStringToDate(startDate),
-				ESEConversionHelper.convertStringToDate(endDate), isPublic);
-		try
-		{
-			addEvent(eventName, startDate, endDate, isPublic);
-		}
-		catch(ESEException e)
-		{
-			this.eventList.add(newEvent);
-		}
-	}
-	*/
-
-	/*
-	 * Mir geht es einfacher die Bootstrap Daten so einzugeben. Falls die Methode
-	 * unerwünscht ist, bitte wieder löschen und Bootstrap Events anpassen:
-	 * statt Date String übergeben.
-	 *
-	 * by Judith
+	/**
+	 * Adds an existing {@link ESEEvent} to this ESECalendar.
+	 * 
+	 * @param event to be added.
 	 */
-	public void addEvent(String eventName, Date startDate, Date endDate, boolean isPublic) throws ESEException
-	{
-		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate),
-				ESEConversionHelper.convertDateToString(endDate), isPublic);
-	}
-	
 	public void addEvent(ESEEvent event)
 	{
 		if(!this.eventList.contains(event))
@@ -131,14 +140,27 @@ public class ESECalendar
 			this.eventList.add(event);
 		}
 	}
-
+	
+	/**
+	 * Removes an {@link ESEEvent} from this ESECalendar by its id.
+	 * 
+	 * @param eventID of ESEEvent to remove.
+	 * @throws ESEException
+	 */
 	public void removeEvent(int eventID) throws ESEException
 	{
 		ESEEvent eventToRemove = this.getEventByID(eventID);
 		this.eventList.remove(eventToRemove);
 		
 	}
-
+	/**
+	 * Returns a List with all ESEEvents, that may be view by the 
+	 * current user.
+	 * 
+	 * @return ArrayList<ESEEvent> all events.
+	 * 
+	 * @see ESEDatabase#getCurrentUser()
+	 */
 	public ArrayList<ESEEvent> getAllAllowedEvents()
 	{
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
@@ -150,7 +172,11 @@ public class ESECalendar
 			return this.getAllPublicEvents();
 		}
 	}
-
+	/**
+	 * Returns a List of {@link ESEEvent}, which may be viewed by all ESEUser.
+	 * 
+	 * @return ArrayList<ESEEvent> of all public ESEEvents of this ESECalendar.
+	 */
 	public ArrayList<ESEEvent> getAllPublicEvents()
 	{
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
@@ -163,19 +189,40 @@ public class ESECalendar
 		}
 		return publicEventsList;
 	}
-
+	/**
+	 * Returns a List of all {@link ESEEvent} of this ESECalendar. This includes
+	 * all public, as well as all private ESEEvents.
+	 * 
+	 * @return ArrayList<ESEEvent> of all ESEEvents.
+	 */
 	public ArrayList<ESEEvent> getAllEvents()
 	{
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
-
+	/**
+	 * Returns a List of all {@link ESEEvent}, that may be viewed by the current
+	 * ESEUser within the given month.
+	 * 
+	 * @param month given
+	 * @return ArrayList<ESEEvent> of ESEEvents of given month.
+	 * 
+	 * @see {@link #getAllEventsOfMonth(int)} same without restriction of current user.
+	 * @see {@link ESEDatabase#getCurrentUser()} current logged in user.
+	 */
 	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.getAllEventsOfMonth(month);
 		else
 			return this.getAllPublicEventsOfMonth(month);
 	} 
-
+	/**
+	 * Returns a List of all {@link ESEEvent} within the given month.
+	 * 
+	 * @param month given
+	 * @return ArrayList<ESEEvent> of ESEEvents of given month.
+	 * 
+	 * @see {@link #getAllAllowedEventsOfMonth(int)} same but with restriction of current user.
+	 */
 	public ArrayList<ESEEvent> getAllEventsOfMonth(int month) {
 		Calendar monthAsCal = new GregorianCalendar();
 		monthAsCal.set(Calendar.MONTH,month);
@@ -199,7 +246,13 @@ public class ESECalendar
 		}
 		return eventsOfMonth;
 	}
-	
+	/**
+	 * Returns a List of all {@link ESEEvent} within the given month, that
+	 * may be viewed by all ESEUsers.
+	 * 
+	 * @param month given
+	 * @return ArrayList<ESEEvent> of ESEEvents of current month, that are public.
+	 */
 	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month) {
 		ArrayList<ESEEvent> listOfPublicEvents = new ArrayList<ESEEvent>();
 		
@@ -209,7 +262,18 @@ public class ESECalendar
 		}
 		return listOfPublicEvents;
 	}	
-
+	/**
+	 * Returns a List with Integers. The size of the List is equal to the number of 
+	 * days of the given month. The List starts with 1 and ends with the last day
+	 * of the month.
+	 * 
+	 * @param month given
+	 * @param year given
+	 * @return List<Integer> of Integers representing a month.
+	 * 
+	 * @see #getDaysFromLastMonth(int, int)
+	 * @see #getDaysFromNextMonth(int, int)
+	 */
 	public List<Integer> getDaysFromThisMonth(int month, int year)
 	{
 		Calendar cal = new GregorianCalendar();
@@ -222,7 +286,18 @@ public class ESECalendar
 		}
 		return daysFromThisMonth;
 	}
-
+	/**
+	 * Returns a List with Integers. The size of the List is equal to the number of 
+	 * days of the previous month. The List starts with 1 and ends with the last day
+	 * of the previous month.<p>
+	 * 
+	 * @param month given
+	 * @param year given
+	 * @return List<Integer> of Integers representing a month.
+	 * 
+	 * @see #getDaysFromThisMonth(int, int)
+	 * @see #getDaysFromNextMonth(int, int)
+	 */
 	public List<Integer> getDaysFromLastMonth(int month, int year)
 	{
 		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
@@ -247,7 +322,18 @@ public class ESECalendar
 		}
 		return daysFromLastMonth;
 	}
-
+	/**
+	 * Returns a List with Integers. The size of the List is equal to the number of 
+	 * days of the next month. The List starts with 1 and ends with the last day
+	 * of the next month.
+	 * 
+	 * @param month given
+	 * @param year given
+	 * @return List<Integer> of Integers representing a month.
+	 * 
+	 * @see #getDaysFromThisMonth(int, int)
+	 * @see #getDaysFromLastMonth(int, int)
+	 */
 	public List<Integer> getDaysFromNextMonth(int month, int year)
 	{
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
@@ -257,7 +343,15 @@ public class ESECalendar
 			daysFromNextMonth.add(i);
 		return daysFromNextMonth;
 	}
-
+	/**
+	 * Returns a List with Integers. Each Integer within this
+	 * List represents a date of the given month, where an {@link ESEEvent}
+	 * takes place.
+	 * 
+	 * @param month given
+	 * @param year given
+	 * @return List<Integer> date with ESEEvents.
+	 */
 	public ArrayList<Integer> getEventDaysOfMonth(int month, int year)
 	{
 		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
