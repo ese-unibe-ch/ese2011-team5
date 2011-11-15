@@ -18,7 +18,8 @@ import java.util.ArrayList;
  * A user is uniquely defined by it's <code>userID</code> and described by it's
  * <code>profile</code>, that contains Name and other personal Information.<br>
  * A User has a <code>password</code> that is used to login.<br>
- * A User can have several Calendars as well as different groups of contacts.
+ * A User can have several Calendars as well as different groups of contacts that
+ * can be added to its lists.
  *
  *@see ESECalendar
  *@see ESEGroup
@@ -226,6 +227,8 @@ public class ESEUser
 	 * @param calendarName Must not be empty.
 	 * 
 	 * @throws ESEException
+	 * 
+	 * @see {@link #addCalendar(ESECalendar)} to only add but not create a new calendar.
 	 */
 	public void addCalendar(String calendarName) throws ESEException
 	{
@@ -376,7 +379,13 @@ public class ESEUser
 	 * Methods with read-write access
 	 */
 	/**
+	 *Adds an ESECalendar to this ESEUsers Calendar List. <br>
+	 *
+	 * @param calendarToAdd owner must be this.
 	 * 
+	 * @throws ESEException
+	 * 
+	 * @see {@link #addCalendar(String)} to create and add a new calendar.
 	 */
 	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
 	{
@@ -387,8 +396,9 @@ public class ESEUser
 		this.calendarList.add(calendarToAdd);
 	}
 	/**
+	 * Creates and adds a new Group to the list of this ESEUser. <br>
 	 * 
-	 * @param groupToAdd
+	 * @param groupToAdd String must not be empty.
 	 * @throws ESEException
 	 */
 	public void addGroup(ESEGroup groupToAdd) throws ESEException
@@ -400,19 +410,35 @@ public class ESEUser
 		this.groupList.add(groupToAdd);
 	}
 	/**
+	 * Sets the password to a new value.
 	 * 
-	 * @param newPassword
+	 * @param newPassword String must not be empty.
+	 * 
+	 * @see #setAnswer(String)
+	 * @see #setQuestion(String)
 	 */
 	public void setPassword(String newPassword)
 	{
 		this.password = newPassword;
 	}
 	
+	/**
+	 * Replaces the old questions with a new secret question.
+	 * 
+	 * @param newQuestion String must not be empty.
+	 * @see {@link #setAnswer(String)} to change also the answer to the new question.
+	 */
 	public void setQuestion(String newQuestion)
 	{
 		this.secureQuestion = newQuestion;
 	}
-	
+	/**
+	 * Replaces the old answer with a new one.
+	 * The answer should relate to the current <code>secretQuestion</code>.
+	 * 
+	 * @param newAnswer String must not be empty.
+	 * @see {@link #setQuestion(String)}
+	 */
 	public void setAnswer(String newAnswer)
 	{
 		this.secureAnswer = newAnswer;
