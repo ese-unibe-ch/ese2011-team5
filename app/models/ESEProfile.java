@@ -4,9 +4,6 @@
  * 		Rafael Breu
  * 		Renato Corti
  * 		Lukas Keller
- * Last Change:
- * 	by:		xxx
- * 	date:	xxx
  */
 package models;
 
