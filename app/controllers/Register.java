@@ -34,7 +34,16 @@ public class Register extends Controller
 			index();
 		}
 
-		ESEDatabase.createUser(username, password, "", "", question, answer);
+		try
+		{
+			ESEDatabase.createUser(username, password, "", "", question, answer);
+		}
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			index();
+		}
 		Security.ownAuthenticate(username, password);
 		Application.showCalendars();
 	}
