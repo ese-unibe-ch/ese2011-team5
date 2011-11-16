@@ -1,0 +1,13 @@
+*{ You can use plain selenium command using the selenium tag }*
+
+#{selenium registerNewUser}
+	clearSession()
+    open('http://127.0.0.1:9000/register/index')
+	type('username', 'SeleniumTestUser')
+	type('password', 'TestPassword')
+	type('confirmpassword', 'TestPassword')
+	type('question', 'What are we doing here?')
+	type('answer', 'Selenium Tests')
+	clickAndWait('register')
+	assertTitle('ESECalendar')
+#{/selenium}

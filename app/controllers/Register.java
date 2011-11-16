@@ -18,7 +18,7 @@ public class Register extends Controller
 		render(currentUser, calendarList, otherUsers, groups);
 	}
 
-	public static void createNewUser(@Required String username, @Required String password, @Required String confirmpassword, @Required String question, @Required String answer, @Required String confirmanswer) throws Throwable
+	public static void createNewUser(@Required String username, @Required String password, @Required String confirmpassword, @Required String question, @Required String answer) throws ESEException
 	{
 		if (!password.equals(confirmpassword))
 		{
