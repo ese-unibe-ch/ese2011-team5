@@ -1,3 +1,10 @@
+/*
+ * Project: ESECalendar team 5
+ * Authors:
+ * 		Rafael Breu
+ * 		Renato Corti
+ * 		Lukas Keller
+ */
 package models;
 
 import java.text.SimpleDateFormat;
@@ -24,7 +31,13 @@ public class ESEConversionHelper
 		DateTime dateTimeParser = dateTimeConvert.parseDateTime(userDateString);
 		return dateTimeParser.toDate();
 	}
-	
+	/**
+	 * Converts a {@link Date} to a {@link String} value.
+	 * 
+	 * @param userDateString
+	 * @return Date of birthday
+	 * @see #convertBirthdayDateToString(Date)
+	 */
 	public static Date convertBirthdayStringToDate(String userDateString) 
 	{
 		String birthdayFormat = "dd.MM.yyyy";
@@ -57,7 +70,14 @@ public class ESEConversionHelper
 			return "-";
 		}
 	}
-
+	/**
+	 * Converts a {@link Date} to a {@link String} value.<br>
+	 * If a <code>null</code> Date is passed, the birthday String 
+	 * is set to "-".
+	 * @param date to be converted
+	 * @return String representation of birthday
+	 * @see #convertBirthdayStringToDate(String)
+	 */
 	public static String convertBirthdayDateToString(Date date)
 	{
 		String birthdayFormat = "dd.MM.yyyy";

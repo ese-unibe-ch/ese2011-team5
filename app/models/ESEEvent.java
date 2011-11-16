@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 /**
+ * Class handling events in a Calendar.
  * 
  * @see ESECalendar
  * @see ESEUser

@@ -14,7 +14,15 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.mysql.jdbc.Util;
-
+/**
+ * ESECalendar organizes the ESEEvents of an ESEUser.
+ * It is also responsible for the correct interpretation of
+ * time and Date representation within the application.
+ * 
+ * @see ESEUser
+ * @see ESEEvent
+ *
+ */
 public class ESECalendar
 {
 	private static int idCounter = 0;
@@ -23,7 +31,13 @@ public class ESECalendar
 	private String calendarName;
 	private ESEUser owner;
 	private ArrayList<ESEEvent> eventList;
-
+	/**
+	 * Constructor for ESECalendar.<br>
+	 * 
+	 * @param calendarName Must not be empty.
+	 * @param owner Must not be null.
+	 * @throws ESEException is either owner is null or calendarName is empty.
+	 */
 	public ESECalendar(String calendarName, ESEUser owner) throws ESEException
 	{
 		if(calendarName.isEmpty())
