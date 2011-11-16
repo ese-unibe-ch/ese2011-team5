@@ -100,4 +100,56 @@ public class ESEEventTests extends UnitTest
 		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(24, 11, 2011));
 		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(25, 11, 2011));
 	}
+
+	@Test
+	public void shouldEditEvent() throws ESEException
+	{
+		this.cal.set(2011, 11, 13, 00, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2011, 11, 14, 00, 00);
+		this.endDate = this.cal.getTime();
+		ESEEvent editEvent = new ESEEvent("editevent", this.dummyCal, this.startDate, this.endDate, false);
+		dummyCal.addEvent(editEvent);
+
+		editEvent.setEventName("Edit Event");
+		assertEquals("Edit Event", editEvent.getEventName());
+
+		this.cal.set(2011, 11, 17, 00, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2011, 11, 18, 00, 00);
+		this.endDate = this.cal.getTime();
+		try
+		{
+			editEvent.setStartDate(this.startDate);
+			editEvent.setEndDate(this.endDate);
+			fail("Invalid dates were set");
+		}
+		catch(ESEException e)
+		{
+			editEvent.setStartDateAndEndDate(this.startDate, this.endDate);
+		}
+		assertEquals(this.startDate, editEvent.getStartDate());
+		assertEquals(this.endDate, editEvent.getEndDate());
+
+		this.cal.set(2011, 11, 15, 00, 00);
+		this.startDate = this.cal.getTime();
+		this.cal.set(2011, 11, 16, 00, 00);
+		this.endDate = this.cal.getTime();
+		try
+		{
+			editEvent.setEndDate(this.endDate);
+			editEvent.setStartDate(this.startDate);
+			fail("Invalid dates were set");
+		}
+		catch(ESEException e)
+		{
+			editEvent.setStartDateAndEndDate(this.startDate, this.endDate);
+		}
+		assertEquals(this.startDate, editEvent.getStartDate());
+		assertEquals(this.endDate, editEvent.getEndDate());
+
+		editEvent.setVisibility(true);
+		assertTrue(editEvent.isPublic());
+
+	}
 }

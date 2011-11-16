@@ -19,12 +19,17 @@
 		</aside>
 		
 		<article>
+
 		#{if flash.error}
-					<p id="error">
-						${flash.error}
-					</p>
+			<p id="error">
+				${flash.error}
+				#{if flash.error.matches("Event \".*\" overlaps with existing event!")}
+					<a href=@{Application.showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year)}>Continue anyway</a>
+				#{/if}
+			</p>
 		#{/if}
-#{form @Application.doEditEvent()}
+
+		#{form @Application.doEditEvent()}
 		    <p>
 		        <label for="eventName">Name of the Event: </label>
 		        <input type="text" name="eventName" id="eventName" value="${event.getEventName()}" />
@@ -58,8 +63,7 @@
 		    </p>
 		
 		#{/form}
-		
-		
+
 		<article>
 	
 	</section>

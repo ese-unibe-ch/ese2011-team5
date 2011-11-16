@@ -302,10 +302,24 @@ public class ESEEvent implements Comparable<ESEEvent>
 	 * 
 	 * @param eventName to be set.
 	 */
-	public void setEventName(String eventName)
+	public void setEventName(String eventName) throws ESEException
 	{
+		if(eventName.isEmpty())
+		{
+			throw new ESEException("Event name must not be empty!");
+		}
 		this.eventName = eventName;
 	}
+
+	// Setting start date and end date should be atomic
+	public void setStartDateAndEndDate(Date startDate, Date endDate) throws ESEException
+	{
+		checkDateValidity(startDate, endDate);
+		this.checkForOverlapping(this.originsCalendar.getAllEvents());
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+
 	/**
 	 * Sets the {@link #startDate} to a new value. <br>
 	 * 
@@ -315,6 +329,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 	public void setStartDate(Date startDate) throws ESEException
 	{
 		checkDateValidity(startDate, this.endDate);
+		this.checkForOverlapping(this.originsCalendar.getAllEvents());
 		this.startDate = startDate;
 	}
 	/**
@@ -326,6 +341,7 @@ public class ESEEvent implements Comparable<ESEEvent>
 	public void setEndDate(Date endDate) throws ESEException
 	{
 		checkDateValidity(this.startDate, endDate);
+		this.checkForOverlapping(this.originsCalendar.getAllEvents());
 		this.endDate = endDate;
 	}
 	/**
@@ -337,6 +353,67 @@ public class ESEEvent implements Comparable<ESEEvent>
 	{
 		this.isPublic = publiclyViewable;
 	}
+
+	public Boolean checkForOverlapping(ArrayList<ESEEvent> eventList)
+	{
+		for (ESEEvent existingEvent : eventList)
+		{
+			if (!this.equals(existingEvent) && checkEventOverlaps(existingEvent, this))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		boolean startDateOverlaps = startDateLiesInBetweenExistingEvent(existingEvent, newEvent);
+		boolean endDateOverlaps = endDateLiesInBetweenExistingEvent(existingEvent, newEvent);
+		boolean embracesEvent = eventIsSubsetOfExistingEvent(existingEvent, newEvent);
+		boolean isInEvent = eventContainsExistingEvent(existingEvent, newEvent);
+
+		return startDateOverlaps || endDateOverlaps || embracesEvent || isInEvent;
+	}
+
+	private boolean startDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newStartTime = newEvent.getStartDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newStartTime && newStartTime <= existingEndTime;
+	}
+
+	private boolean endDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newEndTime && newEndTime <= existingEndTime;
+	}
+
+	private boolean eventIsSubsetOfExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long newStartTime = newEvent.getStartDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+
+		return existingStartTime <= newStartTime && newEndTime <= existingEndTime;
+	}
+
+	private boolean eventContainsExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
+	{
+		long newStartTime = newEvent.getStartDate().getTime();
+		long existingStartTime = existingEvent.getStartDate().getTime();
+		long existingEndTime = existingEvent.getEndDate().getTime();
+		long newEndTime = newEvent.getEndDate().getTime();
+
+		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
+	}
+
 	/**
 	 * @return String representation of this ESEEvent. <br>
 	 * Example. "Meeting: From 12.09.2011 13:00 to 12.09.2011 15:00" 
