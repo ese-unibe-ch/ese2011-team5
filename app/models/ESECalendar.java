@@ -70,7 +70,7 @@ public class ESECalendar
 				return e;
 			}
 		}
-		throw new ESEException("No event with this ID! IN CALENDAR" +this.getCalendarName());
+		throw new ESEException("No event with ID \"" + id + "\" in calendar \"" + this.getCalendarName() + "\"!");
 	}
 
 	public void addEvent(String eventName, String startDate, String endDate, boolean isPublic) throws ESEException
@@ -79,13 +79,14 @@ public class ESECalendar
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 				ESEConversionHelper.convertStringToDate(startDate),
 				ESEConversionHelper.convertStringToDate(endDate), isPublic);
-		for (ESEEvent existingEvent : this.eventList)
+		eventOverlaps = newEvent.checkForOverlapping(this.eventList);
+		/*for (ESEEvent existingEvent : this.eventList)
 		{
 			if (checkEventOverlaps(existingEvent, newEvent))
 			{
 				eventOverlaps = true;
 			}
-		}
+		}*/
 		this.eventList.add(newEvent);
 		if(eventOverlaps)
 		{
@@ -316,54 +317,6 @@ public class ESECalendar
 		return eventDaysList;
 	}
 
-	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
-	{
-		boolean startDateOverlaps = startDateLiesInBetweenExistingEvent(existingEvent, newEvent);
-		boolean endDateOverlaps = endDateLiesInBetweenExistingEvent(existingEvent, newEvent);
-		boolean embracesEvent = eventIsSubsetOfExistingEvent(existingEvent, newEvent);
-		boolean isInEvent = eventContainsExistingEvent(existingEvent, newEvent);
-
-		return startDateOverlaps || endDateOverlaps || embracesEvent || isInEvent;
-	}
-
-	private boolean startDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
-	{
-		long existingStartTime = existingEvent.getStartDate().getTime();
-		long newStartTime = newEvent.getStartDate().getTime();
-		long existingEndTime = existingEvent.getEndDate().getTime();
-
-		return existingStartTime <= newStartTime && newStartTime <= existingEndTime;
-	}
-
-	private boolean endDateLiesInBetweenExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
-	{
-		long existingStartTime = existingEvent.getStartDate().getTime();
-		long newEndTime = newEvent.getEndDate().getTime();
-		long existingEndTime = existingEvent.getEndDate().getTime();
-
-		return existingStartTime <= newEndTime && newEndTime <= existingEndTime;
-	}
-
-	private boolean eventIsSubsetOfExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
-	{
-		long existingStartTime = existingEvent.getStartDate().getTime();
-		long newStartTime = newEvent.getStartDate().getTime();
-		long newEndTime = newEvent.getEndDate().getTime();
-		long existingEndTime = existingEvent.getEndDate().getTime();
-
-		return existingStartTime <= newStartTime && newEndTime <= existingEndTime;
-	}
-
-	private boolean eventContainsExistingEvent(ESEEvent existingEvent, ESEEvent newEvent)
-	{
-		long newStartTime = newEvent.getStartDate().getTime();
-		long existingStartTime = existingEvent.getStartDate().getTime();
-		long existingEndTime = existingEvent.getEndDate().getTime();
-		long newEndTime = newEvent.getEndDate().getTime();
-
-		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
-	}
-	
 	public String toString()
 	{
 		return calendarName;

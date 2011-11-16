@@ -198,47 +198,45 @@ public class Application extends Controller {
 
 	public static void doEditEvent(int calendarID, int eventID,
 			String eventName, String eventStart, String eventEnd,
-			boolean isPublic, int selectedDay, int month, int year) {
-		ESECalendar calendar;
+			boolean isPublic, int selectedDay, int month, int year) throws ESEException {
+		ESECalendar calendar = null;
 		try 
 		{
 			calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 			ESEEvent event = calendar.getEventByID(eventID);
 
-			event.setStartDate(ESEConversionHelper.convertStringToDate(eventStart));
-			event.setEndDate(ESEConversionHelper.convertStringToDate(eventEnd));
 			event.setEventName(eventName);
+			event.setStartDateAndEndDate(ESEConversionHelper.convertStringToDate(eventStart), ESEConversionHelper.convertStringToDate(eventEnd));
 			event.setVisibility(isPublic);
 
-			showCalendarView(calendarID, calendar.getOwner().getName(),selectedDay, month, year);
-		} 
-		catch (ESEException e) 
-		{
-			try 
+			if(event.checkForOverlapping(calendar.getAllEvents()))
 			{
-				flash.error(e.getMessage());
-				params.flash();
-				editEvent(calendarID,eventID, selectedDay, month, year);
-			} 
-			catch (ESEException e1) 
-			{
-				flash.error(e.getMessage());		//TODO: get a better error
-				params.flash();
+				throw new ESEException("Event \""+event.getEventName()+"\" overlaps with existing event!");
 			}
+			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
+		} 
+		catch(IllegalArgumentException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			editEvent(calendarID, eventID, selectedDay, month, year);
 		}
-	
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			editEvent(calendarID, eventID, selectedDay, month, year);
+		}
 	}
 
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
 			int month, int year) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByName(currentUser.getName());
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
-				.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
-		System.out.println("USER ID: " + currentUser.getUserID()
-				+ " calendarID: " + calendar.getID());
+		System.out.println("USER ID: " + currentUser.getUserID() + " calendarID: " + calendar.getID());
 		ESEEvent event = calendar.getEventByID(eventID);
 
 		ArrayList<ESEUser> otherUsersList = otherUsers;

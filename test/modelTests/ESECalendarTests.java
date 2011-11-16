@@ -257,7 +257,7 @@ public class ESECalendarTests extends UnitTest
 	}
 
 	@Test
-	public void shouldDaysOfEventInMonth() throws ESEException
+	public void shouldReturnDaysOfEventInMonth() throws ESEException
 	{
 		this.cal2.addEvent("Long event", "14.10.2011 13:40", "17.12.2011 13:00", true);
 
