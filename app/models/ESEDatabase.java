@@ -32,16 +32,7 @@ public class ESEDatabase
 	 */
 	private static ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
-	// Usage only intended for testing purposes
-	public static void clearAll()
-	{
-		userList.clear();
-		ESEUser.resetIdCounter();
-		ESECalendar.resetIdCounter();
-		ESEEvent.resetIdCounter();
-		ESEGroup.resetIdCounter();
-		ESEProfile.resetIdCounter();
-	}
+
 
 	/*
 	 * Current user methods:
@@ -258,12 +249,24 @@ public class ESEDatabase
 
 		for(ESEUser user:userList)
 		{
-			//if(user.getName().toLowerCase().matches(".*"+username.toLowerCase()+".*") && !user.equals(currentUser))
 			if(user.getName().toLowerCase().contains(sequence) && !user.equals(currentUser))
 			{
 				matchingUsers.add(user);
 			}
 		}
 		return matchingUsers;
+	}
+	
+	/*
+	 * for testing purposes
+	 */
+	public static void clearAll()
+	{
+		userList.clear();
+		ESEUser.resetIdCounter();
+		ESECalendar.resetIdCounter();
+		ESEEvent.resetIdCounter();
+		ESEGroup.resetIdCounter();
+		ESEProfile.resetIdCounter();
 	}
 }

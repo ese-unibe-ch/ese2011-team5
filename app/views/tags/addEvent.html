@@ -1,0 +1,37 @@
+<head>
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+</head>
+
+#{form @Application.addEvent()}
+				#{if flash.error}
+					<p id="error">
+						${flash.error}
+					</p>
+				#{/if}
+			    <p>
+			        <label for="eventName">Name of the Event: </label>
+			        <input type="text" name="eventName" id="eventName" value=""  />
+			    </p>
+			    <p>
+			        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
+			        <input type="text" name="eventStart" id="eventStart" value="${_selectedDay}.${_month+1}.${_year} 00:00" />
+			    </p>
+			    <p>
+			        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
+			        <input type="text" name="eventEnd" id="eventEnd" value="${_selectedDay}.${_month+1}.${_year} 00:00" />
+			    </p>
+			    <p>
+			    	<input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
+			    	<input type="hidden" name="selectedDay" id="selectedDay" value="${_selectedDay}" />
+			    	<input type="hidden" name="year" id="year" value="${_year}" />
+			    	<input type="hidden" name="month" id="month" value="${_month}" />
+			    </p>
+			    <p>
+			    	<label for="isPrivate">Public Event</label>
+			    	<input type="checkbox" name="isPublic" id="isPublic" />
+			    </p>
+			    <p>
+			        <input type="submit" value="Submit your Event" />
+			    </p>
+			
+	#{/form}

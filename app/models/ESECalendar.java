@@ -102,7 +102,6 @@ public class ESECalendar
 	{
 		for(ESEEvent e: this.eventList)
 		{
-			System.out.println("EVENT: " + e.getEventID() + " name " + e.getEventName());
 			if(e.getEventID() == id)
 			{
 				return e;
@@ -147,6 +146,13 @@ public class ESECalendar
 	 * 
 	 * @param event to be added.
 	 */
+	public void addEvent(String eventName, Date startDate, Date endDate, 
+			boolean isPublic) throws ESEException
+	{
+		this.addEvent(eventName, ESEConversionHelper.convertDateToString(startDate),
+				ESEConversionHelper.convertDateToString(endDate), isPublic);
+	}
+	
 	public void addEvent(ESEEvent event)
 	{
 		if(!this.eventList.contains(event))
@@ -223,12 +229,13 @@ public class ESECalendar
 	 * @see {@link #getAllEventsOfMonth(int)} same without restriction of current user.
 	 * @see {@link ESEDatabase#getCurrentUser()} current logged in user.
 	 */
-	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month){
+	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month, int year){
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
-			return this.getAllEventsOfMonth(month);
+			return this.getAllEventsOfMonth(month, year);
 		else
-			return this.getAllPublicEventsOfMonth(month);
+			return this.getAllPublicEventsOfMonth(month, year);
 	} 
+
 	/**
 	 * Returns a List of all {@link ESEEvent} within the given month.
 	 * 
@@ -237,9 +244,11 @@ public class ESECalendar
 	 * 
 	 * @see {@link #getAllAllowedEventsOfMonth(int)} same but with restriction of current user.
 	 */
-	public ArrayList<ESEEvent> getAllEventsOfMonth(int month) {
+
+	public ArrayList<ESEEvent> getAllEventsOfMonth(int month, int year) {
 		Calendar monthAsCal = new GregorianCalendar();
 		monthAsCal.set(Calendar.MONTH,month);
+		monthAsCal.set(Calendar.YEAR,year);
 		Calendar startCal = new GregorianCalendar();
 		Calendar endCal = new GregorianCalendar();
 		ArrayList<ESEEvent> eventsOfMonth = new ArrayList<ESEEvent>();
@@ -267,10 +276,10 @@ public class ESECalendar
 	 * @param month given
 	 * @return ArrayList<ESEEvent> of ESEEvents of current month, that are public.
 	 */
-	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month) {
+	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month, int year) {
 		ArrayList<ESEEvent> listOfPublicEvents = new ArrayList<ESEEvent>();
 		
-		for (ESEEvent event : this.getAllEventsOfMonth(month)){
+		for (ESEEvent event : this.getAllEventsOfMonth(month, year)){
 			if (event.isPublic())
 				listOfPublicEvents.add(event);
 		}
@@ -369,58 +378,13 @@ public class ESECalendar
 	public ArrayList<Integer> getEventDaysOfMonth(int month, int year)
 	{
 		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
-
-		for (ESEEvent event : this.getAllAllowedEvents())
-		{
-			Calendar startCal = new GregorianCalendar();
-			Calendar endCal = new GregorianCalendar();
-			startCal.setTime(event.getStartDate());
-			endCal.setTime(event.getEndDate());
-			
-			int startDay = startCal.get(startCal.DAY_OF_MONTH);
-			int endDay = endCal.get(endCal.DAY_OF_MONTH);	
-			
-			if (startCal.get(startCal.YEAR) == endCal.get(endCal.YEAR) 
-					&& startCal.get(startCal.YEAR) == year){
-				if (startCal.get(startCal.MONTH) == endCal.get(endCal.MONTH)
-						&& startCal.get(startCal.MONTH) == month){
-					int addDay = startDay;
-					while (addDay <= endDay)
-					{
-						eventDaysList.add(addDay);
-						addDay+=1;
-					}
-				}
-				else if (endCal.get(endCal.MONTH) == month
-						&& endCal.get(endCal.MONTH) > startCal.get(startCal.MONTH)){
-					int addDay = endDay;
-					while (addDay >= 1)
-					{
-						eventDaysList.add(addDay);
-						addDay-=1;
-					}
-				}
-				else if (startCal.get(startCal.MONTH) == month
-						&& endCal.get(endCal.MONTH) > startCal.get(startCal.MONTH)){
-					int addDay = startDay;
-					while (addDay <= 31)
-					{
-						eventDaysList.add(addDay);
-						addDay+=1;
-					}
-				}
-				else if ((startCal.get(startCal.MONTH) < month)
-						&& endCal.get(endCal.MONTH) > month){
-					int addDay = 0;//= endDay;
-					while (addDay <= 31) // if a month has only 28/30 days, it does not matter for the output, when 29,30,31 are included
-					{
-						eventDaysList.add(addDay);
-						addDay+=1;
-					}
-				}
+		
+		for (ESEEvent event : this.getAllAllowedEventsOfMonth(month, year)){
+			for (int i = 1; i<=31;i++){
+				if (event.isEventDay(i, month, year)){
+					eventDaysList.add(i);
+				}	
 			}
-			////+ YEAR-DIFFERENZEN
-			
 		}
 		return eventDaysList;
 	}
@@ -471,5 +435,10 @@ public class ESECalendar
 		long newEndTime = newEvent.getEndDate().getTime();
 
 		return newStartTime <= existingStartTime && existingEndTime <= newEndTime;
+	}
+	
+	public String toString()
+	{
+		return calendarName;
 	}
 }

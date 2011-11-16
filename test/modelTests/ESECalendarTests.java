@@ -115,7 +115,7 @@ public class ESECalendarTests extends UnitTest
 		catch (ESEException e)
 		{}
 
-		assertEquals(5, this.cal1.getAllEventsOfMonth(3).size());
+		assertEquals(5, this.cal1.getAllEventsOfMonth(3,2011).size());
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class ESECalendarTests extends UnitTest
 		catch (ESEException e)
 		{}
 
-		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3).size());
+		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3,2011).size());
 	}
 
 	@Test
@@ -155,11 +155,11 @@ public class ESECalendarTests extends UnitTest
 
 		ESEDatabase.setCurrentUser(ownerDummy);
 
-		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3).size());
+		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3,2011).size());
 
 		ESEDatabase.setCurrentUser(ownerDummy2);
 
-		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3).size());
+		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3,2011).size());
 	}
 
 
@@ -272,17 +272,20 @@ public class ESECalendarTests extends UnitTest
 		}
 
 		ArrayList<Integer> eventsInNovember = this.cal2.getEventDaysOfMonth(10, 2011);
-		assertEquals(32, eventsInNovember.size()); // First day is 0 and last day is 31 regardless of month
-		for (int i = 0; i <= 30; i++)
-		{
-			assertEquals(String.valueOf(i), String.valueOf(eventsInNovember.get(i)));
+		for (int i = 1; i <=30; i++){
+		assertTrue(eventsInNovember.contains(i));
 		}
-
+		
 		ArrayList<Integer> eventsInDecember = this.cal2.getEventDaysOfMonth(11, 2011);
-		assertEquals(17, eventsInDecember.size());
-		for (int i = 1; i <= 17; i++)
-		{
-			assertEquals(String.valueOf(18-i), String.valueOf(eventsInDecember.get(i-1))); // List is inverted
+		for (int i = 1; i <=17; i++){
+			assertTrue(eventsInDecember.contains(i));
 		}
+		
+		for (int i = 18; i <=31; i++){
+			assertFalse(eventsInDecember.contains(i));
+		}
+		
+		
+		
 	}
 }

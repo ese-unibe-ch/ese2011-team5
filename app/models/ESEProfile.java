@@ -78,7 +78,8 @@ public class ESEProfile
 	 * 
 	 * @see {@link ESEUser}
 	 */
-	public ESEProfile(ESEUser owner, String username, String firstName, String familyName) throws ESEException
+	public ESEProfile(ESEUser owner, String username, String firstName, 
+			String familyName) throws ESEException
 	{
 		if(username.isEmpty())
 		{

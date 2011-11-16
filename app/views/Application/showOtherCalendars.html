@@ -19,13 +19,12 @@
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
-				#{login /}
-			#{/if}
-			#{else}
-				#{welcomeUser currentUser:currentUser, calendarList:calendarList /}
-			#{/else}
+		
+			Calendars of ${otherUser.getName()}:<br>
 			
+			#{list items:calendarList, as:'calendarToShow'}
+				<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendarToShow.getID(), calendarToShow.getOwner().getName())}">${calendarToShow.getCalendarName()}</a></p>
+			#{/list}
 		<article>
 	
 	</section>

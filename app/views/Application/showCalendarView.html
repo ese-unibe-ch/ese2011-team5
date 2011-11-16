@@ -1,0 +1,41 @@
+#{extends 'main.html' /}
+#{set title:'ESECalendar' /}
+
+<body>
+	<header>
+		<aside id="login">
+			#{nav currentUser:currentUser/}
+		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+
+	<section id="section">
+		<aside id="search">
+		
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
+			
+		</aside>
+		
+		<article>
+			#{calendarView calendarUser:calendarUser, currentUser:currentUser, calendar:calendar, monthString:monthString, startOfLastMonth:startOfLastMonth, daysFromLastMonth:daysFromLastMonth, daysFromThisMonth:daysFromThisMonth, daysFromNextMonth:daysFromNextMonth, eventDaysOfMonth:eventDaysOfMonth, selectedDay:selectedDay, weekdays:weekdays, currentDay:currentDay, year:year, month:month, events:events /}	
+			
+			#{if calendar.getOwner().equals(currentUser)}
+			Add event:
+			<section id="AddEvent">
+				#{addEvent event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
+			</section>
+			#{/if}
+		
+		<article>
+	
+	</section>
+	
+	<footer>
+		#{footer /}
+	</footer>
+
+</body>
+
+

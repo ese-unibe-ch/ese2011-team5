@@ -1,0 +1,34 @@
+<head>
+	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+</head>
+Copy event
+
+#{form @Application.doCopyEvent()}
+
+	<p id="calendarName-field">
+		<label for="selectedCalendarName">Name of calendar to add the event:</label>
+		#{select 'selectedCalendarName', value:1, id:'selectedCalendarName'}
+			#{list items:_calendarList, as:'calendar'}	
+				 #{option value=calendar.getCalendarName()} ${calendar.getCalendarName()}#{/option}
+			#{/list}
+		#{/select}
+	
+	</p>
+
+	<p id="eventID-field">
+		<input type="hidden" name="eventID" id="eventID" value="${_eventID}"/>
+	</p>
+	
+	<p id="otherUserID-field">
+		<input type="hidden" name="otherUserID" id="otherUserID" value="${_userID}"/>
+	</p>
+	
+	<p id="otherUserCalendarID-field">
+		<input type="hidden" name="otherUserCalendarID" id="otherUserCalendarID" value="${_otherUserCalendarID}"/>
+	</p>
+		
+	<p id="check-field">
+		<input type="submit" id="check" value="Copy event to the calendar" />
+	</p>
+		
+#{/form}
