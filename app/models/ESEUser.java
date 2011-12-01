@@ -148,6 +148,7 @@ public class ESEUser implements Visitable {
 		for (ESECalendar calendar : this.calendarList) {
 			calendar.accept(visitor);
 		}
+		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes

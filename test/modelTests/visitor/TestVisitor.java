@@ -1,66 +1,140 @@
 package modelTests.visitor;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 
 import models.ESECalendar;
 import models.ESEDatabase;
 import models.ESEEvent;
 import models.ESEException;
 import models.ESEUser;
+import models.visitor.SearchCalendarVisitor;
 import models.visitor.SearchEventVisitor;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 
 import play.test.UnitTest;
 
 public class TestVisitor extends UnitTest {
-	Calendar cal = Calendar.getInstance();
+	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy.MM.dd HH:mm");
 	private ESEUser user;
-	private ESECalendar calendar;
+	private ESECalendar myCalendar, mySportCalendar;
 	private ESEEvent event1, event2;
-	private Date startDate;
-	private Date endDate;
+	private DateTime startDate1;
+	private DateTime endDate1;
+	private DateTime startDate2;
+	private DateTime endDate2;
 
 	@Before
 	public void setUp() throws ESEException {
 		ESEDatabase.clearAll();
 		this.user = new ESEUser("dummy", "pw", "firstName", "familyName");
-		this.calendar = new ESECalendar("Calendar", user);
-		this.startDate = this.cal.getTime();
-		this.cal.set(2011, 11, 24, 23, 00);
-		this.endDate = this.cal.getTime();
 
-		this.event1 = new ESEEvent("Weihnachten 2010", this.calendar,
-				this.startDate, this.endDate, false);
-		this.calendar.addEvent(event1);
+		this.myCalendar = new ESECalendar("My Calendar", user);
+		this.mySportCalendar = new ESECalendar("My Sport Calendar", user);
 
-		this.event2 = new ESEEvent("Weihnachten 2011", this.calendar,
-				this.startDate, this.endDate, false);
-		this.calendar.addEvent(event2);
+		startDate1 = formatter.parseDateTime("2011.12.24 08:00");
+		endDate1 = formatter.parseDateTime("2011.12.24 12:00");
 
-		this.user.addCalendar(this.calendar);
+		startDate2 = formatter.parseDateTime("2013.12.24 08:00");
+		endDate2 = formatter.parseDateTime("2013.12.24 12:00");
+
+		this.event1 = new ESEEvent("Weihnachten 2010", this.myCalendar,
+				this.startDate1.toDate(), this.endDate1.toDate(), false);
+		this.myCalendar.addEvent(event1);
+
+		this.event2 = new ESEEvent("Weihnachten 2011", this.myCalendar,
+				this.startDate2.toDate(), this.endDate2.toDate(), false);
+		this.myCalendar.addEvent(event2);
+
+		this.user.addCalendar(this.myCalendar);
+		this.user.addCalendar(this.mySportCalendar);
 
 	}
 
 	@Test
-	public void testVisitorForCalendar() {
+	public void testSearchEventWithCalendarAndEventName() {
 		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten");
-		this.calendar.accept(visitor);
+		this.myCalendar.accept(visitor);
 
-		Iterator<ESEEvent> iterator = visitor.results();
-		assertTrue(iterator.hasNext());
+		List<ESEEvent> events = visitor.results();
+
+		assertTrue(events.contains(this.event1));
+		assertTrue(events.contains(this.event2));
 	}
 
 	@Test
-	public void testVisitorForUser() {
+	public void testSearchEventWithLimits() {
+		DateTime lowerLimit = formatter.parseDateTime("2010.12.24 8:00");
+		DateTime upperLimit = formatter.parseDateTime("2012.12.24 12:00");
+
+		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten",
+				lowerLimit, upperLimit);
+		this.myCalendar.accept(visitor);
+
+		List<ESEEvent> events = visitor.results();
+
+		assertTrue(events.contains(this.event1));
+		assertFalse(events.contains(this.event2));
+	}
+
+	@Test
+	public void testSearchEventWithUserAndEventName() {
 		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten");
 		this.user.accept(visitor);
 
-		Iterator<ESEEvent> iterator = visitor.results();
-		assertTrue(iterator.hasNext());
+		List<ESEEvent> events = visitor.results();
+
+		assertTrue(events.contains(this.event1));
+		assertTrue(events.contains(this.event2));
 	}
 
+	@Test
+	public void testSearchEventWithUserAndEventId() {
+		SearchEventVisitor visitor = new SearchEventVisitor(
+				this.event1.getEventID());
+		this.user.accept(visitor);
+
+		List<ESEEvent> events = visitor.results();
+
+		assertTrue(events.contains(this.event1));
+		assertFalse(events.contains(this.event2));
+	}
+
+	@Test
+	public void testSearchCalendarWithUserAndCalendarName() {
+		SearchCalendarVisitor visitor = new SearchCalendarVisitor("Calendar");
+		this.user.accept(visitor);
+
+		List<ESECalendar> calendars = visitor.results();
+
+		assertTrue(calendars.contains(this.myCalendar));
+		assertTrue(calendars.contains(this.mySportCalendar));
+	}
+
+	@Test
+	public void testSearchCalendarWithUserAndCalendarName2() {
+		SearchCalendarVisitor visitor = new SearchCalendarVisitor("My Calendar");
+		this.user.accept(visitor);
+
+		List<ESECalendar> calendars = visitor.results();
+
+		assertTrue(calendars.contains(this.myCalendar));
+		assertFalse(calendars.contains(this.mySportCalendar));
+	}
+
+	@Test
+	public void testSearchCalendarWithUserAndCalendarId() {
+		SearchCalendarVisitor visitor = new SearchCalendarVisitor(
+				this.myCalendar.getID());
+		this.user.accept(visitor);
+
+		List<ESECalendar> calendars = visitor.results();
+
+		assertTrue(calendars.contains(this.myCalendar));
+		assertFalse(calendars.contains(this.mySportCalendar));
+	}
 }

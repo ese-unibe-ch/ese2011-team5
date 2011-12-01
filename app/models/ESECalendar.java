@@ -68,7 +68,7 @@ public class ESECalendar implements Visitable {
 		for (ESEEvent event : this.eventList) {
 			event.accept(visitor);
 		}
-		visitor.visitCalendar(this);
+		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes

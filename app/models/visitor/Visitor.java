@@ -1,10 +1,17 @@
 package models.visitor;
 
+import java.util.Collection;
+
 import models.ESECalendar;
 import models.ESEEvent;
+import models.ESEUser;
 
-public interface Visitor {
-	void visitEvent(ESEEvent eseEvent);
+public interface Visitor<T> {
+	void visit(ESEEvent eseEvent);
 
-	void visitCalendar(ESECalendar eseCalendar);
+	void visit(ESECalendar eseCalendar);
+
+	Collection<T> results();
+
+	void visit(ESEUser eseUser);
 }

@@ -110,7 +110,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	}
 
 	public void accept(Visitor visitor) {
-		visitor.visitEvent(this);
+		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes
