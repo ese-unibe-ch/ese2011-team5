@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ESE 2011 Team 5 Code Review</title>
+        <style>
+        	body
+        	{
+        		padding: 50px 30px;
+        	}
+        	
+        	#page
+        	{
+        		width: 700px;
+        		margin: 0px auto;
+        	}
+        	
+        	p, li
+        	{
+        		font-size: 14px;
+        		text-align: justify;
+        	}
+        	
+        	#title
+        	{
+        		text-align: center;
+        		margin-bottom: 40px;
+        	}
+        	
+        	#content
+        	{
+        		text-align: left;
+        	}
+        	
+        	li
+        	{
+        		margin-top: 7px;
+        	}
+        	
+        	p tt, li tt
+        	{
+        		font-size: 15px;
+        	}
+        	
+        	h1
+        	{
+        		font-size: 19px;
+        	}
+        	
+        	#title h1
+        	{
+        		font-size: 22px;
+        	}
+        	
+        	#title p
+        	{
+        		text-align: center;
+        	}
+        	
+        	h2
+        	{
+        		font-size: 15px;
+        	}
+        	
+        	h3
+        	{
+        		font-size: 13px;
+        	}
+        </style>
+    </head>
+    <body>
+    	<div id="page">
+       		<div id="title">
+        		<h1>ESE 2011 Team 5 Code Review</h1>
+        		<p>by ESE2011 Team 3</p>
+        	</div>
+        	
+		    <div id="content">
+		   		<h1>Review</h1>
+		    	
+		    	<p>The following section contains our coding review about the application <tt>ESECalendar</tt> which has been coded by ESE2011's team number 5.
+		    	
+		    	<h2>Design</h2>
+		    	
+		    	<ul>
+		    		<li>There's only one controller - <tt>Application</tt> - which is very big and thus unreadable. If all the other methods concerning users are in <tt>Application</tt>, also the <tt>Register#createNewUser()</tt> should be placed there.</li>
+		    		<li>The logic of creating the grid of the calendar is really inconsistent. Starting the application in November causes the calendar to have 30 days in every single month. Starting it in December implies 31 days for each month. In conclusion: the calculation you intended to do does not work at all.</li>
+		    		<li></li>
+		    	</ul>
+		    	
+		    	<h2>Coding Style</h2>
+		    	
+		    	<ul>
+		    		<li>Frequent use of meaningless names for either methods or variables (constants and locals).</li>
+		    		<li>Class names are all started by <tt>ESE</tt> which helps destroying readability.</li>
+		    		<li>Almost every method throws an <tt>ESEException</tt> and there is even some which are declared as throwing one but actually don't. Further, the exceptions are mostly cascaded up the call stack to the play implementation and not handled at all.</li>
+		    		<li></li>
+		    	</ul>
+		    	<h2>JavaDoc</h2>
+		    	<ul>
+		    		<li>In general, the JD isn't infmormative enough. You state the obvious and leave out responsibilities and usage of the parameters as an example.</li>
+		    		<li></li>
+		    	</ul>
+		    	<h2>Tests</h2>
+		    	
+		    	<h1>Use Cases</h1>
+		    	
+		    	<p>Please see <tt>usecases.pdf</tt>.
+		    	
+		    	<h1>Conclusion</h1>
+		    	
+		  	</div>
+		  </div>
+    </body>
+</html>
