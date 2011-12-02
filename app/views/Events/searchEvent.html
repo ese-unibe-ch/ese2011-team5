@@ -53,21 +53,23 @@
 	});	
 	
 	function getData(){
-		var lowerlimit = $('#lowerlimit').val();
-		var upperlmit = $('#upperlimit').val();
+		var lowerlimit = null;
+		var upperlimit = null;
+		lowerlimit = $('#lowerlimit').val();
+		upperlmit = $('#upperlimit').val();
 		var name = $('#name').val();
 		
-		if(!lowerlimit || !upperlimit){
-			var request = #{jsAction @Events.handleEventSearch(':uid', ':name') /}
-			var params = {	uid: ${user.getUserID()}, 
-									name:$('#name').val()
-						};
-		} else {
+		if(lowerlimit!="" && upperlimit!=""){
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name', ':lowerlimit', ':upperlimit') /}
 			var params = {	uid: ${user.getUserID()}, 
 									name:$('#name').val(), 
 									lowerlimit: $('#lowerlimit').val(), 
-									upperlimit:$('#upperlimit').val()
+									upperlimit: $('#upperlimit').val()
+						};
+		} else {
+			var request = #{jsAction @Events.handleEventSearch(':uid', ':name') /}
+			var params = {	uid: ${user.getUserID()}, 
+									name:$('#name').val()
 						};
 		}
 		
@@ -86,7 +88,7 @@
 		$('#results #elements .element').remove();
 		
 		if(events.length==0){
-			$('#results #elements').append('No events have been found!');  
+			$('#results #elements').append('<div class="element">No events have been found!</div>');  
 		}
 	
 		var name, end, start, out;
