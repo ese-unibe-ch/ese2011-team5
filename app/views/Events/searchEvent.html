@@ -1,3 +1,4 @@
+<!-- @author Alexander Rüedlinger -->
 #{extends 'main.html' /}
 <script src="http://www.google.com/jsapi"></script>  
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" type="text/css" />
@@ -24,43 +25,49 @@
 	google.load("jqueryui", "1.7.2");
 	$(document).ready(
 		function() { 
-			$( '#upperlimit').datepicker({dateFormat: 'yy-mm-dd'});
-			$( '#lowerlimit' ).datepicker({dateFormat: 'yy-mm-dd'});
+			$('#upperlimit').datepicker({dateFormat: 'yy-mm-dd'});
+			$('#lowerlimit' ).datepicker({dateFormat: 'yy-mm-dd'});
 			$('#results').hide();
-			$('#searchEvent').submit( function(){ getData(); return false;} );
-		}
-	);	
+			$('#searchEvent').submit( function(){ 
+				getData();
+				return false;
+			});
+	});	
 	
 	function getData(){
-		$('#results').show();
-		
 		var lowerlimit = $('#lowerlimit').val();
 		var upperlmit = $('#upperlimit').val();
+		var name = $('#name').val();
+		
 		if(!lowerlimit || !upperlimit){
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name') /}
 			var params = {	uid: ${user.getUserID()}, 
-								name:$('#name').val()
-							};
+									name:$('#name').val()
+						};
 		} else {
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name', ':lowerlimit', ':upperlimit') /}
 			var params = {	uid: ${user.getUserID()}, 
-								name:$('#name').val(), 
-								lowerlimit: $('#lowerlimit').val(), 
-								upperlimit:$('#upperlimit').val()
-							};
+									name:$('#name').val(), 
+									lowerlimit: $('#lowerlimit').val(), 
+									upperlimit:$('#upperlimit').val()
+						};
 		}
 		
-		$.getJSON(request(params), 
-							function(data){ 
-								$('#results #elements .element').remove();
-							  	$.each(data, function(key, event) {
-							   			$('#results #elements').append(makeItPretty(event));   
-							  	});
-							}
-		);								
+		if(name){
+			$.getJSON(request(params), 
+								function(events){ 
+									$('#results #elements .element').remove();
+									for(var i = 0; i < events.length; i++){
+										$('#results #elements').append(resultBoxView(events[i]));  
+									}
+								}
+			);	
+			
+			$('#results').show();
+		}						
 	}
 	
-	function makeItPretty(event){
+	function resultBoxView(event){
 		var name = event.eventName;
 		var end = event.endDate;
 		var start = event.startDate;
@@ -69,8 +76,7 @@
 		 	+  start + '<div/><div class="field">end: '  
 		 	+ end +'<div/></div>'
 		return out;
-	}
-			
+	}		
 </script>
 
 <h1>Event Search</h1>
