@@ -5,6 +5,13 @@
 <style type="text/css">
 	form { padding: 10px;}
 	label { display: block;}
+	
+	label.error {
+		margin-left: 10px;
+		width: auto;
+		display: inline;
+	}
+	
 	.element {
 		display: block;
 		border: solid 1px black;
@@ -21,10 +28,21 @@
 		padding: 5px;
 	}
 </style>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 <script type="text/javascript">
 	google.load("jqueryui", "1.7.2");
 	$(document).ready(
 		function() { 
+			$('#searchEvent').validate({
+	    		rules: {
+	    			name: "required"
+	    		},
+    		
+	    		messages: {
+	    			name: "Please enter something..."
+	    		},
+    		});
+
 			$('#upperlimit').datepicker({dateFormat: 'yy-mm-dd'});
 			$('#lowerlimit' ).datepicker({dateFormat: 'yy-mm-dd'});
 			$('#results').hide();
@@ -56,10 +74,7 @@
 		if(name){
 			$.getJSON(request(params), 
 								function(events){ 
-									$('#results #elements .element').remove();
-									for(var i = 0; i < events.length; i++){
-										$('#results #elements').append(resultBoxView(events[i]));  
-									}
+									prepareResultBox(events);  
 								}
 			);	
 			
@@ -67,15 +82,25 @@
 		}						
 	}
 	
-	function resultBoxView(event){
-		var name = event.eventName;
-		var end = event.endDate;
-		var start = event.startDate;
-		var out = '<div class="element"><div class="title">' 
-			+  name + '</div><div class="field">start: ' 
-		 	+  start + '<div/><div class="field">end: '  
-		 	+ end +'<div/></div>'
-		return out;
+	function prepareResultBox(events){
+		$('#results #elements .element').remove();
+		
+		if(events.length==0){
+			$('#results #elements').append('No events have been found!');  
+		}
+	
+		var name, end, start, out;
+		for(var i = 0; i < events.length; i++){
+			name = events[i].eventName;
+			end = events[i].endDate;
+			start = events[i].startDate;
+			out = '<div class="element"><div class="title">' 
+				+  name + '</div><div class="field">start: ' 
+			 	+  start + '<div/><div class="field">end: '  
+			 	+ end +'<div/></div>';
+			 	
+			 	$('#results #elements').append(out);
+		}
 	}		
 </script>
 
