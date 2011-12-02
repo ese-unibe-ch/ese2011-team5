@@ -1,3 +1,6 @@
+/**
+ * @author Alexander Rüedlinger
+ */
 package controllers;
 
 import java.util.Collection;
@@ -19,7 +22,6 @@ import com.google.gson.GsonBuilder;
 public class Events extends Application {
 
 	public static void searchEvent() {
-
 		// ?!!!?
 		ESEUser user = ESEDatabase.getCurrentUser();
 

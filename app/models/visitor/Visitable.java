@@ -1,3 +1,6 @@
+/**
+ * @author Alexander Rüedlinger
+ */
 package models.visitor;
 
 public interface Visitable {
