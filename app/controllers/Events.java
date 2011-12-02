@@ -1,5 +1,5 @@
 /**
- * @author Alexander Rüedlinger
+ * @author Alt-F4
  */
 package controllers;
 

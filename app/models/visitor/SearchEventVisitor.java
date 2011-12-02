@@ -1,6 +1,7 @@
 /**
- * @author Alexander Rüedlinger
+ * @author Alt-F4
  */
+
 package models.visitor;
 
 import java.util.ArrayList;
