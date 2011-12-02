@@ -16,6 +16,8 @@ import java.util.GregorianCalendar;
 import models.visitor.Visitable;
 import models.visitor.Visitor;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Class handling events in a Calendar.
  * 
@@ -31,7 +33,9 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	/**
 	 * Number to distinct different ESEEvent within one application.
 	 */
+	@Expose
 	private int eventID;
+	@Expose
 	private String eventName;
 	/**
 	 * The {@link ESECalendar} in which the ESEEvent originally was created.
@@ -48,7 +52,9 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * ESEUser that created this ESEEvent is also in this List.
 	 */
 	private ArrayList<ESEUser> participants;
+	@Expose
 	private Date startDate;
+	@Expose
 	private Date endDate;
 	/**
 	 * If {@link #isPublic()} is <code>true</code>, all ESEUser may view this

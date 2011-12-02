@@ -8,6 +8,10 @@ GET		/forgotPassword/{username}															Application.forgotPassword(usernam
 GET 	/{username}																			Application.showOtherCalendars()
 GET		/{username}/{calendarID}/day={selectedDay}&month={month}&year={year}				Application.showCalendarView()
 
+GET 	/events/search																		Events.searchEvent
+GET		/events/handle/search/{uid}/{name}/{lowerlimit}/{upperlimit}						Events.handleEventSearch
+GET		/events/handle/search/{uid}/{name}													Events.handleEventSearch
+
 	
 # Ignore favicon requests
 GET     /favicon.ico                            404

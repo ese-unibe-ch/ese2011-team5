@@ -1,0 +1,127 @@
+#{extends 'main.html' /}
+<script src="http://www.google.com/jsapi"></script>  
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/smoothness/jquery-ui.css" type="text/css" />
+<style type="text/css">
+	form { padding: 10px;}
+	label { display: block;}
+	.element {
+		display: block;
+		border: solid 1px black;
+		margin: 5px;
+		width: 300px;
+	}
+	.field {
+		font-style: italic;
+		padding: 5px;
+	}
+	.title {
+		font-size: 120%;
+		font-weight: bold;
+		padding: 5px;
+	}
+</style>
+<script type="text/javascript">
+	google.load("jqueryui", "1.7.2");
+	$(document).ready(
+		function() { 
+			$( '#upperlimit').datepicker({dateFormat: 'yy-mm-dd'});
+			$( '#lowerlimit' ).datepicker({dateFormat: 'yy-mm-dd'});
+			$('#results').hide();
+			$('#searchEvent').submit( function(){ getData(); return false;} );
+		}
+	);	
+	
+	function getData(){
+		$('#results').show();
+		
+		var lowerlimit = $('#lowerlimit').val();
+		var upperlmit = $('#upperlimit').val();
+		if(!lowerlimit || !upperlimit){
+			var request = #{jsAction @Events.handleEventSearch(':uid', ':name') /}
+			var params = {	uid: ${user.getUserID()}, 
+								name:$('#name').val()
+							};
+		} else {
+			var request = #{jsAction @Events.handleEventSearch(':uid', ':name', ':lowerlimit', ':upperlimit') /}
+			var params = {	uid: ${user.getUserID()}, 
+								name:$('#name').val(), 
+								lowerlimit: $('#lowerlimit').val(), 
+								upperlimit:$('#upperlimit').val()
+							};
+		}
+		
+		$.getJSON(request(params), 
+							function(data){ 
+								$('#results #elements .element').remove();
+							  	$.each(data, function(key, event) {
+							   			$('#results #elements').append(makeItPretty(event));   
+							  	});
+							}
+		);								
+	}
+	
+	function makeItPretty(event){
+		var name = event.eventName;
+		var end = event.endDate;
+		var start = event.startDate;
+		var out = '<div class="element"><div class="title">' 
+			+  name + '</div><div class="field">start: ' 
+		 	+  start + '<div/><div class="field">end: '  
+		 	+ end +'<div/></div>'
+		return out;
+	}
+			
+</script>
+
+<h1>Event Search</h1>
+Enter all or part of the event name, starting at the beginning in the search field. 
+Optionally lower and upper bounds can be set to limit the search results.
+
+#{form @Events.searchEvent(), id:'searchEvent'}
+	#{field 'name'}
+	<p>
+		<label>Search field:</label>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" />
+		<span class="error">${field.error}</span>
+	</p>
+	#{/field}
+	
+	<div>
+	#{field 'lowerlimit'}
+	<p>
+		<label>lower bound(optional):</label>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}"/>
+		<span class="error">${field.error}</span>
+	</p>
+	#{/field}
+	</div>
+	
+	<div>
+	#{field 'upperlimit'}
+	<p>
+		<label>upper bound(optional):</label>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}"/>
+		<span class="error">${field.error}</span>
+	</p>
+	#{/field}
+	</div>
+	#{field 'submit'}
+	<p>
+		<input type="submit" name="${field.name}" id="${field.name}" value="search" />
+	</p>
+	#{/field}
+	<br/>
+	<p>
+		<div id="results">
+			
+			<h2>Found:</h2>
+				<div id="elements">
+				</div>
+		</div>
+	</p>
+#{/form}
+
+
+
+
+

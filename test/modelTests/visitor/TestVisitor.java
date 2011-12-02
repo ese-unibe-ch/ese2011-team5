@@ -82,6 +82,21 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
+	public void testSearchEventWithLimits2() {
+		DateTime lowerLimit = formatter.parseDateTime("2011.12.20 8:00");
+		DateTime upperLimit = formatter.parseDateTime("2011.12.30 12:00");
+
+		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten",
+				lowerLimit, upperLimit);
+		this.user.accept(visitor);
+
+		List<ESEEvent> events = visitor.results();
+
+		assertTrue(events.contains(this.event1));
+		assertFalse(events.contains(this.event2));
+	}
+
+	@Test
 	public void testSearchEventWithUserAndEventName() {
 		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten");
 		this.user.accept(visitor);

@@ -2,6 +2,23 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 </head>
 <body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#searchEvent').click(function(ev){
+				var windowName = 'Search for an Event?';
+				var url = '@{Events.searchEvent()}';
+				var width = 500;
+				var height = 600;
+				var left = (screen.width/2)-(width/2);
+				var top = (screen.height/2)-(height/2);
+				var windowSize = "width=" + width + ", height=" + height + ",screenX=" + left + ",screenY=" + top +"scrollbars=yes";
+				window.open(url, windowName, windowSize);
+				ev.preventDefault();
+				return false;
+			});
+		});
+	</script>
+
 	<h3>Welcome user ${_currentUser.getName()}!</h3>
 	
 	<b>Your calendars:</b>
@@ -26,4 +43,7 @@
 	    </p>
 	
 	#{/form}
+	
+	<a href="#" id="searchEvent">Search an Event?</a>
+	
 </body>
