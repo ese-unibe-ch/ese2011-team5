@@ -28,16 +28,18 @@ public class Events extends Application
 
 	public static void searchEvent()
 	{
-		// ?!!!?
 		ESEUser user = ESEDatabase.getCurrentUser();
-
-		render(user);
+		String lowerlimit = new DateTime().minusYears(1).toString(DATE_PATTERN);
+		String upperlimit = new DateTime().plusYears(1).toString(DATE_PATTERN);
+		renderArgs.put("upperlimit", upperlimit);
+		renderArgs.put("lowerlimit", lowerlimit);
+		renderArgs.put("userId", user.getUserID());
+		render();
 	}
 
 	public static void handleEventSearch(@Required Long uid,
 			@Required String name, String lowerlimit, String upperlimit)
 	{
-
 		DateTimeFormatter formatter = DateTimeFormat.forPattern(DATE_PATTERN);
 		Gson gson = new GsonBuilder().setPrettyPrinting()
 				.excludeFieldsWithoutExposeAnnotation()

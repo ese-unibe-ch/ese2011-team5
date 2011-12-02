@@ -60,14 +60,14 @@
 		
 		if(lowerlimit!="" && upperlimit!=""){
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name', ':lowerlimit', ':upperlimit') /}
-			var params = {	uid: ${user.getUserID()}, 
+			var params = {	uid: ${userId}, 
 									name:$('#name').val(), 
 									lowerlimit: $('#lowerlimit').val(), 
 									upperlimit: $('#upperlimit').val()
 						};
 		} else {
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name') /}
-			var params = {	uid: ${user.getUserID()}, 
+			var params = {	uid: ${userId}, 
 									name:$('#name').val()
 						};
 		}
