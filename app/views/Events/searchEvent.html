@@ -81,13 +81,13 @@
 
 <h1>Event Search</h1>
 Enter all or part of the event name, starting at the beginning in the search field. 
-Optionally lower and upper bounds can be set to limit the search results.
+Optionally lower and upper date bounds can be set to limit the search results.
 
 #{form @Events.searchEvent(), id:'searchEvent'}
 	#{field 'name'}
 	<p>
 		<label>Search field:</label>
-		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" />
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="Search..."/>
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
@@ -96,7 +96,7 @@ Optionally lower and upper bounds can be set to limit the search results.
 	#{field 'lowerlimit'}
 	<p>
 		<label>lower bound(optional):</label>
-		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}"/>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="yyyy-MM-dd"/>
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
@@ -106,7 +106,7 @@ Optionally lower and upper bounds can be set to limit the search results.
 	#{field 'upperlimit'}
 	<p>
 		<label>upper bound(optional):</label>
-		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}"/>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="yyyy-MM-dd"/>
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
