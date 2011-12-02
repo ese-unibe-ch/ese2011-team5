@@ -25,7 +25,8 @@ import models.visitor.Visitor;
  * @see ESEEvent
  * 
  */
-public class ESECalendar implements Visitable {
+public class ESECalendar implements Visitable
+{
 	private static int idCounter = 0;
 
 	private int calendarID;
@@ -43,16 +44,21 @@ public class ESECalendar implements Visitable {
 	 * @throws ESEException
 	 *             is either owner is null or calendarName is empty.
 	 */
-	public ESECalendar(String calendarName, ESEUser owner) throws ESEException {
-		if (calendarName.isEmpty()) {
+	public ESECalendar(String calendarName, ESEUser owner) throws ESEException
+	{
+		if (calendarName.isEmpty())
+		{
 			throw new ESEException("Calendar name must not be empty!");
 		}
-		if (owner == null) {
+		if (owner == null)
+		{
 			throw new ESEException("Calendar is not assigned to any user!");
 		}
 
-		for (ESECalendar calendar : owner.getCalendarList()) {
-			if (calendarName.equals(calendar.getCalendarName())) {
+		for (ESECalendar calendar : owner.getCalendarList())
+		{
+			if (calendarName.equals(calendar.getCalendarName()))
+			{
 				throw new ESEException(
 						"A calendar with this name already exists!");
 			}
@@ -64,15 +70,18 @@ public class ESECalendar implements Visitable {
 		this.owner = owner;
 	}
 
-	public void accept(Visitor visitor) {
-		for (ESEEvent event : this.eventList) {
+	public void accept(Visitor visitor)
+	{
+		for (ESEEvent event : this.eventList)
+		{
 			event.accept(visitor);
 		}
 		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes
-	public static void resetIdCounter() {
+	public static void resetIdCounter()
+	{
 		idCounter = 0;
 	}
 
@@ -80,7 +89,8 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @return int calendarID. The value ranges from 0 to {@link #idCounter}.
 	 */
-	public int getID() {
+	public int getID()
+	{
 		return this.calendarID;
 	}
 
@@ -88,7 +98,8 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @return String name of this ESECalendar.
 	 */
-	public String getCalendarName() {
+	public String getCalendarName()
+	{
 		return this.calendarName;
 	}
 
@@ -96,7 +107,8 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @return {@link ESEUser} owner of this ESECalendar.
 	 */
-	public ESEUser getOwner() {
+	public ESEUser getOwner()
+	{
 		return this.owner;
 	}
 
@@ -108,9 +120,12 @@ public class ESECalendar implements Visitable {
 	 * @throws ESEException
 	 *             if there is no such ESEEvent in this Calendar.
 	 */
-	public ESEEvent getEventByID(int id) throws ESEException {
-		for (ESEEvent e : this.eventList) {
-			if (e.getEventID() == id) {
+	public ESEEvent getEventByID(int id) throws ESEException
+	{
+		for (ESEEvent e : this.eventList)
+		{
+			if (e.getEventID() == id)
+			{
 				return e;
 			}
 		}
@@ -137,7 +152,8 @@ public class ESECalendar implements Visitable {
 	 * @see ESECalendar
 	 */
 	public void addEvent(String eventName, String startDate, String endDate,
-			boolean isPublic) throws ESEException {
+			boolean isPublic) throws ESEException
+	{
 		Boolean eventOverlaps = false;
 		ESEEvent newEvent = new ESEEvent(eventName, this,
 				ESEConversionHelper.convertStringToDate(startDate),
@@ -149,7 +165,8 @@ public class ESECalendar implements Visitable {
 		 * } }
 		 */
 		this.eventList.add(newEvent);
-		if (eventOverlaps) {
+		if (eventOverlaps)
+		{
 			throw new ESEException("New event \"" + newEvent.getEventName()
 					+ "\" overlaps with existing event!");
 		}
@@ -162,14 +179,17 @@ public class ESECalendar implements Visitable {
 	 *            to be added.
 	 */
 	public void addEvent(String eventName, Date startDate, Date endDate,
-			boolean isPublic) throws ESEException {
+			boolean isPublic) throws ESEException
+	{
 		this.addEvent(eventName,
 				ESEConversionHelper.convertDateToString(startDate),
 				ESEConversionHelper.convertDateToString(endDate), isPublic);
 	}
 
-	public void addEvent(ESEEvent event) {
-		if (!this.eventList.contains(event)) {
+	public void addEvent(ESEEvent event)
+	{
+		if (!this.eventList.contains(event))
+		{
 			this.eventList.add(event);
 		}
 	}
@@ -181,7 +201,8 @@ public class ESECalendar implements Visitable {
 	 *            of ESEEvent to remove.
 	 * @throws ESEException
 	 */
-	public void removeEvent(int eventID) throws ESEException {
+	public void removeEvent(int eventID) throws ESEException
+	{
 		ESEEvent eventToRemove = this.getEventByID(eventID);
 		this.eventList.remove(eventToRemove);
 
@@ -194,10 +215,13 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @see ESEDatabase#getCurrentUser()
 	 */
-	public ArrayList<ESEEvent> getAllAllowedEvents() {
-		if (ESEDatabase.getCurrentUser().equals(this.owner)) {
+	public ArrayList<ESEEvent> getAllAllowedEvents()
+	{
+		if (ESEDatabase.getCurrentUser().equals(this.owner))
+		{
 			return this.getAllEvents();
-		} else {
+		} else
+		{
 			return this.getAllPublicEvents();
 		}
 	}
@@ -207,10 +231,13 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @return ArrayList<ESEEvent> of all public ESEEvents of this ESECalendar.
 	 */
-	public ArrayList<ESEEvent> getAllPublicEvents() {
+	public ArrayList<ESEEvent> getAllPublicEvents()
+	{
 		ArrayList<ESEEvent> publicEventsList = new ArrayList<ESEEvent>();
-		for (ESEEvent event : this.eventList) {
-			if (event.isPublic()) {
+		for (ESEEvent event : this.eventList)
+		{
+			if (event.isPublic())
+			{
 				publicEventsList.add(event);
 			}
 		}
@@ -223,7 +250,8 @@ public class ESECalendar implements Visitable {
 	 * 
 	 * @return ArrayList<ESEEvent> of all ESEEvents.
 	 */
-	public ArrayList<ESEEvent> getAllEvents() {
+	public ArrayList<ESEEvent> getAllEvents()
+	{
 		return new ArrayList<ESEEvent>(this.eventList);
 	}
 
@@ -239,7 +267,8 @@ public class ESECalendar implements Visitable {
 	 *      current user.
 	 * @see {@link ESEDatabase#getCurrentUser()} current logged in user.
 	 */
-	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month, int year) {
+	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month, int year)
+	{
 		if (ESEDatabase.getCurrentUser().equals(this.owner))
 			return this.getAllEventsOfMonth(month, year);
 		else
@@ -257,14 +286,16 @@ public class ESECalendar implements Visitable {
 	 *      of current user.
 	 */
 
-	public ArrayList<ESEEvent> getAllEventsOfMonth(int month, int year) {
+	public ArrayList<ESEEvent> getAllEventsOfMonth(int month, int year)
+	{
 		Calendar monthAsCal = new GregorianCalendar();
 		monthAsCal.set(Calendar.MONTH, month);
 		monthAsCal.set(Calendar.YEAR, year);
 		Calendar startCal = new GregorianCalendar();
 		Calendar endCal = new GregorianCalendar();
 		ArrayList<ESEEvent> eventsOfMonth = new ArrayList<ESEEvent>();
-		for (ESEEvent event : eventList) {
+		for (ESEEvent event : eventList)
+		{
 			startCal.setTime(event.getStartDate());
 			endCal.setTime(event.getEndDate());
 			if (monthAsCal.get(monthAsCal.MONTH) == startCal
@@ -297,10 +328,12 @@ public class ESECalendar implements Visitable {
 	 * @return ArrayList<ESEEvent> of ESEEvents of current month, that are
 	 *         public.
 	 */
-	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month, int year) {
+	public ArrayList<ESEEvent> getAllPublicEventsOfMonth(int month, int year)
+	{
 		ArrayList<ESEEvent> listOfPublicEvents = new ArrayList<ESEEvent>();
 
-		for (ESEEvent event : this.getAllEventsOfMonth(month, year)) {
+		for (ESEEvent event : this.getAllEventsOfMonth(month, year))
+		{
 			if (event.isPublic())
 				listOfPublicEvents.add(event);
 		}
@@ -321,12 +354,14 @@ public class ESECalendar implements Visitable {
 	 * @see #getDaysFromLastMonth(int, int)
 	 * @see #getDaysFromNextMonth(int, int)
 	 */
-	public List<Integer> getDaysFromThisMonth(int month, int year) {
+	public List<Integer> getDaysFromThisMonth(int month, int year)
+	{
 		Calendar cal = new GregorianCalendar();
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 
 		List<Integer> daysFromThisMonth = new ArrayList<Integer>();
-		for (int i = 0; i < max; i++) {
+		for (int i = 0; i < max; i++)
+		{
 			daysFromThisMonth.add(i + 1);
 		}
 		return daysFromThisMonth;
@@ -347,7 +382,8 @@ public class ESECalendar implements Visitable {
 	 * @see #getDaysFromThisMonth(int, int)
 	 * @see #getDaysFromNextMonth(int, int)
 	 */
-	public List<Integer> getDaysFromLastMonth(int month, int year) {
+	public List<Integer> getDaysFromLastMonth(int month, int year)
+	{
 		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
 		Calendar thisMonth = new GregorianCalendar();
 		Calendar lastMonth = new GregorianCalendar();
@@ -364,7 +400,8 @@ public class ESECalendar implements Visitable {
 		if (start == 1)
 			start = 8;
 
-		for (int i = max - start + 2; i < max; i++) {
+		for (int i = max - start + 2; i < max; i++)
+		{
 			daysFromLastMonth.add(i + 1);
 		}
 		return daysFromLastMonth;
@@ -384,7 +421,8 @@ public class ESECalendar implements Visitable {
 	 * @see #getDaysFromThisMonth(int, int)
 	 * @see #getDaysFromLastMonth(int, int)
 	 */
-	public List<Integer> getDaysFromNextMonth(int month, int year) {
+	public List<Integer> getDaysFromNextMonth(int month, int year)
+	{
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
 		int daysToAdd = 7 - (this.getDaysFromThisMonth(month, year).size() + this
 				.getDaysFromLastMonth(month, year).size()) % 7;
@@ -403,12 +441,16 @@ public class ESECalendar implements Visitable {
 	 *            given
 	 * @return List<Integer> date with ESEEvents.
 	 */
-	public ArrayList<Integer> getEventDaysOfMonth(int month, int year) {
+	public ArrayList<Integer> getEventDaysOfMonth(int month, int year)
+	{
 		ArrayList<Integer> eventDaysList = new ArrayList<Integer>();
 
-		for (ESEEvent event : this.getAllAllowedEventsOfMonth(month, year)) {
-			for (int i = 1; i <= 31; i++) {
-				if (event.isEventDay(i, month, year)) {
+		for (ESEEvent event : this.getAllAllowedEventsOfMonth(month, year))
+		{
+			for (int i = 1; i <= 31; i++)
+			{
+				if (event.isEventDay(i, month, year))
+				{
 					eventDaysList.add(i);
 				}
 			}
@@ -416,7 +458,8 @@ public class ESECalendar implements Visitable {
 		return eventDaysList;
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		return calendarName;
 	}
 }

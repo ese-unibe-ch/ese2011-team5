@@ -25,7 +25,8 @@ import models.visitor.Visitor;
  * @see ESEGroup
  * @see ESEDatabase
  */
-public class ESEUser implements Visitable {
+public class ESEUser implements Visitable
+{
 	/**
 	 * static counter to determine uniquely userID.<br>
 	 * Increased after initialization of an new ESEUser.
@@ -94,7 +95,8 @@ public class ESEUser implements Visitable {
 	 * @see {@link ESEDatabase} organizes ESEUser to serve in application.
 	 */
 	public ESEUser(String username, String password, String firstName,
-			String familyName) throws ESEException {
+			String familyName) throws ESEException
+	{
 		this(username, password, firstName, familyName, "Holy solution", "42");
 	}
 
@@ -119,13 +121,17 @@ public class ESEUser implements Visitable {
 	 */
 	public ESEUser(String username, String password, String firstName,
 			String familyName, String secureQuestion, String secureAnswer)
-			throws ESEException {
-		if (username.isEmpty()) {
+			throws ESEException
+	{
+		if (username.isEmpty())
+		{
 			throw new ESEException("User name must not be empty!");
 		}
 
-		for (ESEUser user : ESEDatabase.getAllUsers()) {
-			if (username.equals(user.getName())) {
+		for (ESEUser user : ESEDatabase.getAllUsers())
+		{
+			if (username.equals(user.getName()))
+			{
 				throw new ESEException(
 						"This user name is already in the database!");
 			}
@@ -144,15 +150,18 @@ public class ESEUser implements Visitable {
 	}
 
 	@Override
-	public void accept(Visitor visitor) {
-		for (ESECalendar calendar : this.calendarList) {
+	public void accept(Visitor visitor)
+	{
+		for (ESECalendar calendar : this.calendarList)
+		{
 			calendar.accept(visitor);
 		}
 		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes
-	public static void resetIdCounter() {
+	public static void resetIdCounter()
+	{
 		idCounter = 0;
 	}
 
@@ -162,7 +171,8 @@ public class ESEUser implements Visitable {
 	/**
 	 * @return {@link int} unique userID of this ESEUser.
 	 */
-	public int getUserID() {
+	public int getUserID()
+	{
 		return this.userID;
 	}
 
@@ -171,7 +181,8 @@ public class ESEUser implements Visitable {
 	 * @return {@link String} username of this ESEUser, specified by its
 	 *         ESEProfile.
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return this.profile.getUsername();
 	}
 
@@ -179,7 +190,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @return {@link String} password of this ESEUser.
 	 */
-	public String getPassword() {
+	public String getPassword()
+	{
 		return this.password;
 	}
 
@@ -187,7 +199,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @return {@link String} firstName of this ESEUser.
 	 */
-	public String getFirstName() {
+	public String getFirstName()
+	{
 		return this.profile.getFirstName();
 	}
 
@@ -195,7 +208,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @return {@link String} familyName of this ESEUser.
 	 */
-	public String getFamilyName() {
+	public String getFamilyName()
+	{
 		return this.profile.getFamilyName();
 	}
 
@@ -206,7 +220,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @see ESEProfile
 	 */
-	public ESEProfile getProfile() {
+	public ESEProfile getProfile()
+	{
 		return this.profile;
 	}
 
@@ -214,7 +229,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @return {@link String} that contains the Question.
 	 */
-	public String getQuestion() {
+	public String getQuestion()
+	{
 		return this.secureQuestion;
 	}
 
@@ -222,7 +238,8 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @return {@link String} that contains the Answer.
 	 */
-	public String getAnswer() {
+	public String getAnswer()
+	{
 		return this.secureAnswer;
 	}
 
@@ -232,7 +249,8 @@ public class ESEUser implements Visitable {
 	 *         copy, so changes made within this ArrayList will not affect the
 	 *         real Data.
 	 */
-	public ArrayList<ESEGroup> getGroupList() {
+	public ArrayList<ESEGroup> getGroupList()
+	{
 		return new ArrayList<ESEGroup>(this.groupList);
 	}
 
@@ -242,7 +260,8 @@ public class ESEUser implements Visitable {
 	 *         copy, so changes made within this ArrayList will not affect the
 	 *         real Data.
 	 */
-	public ArrayList<ESECalendar> getCalendarList() {
+	public ArrayList<ESECalendar> getCalendarList()
+	{
 		return new ArrayList<ESECalendar>(this.calendarList);
 	}
 
@@ -257,7 +276,8 @@ public class ESEUser implements Visitable {
 	 * @see {@link #addCalendar(ESECalendar)} to only add but not create a new
 	 *      calendar.
 	 */
-	public void addCalendar(String calendarName) throws ESEException {
+	public void addCalendar(String calendarName) throws ESEException
+	{
 		this.calendarList.add(new ESECalendar(calendarName, this));
 	}
 
@@ -268,7 +288,8 @@ public class ESEUser implements Visitable {
 	 *            Must not be empty.
 	 * @throws ESEException
 	 */
-	public void addGroup(String groupName) throws ESEException {
+	public void addGroup(String groupName) throws ESEException
+	{
 		ESEGroup group = new ESEGroup(groupName, this);
 		this.groupList.add(group);
 	}
@@ -284,9 +305,12 @@ public class ESEUser implements Visitable {
 	 * @see {@link #getCalendarByName(String)} to search by Calendar name.
 	 * @see {@link #getCalendarList()} to get all Calendars.
 	 */
-	public ESECalendar getCalendarByID(int id) throws ESEException {
-		for (ESECalendar calendar : calendarList) {
-			if (calendar.getID() == id) {
+	public ESECalendar getCalendarByID(int id) throws ESEException
+	{
+		for (ESECalendar calendar : calendarList)
+		{
+			if (calendar.getID() == id)
+			{
 				return calendar;
 			}
 		}
@@ -303,9 +327,12 @@ public class ESEUser implements Visitable {
 	 * @see {@link #getCalendarByID(int)} to search by Calendar ID.
 	 * @see {@link #getCalendarList()} to get all Calendars.
 	 */
-	public ESECalendar getCalendarByName(String name) throws ESEException {
-		for (ESECalendar calendar : calendarList) {
-			if (calendar.getCalendarName().equals(name)) {
+	public ESECalendar getCalendarByName(String name) throws ESEException
+	{
+		for (ESECalendar calendar : calendarList)
+		{
+			if (calendar.getCalendarName().equals(name))
+			{
 				return calendar;
 			}
 		}
@@ -322,9 +349,12 @@ public class ESEUser implements Visitable {
 	 * @see {@link #getGroupByName(String)}
 	 * @see {@link #getGroupList()}
 	 */
-	public ESEGroup getGroupByID(int id) throws ESEException {
-		for (ESEGroup group : groupList) {
-			if (group.getGroupID() == id) {
+	public ESEGroup getGroupByID(int id) throws ESEException
+	{
+		for (ESEGroup group : groupList)
+		{
+			if (group.getGroupID() == id)
+			{
 				return group;
 			}
 		}
@@ -341,15 +371,18 @@ public class ESEUser implements Visitable {
 	 * @see {@link #getGroupByID(String)}
 	 * @see {@link #getGroupList()}
 	 */
-	public ESEGroup getGroupByName(String name) throws ESEException {
-		for (ESEGroup group : groupList) {
+	public ESEGroup getGroupByName(String name) throws ESEException
+	{
+		for (ESEGroup group : groupList)
+		{
 			if (group.getGroupName().equals(name))
 				return group;
 		}
 		throw new ESEException("No group with name \"" + name + "\"!");
 	}
 
-	public void removeCalendar(int calendarID) throws ESEException {
+	public void removeCalendar(int calendarID) throws ESEException
+	{
 		ESECalendar calendarToRemove = this.getCalendarByID(calendarID);
 		this.calendarList.remove(calendarToRemove);
 	}
@@ -365,9 +398,12 @@ public class ESEUser implements Visitable {
 	 *      this ESECalendar.
 	 * @see {@link ESEEvent}
 	 */
-	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException {
-		for (ESECalendar calendar : this.calendarList) {
-			if (calendar.getID() == calendarID) {
+	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException
+	{
+		for (ESECalendar calendar : this.calendarList)
+		{
+			if (calendar.getID() == calendarID)
+			{
 				return calendar.getAllEvents();
 			}
 		}
@@ -388,9 +424,12 @@ public class ESEUser implements Visitable {
 	 * 
 	 */
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID)
-			throws ESEException {
-		for (ESECalendar calendar : this.calendarList) {
-			if (calendar.getID() == calendarID) {
+			throws ESEException
+	{
+		for (ESECalendar calendar : this.calendarList)
+		{
+			if (calendar.getID() == calendarID)
+			{
 				return calendar.getAllPublicEvents();
 			}
 		}
@@ -410,8 +449,10 @@ public class ESEUser implements Visitable {
 	 * 
 	 * @see {@link #addCalendar(String)} to create and add a new calendar.
 	 */
-	public void addCalendar(ESECalendar calendarToAdd) throws ESEException {
-		if (!this.equals(calendarToAdd.getOwner())) {
+	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
+	{
+		if (!this.equals(calendarToAdd.getOwner()))
+		{
 			throw new ESEException("Taking a foreign calendar is not allowed!");
 		}
 		this.calendarList.add(calendarToAdd);
@@ -424,8 +465,10 @@ public class ESEUser implements Visitable {
 	 *            String must not be empty.
 	 * @throws ESEException
 	 */
-	public void addGroup(ESEGroup groupToAdd) throws ESEException {
-		if (!this.equals(groupToAdd.getOwner())) {
+	public void addGroup(ESEGroup groupToAdd) throws ESEException
+	{
+		if (!this.equals(groupToAdd.getOwner()))
+		{
 			throw new ESEException("Taking a foreign group is not allowed!");
 		}
 		this.groupList.add(groupToAdd);
@@ -440,7 +483,8 @@ public class ESEUser implements Visitable {
 	 * @see #setAnswer(String)
 	 * @see #setQuestion(String)
 	 */
-	public void setPassword(String newPassword) {
+	public void setPassword(String newPassword)
+	{
 		this.password = newPassword;
 	}
 
@@ -452,7 +496,8 @@ public class ESEUser implements Visitable {
 	 * @see {@link #setAnswer(String)} to change also the answer to the new
 	 *      question.
 	 */
-	public void setQuestion(String newQuestion) {
+	public void setQuestion(String newQuestion)
+	{
 		this.secureQuestion = newQuestion;
 	}
 
@@ -464,7 +509,8 @@ public class ESEUser implements Visitable {
 	 *            String must not be empty.
 	 * @see {@link #setQuestion(String)}
 	 */
-	public void setAnswer(String newAnswer) {
+	public void setAnswer(String newAnswer)
+	{
 		this.secureAnswer = newAnswer;
 	}
 

@@ -3,6 +3,7 @@
  */
 package models.visitor;
 
-public interface Visitable {
+public interface Visitable
+{
 	void accept(Visitor visitor);
 }

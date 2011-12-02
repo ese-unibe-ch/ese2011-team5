@@ -24,7 +24,8 @@ import com.google.gson.annotations.Expose;
  * @see ESECalendar
  * @see ESEUser
  */
-public class ESEEvent implements Comparable<ESEEvent>, Visitable {
+public class ESEEvent implements Comparable<ESEEvent>, Visitable
+{
 	/**
 	 * static counter to determine uniquely eventID.<br>
 	 * Increased after initialization of an new ESEEvent.
@@ -91,13 +92,16 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @see ESEUser
 	 */
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
-			Date startDate, Date endDate, boolean isPublic) throws ESEException {
+			Date startDate, Date endDate, boolean isPublic) throws ESEException
+	{
 
 		checkDateValidity(startDate, endDate);
-		if (correspondingCalendar == null) {
+		if (correspondingCalendar == null)
+		{
 			throw new ESEException("Event is not assigned to any calendar!");
 		}
-		if (eventName.isEmpty()) {
+		if (eventName.isEmpty())
+		{
 			throw new ESEException("Event name must not be empty!");
 		}
 
@@ -115,12 +119,14 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 
 	}
 
-	public void accept(Visitor visitor) {
+	public void accept(Visitor visitor)
+	{
 		visitor.visit(this);
 	}
 
 	// Usage only intended for testing purposes
-	public static void resetIdCounter() {
+	public static void resetIdCounter()
+	{
 		idCounter = 0;
 	}
 
@@ -135,7 +141,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return <code>true</code> if Event takes place on that day.<br>
 	 *         <code>false</code> if Event doesn't take place on that day.
 	 */
-	public boolean isEventDay(int day, int month, int year) {
+	public boolean isEventDay(int day, int month, int year)
+	{
 		// TODO: remove noise!
 		Calendar dateAsCal = new GregorianCalendar();
 		dateAsCal.set(dateAsCal.DAY_OF_MONTH, day);
@@ -173,8 +180,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 *             if endDate is before startDate.
 	 */
 	private void checkDateValidity(Date startDate, Date endDate)
-			throws ESEException {
-		if (startDate.after(endDate)) {
+			throws ESEException
+	{
+		if (startDate.after(endDate))
+		{
 			throw new ESEException("Invalid start and end date!");
 		}
 	}
@@ -187,7 +196,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return int {@link #eventID} of this ESEEvent. The value is ranged
 	 *         between 0 and the current value of {@link #idCounter}.
 	 */
-	public int getEventID() {
+	public int getEventID()
+	{
 		return this.eventID;
 	}
 
@@ -195,7 +205,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * 
 	 * @return String name of this ESEEvent.
 	 */
-	public String getEventName() {
+	public String getEventName()
+	{
 		return this.eventName;
 	}
 
@@ -204,7 +215,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return originsCalendar <br>
 	 *         ESECalendar that originally created this ESEEvent.
 	 */
-	public ESECalendar getCorrespondingCalendar() {
+	public ESECalendar getCorrespondingCalendar()
+	{
 		return this.originsCalendar;
 	}
 
@@ -215,8 +227,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 *            that this ESEEvent should be added to.
 	 * 
 	 */
-	public void addCorrespondingCalendar(ESECalendar calendar) {
-		if (!this.correspondingCalendars.contains(calendar)) {
+	public void addCorrespondingCalendar(ESECalendar calendar)
+	{
+		if (!this.correspondingCalendars.contains(calendar))
+		{
 			this.correspondingCalendars.add(calendar);
 		}
 	}
@@ -230,9 +244,12 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @throws ESEException
 	 *             if there is no ESECalendar with this id.
 	 */
-	public ESECalendar getOneCorresponding(int id) throws ESEException {
-		for (ESECalendar calendar : this.correspondingCalendars) {
-			if (calendar.getID() == id) {
+	public ESECalendar getOneCorresponding(int id) throws ESEException
+	{
+		for (ESECalendar calendar : this.correspondingCalendars)
+		{
+			if (calendar.getID() == id)
+			{
 				return calendar;
 			}
 		}
@@ -243,14 +260,16 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * 
 	 * @return Date specifying the time, when the ESEEvent starts.
 	 */
-	public Date getStartDate() {
+	public Date getStartDate()
+	{
 		return this.startDate;
 	}
 
 	/**
 	 * @return Date specifying the time, when the ESEEvent ends.
 	 */
-	public Date getEndDate() {
+	public Date getEndDate()
+	{
 		return this.endDate;
 	}
 
@@ -266,7 +285,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @see #removeCopiedEvent(ESECalendar)
 	 * @see ESECalendar
 	 */
-	public void copyEvent(ESECalendar correspondingCalendar) {
+	public void copyEvent(ESECalendar correspondingCalendar)
+	{
 		if (!this.correspondingCalendars.contains(correspondingCalendar))
 			;
 		{
@@ -281,7 +301,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * 
 	 * @see #copyEvent(ESECalendar)
 	 */
-	public void removeCopiedEvent(ESECalendar correspondingCalendar) {
+	public void removeCopiedEvent(ESECalendar correspondingCalendar)
+	{
 		if (this.correspondingCalendars.contains(correspondingCalendar))
 			;
 		{
@@ -294,7 +315,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return String representation of endDate in the following format:
 	 *         "dd.MM.yyyy HH:mm"
 	 */
-	public String getStringEndDate() {
+	public String getStringEndDate()
+	{
 		return ESEConversionHelper.convertDateToString(this.endDate);
 	}
 
@@ -303,7 +325,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return String representation of startDate in the following format:
 	 *         "dd.MM.yyyy HH:mm"
 	 */
-	public String getStringStartDate() {
+	public String getStringStartDate()
+	{
 		return ESEConversionHelper.convertDateToString(this.startDate);
 	}
 
@@ -311,7 +334,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * 
 	 * @return boolean Privacy of this ESEEvent.
 	 */
-	public boolean isPublic() {
+	public boolean isPublic()
+	{
 		return this.isPublic;
 	}
 
@@ -324,8 +348,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @param eventName
 	 *            to be set.
 	 */
-	public void setEventName(String eventName) throws ESEException {
-		if (eventName.isEmpty()) {
+	public void setEventName(String eventName) throws ESEException
+	{
+		if (eventName.isEmpty())
+		{
 			throw new ESEException("Event name must not be empty!");
 		}
 		this.eventName = eventName;
@@ -333,7 +359,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 
 	// Setting start date and end date should be atomic
 	public void setStartDateAndEndDate(Date startDate, Date endDate)
-			throws ESEException {
+			throws ESEException
+	{
 		checkDateValidity(startDate, endDate);
 		this.checkForOverlapping(this.originsCalendar.getAllEvents());
 		this.startDate = startDate;
@@ -348,7 +375,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @throws ESEException
 	 *             if startDate is after endDate
 	 */
-	public void setStartDate(Date startDate) throws ESEException {
+	public void setStartDate(Date startDate) throws ESEException
+	{
 		checkDateValidity(startDate, this.endDate);
 		this.checkForOverlapping(this.originsCalendar.getAllEvents());
 		this.startDate = startDate;
@@ -362,7 +390,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @throws ESEException
 	 *             if startDate is after endDate
 	 */
-	public void setEndDate(Date endDate) throws ESEException {
+	public void setEndDate(Date endDate) throws ESEException
+	{
 		checkDateValidity(this.startDate, endDate);
 		this.checkForOverlapping(this.originsCalendar.getAllEvents());
 		this.endDate = endDate;
@@ -374,21 +403,26 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * 
 	 * @param publiclyViewable
 	 */
-	public void setVisibility(boolean publiclyViewable) {
+	public void setVisibility(boolean publiclyViewable)
+	{
 		this.isPublic = publiclyViewable;
 	}
 
-	public Boolean checkForOverlapping(ArrayList<ESEEvent> eventList) {
-		for (ESEEvent existingEvent : eventList) {
+	public Boolean checkForOverlapping(ArrayList<ESEEvent> eventList)
+	{
+		for (ESEEvent existingEvent : eventList)
+		{
 			if (!this.equals(existingEvent)
-					&& checkEventOverlaps(existingEvent, this)) {
+					&& checkEventOverlaps(existingEvent, this))
+			{
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent) {
+	private boolean checkEventOverlaps(ESEEvent existingEvent, ESEEvent newEvent)
+	{
 		boolean startDateOverlaps = startDateLiesInBetweenExistingEvent(
 				existingEvent, newEvent);
 		boolean endDateOverlaps = endDateLiesInBetweenExistingEvent(
@@ -402,7 +436,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	}
 
 	private boolean startDateLiesInBetweenExistingEvent(ESEEvent existingEvent,
-			ESEEvent newEvent) {
+			ESEEvent newEvent)
+	{
 		long existingStartTime = existingEvent.getStartDate().getTime();
 		long newStartTime = newEvent.getStartDate().getTime();
 		long existingEndTime = existingEvent.getEndDate().getTime();
@@ -412,7 +447,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	}
 
 	private boolean endDateLiesInBetweenExistingEvent(ESEEvent existingEvent,
-			ESEEvent newEvent) {
+			ESEEvent newEvent)
+	{
 		long existingStartTime = existingEvent.getStartDate().getTime();
 		long newEndTime = newEvent.getEndDate().getTime();
 		long existingEndTime = existingEvent.getEndDate().getTime();
@@ -421,7 +457,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	}
 
 	private boolean eventIsSubsetOfExistingEvent(ESEEvent existingEvent,
-			ESEEvent newEvent) {
+			ESEEvent newEvent)
+	{
 		long existingStartTime = existingEvent.getStartDate().getTime();
 		long newStartTime = newEvent.getStartDate().getTime();
 		long newEndTime = newEvent.getEndDate().getTime();
@@ -432,7 +469,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	}
 
 	private boolean eventContainsExistingEvent(ESEEvent existingEvent,
-			ESEEvent newEvent) {
+			ESEEvent newEvent)
+	{
 		long newStartTime = newEvent.getStartDate().getTime();
 		long existingStartTime = existingEvent.getStartDate().getTime();
 		long existingEndTime = existingEvent.getEndDate().getTime();
@@ -446,14 +484,16 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @return String representation of this ESEEvent. <br>
 	 *         Example. "Meeting: From 12.09.2011 13:00 to 12.09.2011 15:00"
 	 */
-	public String toString() {
+	public String toString()
+	{
 		return eventName + ": From "
 				+ ESEConversionHelper.convertDateToString(startDate) + " to "
 				+ ESEConversionHelper.convertDateToString(endDate);
 	}
 
 	@Override
-	public int compareTo(ESEEvent compareEvent) {
+	public int compareTo(ESEEvent compareEvent)
+	{
 		if (this.getStartDate().getTime() > compareEvent.getStartDate()
 				.getTime())
 			return 1;
@@ -473,8 +513,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable {
 	 * @see {@link #removeCopiedEvent(ESECalendar)} remove Event from one
 	 *      Calendar.
 	 */
-	public void eventRemoveInCorrespondingCalendars() throws ESEException {
-		for (ESECalendar calendar : this.correspondingCalendars) {
+	public void eventRemoveInCorrespondingCalendars() throws ESEException
+	{
+		for (ESECalendar calendar : this.correspondingCalendars)
+		{
 			calendar.removeEvent(this.eventID);
 		}
 

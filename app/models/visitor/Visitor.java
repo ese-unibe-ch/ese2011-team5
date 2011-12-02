@@ -9,7 +9,8 @@ import models.ESECalendar;
 import models.ESEEvent;
 import models.ESEUser;
 
-public interface Visitor<T> {
+public interface Visitor<T>
+{
 	void visit(ESEEvent eseEvent);
 
 	void visit(ESECalendar eseCalendar);

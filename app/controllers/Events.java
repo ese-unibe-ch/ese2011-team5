@@ -3,7 +3,8 @@
  */
 package controllers;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import models.ESEDatabase;
 import models.ESEEvent;
@@ -19,9 +20,14 @@ import play.data.validation.Required;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Events extends Application {
+public class Events extends Application
+{
 
-	public static void searchEvent() {
+	private static final String DATETIME_PATTERN = "dd.MM.yyy, HH:mm";
+	private static final String DATE_PATTERN = "dd.MM.yyyy";
+
+	public static void searchEvent()
+	{
 		// ?!!!?
 		ESEUser user = ESEDatabase.getCurrentUser();
 
@@ -29,31 +35,35 @@ public class Events extends Application {
 	}
 
 	public static void handleEventSearch(@Required Long uid,
-			@Required String name, String lowerlimit, String upperlimit) {
+			@Required String name, String lowerlimit, String upperlimit)
+	{
 
-		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+		DateTimeFormatter formatter = DateTimeFormat.forPattern(DATE_PATTERN);
 		Gson gson = new GsonBuilder().setPrettyPrinting()
 				.excludeFieldsWithoutExposeAnnotation()
-				.setDateFormat("yyyy/MM/dd, HH:mm").create();
+				.setDateFormat(DATETIME_PATTERN).create();
 
-		try {
+		try
+		{
 			ESEUser user = ESEDatabase.getUserByID(uid.intValue());
 			SearchEventVisitor query;
-			if (lowerlimit == null || upperlimit == null) {
+			if (lowerlimit == null || upperlimit == null)
+			{
 				query = new SearchEventVisitor(name);
-				user.accept(query);
-			} else {
+			} else
+			{
 				DateTime upper = formatter.parseDateTime(upperlimit);
 				DateTime lower = formatter.parseDateTime(lowerlimit);
 				query = new SearchEventVisitor(name, lower, upper);
-				user.accept(query);
 			}
-
-			Collection<ESEEvent> events = query.results();
+			user.accept(query);
+			List<ESEEvent> events = query.results();
+			Collections.sort(events);
 
 			renderText(gson.toJson(events));
-		} catch (Exception e) {
-			renderText("fuck: " + e);
+		} catch (Exception e)
+		{
+			renderText(e);
 		}
 
 	}

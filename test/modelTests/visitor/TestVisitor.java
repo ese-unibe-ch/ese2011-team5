@@ -18,7 +18,8 @@ import org.junit.Test;
 
 import play.test.UnitTest;
 
-public class TestVisitor extends UnitTest {
+public class TestVisitor extends UnitTest
+{
 	DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy.MM.dd HH:mm");
 	private ESEUser user;
 	private ESECalendar myCalendar, mySportCalendar;
@@ -29,7 +30,8 @@ public class TestVisitor extends UnitTest {
 	private DateTime endDate2;
 
 	@Before
-	public void setUp() throws ESEException {
+	public void setUp() throws ESEException
+	{
 		ESEDatabase.clearAll();
 		this.user = new ESEUser("dummy", "pw", "firstName", "familyName");
 
@@ -56,7 +58,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchEventWithCalendarAndEventName() {
+	public void testSearchEventWithCalendarAndEventName()
+	{
 		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten");
 		this.myCalendar.accept(visitor);
 
@@ -67,7 +70,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchEventWithLimits() {
+	public void testSearchEventWithLimits()
+	{
 		DateTime lowerLimit = formatter.parseDateTime("2010.12.24 8:00");
 		DateTime upperLimit = formatter.parseDateTime("2012.12.24 12:00");
 
@@ -82,7 +86,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchEventWithLimits2() {
+	public void testSearchEventWithLimits2()
+	{
 		DateTime lowerLimit = formatter.parseDateTime("2011.12.20 8:00");
 		DateTime upperLimit = formatter.parseDateTime("2011.12.30 12:00");
 
@@ -97,7 +102,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchEventWithUserAndEventName() {
+	public void testSearchEventWithUserAndEventName()
+	{
 		SearchEventVisitor visitor = new SearchEventVisitor("Weihnachten");
 		this.user.accept(visitor);
 
@@ -108,7 +114,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchEventWithUserAndEventId() {
+	public void testSearchEventWithUserAndEventId()
+	{
 		SearchEventVisitor visitor = new SearchEventVisitor(
 				this.event1.getEventID());
 		this.user.accept(visitor);
@@ -120,7 +127,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchCalendarWithUserAndCalendarName() {
+	public void testSearchCalendarWithUserAndCalendarName()
+	{
 		SearchCalendarVisitor visitor = new SearchCalendarVisitor("Calendar");
 		this.user.accept(visitor);
 
@@ -131,7 +139,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchCalendarWithUserAndCalendarName2() {
+	public void testSearchCalendarWithUserAndCalendarName2()
+	{
 		SearchCalendarVisitor visitor = new SearchCalendarVisitor("My Calendar");
 		this.user.accept(visitor);
 
@@ -142,7 +151,8 @@ public class TestVisitor extends UnitTest {
 	}
 
 	@Test
-	public void testSearchCalendarWithUserAndCalendarId() {
+	public void testSearchCalendarWithUserAndCalendarId()
+	{
 		SearchCalendarVisitor visitor = new SearchCalendarVisitor(
 				this.myCalendar.getID());
 		this.user.accept(visitor);
