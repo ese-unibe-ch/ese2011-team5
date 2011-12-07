@@ -18,8 +18,8 @@ import models.visitor.Visitor;
  * A user is uniquely defined by it's <code>userID</code> and described by it's
  * <code>profile</code>, that contains Name and other personal Information.<br>
  * A User has a <code>password</code> that is used to login.<br>
- * A User can have several Calendars as well as different groups of contacts
- * that can be added to its lists.
+ * A User can have several Calendars as well as different groups of contacts that
+ * can be added to its lists.
  * 
  * @see ESECalendar
  * @see ESEGroup
@@ -49,13 +49,13 @@ public class ESEUser implements Visitable
 	 */
 	private String password;
 	/**
-	 * Together with <code>secureAnswer</code> an ESEUser is able to reset it's
-	 * password.
+	 * Together with <code>secureAnswer</code> an ESEUser is able
+	 * to reset it's password.
 	 */
 	private String secureQuestion = "Holy solution";
 	/**
-	 * Together with <code>secureQuestion</code> an ESEUser is able to reset
-	 * it's password.
+	 * Together with <code>secureQuestion</code> an ESEUser is able
+	 * to reset it's password.
 	 */
 	private String secureAnswer = "42";
 
@@ -66,62 +66,48 @@ public class ESEUser implements Visitable
 	 */
 	private ArrayList<ESECalendar> calendarList;
 	/**
-	 * Contains all ESEGroups of an ESEUser. Within these groups, an ESEUser may
-	 * organize Contacts (other ESEUser).
+	 * Contains all ESEGroups of an ESEUser. Within these groups, an
+	 * ESEUser may organize Contacts (other ESEUser).
 	 */
 	private ArrayList<ESEGroup> groupList;
 
 	/**
-	 * Default Constructor for ESEUser. <br>
+	 * Default Constructor for ESEUser.<br>
 	 * Question and Answer to change password are set to default:<br>
-	 * Question: "Holy solution", Answer:"42"
-	 * <p>
+	 * Question: "Holy solution", Answer:"42"<p>
 	 * Example: ESEUser user = ("UsernameOfJack", "secretPassword", "Jack",
 	 * "Sparrow");
 	 * 
-	 * @param username
-	 *            String must not be empty, or an Exception is thrown.
-	 * @param password
-	 *            String must not be empty, or an Exception is thrown.
-	 * @param firstName
-	 *            First name of registered Person.
-	 * @param familyName
-	 *            Second/Family name of registered Person.
+	 * @param username String must not be empty, or an Exception is thrown.
+	 * @param password String must not be empty, or an Exception is thrown.
+	 * @param firstName First name of registered Person.
+	 * @param familyName Second/Family name of registered Person.
 	 * @throws ESEException
 	 * 
-	 * @see {@link #ESEUser(String, String, String, String, String, String)}
-	 *      extended constructor<br>
+	 * @see {@link #ESEUser(String, String, String, String, String, String)} extended constructor<br>
 	 *      to create ESEUser with individual Answer and Question.
 	 * @see {@link ESEDatabase} organizes ESEUser to serve in application.
 	 */
-	public ESEUser(String username, String password, String firstName,
-			String familyName) throws ESEException
+	public ESEUser(String username, String password, String firstName, String familyName) throws ESEException
 	{
 		this(username, password, firstName, familyName, "Holy solution", "42");
 	}
 
 	/**
-	 * Extended constructor for ESEUser that also provides the option of
-	 * choosing an own Question and Answer to reset the password.
+	 * Extended constructor for ESEUser that also provides the option of choosing
+	 * an own Question and Answer to reset the password.
 	 * 
-	 * @param username
-	 *            String must not be empty and unique in {@link ESEDatabase}, or
-	 *            an Exception is thrown.
-	 * @param password
-	 *            String must not be empty, or an Exception is thrown.
-	 * @param firstName
-	 *            First name of registered Person.
-	 * @param familyName
-	 *            Second/Family name of registered Person.
-	 * @param secureQuestion
-	 *            A question only the user can answer.
-	 * @param secureAnswer
-	 *            Answer to <code>secureQuestion</code>.
+	 * @param username String must not be empty and unique in {@link ESEDatabase}, or an Exception is thrown.
+	 * @param password String must not be empty, or an Exception is thrown.
+	 * @param firstName First name of registered Person.
+	 * @param familyName Second/Family name of registered Person.
+	 * @param secureQuestion A question only the user can answer.
+	 * @param secureAnswer Answer to <code>secureQuestion</code>.
 	 * @throws ESEException
 	 */
-	public ESEUser(String username, String password, String firstName,
-			String familyName, String secureQuestion, String secureAnswer)
-			throws ESEException
+	public ESEUser(String username, String password,
+			String firstName, String familyName,
+			String secureQuestion, String secureAnswer) throws ESEException
 	{
 		if (username.isEmpty())
 		{
@@ -132,8 +118,7 @@ public class ESEUser implements Visitable
 		{
 			if (username.equals(user.getName()))
 			{
-				throw new ESEException(
-						"This user name is already in the database!");
+				throw new ESEException("This user name is already in the database!");
 			}
 		}
 
@@ -178,8 +163,7 @@ public class ESEUser implements Visitable
 
 	/**
 	 * 
-	 * @return {@link String} username of this ESEUser, specified by its
-	 *         ESEProfile.
+	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
 	 */
 	public String getName()
 	{
@@ -215,8 +199,7 @@ public class ESEUser implements Visitable
 
 	/**
 	 * 
-	 * @return {@link ESEProfile} containing this ESEUsers personal
-	 *         informations.
+	 * @return {@link ESEProfile} containing this ESEUsers personal informations.
 	 * 
 	 * @see ESEProfile
 	 */
@@ -245,9 +228,9 @@ public class ESEUser implements Visitable
 
 	/**
 	 * 
-	 * @return {@link ArrayList} of type {@link ESEGroup}. This is a shallow
-	 *         copy, so changes made within this ArrayList will not affect the
-	 *         real Data.
+	 * @return {@link ArrayList} of type {@link ESEGroup}. This is a
+	 * shallow copy, so changes made within this ArrayList will not
+	 * affect the real Data.
 	 */
 	public ArrayList<ESEGroup> getGroupList()
 	{
@@ -256,9 +239,9 @@ public class ESEUser implements Visitable
 
 	/**
 	 * 
-	 * @return {@link ArrayList} of type {@link ESECalendar}. This is a shallow
-	 *         copy, so changes made within this ArrayList will not affect the
-	 *         real Data.
+	 * @return {@link ArrayList} of type {@link ESECalendar}. This is a
+	 * shallow copy, so changes made within this ArrayList will not
+	 * affect the real Data.
 	 */
 	public ArrayList<ESECalendar> getCalendarList()
 	{
@@ -268,13 +251,11 @@ public class ESEUser implements Visitable
 	/**
 	 * Creates an new {@link ESECalendar} for this ESEUser. <br>
 	 * 
-	 * @param calendarName
-	 *            Must not be empty.
+	 * @param calendarName Must not be empty.
 	 * 
 	 * @throws ESEException
 	 * 
-	 * @see {@link #addCalendar(ESECalendar)} to only add but not create a new
-	 *      calendar.
+	 * @see {@link #addCalendar(ESECalendar)} to only add but not create a new calendar.
 	 */
 	public void addCalendar(String calendarName) throws ESEException
 	{
@@ -284,8 +265,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Creates an new {@link ESEGroup} for this ESEUser. <br>
 	 * 
-	 * @param groupName
-	 *            Must not be empty.
+	 * @param groupName Must not be empty.
 	 * @throws ESEException
 	 */
 	public void addGroup(String groupName) throws ESEException
@@ -297,8 +277,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Returns the corresponding ESECalendar of this ESEUser.
 	 * 
-	 * @param id
-	 *            unique
+	 * @param id unique
 	 * @return {@link ESECalendar} with corresponding ID of this ESEUser.
 	 * @throws ESEException
 	 * 
@@ -320,8 +299,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Returns the corresponding ESECalendar of this ESEUser.
 	 * 
-	 * @param name
-	 *            of searched ESECalendar.
+	 * @param name of searched ESECalendar.
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
 	 * @see {@link #getCalendarByID(int)} to search by Calendar ID.
@@ -342,8 +320,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Returns the corresponding ESEGroup to this <code>id</code>.
 	 * 
-	 * @param id
-	 *            of searched ESEGroup
+	 * @param id of searched ESEGroup
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
 	 * @see {@link #getGroupByName(String)}
@@ -364,8 +341,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Returns the corresponding ESEGroup to this <code>name</code>.
 	 * 
-	 * @param name
-	 *            of searched ESEGroup
+	 * @param name of searched ESEGroup
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
 	 * @see {@link #getGroupByID(String)}
@@ -394,8 +370,7 @@ public class ESEUser implements Visitable
 	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
 	 * 
-	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of
-	 *      this ESECalendar.
+	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
 	 * @see {@link ESEEvent}
 	 */
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException
@@ -411,20 +386,17 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Returns all public ESEEvents of the ESECalendar with the corresponding
-	 * ID. <br>
+	 * Returns all public ESEEvents of the ESECalendar with the corresponding ID.<br>
 	 * 
 	 * @param calendarID
 	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
 	 * 
-	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of
-	 *      this ESECalendar.
+	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
 	 * @see {@link ESEEvent}
 	 * 
 	 */
-	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID)
-			throws ESEException
+	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws ESEException
 	{
 		for (ESECalendar calendar : this.calendarList)
 		{
@@ -442,8 +414,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Adds an ESECalendar to this ESEUsers Calendar List. <br>
 	 * 
-	 * @param calendarToAdd
-	 *            owner must be this.
+	 * @param calendarToAdd owner must be this.
 	 * 
 	 * @throws ESEException
 	 * 
@@ -461,8 +432,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Creates and adds a new Group to the list of this ESEUser. <br>
 	 * 
-	 * @param groupToAdd
-	 *            String must not be empty.
+	 * @param groupToAdd String must not be empty.
 	 * @throws ESEException
 	 */
 	public void addGroup(ESEGroup groupToAdd) throws ESEException
@@ -477,8 +447,7 @@ public class ESEUser implements Visitable
 	/**
 	 * Sets the password to a new value.
 	 * 
-	 * @param newPassword
-	 *            String must not be empty.
+	 * @param newPassword String must not be empty.
 	 * 
 	 * @see #setAnswer(String)
 	 * @see #setQuestion(String)
@@ -491,10 +460,8 @@ public class ESEUser implements Visitable
 	/**
 	 * Replaces the old questions with a new secret question.
 	 * 
-	 * @param newQuestion
-	 *            String must not be empty.
-	 * @see {@link #setAnswer(String)} to change also the answer to the new
-	 *      question.
+	 * @param newQuestion String must not be empty.
+	 * @see {@link #setAnswer(String)} to change also the answer to the new question.
 	 */
 	public void setQuestion(String newQuestion)
 	{
@@ -502,11 +469,10 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Replaces the old answer with a new one. The answer should relate to the
-	 * current <code>secretQuestion</code>.
+	 * Replaces the old answer with a new one.
+	 * The answer should relate to the current <code>secretQuestion</code>.
 	 * 
-	 * @param newAnswer
-	 *            String must not be empty.
+	 * @param newAnswer String must not be empty.
 	 * @see {@link #setQuestion(String)}
 	 */
 	public void setAnswer(String newAnswer)

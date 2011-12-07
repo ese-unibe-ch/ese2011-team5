@@ -63,8 +63,7 @@ public class Application extends Controller {
 	}
 
 	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
-			String currentUser, int day, int month, int year)
-			throws ESEException {
+			String currentUser, int day, int month, int year) throws ESEException {
 		int currentMonth = month;
 		int currentYear = year;
 		int currentDay = day;
@@ -128,8 +127,7 @@ public class Application extends Controller {
 		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
 		daysFromLastMonth = calendar.getDaysFromLastMonth(month, year);
 		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
-		List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month,
-				year);
+		List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month, year);
 
 		int startOfLastMonth = 0;
 		if (!daysFromLastMonth.isEmpty()) {
@@ -138,8 +136,7 @@ public class Application extends Controller {
 
 		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month,
 				year);
-		ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(
-				month, year);
+		ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month, year);
 		ArrayList<String> weekdays = getWeekDays();
 
 		ArrayList<ESEUser> otherUsersList = otherUsers;
@@ -194,10 +191,10 @@ public class Application extends Controller {
 
 	public static void doEditEvent(int calendarID, int eventID,
 			String eventName, String eventStart, String eventEnd,
-			boolean isPublic, int selectedDay, int month, int year)
-			throws ESEException {
+			boolean isPublic, int selectedDay, int month, int year) throws ESEException {
 		ESECalendar calendar = null;
-		try {
+		try
+		{
 			calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 			ESEEvent event = calendar.getEventByID(eventID);
 
@@ -207,17 +204,20 @@ public class Application extends Controller {
 					ESEConversionHelper.convertStringToDate(eventEnd));
 			event.setVisibility(isPublic);
 
-			if (event.checkForOverlapping(calendar.getAllEvents())) {
-				throw new ESEException("Event \"" + event.getEventName()
-						+ "\" overlaps with existing event!");
+			if (event.checkForOverlapping(calendar.getAllEvents()))
+			{
+				throw new ESEException("Event \"" + event.getEventName() + "\" overlaps with existing event!");
 			}
-			showCalendarView(calendarID, calendar.getOwner().getName(),
-					selectedDay, month, year);
-		} catch (IllegalArgumentException e) {
+			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
+		}
+		catch (IllegalArgumentException e)
+		{
 			flash.error(e.getMessage());
 			params.flash();
 			editEvent(calendarID, eventID, selectedDay, month, year);
-		} catch (ESEException e) {
+		}
+		catch (ESEException e)
+		{
 			flash.error(e.getMessage());
 			params.flash();
 			editEvent(calendarID, eventID, selectedDay, month, year);
@@ -227,8 +227,7 @@ public class Application extends Controller {
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
 			int month, int year) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
-				.getName());
+		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
 		ESEEvent event = calendar.getEventByID(eventID);
 
@@ -242,16 +241,19 @@ public class Application extends Controller {
 		showGroups();
 	}
 
-	public static void addUserToGroup(String username, int groupID)
-			throws ESEException {
-		try {
+	public static void addUserToGroup(String username, int groupID) throws ESEException
+	{
+		try
+		{
 			ESEUser currentUser = ESEDatabase.getCurrentUser();
 			ESEUser userToAdd = ESEDatabase.getUserByName(username);
 			ESEGroup group = currentUser.getGroupByID(groupID);
 
 			group.addUserToGroup(userToAdd);
 			showUsersInGroup(groupID);
-		} catch (ESEException e) {
+		}
+		catch (ESEException e)
+		{
 			flash.error(e.getMessage());
 			params.flash();
 			showUsersInGroup(groupID);
@@ -377,20 +379,21 @@ public class Application extends Controller {
 		showUsersInGroup(group.getGroupID());
 	}
 
-	public static void searchUser(@Required String searchName) {
-
+	public static void searchUser(@Required String searchName)
+	{
 		ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
-		if (!searchName.equals("")) {
+		if (!searchName.equals(""))
+		{
 			otherUsersLocal = ESEDatabase.findUser(searchName);
-		} else
+		}
+		else
 			otherUsersLocal = ESEDatabase.getAllUsers();
 
-		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(
-				otherUsersLocal);
-		for (ESEUser u : otherUserLocalOriginal) {
-			if (u.getName().equals("guest")
-					|| u.getName().equals(
-							ESEDatabase.getCurrentUser().getName())) {
+		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
+		for (ESEUser u : otherUserLocalOriginal)
+		{
+			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
+			{
 				otherUsersLocal.remove(u);
 			}
 		}
@@ -426,7 +429,8 @@ public class Application extends Controller {
 		ESEUser user = ESEDatabase.getCurrentUser();
 		ESEUser otherUser = ESEDatabase.getUserByID(otherUserID);
 		ESECalendar selectedCalendar = null;
-		try {
+		try
+		{
 			selectedCalendar = user.getCalendarByName(selectedCalendarName);
 			ESECalendar otherCalendar = otherUser
 					.getCalendarByID(otherUserCalendarID);
@@ -439,8 +443,7 @@ public class Application extends Controller {
 			int day = ESEConversionHelper.getDay(event.getStartDate());
 			int month = ESEConversionHelper.getMonth(event.getStartDate());
 			int year = ESEConversionHelper.getYear(event.getStartDate());
-			betweenShowCalendarsAndShowCalendarView(selectedCalendar.getID(),
-					ESEDatabase.getCurrentUser().getName(), day, month, year);
+			betweenShowCalendarsAndShowCalendarView(selectedCalendar.getID(), ESEDatabase.getCurrentUser().getName(), day, month, year);
 		} catch (ESEException e) {
 			flash.error(e.getMessage());
 			params.flash();
