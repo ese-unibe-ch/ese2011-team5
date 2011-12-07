@@ -85,23 +85,23 @@
 		    	<ul>
 		    		<li>There's only one controller - <tt>Application</tt> - which is very big and thus unreadable. If all the other methods concerning users are in <tt>Application</tt>, also the <tt>Register#createNewUser()</tt> should be placed there.</li>
 		    		<li>The logic of creating the grid of the calendar is really inconsistent. Starting the application in November causes the calendar to have 30 days in every single month. Starting it in December implies 31 days for each month. In conclusion: the calculation you intended to do does not work at all.</li>
-		    		<li>You have a nice object structure, which is starting from the user.</li>
-		    		<li>Why isnt your ESEDatabase an ordinary object? It could be easily adapted to an object. 
-		    			In that case you would extend the object structure, so that the ESEDatabase would be the root node.
+		    		<li>You have a nice object structure, which is starting from <tt>User</tt>.</li>
+		    		<li>Why isnt your <tt>ESEDatabase</tt> an ordinary object? It could be easily adapted to an object. 
+		    			In that case you would extend the object structure, so that the <tt>ESEDatabase</tt> would be the root node.
 		    		</li>
-		    		<li>The Security controller is pretty strange. You redefine the static method Security#invoke() from the playframework in order to implement a redirection! What happens if the programmers of play change Security#invoke() method in a later release?</li>
+		    		<li>The <tt>Security</tt> controller is pretty strange. You redefine the static method <tt>Security#invoke()</tt> from the <tt>play!</tt> framework in order to implement a redirection! What happens if the programmers of play change <tt>Security#invoke()</tt> method in a later release?</li>
 		    	
 		    	</ul>
 		    	
 		    	<h2>Coding Style</h2>
 		    	
 		    	<ul>
-		    		<li>Almost every setter or getter sticks to the JavaBeans Conventions. That's good!</li>
+		    		<li>Almost every setter or getter sticks to the <tt>JavaBeans</tt> Conventions. That's good!</li>
 		    		<li>Frequent use of meaningless names for either methods or variables (constants and locals).</li>
 		    		<li>Class names are all started by <tt>ESE</tt> which helps destroying readability.</li>
 		    		<li>Almost every method throws an <tt>ESEException</tt> and there is even some which are declared as throwing one but actually don't. Further, the exceptions are mostly cascaded up the call stack to the play implementation and not handled at all.</li>
-		    		<li>The coding style isn't consistent. Requesting a user id is done by User#getUserID(). Requesting a calendar id should be therefore: Calendar#getCalendarID(), but is Calendar#getID().</li>
-		    		<li>It's okay to name getters for id's or names after the JavaBeans Conventions. But if you ever need an interface for events, calendars or users then you're better off by naming the attributes as id or name and the getters as getId() or as getName().</li>
+		    		<li>The coding style isn't consistent. Requesting a user id is done by <tt>User#getUserID()</tt>. Requesting a calendar id should be therefore: <tt>Calendar#getCalendarID()</tt>, but is <tt>Calendar#getID()</tt>.</li>
+		    		<li>It's okay to name getters for id's or names after the JavaBeans Conventions. But if you ever need an interface for events, calendars or users then you're better off by naming the attributes as id or name and the getters as <tt>getId()</tt> or as <tt>getName()</tt>.</li>
 		    	
 		    		</ul>
 		    	<h2>JavaDoc</h2>
