@@ -68,6 +68,8 @@
 		#{if event.isEventDay(_selectedDay,_month,_year)} 
 		<p> ${event.toString()} </p>
 		
+		#{showParticipants participants:event.getParticipants() /}
+		
 		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser.getName()!="guest"}
 				<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> Copy the event in your own calendar </a></p>
 				

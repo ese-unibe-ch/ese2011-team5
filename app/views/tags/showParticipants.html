@@ -1,0 +1,10 @@
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+		
+	Participants of the event:
+	<ul>
+	#{list items:_participants, as:'participant'}
+	<li><p>${participant.toString()}</p></li>
+	
+	#{/list}
+	<ul>
+	

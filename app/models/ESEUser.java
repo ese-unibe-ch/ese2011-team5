@@ -479,5 +479,11 @@ public class ESEUser implements Visitable
 	{
 		this.secureAnswer = newAnswer;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.profile.getUsername();
+	}
 
 }
