@@ -10,23 +10,22 @@
 	<h1>You are watching ${_watchedUser.getName()}'s profile</h1>
 #{/else}
 
-	Username: ${_profile.getUsername()} </br>
-	Member since: ${_profile.getRegistrationDateString()} </br>
-	State message: ${_profile.getStateMessage()} </br>
-	State: ${_profile.getState()} </br>
-	Firstname: ${_profile.getFirstName()} </br>
-	Familyname: ${_profile.getFamilyName()} </br>
-	Em@il: ${_profile.getMail()} </br>
+	Username: ${_watchedUser.getName()} </br>
+	Member since: ${_watchedUser.getRegistrationDate()} </br>
+	State message: ${_watchedUser.getStateMessage()} </br>
+	Firstname: ${_watchedUser.getFirstName()} </br>
+	Familyname: ${_watchedUser.getFamilyName()} </br>
+	Em@il: ${_watchedUser.getMail()} </br>
 	
-	#{if _profile.getBirthday()==null}
+	#{if _watchedUser.getBirthday()==null}
 		Birthday: - </br>
 	#{/if}
 	#{else}
-		Birthday: ${_profile.getBirthdayString()} </br>
+		Birthday: ${_watchedUser.getBirthdayString()} </br>
 	#{/else}
 	
 	
-	Street: ${_profile.getStreet()} </br>
-	City: ${_profile.getCity()} </br>
-	Postcode: ${_profile.getPostCode()} </br>
+	Street: ${_watchedUser.getStreet()} </br>
+	City: ${_watchedUser.getCity()} </br>
+	Postcode: ${_watchedUser.getPostCode()} </br>
 </body>

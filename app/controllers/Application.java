@@ -479,28 +479,28 @@ public class Application extends Controller {
 		ESEProfile profile = user.getProfile();
 
 		if (isStringNotEmpty(birthday)) {
-			profile.setBirthday(birthday);
+			user.setBirthday(birthday);
 		}
 		if (isStringNotEmpty(city)) {
-			profile.setCity(city);
+			user.setCity(city);
 		}
 		if (isStringNotEmpty(familyName)) {
-			profile.setFamilyName(familyName);
+			user.setFamilyName(familyName);
 		}
 		if (isStringNotEmpty(firstName)) {
-			profile.setFirstName(firstName);
+			user.setFirstName(firstName);
 		}
 		if (isStringNotEmpty(mail)) {
-			profile.setMail(mail);
+			user.setMail(mail);
 		}
 		if (isStringNotEmpty(postcode)) {
-			profile.setPostCode(postcode);
+			user.setPostCode(postcode);
 		}
 		if (isStringNotEmpty(stateMessage)) {
-			profile.setStateMessage(stateMessage);
+			user.setStateMessage(stateMessage);
 		}
 		if (isStringNotEmpty(street)) {
-			profile.setStreet(street);
+			user.setStreet(street);
 		}
 		if (isStringNotEmpty(question)) {
 			user.setQuestion(question);

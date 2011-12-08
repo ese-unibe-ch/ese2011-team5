@@ -52,7 +52,7 @@ public class Security extends Secure.Security
 		response.removeCookie("rememberme");
 		Security.invoke("onDisconnected");
 		flash.success("secure.logout");
-		ESEDatabase.getCurrentUser().getProfile().changeState(ESEState.OFFLINE);
+		//ESEDatabase.getCurrentUser().getProfile().changeState(ESEState.OFFLINE);
 		ESEDatabase.setCurrentUser("guest");
 
 		Application.showCalendars(); // go to the start screen, not to the login
