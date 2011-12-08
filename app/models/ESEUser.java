@@ -9,6 +9,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import models.visitor.Visitable;
 import models.visitor.Visitor;
@@ -42,6 +43,20 @@ public class ESEUser implements Visitable
 	 * @see ESEProfil
 	 */
 	private ESEProfile profile;
+	
+	private Date registrationDate;
+	private String stateMessage = "Hi there!";
+	private String username;
+	private String firstName = "-";
+	private String familyName = "-";
+
+	private Date birthday;
+
+	private String eMail = "-";
+
+	private String street = "-";
+	private String city = "-";
+	private String postCode = "-";
 
 	/**
 	 * String needed by ESEUser to login an application.<br>
@@ -123,6 +138,11 @@ public class ESEUser implements Visitable
 		}
 
 		this.userID = idCounter++;
+		this.username = username;
+		this.firstName = firstName;
+		this.familyName = familyName;
+		this.registrationDate = new Date();
+		
 		this.calendarList = new ArrayList<ESECalendar>();
 		this.groupList = new ArrayList<ESEGroup>();
 		ESEGroup friends = new ESEGroup("Friends", this);
@@ -161,70 +181,7 @@ public class ESEUser implements Visitable
 		return this.userID;
 	}
 
-	/**
-	 * 
-	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
-	 */
-	public String getName()
-	{
-		return this.profile.getUsername();
-	}
 
-	/**
-	 * 
-	 * @return {@link String} password of this ESEUser.
-	 */
-	public String getPassword()
-	{
-		return this.password;
-	}
-
-	/**
-	 * 
-	 * @return {@link String} firstName of this ESEUser.
-	 */
-	public String getFirstName()
-	{
-		return this.profile.getFirstName();
-	}
-
-	/**
-	 * 
-	 * @return {@link String} familyName of this ESEUser.
-	 */
-	public String getFamilyName()
-	{
-		return this.profile.getFamilyName();
-	}
-
-	/**
-	 * 
-	 * @return {@link ESEProfile} containing this ESEUsers personal informations.
-	 * 
-	 * @see ESEProfile
-	 */
-	public ESEProfile getProfile()
-	{
-		return this.profile;
-	}
-
-	/**
-	 * 
-	 * @return {@link String} that contains the Question.
-	 */
-	public String getQuestion()
-	{
-		return this.secureQuestion;
-	}
-
-	/**
-	 * 
-	 * @return {@link String} that contains the Answer.
-	 */
-	public String getAnswer()
-	{
-		return this.secureAnswer;
-	}
 
 	/**
 	 * 
@@ -478,6 +435,247 @@ public class ESEUser implements Visitable
 	public void setAnswer(String newAnswer)
 	{
 		this.secureAnswer = newAnswer;
+	}
+	
+	/**
+	 * 
+	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
+	 */
+	public String getName()
+	{
+		return this.username;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} password of this ESEUser.
+	 */
+	public String getPassword()
+	{
+		return this.password;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} firstName of this ESEUser.
+	 */
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} familyName of this ESEUser.
+	 */
+	public String getFamilyName()
+	{
+		return this.familyName;
+	}
+	
+	/**
+	 * 
+	 * @return birthday of this ESEUser.
+	 */
+	public Date getBirthday()
+	{
+		return birthday;
+	}
+	
+	/**
+	 * @return String {@link #birthday} representation of this ESEProfile, 
+	 * with the following format: "dd.MM.yyyy HH:mm".<br>
+	 * If not initialized "-" is returned instead.
+	 */
+	public String getBirthdayString()
+	{
+		return ESEConversionHelper.convertBirthdayDateToString(this.birthday);
+	}
+	
+	/**
+	 * @return Date {@link #registrationDate} of this ESEProfile.
+	 */
+	public Date getRegistrationDate()
+	{
+		return this.registrationDate;
+	}
+	
+	/**
+	 * @return String {@link #registrationDate} representation of this ESEProfile.
+	 */
+	public String getRegistrationDateString()
+	{
+		return ESEConversionHelper.convertDateToString(this.registrationDate);
+	}
+	
+	/**
+	 * @return String {@link #eMail} of this ESEProfile.
+	 * If not initialized, the default value is "-".
+	 */
+	public String getMail()
+	{
+		return eMail;
+	}
+	/**
+	 * @return String {@link #street} of this ESEProfile. 
+	 * If not initialized, the default value is "-".
+	 */
+	public String getStreet()
+	{
+		return street;
+	}
+	/**
+	 * @return String {@link #city} of this ESEProfile. 
+	 * If not initialized, the default value is "-".
+	 */
+	public String getCity()
+	{
+		return city;
+	}
+	/**
+	 * @return String {@link #postCode} of this ESEProfile. 
+	 * If not initialized, the default value is "-".
+	 */
+	public String getPostCode()
+	{
+		return postCode;
+	}
+	
+	/**
+	 * @return String {@link #stateMessage} of this ESEProfile. 
+	 * If not initialized, the default value is "hi there!".
+	 */
+	public String getStateMessage()
+	{
+		return this.stateMessage;
+	}
+	
+	/**
+	 * Set the {@link #stateMessage} to a new value.<br>
+	 * The default value of stateMessage when a new ESEProfile is 
+	 * created is: "hi there!". <p>
+	 * Example of new message: <br>
+	 * stateMessage = "I'm at home and it is raining."
+	 * 
+	 * @param stateMessage the message to be set.
+	 */
+	public void setStateMessage(String stateMessage)
+	{
+		this.stateMessage=stateMessage;
+	}
+	/**
+	 * Set the {@link #username} to a new value.<br>
+	 * 
+	 * @param username to be set. Must not be empty.
+	 */
+	public void setUsername(String username)
+	{
+		this.username = username;
+	}
+	/**
+	 * Set the {@link #firstName} to a new value.<br> 
+	 * The default value by initialization is "-".
+	 * 
+	 * @param firstName to be set.
+	 */
+	public void setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+	}
+	/**
+	 * Set the {@link #familyName} to a new value. <br>
+	 * The default value by initialization is "-".
+	 * 
+	 * @param familyName to be set.
+	 */
+	public void setFamilyName(String familyName)
+	{
+		this.familyName = familyName;
+	}
+	/**
+	 * Set {@link #birthday} to the right Date.
+	 * @param birthday {@link Date} of birth of related ESEUser.
+	 * @see {@link #setBirthday(String)} to set by String.
+	 */
+	public void setBirthday(Date birthday)
+	{
+		this.birthday = birthday;
+	}
+	/**
+	 * Set {@link #birthday} to the right Date.
+	 * 
+	 * @param birthday <br>The String must have the following format: "dd.MM.yyyy HH:mm".
+	 * @see {@link #setBirthday(Date)} to set by Date.
+	 */	
+	public void setBirthday(String birthday)
+	{
+		Date birthdayDate = ESEConversionHelper.convertBirthdayStringToDate(birthday);
+		this.setBirthday(birthdayDate);
+	}
+	/**
+	 * Set {@link #eMail} to a new value.<br>
+	 * The default value by initialization is "-".
+	 * @param eMail to be set.
+	 */
+	public void setMail(String eMail)
+	{
+		this.eMail = eMail;
+	}
+	/**
+	 * Set {@link #street} to a new value.<br>
+	 * The default value by initialization is "-".
+	 * @param street to be set.
+	 */
+	public void setStreet(String street)
+	{
+		this.street = street;
+	}
+	/**
+	 * Set {@link #city} to a new value.<br>
+	 * The default value by initialization is "-".
+	 * @param city to be set.
+	 */
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
+	/**
+	 * Set {@link #postCode} to a new value.<br>
+	 * The default value by initialization is "-".
+	 * @param postCode to be set.
+	 */
+	public void setPostCode(String postCode)
+	{
+		this.postCode = postCode;
+	}
+
+	/**
+	 * 
+	 * @return {@link ESEProfile} containing this ESEUsers personal informations.
+	 * 
+	 * @see ESEProfile
+	 */
+	public ESEProfile getProfile()
+	{
+		return this.profile;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} that contains the Question.
+	 */
+	public String getQuestion()
+	{
+		return this.secureQuestion;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} that contains the Answer.
+	 */
+	public String getAnswer()
+	{
+		return this.secureAnswer;
 	}
 
 }
