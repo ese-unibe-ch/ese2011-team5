@@ -3,7 +3,7 @@
 	Participants of the event:
 	<ul>
 	#{list items:_participants, as:'participant'}
-	<li><p>${participant.toString()}</p></li>
+	<li><a href="@{Application.showOtherCalendars(participant.getName())}">${participant.getName()}</a></li>
 	
 	#{/list}
 	<ul>
