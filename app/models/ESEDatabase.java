@@ -52,12 +52,7 @@ public class ESEDatabase
 	 */
 	public static void setCurrentUser(ESEUser loggedIn)
 	{
-		if(currentUser != null)
-		{
-			currentUser.getProfile().changeState(ESEState.OFFLINE);
-		}
 		currentUser = loggedIn;
-		currentUser.getProfile().changeState(ESEState.ONLINE);
 	}
 	/**
 	 * Returns the ESEUser that is currently logged in.
@@ -267,6 +262,5 @@ public class ESEDatabase
 		ESECalendar.resetIdCounter();
 		ESEEvent.resetIdCounter();
 		ESEGroup.resetIdCounter();
-		ESEProfile.resetIdCounter();
 	}
 }

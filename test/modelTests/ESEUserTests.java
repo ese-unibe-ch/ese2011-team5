@@ -115,4 +115,28 @@ public class ESEUserTests extends UnitTest
 		assertEquals(testCalendar1.getAllEvents(), allowedEvents);
 		assertEquals(publicEvents, onlyAllowedEvents);
 	}
+	
+	@Test
+	public void shouldEditProfile()
+	{
+		user1.setBirthday("16.11.2011");
+		user1.setCity("Here");
+		user1.setFamilyName("Test");
+		user1.setFirstName("User");
+		user1.setMail("-");
+		user1.setPostCode("0000");
+		user1.setStateMessage("I was here!");
+		user1.setStreet("Street");
+		user1.setUsername("TestUser");
+
+		assertEquals("16.11.2011", user1.getBirthdayString());
+		assertEquals("Here", user1.getCity());
+		assertEquals("Test", user1.getFamilyName());
+		assertEquals("User", user1.getFirstName());
+		assertEquals("-", user1.getMail());
+		assertEquals("0000", user1.getPostCode());
+		assertEquals("I was here!", user1.getStateMessage());
+		assertEquals("Street", user1.getStreet());
+		assertEquals("TestUser", user1.getName());
+	}
 }

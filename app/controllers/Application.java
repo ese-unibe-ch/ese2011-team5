@@ -12,7 +12,7 @@ import models.ESEDatabase;
 import models.ESEEvent;
 import models.ESEException;
 import models.ESEGroup;
-import models.ESEProfile;
+//import models.ESEProfile;
 import models.ESEUser;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -274,25 +274,25 @@ public class Application extends Controller {
 	public static void profile(int userID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
-		ESEProfile profile = watchedUser.getProfile();
+		//ESEProfile profile = watchedUser.getProfile();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
 				.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
-		render(currentUser, groups, otherUsers, watchedUser, profile);
+		render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
 	}
 
 	public static void showAndEditProfile(int userID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
-		ESEProfile profile = watchedUser.getProfile();
+		//ESEProfile profile = watchedUser.getProfile();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser
 				.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		ArrayList<ESEUser> otherUsersList = otherUsers;
 
-		render(currentUser, groups, otherUsers, watchedUser, profile,
+		render(currentUser, groups, otherUsers, watchedUser, /*profile,*/
 				otherUsersList);
 	}
 
@@ -476,7 +476,7 @@ public class Application extends Controller {
 			String password, String confirmpassword, String question,
 			String answer) throws ESEException {
 		ESEUser user = ESEDatabase.getUserByID(userID);
-		ESEProfile profile = user.getProfile();
+		//ESEProfile profile = user.getProfile();
 
 		if (isStringNotEmpty(birthday)) {
 			user.setBirthday(birthday);

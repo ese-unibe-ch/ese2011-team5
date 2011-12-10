@@ -42,8 +42,7 @@ public class ESEUser implements Visitable
 	 * 
 	 * @see ESEProfil
 	 */
-	private ESEProfile profile;
-	
+		
 	private Date registrationDate;
 	private String stateMessage = "Hi there!";
 	private String username;
@@ -147,8 +146,7 @@ public class ESEUser implements Visitable
 		this.groupList = new ArrayList<ESEGroup>();
 		ESEGroup friends = new ESEGroup("Friends", this);
 		this.groupList.add(friends);
-		this.profile = new ESEProfile(this, username, firstName, familyName);
-
+		
 		this.secureQuestion = secureQuestion;
 		this.secureAnswer = secureAnswer;
 		this.password = password;
@@ -647,17 +645,6 @@ public class ESEUser implements Visitable
 	public void setPostCode(String postCode)
 	{
 		this.postCode = postCode;
-	}
-
-	/**
-	 * 
-	 * @return {@link ESEProfile} containing this ESEUsers personal informations.
-	 * 
-	 * @see ESEProfile
-	 */
-	public ESEProfile getProfile()
-	{
-		return this.profile;
 	}
 
 	/**
