@@ -437,7 +437,7 @@ public class Application extends Controller {
 			ESEEvent event = otherCalendar.getEventByID(eventID);
 			event.addCorrespondingCalendar(selectedCalendar);
 			selectedCalendar.addEvent(event);
-
+			event.addParticipant(user);
 			// betweenShowCalendarsAndShowCalendarView(ESEDatabase.getCurrentUser().getCalendarList().get(0).getID(),
 			// ESEDatabase.getCurrentUser().getName());
 			int day = ESEConversionHelper.getDay(event.getStartDate());

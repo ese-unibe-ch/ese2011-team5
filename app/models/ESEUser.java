@@ -179,7 +179,70 @@ public class ESEUser implements Visitable
 		return this.userID;
 	}
 
+	/**
+	 * 
+	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
+	 */
+	public String getName()
+	{
+		return this.profile.getUsername();
+	}
 
+	/**
+	 * 
+	 * @return {@link String} password of this ESEUser.
+	 */
+	public String getPassword()
+	{
+		return this.password;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} firstName of this ESEUser.
+	 */
+	public String getFirstName()
+	{
+		return this.profile.getFirstName();
+	}
+
+	/**
+	 * 
+	 * @return {@link String} familyName of this ESEUser.
+	 */
+	public String getFamilyName()
+	{
+		return this.profile.getFamilyName();
+	}
+
+	/**
+	 * 
+	 * @return {@link ESEProfile} containing this ESEUsers personal informations.
+	 * 
+	 * @see ESEProfile
+	 */
+	public ESEProfile getProfile()
+	{
+		return this.profile;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} that contains the Question.
+	 */
+	public String getQuestion()
+	{
+		return this.secureQuestion;
+	}
+
+	/**
+	 * 
+	 * @return {@link String} that contains the Answer.
+	 */
+	public String getAnswer()
+	{
+		return this.secureAnswer;
+	}
 
 	/**
 	 * 
@@ -435,6 +498,7 @@ public class ESEUser implements Visitable
 		this.secureAnswer = newAnswer;
 	}
 	
+
 	/**
 	 * 
 	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
@@ -663,6 +727,12 @@ public class ESEUser implements Visitable
 	public String getAnswer()
 	{
 		return this.secureAnswer;
+=======
+	@Override
+	public String toString()
+	{
+		return this.profile.getUsername();
+>>>>>>> 7cd423adb5a13ac8146ef8e1b7e496fa29788881
 	}
 
 }

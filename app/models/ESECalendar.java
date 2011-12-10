@@ -189,6 +189,8 @@ public class ESECalendar implements Visitable
 	{
 		ESEEvent eventToRemove = this.getEventByID(eventID);
 		this.eventList.remove(eventToRemove);
+		
+		eventToRemove.removeParticipant(this.owner);
 
 	}
 

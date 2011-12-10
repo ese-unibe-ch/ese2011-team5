@@ -277,6 +277,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		if (!this.correspondingCalendars.contains(correspondingCalendar))
 		{
 			this.correspondingCalendars.add(correspondingCalendar);
+		
 		}
 
 	}
@@ -291,6 +292,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		if (this.correspondingCalendars.contains(correspondingCalendar))
 		{
 			this.correspondingCalendars.remove(correspondingCalendar);
+			
 		}
 	}
 
@@ -481,5 +483,28 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		}
 
 		this.correspondingCalendars.clear();
+	}
+	
+	/**
+	 * get all participants of the event
+	 * @return an arrayList of ESEUsers
+	 */
+	public ArrayList<ESEUser> getParticipants()
+	{
+		return new ArrayList<ESEUser>(this.participants);
+	}
+	
+	public void addParticipant(ESEUser participant)
+	{
+		this.participants.add(participant);
+	}
+	
+	public void removeParticipant(ESEUser participant)
+	{
+		if(this.participants.contains(participant))
+		{
+			this.participants.remove(participant);
+		}
+		
 	}
 }
