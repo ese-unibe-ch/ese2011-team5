@@ -21,42 +21,42 @@
 			
 			<p id="stateMessage-field">
 				<label for="stateMessage">stateMessage</label>
-				<input type="text" name="stateMessage" id="stateMessage" value="${_profile.getStateMessage()}"/>
+				<input type="text" name="stateMessage" id="stateMessage" value="${_currentUser.getStateMessage()}"/>
 			</p>
 		
 			<p id="firstName-field">
 				<label for="firstName">firstName</label>
-				<input type="text" name="firstName" id="firstName" value="${_profile.getFirstName()}"/>
+				<input type="text" name="firstName" id="firstName" value="${_currentUser.getFirstName()}"/>
 			</p>
 			
 			<p id="familyName-field">
 				<label for="familyName">familyName</label>
-				<input type="text" name="familyName" id="familyName" value="${_profile.getFamilyName()}"/>
+				<input type="text" name="familyName" id="familyName" value="${_currentUser.getFamilyName()}"/>
 			</p>
 			
 			<p id="mail-field">
 				<label for="mail">eM@il</label>
-				<input type="text" name="mail" id="mail" value="${_profile.getMail()}"/>
+				<input type="text" name="mail" id="mail" value="${_currentUser.getMail()}"/>
 			</p>
 			
 			<p id="birthday-field">
 				<label for="birthday">birthday</label>
-				<input type="text" name="birthday" id="birthday" value="${_profile.getBirthdayString()}"/>
+				<input type="text" name="birthday" id="birthday" value="${_currentUser.getBirthdayString()}"/>
 			</p>
 			
 			<p id="street-field">
 				<label for="street">street</label>
-				<input type="text" name="street" id="street" value="${_profile.getStreet()}"/>
+				<input type="text" name="street" id="street" value="${_currentUser.getStreet()}"/>
 			</p>
 			
 			<p id="city-field">
 				<label for="city">city</label>
-				<input type="text" name="city" id="city" value="${_profile.getCity()}"/>
+				<input type="text" name="city" id="city" value="${_currentUser.getCity()}"/>
 			</p>
 			
 			<p id="postcode-field">
 				<label for="postcode">postcode</label>
-				<input type="text" name="postcode" id="postcode" value="${_profile.getPostCode()}"/>
+				<input type="text" name="postcode" id="postcode" value="${_currentUser.getPostCode()}"/>
 			</p>
 			
 			<p id="password-field">
