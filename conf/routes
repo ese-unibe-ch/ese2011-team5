@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                                       											Application.showCalendars
+GET     /                                       											Application.index
 GET		/forgotPassword/{username}															Application.forgotPassword(username)	
 GET 	/{username}																			Application.showOtherCalendars()
 GET		/{username}/{calendarID}/day={selectedDay}&month={month}&year={year}				Application.showCalendarView()
