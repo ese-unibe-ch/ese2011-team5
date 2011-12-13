@@ -282,6 +282,16 @@ public class Application extends Controller {
 		render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
 	}
 
+	public static void showCurrentUserProfile() throws ESEException
+	{
+		if(ESEDatabase.isUserLogedIn())
+		{
+			ESEUser user = ESEDatabase.getCurrentUser();
+			showAndEditProfile(user.getUserID());
+		}
+		//TODO: DO NOTHING
+	}
+	
 	public static void showAndEditProfile(int userID) throws ESEException {
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
@@ -537,5 +547,20 @@ public class Application extends Controller {
 		ArrayList<ESEUser> otherUsersList = otherUsers;
 
 		render(groupList, currentUser, otherUsersList);
+	}
+	
+	public static void login()
+	{
+		render();
+	}
+	
+	public static ESEUser getCurrentUser()
+	{
+		return ESEDatabase.getCurrentUser();
+	}
+	
+	public static ESEDatabase getDatabase()
+	{
+		return new ESEDatabase();
 	}
 }

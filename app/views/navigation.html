@@ -1,0 +1,17 @@
+#{stylesheet 'navigation.css' /}
+<nav id="mainNav">
+	<a href=@{Application.showCalendars()}>Home</a> 
+	| 
+	Calendars 
+	|
+	Contacts
+</nav>
+
+<nav id="statusNav">
+	#{if currentUser}	*{TODO}*
+		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
+	#{/if}
+	#{else}
+		<a href=@{Application.login()}>Login</a>
+	#{/else}
+</nav>

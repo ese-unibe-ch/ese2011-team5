@@ -9,6 +9,7 @@ package models;
 
 import java.util.ArrayList;
 
+
 import controllers.Secure;
 import controllers.Security;
 /**
@@ -20,7 +21,7 @@ import controllers.Security;
  * @see ESEUser
  *
  */
-public class ESEDatabase
+public class  ESEDatabase
 {
 	/**
 	 * The currentUser is the ESEUser that is currently useing 
@@ -70,8 +71,9 @@ public class ESEDatabase
 	public static ESEUser getCurrentUser() 
 	{
 		String username = Security.connected();
-		System.out.println("Looking for user with username: "+ username);
-		try {
+
+		try 
+		{
 			return ESEDatabase.getUserByName(username);
 		} catch (ESEException e)
 		{
@@ -136,10 +138,23 @@ public class ESEDatabase
 		{
 			if (user.getName().equals(username))
 			{
-				return user;
+				if(!isUserGuestUser(user))
+				{
+					return user;
+				}
+				else
+				{
+					System.out.println("It is the guest user!");
+				}
 			}
 		}
 		throw new ESEException("User \"" + username + "\" not found!");
+	}
+	private static boolean isUserGuestUser(ESEUser user) 
+	{
+		
+		System.out.println("in user: " + user.getName() + "guestUser: "+ guestUser.getName());
+		return user.equals(guestUser);
 	}
 	/**
 	 * Searches by userID and returns a {@link ESEUser}.
@@ -286,7 +301,24 @@ public class ESEDatabase
 	
 	public static void prepareGuestUser() throws ESEException 
 	{
-		ESEUser guest = new ESEUser("guest", "guest", "guest", "guest");
-		guestUser = guest;
+		guestUser = new ESEUser("guest", "guest", "guest", "guest");
+	}
+	
+	/**
+	 * 
+	 * @return true if an user is logged in; else return false
+	 */
+	public static boolean isUserLogedIn()
+	{
+		String username = Security.connected();
+		try 
+		{
+			ESEDatabase.getUserByName(username);
+			return true;
+		} 
+		catch (ESEException e)
+		{
+			return false;
+		}
 	}
 }
