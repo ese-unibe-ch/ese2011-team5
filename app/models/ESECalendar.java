@@ -203,11 +203,17 @@ public class ESECalendar implements Visitable
 	 */
 	public ArrayList<ESEEvent> getAllAllowedEvents()
 	{
-		if (ESEDatabase.getCurrentUser().equals(this.owner))
-		{
-			return this.getAllEvents();
+		try {
+			if (ESEDatabase.getCurrentUser().equals(this.owner))
+			{
+				return this.getAllEvents();
+			}
+			else
+			{
+				return this.getAllPublicEvents();
+			}
 		}
-		else
+		catch (ESEExceptionGuestUser e) 
 		{
 			return this.getAllPublicEvents();
 		}
@@ -254,10 +260,14 @@ public class ESECalendar implements Visitable
 	 */
 	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month, int year)
 	{
-		if (ESEDatabase.getCurrentUser().equals(this.owner))
-			return this.getAllEventsOfMonth(month, year);
-		else
+		try {
+			if (ESEDatabase.getCurrentUser().equals(this.owner))
+				return this.getAllEventsOfMonth(month, year);
+			else
+				return this.getAllPublicEventsOfMonth(month, year);
+		} catch (ESEExceptionGuestUser e) {
 			return this.getAllPublicEventsOfMonth(month, year);
+		}
 	}
 
 	/**

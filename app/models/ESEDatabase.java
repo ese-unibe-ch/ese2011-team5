@@ -66,18 +66,16 @@ public class  ESEDatabase
 	/**
 	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return the default guestUser
 	 * @return currentUser ESEUser
+	 * @throws ESEExceptionGuestUser 
 	 * @throws ESEException 
 	 */
-	public static ESEUser getCurrentUser() 
+	public static ESEUser getCurrentUser() throws ESEExceptionGuestUser 
 	{
 		String username = Security.connected();
-
-		try 
-		{
+		try {
 			return ESEDatabase.getUserByName(username);
-		} catch (ESEException e)
-		{
-			return guestUser;	
+		} catch (ESEException e) {
+			throw new ESEExceptionGuestUser();
 		}
 	}
 
@@ -307,10 +305,13 @@ public class  ESEDatabase
 	/**
 	 * 
 	 * @return true if an user is logged in; else return false
+	 * @@Deprecated: Use the Security.isConnected();
 	 */
+	@Deprecated 
 	public static boolean isUserLogedIn()
 	{
 		String username = Security.connected();
+		
 		try 
 		{
 			ESEDatabase.getUserByName(username);

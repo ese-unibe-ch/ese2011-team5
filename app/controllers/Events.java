@@ -3,11 +3,13 @@
  */
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import models.ESEDatabase;
 import models.ESEEvent;
+import models.ESEExceptionGuestUser;
 import models.ESEUser;
 import models.visitor.SearchEventVisitor;
 
@@ -28,13 +30,23 @@ public class Events extends Application
 
 	public static void searchEvent()
 	{
-		ESEUser user = ESEDatabase.getCurrentUser();
-		String lowerlimit = new DateTime().minusYears(1).toString(DATE_PATTERN);
-		String upperlimit = new DateTime().plusYears(1).toString(DATE_PATTERN);
-		renderArgs.put("upperlimit", upperlimit);
-		renderArgs.put("lowerlimit", lowerlimit);
-		renderArgs.put("userId", user.getUserID());
-		render();
+		ESEUser user;
+		try 
+		{
+			user = ESEDatabase.getCurrentUser();
+			String lowerlimit = new DateTime().minusYears(1).toString(DATE_PATTERN);
+			String upperlimit = new DateTime().plusYears(1).toString(DATE_PATTERN);
+			renderArgs.put("upperlimit", upperlimit);
+			renderArgs.put("lowerlimit", lowerlimit);
+			renderArgs.put("userId", user.getUserID());
+			render();													//LK: TODO CHECK THIS TRY AND CATCH; maybe there will be an wrong render?
+		} 
+		catch (ESEExceptionGuestUser e) 
+		{
+			//TODO Auto-generated catch block
+			//e.printStackTrace();				//DON'T DO ANYTHING
+		}
+	
 	}
 
 	public static void handleEventSearch(@Required Long uid,

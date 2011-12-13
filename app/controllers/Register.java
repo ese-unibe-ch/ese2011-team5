@@ -10,10 +10,23 @@ public class Register extends Controller
 
 	public static void index()
 	{
-		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
-		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+		ESEUser currentUser = null;
+		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
+		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
+		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
+		try 
+		{
+			currentUser = ESEDatabase.getCurrentUser();
+			calendarList = currentUser.getCalendarList();
+			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+			groups = currentUser.getGroupList();
+		} 
+		catch (ESEExceptionGuestUser e) 
+		{
+			// TODO Auto-generated catch block
+			// e.printStackTrace();				//DON'T DO ANYTHING
+		}
+		
 
 		render(currentUser, calendarList, otherUsers, groups);
 	}

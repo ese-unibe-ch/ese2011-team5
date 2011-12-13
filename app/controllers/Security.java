@@ -69,6 +69,7 @@ public class Security extends Secure.Security
 
 	private static Object invoke(String m, Object... args) throws Throwable 
 	{
+		
 		Class security = null;
 		List<Class> classes = Play.classloader.getAssignableClasses(Security.class);
 		if (classes.size() == 0) {
@@ -81,5 +82,7 @@ public class Security extends Secure.Security
 		} catch (InvocationTargetException e) {
 			throw e.getTargetException();
 		}
+		
+	
 	}
 }

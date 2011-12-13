@@ -7,6 +7,7 @@
 	Contacts
 </nav>
 
+
 <nav id="statusNav">
 	#{if currentUser}	*{TODO}*
 		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
@@ -14,4 +15,5 @@
 	#{else}
 		<a href=@{Application.login()}>Login</a>
 	#{/else}
+	Status: 
 </nav>
