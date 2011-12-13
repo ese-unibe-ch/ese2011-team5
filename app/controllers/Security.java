@@ -42,7 +42,7 @@ public class Security extends Secure.Security
 			  flash.error("No user with the given username exists!");
 	          params.flash();
 		}
-		
+		System.out.println("LOGIN OK...");
 		Application.showCalendars();
 	}
 

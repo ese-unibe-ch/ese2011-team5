@@ -2,13 +2,14 @@
 #{set title:'ESECalendar' /}
 
 <body>
-	<header>
+	*{<header>
 		<aside id="login">
+			CurrentUser in index is ${currentUser}
 			#{nav currentUser:currentUser/}
 		</aside>
 		<h1 id="title"> ESECalendar <h1>
 		<hr>
-	</header>
+	</header>}*
 
 	<section id="section">
 		<aside id="search">
@@ -19,7 +20,8 @@
 		</aside>
 		
 		<article>
-			#{if currentUser.getName().equals("guest")}
+			
+			#{if !currentUser}
 				#{login /}
 			#{/if}
 			#{else}

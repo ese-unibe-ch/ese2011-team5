@@ -75,6 +75,7 @@ public class  ESEDatabase
 		try {
 			return ESEDatabase.getUserByName(username);
 		} catch (ESEException e) {
+			System.out.println("THE CURRENT USER IS GUEST!");
 			throw new ESEExceptionGuestUser();
 		}
 	}
@@ -151,7 +152,7 @@ public class  ESEDatabase
 	private static boolean isUserGuestUser(ESEUser user) 
 	{
 		
-		System.out.println("in user: " + user.getName() + "guestUser: "+ guestUser.getName());
+		//System.out.println("in user: " + user.getName() + "guestUser: "+ guestUser.getName());
 		return user.equals(guestUser);
 	}
 	/**
@@ -320,6 +321,18 @@ public class  ESEDatabase
 		catch (ESEException e)
 		{
 			return false;
+		}
+	}
+	
+	public static ESEUser getCurrentUserForView()
+	{
+		try 
+		{
+			return getCurrentUser();
+		} 
+		catch (ESEExceptionGuestUser e) 
+		{
+			return null;
 		}
 	}
 }

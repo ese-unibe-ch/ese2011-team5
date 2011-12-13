@@ -14,7 +14,7 @@ public class Bootstrap extends Job
 
 		//ESEDatabase.createUser("guest", "guest", "guest", "guest");
 		//ESEDatabase.setCurrentUser("guest");
-		ESEDatabase.prepareGuestUser();
+		//ESEDatabase.prepareGuestUser();
 
 		/*create users*/
 		ESEDatabase.createUser("User1", "pw1", "firstname1", "secondname1");

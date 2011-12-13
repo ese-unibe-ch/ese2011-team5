@@ -887,11 +887,30 @@ public class Application extends Controller {
 
 
 	}
-	
-	//TODO Auto-generated catch block
-	//e.printStackTrace();				//DON'T DO ANYTHING
+
 	public static void login()
 	{
+		
 		render();
 	}
+	
+	public static void index()
+	{
+		ESEUser currentUser = null;
+		try 
+		{
+			currentUser = ESEDatabase.getCurrentUser();
+		} 	
+		catch (ESEExceptionGuestUser e) 
+		{
+			//TODO Auto-generated catch block
+			//e.printStackTrace();				//DON'T DO ANYTHING
+		}
+		finally
+		{
+			render(currentUser);
+		}
+	}
+		
+
 }

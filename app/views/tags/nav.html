@@ -6,7 +6,9 @@
 <div id="nav">
 	<a href=@{Application.showCalendars()}>Home</a>
 		
-		#{if !_currentUser.getName().equals("guest")}
+		CurrentUser is ${currentUser}
+		
+		#{if currentUser}
 			 <a href=@{Application.showAndEditProfile(_currentUser.getUserID())}>Profile</a>
 			 <a href=@{Application.showGroups()}>Contacts</a>
 			 <a href=@{Security.logout()}>logout</a>

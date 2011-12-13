@@ -1,19 +1,31 @@
 #{stylesheet 'navigation.css' /}
 <nav id="mainNav">
-	<a href=@{Application.showCalendars()}>Home</a> 
-	| 
-	Calendars 
-	|
-	Contacts
-</nav>
-
-
-<nav id="statusNav">
-	#{if currentUser}	*{TODO}*
-		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
+	<a href = @{Application.index()}>Home</a>
+	
+	#{if currentUser}
+		|
+		<a href=@{Application.showCalendars()}>Calendars</a>
+		|
+		<a href=@{Application.showGroups()}>Contacts</a>
+		|
+		
+			
 	#{/if}
 	#{else}
 		<a href=@{Application.login()}>Login</a>
 	#{/else}
-	Status: 
+	
+	
+</nav>
+
+<nav id="statusNav">
+	#{if currentUser}
+		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
+		 <a href=@{Application.showAndEditProfile(currentUser.getUserID())}>Profile</a>
+			 <a href=@{Application.showGroups()}>Contacts</a>
+			 <a href=@{Security.logout()}>logout</a>
+	#{/if}
+	#{else}
+		<a href=@{Application.login()}>Login</a>
+	#{/else}
 </nav>
