@@ -8,6 +8,9 @@
 package models;
 
 import java.util.ArrayList;
+
+import controllers.Secure;
+import controllers.Security;
 /**
  * The ESEDatabase is responsible for the administration of 
  * the {@link ESEUser}s.<br>
@@ -27,6 +30,11 @@ public class ESEDatabase
 	 * @see ESEUser
 	 */
 	private static ESEUser currentUser;
+	
+	/**
+	 * The guestUser is the default user if no user is logged in at the moment.
+	 */
+	private static ESEUser guestUser;
 	/**
 	 * List of all registered ESEUsers.
 	 */
@@ -55,12 +63,20 @@ public class ESEDatabase
 		currentUser = loggedIn;
 	}
 	/**
-	 * Returns the ESEUser that is currently logged in.
+	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return the default guestUser
 	 * @return currentUser ESEUser
+	 * @throws ESEException 
 	 */
-	public static ESEUser getCurrentUser()
+	public static ESEUser getCurrentUser() 
 	{
-		return currentUser;
+		String username = Security.connected();
+		System.out.println("Looking for user with username: "+ username);
+		try {
+			return ESEDatabase.getUserByName(username);
+		} catch (ESEException e)
+		{
+			return guestUser;	
+		}
 	}
 
 	/*
@@ -262,5 +278,15 @@ public class ESEDatabase
 		ESECalendar.resetIdCounter();
 		ESEEvent.resetIdCounter();
 		ESEGroup.resetIdCounter();
+	}
+	/**
+	 * creates a new guestUser and set the database guestUser to this new user
+	 * @throws ESEException
+	 */
+	
+	public static void prepareGuestUser() throws ESEException 
+	{
+		ESEUser guest = new ESEUser("guest", "guest", "guest", "guest");
+		guestUser = guest;
 	}
 }

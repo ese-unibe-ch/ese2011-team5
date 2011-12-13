@@ -20,6 +20,15 @@ public class Security extends Secure.Security
 			if(loginUser.getPassword().equals(password))
 			{
 				ESEDatabase.setCurrentUser(loginUser.getName());
+				try {
+					Secure.authenticate(username, password, false); //TODO New variable for boolean
+				} catch (Throwable e) 
+				{
+					flash.error("Wrong password! Try it again! <a href=forgotPassword/" 
+							+ username +"> Did you forget your password? - Don't worry, be happy: There is a solution! </a>");
+								params.flash();
+				}	
+				
 			}
 			else
 			{
@@ -53,7 +62,7 @@ public class Security extends Secure.Security
 		Security.invoke("onDisconnected");
 		flash.success("secure.logout");
 		//ESEDatabase.getCurrentUser().getProfile().changeState(ESEState.OFFLINE);
-		ESEDatabase.setCurrentUser("guest");
+		//ESEDatabase.setCurrentUser("guest");
 
 		Application.showCalendars(); // go to the start screen, not to the login
 	}
