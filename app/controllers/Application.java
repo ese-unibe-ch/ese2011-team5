@@ -742,6 +742,31 @@ public class Application extends Controller {
 		//showCalendars();
 		render(results);
 	}
+	
+	/**
+	 * For ajax
+	 * @param searchName
+	 */
+	public static void search()
+	{
+		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
+		List<ESEUser> results = ESEDatabase.getAllUsers();
+		
+		System.out.println("RESULT ALL: " + results);
+//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
+//		for (ESEUser u : otherUserLocalOriginal)
+//		{
+//			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
+//			{
+//				otherUsersLocal.remove(u);						//NOT LONGER NECESSARY BECAUSE THERE ISN'T A GUEST USER!
+//			}
+//		}
+
+		//otherUsers = otherUsersLocal;
+
+		//showCalendars();
+		render(results);
+	}
 
 	/**
 	 * 

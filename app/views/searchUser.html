@@ -5,28 +5,25 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 </head>
 <body>
-	<h3>Search users (<a href="@{Application.searchUser("")}">all users</a>)</h3>
-	*{#{form @Application.searchUser()}
-			<p id="searchName-field">
-			<label for="searchName">Search for user:</label>
-			<input type="text" name="searchName" id="searchName" />
-		</p>
-		<p id="signin-field">
-			<input type="submit" id="signin" value="Search" />
-		</p>
-	#{/form}}*
+	<a href = # id="displayAll">Display all users</a>
+
 	
 	*{NEW:}*
 	
 	<script type="text/javascript" charset="utf-8">
 	var searchAction = #{jsAction @Application.search(':query') /}
-	
-	document.write("<a href="+$('#results p').load(searchAction({query: ' ' }))+"> All users</a>"); *{ TODO: FIX THIS!}*
+	var searchActionAll = #{jsAction @Application.search('') /}
 	
 	//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
 	$(document).ready(function (){
 		$('#search').keyup(function () {
 			$('#results p').load(searchAction({query: this.value}));
+		});		
+	});
+	
+	$(document).ready(function (){
+		$('#displayAll').click(function() {
+			$('#results p').load(searchActionAll());
 		});		
 	});
 	
@@ -40,6 +37,7 @@
 		<p>
 		</p>
 	</div>
+	
 	
 	
 <body>
