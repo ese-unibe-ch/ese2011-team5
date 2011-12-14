@@ -21,7 +21,7 @@
 	<script type="text/javascript" charset="utf-8">
 	var searchAction = #{jsAction @Application.search(':query') /}
 	
-	 document.write("<a href="+$('#results p').load(searchAction({query: ' ' }))+"> All users</a>"); *{ TODO: FIX THIS!}*
+	document.write("<a href="+$('#results p').load(searchAction({query: ' ' }))+"> All users</a>"); *{ TODO: FIX THIS!}*
 	
 	//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
 	$(document).ready(function (){

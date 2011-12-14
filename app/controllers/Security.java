@@ -19,7 +19,6 @@ public class Security extends Secure.Security
 
 			if(loginUser.getPassword().equals(password))
 			{
-				ESEDatabase.setCurrentUser(loginUser.getName());
 				try {
 					ESEDatabase.addUserToOnline(loginUser);
 					Secure.authenticate(username, password, false); //TODO New variable for boolean

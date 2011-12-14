@@ -24,19 +24,11 @@ import controllers.Security;
  */
 public class  ESEDatabase
 {
-	/**
-	 * The currentUser is the ESEUser that is currently useing 
-	 * the application. Depending on the identity, the currentUser
-	 * has different views.
-	 * 
-	 * @see ESEUser
-	 */
-	private static ESEUser currentUser;
 	
 	/**
 	 * The guestUser is the default user if no user is logged in at the moment.
 	 */
-	private static ESEUser guestUser;
+	//private static ESEUser guestUser;
 	/**
 	 * List of all registered ESEUsers.
 	 */
@@ -45,25 +37,9 @@ public class  ESEDatabase
 
 
 	/*
-	 * Current user methods:
+	 * Current user method:
 	 */
-	/**
-	 * Sets a ESEUser to {@link #currentUser}.
-	 * 
-	 * @param loggedIn String of loggedIn ESEUser.
-	 */
-	public static void setCurrentUser(String loggedIn) throws ESEException
-	{
-		setCurrentUser(getUserByName(loggedIn));
-	}
-	/**
-	 * Sets a ESEUser to {@link #currentUser}.
-	 * @param loggedIn ESEUser.
-	 */
-	public static void setCurrentUser(ESEUser loggedIn)
-	{
-		currentUser = loggedIn;
-	}
+
 	/**
 	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return the default guestUser
 	 * @return currentUser ESEUser
@@ -138,25 +114,13 @@ public class  ESEDatabase
 		{
 			if (user.getName().equals(username))
 			{
-				if(!isUserGuestUser(user))
-				{
-					return user;
-				}
-				else
-				{
-					System.out.println("It is the guest user!");
-				}
+				return user;
 			}
 		}
 		
 		throw new ESEException("User \"" + username + "\" not found!");
 	}
-	private static boolean isUserGuestUser(ESEUser user) 
-	{
-		
-		//System.out.println("in user: " + user.getName() + "guestUser: "+ guestUser.getName());
-		return user.equals(guestUser);
-	}
+	
 	/**
 	 * Searches by userID and returns a {@link ESEUser}.
 	 * 
@@ -276,7 +240,17 @@ public class  ESEDatabase
 
 		for(ESEUser user:userList)
 		{
-			if(user.getName().toLowerCase().contains(sequence) && !user.equals(currentUser))
+			ESEUser localCurrentUser = null;
+			try
+			{
+				localCurrentUser = getCurrentUser();
+			} 
+			catch (ESEExceptionGuestUser e) 
+			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();				//DO NOTHING
+			}
+			if(user.getName().toLowerCase().contains(sequence) && !user.equals(localCurrentUser))
 			{
 				matchingUsers.add(user);
 			}
@@ -300,10 +274,7 @@ public class  ESEDatabase
 	 * @throws ESEException
 	 */
 	
-	public static void prepareGuestUser() throws ESEException 
-	{
-		guestUser = new ESEUser("guest", "guest", "guest", "guest");
-	}
+
 	
 	/**
 	 * 
