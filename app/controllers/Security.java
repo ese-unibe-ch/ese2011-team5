@@ -21,7 +21,9 @@ public class Security extends Secure.Security
 			{
 				ESEDatabase.setCurrentUser(loginUser.getName());
 				try {
+					ESEDatabase.addUserToOnline(loginUser);
 					Secure.authenticate(username, password, false); //TODO New variable for boolean
+					
 				} catch (Throwable e) 
 				{
 					flash.error("Wrong password! Try it again! <a href=forgotPassword/" 
@@ -56,6 +58,9 @@ public class Security extends Secure.Security
 	 */
 	public static void logout() throws Throwable 
 	{
+		ESEUser user = ESEDatabase.getCurrentUser();
+		ESEDatabase.removeUserOnline(user);
+		
 		Security.invoke("onDisconnect");
 		session.clear();
 		response.removeCookie("rememberme");

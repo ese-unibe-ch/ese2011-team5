@@ -8,6 +8,7 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 import controllers.Secure;
@@ -40,7 +41,7 @@ public class  ESEDatabase
 	 * List of all registered ESEUsers.
 	 */
 	private static ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
-
+	private static ArrayList<ESEUser> onlineUser = new ArrayList<ESEUser>();
 
 
 	/*
@@ -334,5 +335,27 @@ public class  ESEDatabase
 		{
 			return null;
 		}
+	}
+	
+	public static void addUserToOnline(ESEUser user)
+	{
+		System.out.println("ADD USER TO ONLINE: " + user);
+		if(!onlineUser.contains(user))
+		{
+			onlineUser.add(user);
+		}
+	}
+	
+	public static void removeUserOnline(ESEUser user)
+	{
+		if(onlineUser.contains(user))
+		{
+			onlineUser.remove(user);
+		}
+	}
+	
+	public static List<ESEUser> getOnlineUsers()
+	{
+		return onlineUser;
 	}
 }

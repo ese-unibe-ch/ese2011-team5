@@ -897,6 +897,8 @@ public class Application extends Controller {
 	public static void index()
 	{
 		ESEUser currentUser = null;
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
+		
 		try 
 		{
 			currentUser = ESEDatabase.getCurrentUser();
@@ -908,7 +910,7 @@ public class Application extends Controller {
 		}
 		finally
 		{
-			render(currentUser);
+			render(currentUser,onlineUsers);
 		}
 	}
 		

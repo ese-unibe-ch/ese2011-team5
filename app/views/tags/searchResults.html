@@ -2,7 +2,7 @@
 	<h3>Search results:</h3>
 
 #{list items:_otherUsersList, as:'otherUserToShow'}
-		<li><a href="@{Application.showOtherCalendars(otherUserToShow.getName())}">${otherUserToShow.getName()}</a> #{if !_currentUser.getName().equals("guest")}<a href="@{Application.addUserToGroup(otherUserToShow.getName(), _currentUser.getGroupList().get(0).getGroupID())}">add to Friends</a>#{/if}</li> 
+		<li><a href="@{Application.showOtherCalendars(otherUserToShow.getName())}">${otherUserToShow.getName()}</a> 
 #{/list}
 
 <body>

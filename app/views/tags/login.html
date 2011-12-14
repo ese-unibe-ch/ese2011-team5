@@ -2,21 +2,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 </head>
 
-<div id="login">
-	
-	Welcome on the Homepage of ESECalendar!<br>
-			<br>
-			ESECalendar allows you to organize your appointments<br>
-			online. You can create as many calendars as you want<br>
-			and share your appointments with your friends.<br>
-			<br>
-			You are currently not logged in. You can search for other<br>
-			users on the right side and search their calendars. You can<br>
-			only see their public appointments.<br>
-			<br>
-			If you want to create your own calendars, please sign in or register.<br> 
-			<br>
-		
+<div id="login">	
 	#{form @Security.ownAuthenticate()}
 		
 		#{if flash.error}
