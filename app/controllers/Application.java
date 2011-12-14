@@ -137,8 +137,14 @@ public class Application extends Controller {
 		finally
 		{
 			ArrayList<ESEUser> otherUsersList = otherUsers;
-
-			render(currentUser, otherUsers, otherUser, calendarList, groups,otherUsersList);
+			if(currentUser.equals(otherUser))
+			{
+				showCalendars();
+			}
+			else
+			{
+				render(currentUser, otherUsers, otherUser, calendarList, groups,otherUsersList);
+			}
 		}
 
 	
@@ -465,6 +471,19 @@ public class Application extends Controller {
 			render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
 		}
 	}
+	
+	public static void showUserProfile(String username)
+	{
+		try {
+			ESEUser user = ESEDatabase.getUserByName(username);
+			showAndEditProfile(user.getUserID());
+		} catch (ESEException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("ERROR");
+		}
+		
+	}
 
 	public static void showCurrentUserProfile() throws ESEException, ESEExceptionGuestUser
 	{
@@ -481,6 +500,7 @@ public class Application extends Controller {
 		}
 		// DO NOTHING TODO: go back to the last page!
 	}
+	
 	
 	public static void showAndEditProfile(int userID) throws ESEException {
 		ESEUser currentUser = null;
@@ -668,15 +688,15 @@ public class Application extends Controller {
 
 	public static void searchUser(@Required String searchName)
 	{
-		ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
+		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		if (!searchName.equals(""))
 		{
-			otherUsersLocal = ESEDatabase.findUser(searchName);
+			otherUsers = ESEDatabase.findUser(searchName);
 		}
 		else
-			otherUsersLocal = ESEDatabase.getAllUsers();
+			otherUsers = ESEDatabase.getAllUsers();
 
-		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
+//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
 //		for (ESEUser u : otherUserLocalOriginal)
 //		{
 //			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
@@ -685,9 +705,42 @@ public class Application extends Controller {
 //			}
 //		}
 
-		otherUsers = otherUsersLocal;
+		//otherUsers = otherUsersLocal;
 
-		showCalendars();
+		//showCalendars();
+		render(otherUsers);
+	}
+	
+	/**
+	 * For ajax
+	 * @param searchName
+	 */
+	public static void search(@Required String searchName)
+	{
+		System.out.println("search: " + searchName);
+		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
+		List<ESEUser> results = new ArrayList<ESEUser>();
+		if (!searchName.equals(""))
+		{
+			results = ESEDatabase.findUser(searchName);
+		}
+		else
+			results = ESEDatabase.getAllUsers();
+		
+		System.out.println("RESULT: " + results);
+//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
+//		for (ESEUser u : otherUserLocalOriginal)
+//		{
+//			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
+//			{
+//				otherUsersLocal.remove(u);						//NOT LONGER NECESSARY BECAUSE THERE ISN'T A GUEST USER!
+//			}
+//		}
+
+		//otherUsers = otherUsersLocal;
+
+		//showCalendars();
+		render(results);
 	}
 
 	/**

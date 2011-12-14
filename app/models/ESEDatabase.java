@@ -148,6 +148,7 @@ public class  ESEDatabase
 				}
 			}
 		}
+		
 		throw new ESEException("User \"" + username + "\" not found!");
 	}
 	private static boolean isUserGuestUser(ESEUser user) 

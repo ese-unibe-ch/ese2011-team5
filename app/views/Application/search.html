@@ -1,0 +1,7 @@
+	#{ifnot results}
+		No results...
+	#{/ifnot}
+	
+	#{list items:results, as:'user'}
+			 <li><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a></li>
+	#{/list}

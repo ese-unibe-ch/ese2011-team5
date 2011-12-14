@@ -2,21 +2,10 @@
 #{set title:'ESECalendar' /}
 
 <body>
-	*{<header>
-		<aside id="login">
-			CurrentUser in index is ${currentUser}
-			#{nav currentUser:currentUser/}
-		</aside>
-		<h1 id="title"> ESECalendar <h1>
-		<hr>
-	</header>}*
-
 	<section id="section">
-		<aside id="search">
-		
-			#{searchUserForm /}
-			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
-			
+	
+		<aside id="searchAside">
+			#{include 'searchUser.html' /}
 		</aside>
 		
 		<article>
