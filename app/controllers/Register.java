@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
 import play.data.validation.Required;
 import play.mvc.Controller;
 import models.*;
@@ -10,28 +9,29 @@ public class Register extends Controller
 
 	public static void index()
 	{
-		ESEUser currentUser = null;
-		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
-		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
-		try 
-		{
-			currentUser = ESEDatabase.getCurrentUser();
-			calendarList = currentUser.getCalendarList();
-			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
-			groups = currentUser.getGroupList();
-		} 
-		catch (ESEExceptionGuestUser e) 
-		{
-			// TODO Auto-generated catch block
-			// e.printStackTrace();				//DON'T DO ANYTHING
-		}
-		
-
-		render(currentUser, calendarList, otherUsers, groups);
+//		ESEUser currentUser = null;
+//		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
+//		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
+//		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
+//		try 
+//		{
+//			currentUser = ESEDatabase.getCurrentUser();
+//			calendarList = currentUser.getCalendarList();
+//			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+//			groups = currentUser.getGroupList();
+//		} 
+//		catch (ESEExceptionGuestUser e) 
+//		{
+//			// TODO Auto-generated catch block
+//			// e.printStackTrace();				//DON'T DO ANYTHING
+//		}
+//		
+//
+//		render(currentUser, calendarList, otherUsers, groups);
+		render();
 	}
 
-	public static void createNewUser(@Required String username, @Required String password, @Required String confirmpassword, @Required String question, @Required String answer) throws ESEException
+	public static void createNewUser(@Required String username, @Required String password, @Required String confirmpassword, @Required String question, @Required String answer)
 	{
 		if (!password.equals(confirmpassword))
 		{

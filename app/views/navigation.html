@@ -16,7 +16,7 @@
 <nav id="statusNav">
 	#{if currentUser}
 		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
-		<a href=@{Security.logout()}>logout</a>
+		<a href=@{Security.logout()}>Logout</a>
 	#{/if}
 	#{else}
 		<a href=@{Application.login()}>Login</a>

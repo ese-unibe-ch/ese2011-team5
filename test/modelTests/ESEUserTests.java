@@ -1,9 +1,10 @@
 package modelTests;
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import models.*;
+
 import org.junit.*;
+
 import play.test.UnitTest;
 
 public class ESEUserTests extends UnitTest
@@ -38,6 +39,12 @@ public class ESEUserTests extends UnitTest
 		assertEquals("familyName 1", this.user1.getFamilyName());
 	}
 
+	@Test(expected=ESEExceptionGuestUser.class)
+	public void shouldReturnGuestUserException() throws ESEExceptionGuestUser
+	{
+		ESEDatabase.getCurrentUser();
+	}
+
 	@Test
 	public void shouldAddCalendar() throws ESEException
 	{
@@ -66,7 +73,7 @@ public class ESEUserTests extends UnitTest
 		this.user1.addCalendar("calendar2");
 		ESECalendar testCalendar1 = this.user1.getCalendarList().get(0);
 		ESECalendar testCalendar2 = this.user1.getCalendarList().get(1);
-		ArrayList<ESECalendar> calendars = user1.getCalendarList();
+		ArrayList<ESECalendar> calendars = this.user1.getCalendarList();
 		assertEquals(2, calendars.size());
 		assertEquals(testCalendar2, this.user1.getCalendarList().get(1));
 		assertEquals(testCalendar1, calendars.get(0));
@@ -97,7 +104,7 @@ public class ESEUserTests extends UnitTest
 	}
 
 	@Test
-	public void shouldGetAllowedEvents() throws ESEException
+	public void shouldGetAllowedEvents() throws Throwable
 	{
 		this.user1.addCalendar("calendar1");
 		this.user1.addCalendar("calendar2");
@@ -105,10 +112,13 @@ public class ESEUserTests extends UnitTest
 		testCalendar1.addEvent("testEvent1", "12.11.2011 16:00", "14.11.2011 18:00", true);
 		testCalendar1.addEvent("testEvent2", "15.11.2011 13:40", "16.11.2011 13:00", false);
 
-		ESEDatabase.setCurrentUser(this.user1);
+		//ESEDatabase.setCurrentUser(this.user1.getName());
+
 		ArrayList<ESEEvent> publicEvents = this.user1.getAllPublicEvents(testCalendar1.getID());
 		ArrayList<ESEEvent> allowedEvents = testCalendar1.getAllAllowedEvents();
-		ESEDatabase.setCurrentUser(this.user2);
+
+		//ESEDatabase.setCurrentUser(this.user2.getName());
+
 		ArrayList<ESEEvent> onlyAllowedEvents = testCalendar1.getAllAllowedEvents();
 
 		assertNotSame(allowedEvents, onlyAllowedEvents);
@@ -119,24 +129,24 @@ public class ESEUserTests extends UnitTest
 	@Test
 	public void shouldEditProfile()
 	{
-		user1.setBirthday("16.11.2011");
-		user1.setCity("Here");
-		user1.setFamilyName("Test");
-		user1.setFirstName("User");
-		user1.setMail("-");
-		user1.setPostCode("0000");
-		user1.setStateMessage("I was here!");
-		user1.setStreet("Street");
-		user1.setUsername("TestUser");
+		this.user1.setBirthday("16.11.2011");
+		this.user1.setCity("Here");
+		this.user1.setFamilyName("Test");
+		this.user1.setFirstName("User");
+		this.user1.setMail("-");
+		this.user1.setPostCode("0000");
+		this.user1.setStateMessage("I was here!");
+		this.user1.setStreet("Street");
+		this.user1.setUsername("TestUser");
 
-		assertEquals("16.11.2011", user1.getBirthdayString());
-		assertEquals("Here", user1.getCity());
-		assertEquals("Test", user1.getFamilyName());
-		assertEquals("User", user1.getFirstName());
-		assertEquals("-", user1.getMail());
-		assertEquals("0000", user1.getPostCode());
-		assertEquals("I was here!", user1.getStateMessage());
-		assertEquals("Street", user1.getStreet());
-		assertEquals("TestUser", user1.getName());
+		assertEquals("16.11.2011", this.user1.getBirthdayString());
+		assertEquals("Here", this.user1.getCity());
+		assertEquals("Test", this.user1.getFamilyName());
+		assertEquals("User", this.user1.getFirstName());
+		assertEquals("-", this.user1.getMail());
+		assertEquals("0000", this.user1.getPostCode());
+		assertEquals("I was here!", this.user1.getStateMessage());
+		assertEquals("Street", this.user1.getStreet());
+		assertEquals("TestUser", this.user1.getName());
 	}
 }

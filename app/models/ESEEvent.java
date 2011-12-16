@@ -169,18 +169,13 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 * @param endDate of ESEEvent.
 	 * @throws ESEException if endDate is before startDate.
 	 */
-	private void checkDateValidity(Date startDate, Date endDate)
-			throws ESEException
+	private void checkDateValidity(Date startDate, Date endDate) throws ESEException
 	{
 		if (startDate.after(endDate))
 		{
 			throw new ESEException("Invalid start and end date!");
 		}
 	}
-
-	/*
-	 * Methods with read only access
-	 */
 
 	/**
 	 * @return int {@link #eventID} of this ESEEvent. The value is ranged
@@ -323,9 +318,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		return this.isPublic;
 	}
 
-	/*
-	 * Methods with read-write access
-	 */
 	/**
 	 * Set the {@link #eventName} to a new value.<br>
 	 * 

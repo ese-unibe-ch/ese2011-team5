@@ -70,7 +70,7 @@
 		
 		#{showParticipants participants:event.getParticipants() /}
 		
-		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser.getName()!="guest"}
+		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser!=null}
 				<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> Copy the event in your own calendar </a></p>
 				
 					

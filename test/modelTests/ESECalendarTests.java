@@ -1,11 +1,10 @@
 package modelTests;
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import models.*;
 import org.junit.*;
+
+import controllers.Security;
 import play.test.UnitTest;
 
 public class ESECalendarTests extends UnitTest
@@ -107,13 +106,19 @@ public class ESECalendarTests extends UnitTest
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		try
 		{
 			this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 
 		assertEquals(5, this.cal1.getAllEventsOfMonth(3,2011).size());
 	}
@@ -129,13 +134,19 @@ public class ESECalendarTests extends UnitTest
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		try
 		{
 			this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 
 		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3,2011).size());
 	}
@@ -151,17 +162,19 @@ public class ESECalendarTests extends UnitTest
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 
-		ESEDatabase.setCurrentUser(ownerDummy);
+		//ESEDatabase.setCurrentUser(ownerDummy);
 
-		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3,2011).size());
+		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3, 2011).size());
 
-		ESEDatabase.setCurrentUser(ownerDummy2);
+		//ESEDatabase.setCurrentUser(ownerDummy2);
 
-		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3,2011).size());
+		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3, 2011).size());
 	}
-
 
 	@Test
 	public void shouldGetAllPublicEvents() throws ESEException
@@ -187,28 +200,40 @@ public class ESECalendarTests extends UnitTest
 			fail("StartDate conflict expected");
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		try
 		{
 			testCal.addEvent("EndDate conflict", "1.11.2011 16:00", "7.11.2011 18:00", true);
 			fail("EndDate conflict expected");
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		try
 		{
 			testCal.addEvent("Contains conflict", "7.11.2011 16:00", "8.11.2011 18:00", true);
 			fail("Contains conflict expected");
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		try
 		{
 			testCal.addEvent("Subset conflict", "1.11.2011 16:00", "16.11.2011 18:00", true);
 			fail("Subset conflict expected");
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		assertEquals(5, testCal.getAllEvents().size());
 	}
 
@@ -220,14 +245,14 @@ public class ESECalendarTests extends UnitTest
 		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent4", "18.04.2011 13:40", "19.04.2011 13:00", false);
  
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(13));
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(14));
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(15));
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(16));
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(17));
-		assertTrue(cal1.getEventDaysOfMonth(3,2011).contains(18));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(13));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(14));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(15));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(16));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(17));
+		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(18));
 
-		ArrayList<ESEEvent> publicEventsList = cal1.getAllAllowedEvents();
+		ArrayList<ESEEvent> publicEventsList = this.cal1.getAllAllowedEvents();
 		assertEquals(3, publicEventsList.size());
 		assertEquals("Testevent1", publicEventsList.get(0).getEventName());
 		assertEquals("Testevent2", publicEventsList.get(1).getEventName());
@@ -247,13 +272,15 @@ public class ESECalendarTests extends UnitTest
 			cal3.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
 		catch (ESEException e)
-		{}
+		{
+			// No exception handling
+			// Overlapping event added intentionally
+		}
 		cal3.removeEvent(3);
 		assertEquals(3, cal3.getAllEvents().size());
 		assertEquals("Testevent1", cal3.getAllEvents().get(0).getEventName());
 		assertEquals("Testevent2", cal3.getAllEvents().get(1).getEventName());
 		assertEquals("Testevent3", cal3.getAllEvents().get(2).getEventName());
-		
 	}
 
 	@Test
@@ -266,26 +293,26 @@ public class ESECalendarTests extends UnitTest
 
 		ArrayList<Integer> eventsInOctober = this.cal2.getEventDaysOfMonth(9, 2011);
 		assertEquals(18, eventsInOctober.size());
-		for (int i = 14; i <= 31; i++)
+		for (int i=14; i<=31; i++)
 		{
 			assertEquals(String.valueOf(i), String.valueOf(eventsInOctober.get(i-14)));
 		}
 
 		ArrayList<Integer> eventsInNovember = this.cal2.getEventDaysOfMonth(10, 2011);
-		for (int i = 1; i <=30; i++){
-		assertTrue(eventsInNovember.contains(i));
+		for (int i=1; i<=30; i++)
+		{
+			assertTrue(eventsInNovember.contains(i));
 		}
-		
+
 		ArrayList<Integer> eventsInDecember = this.cal2.getEventDaysOfMonth(11, 2011);
-		for (int i = 1; i <=17; i++){
+		for (int i=1; i<=17; i++)
+		{
 			assertTrue(eventsInDecember.contains(i));
 		}
-		
-		for (int i = 18; i <=31; i++){
+
+		for (int i=18; i<=31; i++)
+		{
 			assertFalse(eventsInDecember.contains(i));
 		}
-		
-		
-		
 	}
 }

@@ -8,18 +8,13 @@
 
 package models;
 /**
- * An ESEException is thrown whenever there is an 
- * invalid input from a user.
+ * An ESEExceptionGuestUser is thrown whenever there is an indication
+ * that the user is not logged in.
  */
 public class ESEExceptionGuestUser extends Exception
 {
 	public ESEExceptionGuestUser()
 	{
-		super("ERROR: Your not logged in. Your only a guest!");
-	}
-
-	public ESEExceptionGuestUser(String message)
-	{
-		super(message);
+		super("You are not logged in. You are only a guest!");
 	}
 }

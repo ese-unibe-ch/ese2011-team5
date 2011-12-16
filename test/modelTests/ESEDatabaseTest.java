@@ -1,9 +1,7 @@
 package modelTests;
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import models.*;
 import org.junit.*;
 import play.test.UnitTest;

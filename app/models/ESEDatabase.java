@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import controllers.Secure;
 import controllers.Security;
 /**
  * The ESEDatabase is responsible for the administration of 
@@ -44,15 +43,22 @@ public class  ESEDatabase
 	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return the default guestUser
 	 * @return currentUser ESEUser
 	 * @throws ESEExceptionGuestUser 
-	 * @throws ESEException 
 	 */
 	public static ESEUser getCurrentUser() throws ESEExceptionGuestUser 
 	{
-		String username = Security.connected();
-		try {
+		try
+		{
+			String username = Security.connected();
 			return ESEDatabase.getUserByName(username);
-		} catch (ESEException e) {
+		}
+		catch (ESEException e)
+		{
 			System.out.println("THE CURRENT USER IS GUEST!");
+			throw new ESEExceptionGuestUser();
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("No session, that means we are running a test");
 			throw new ESEExceptionGuestUser();
 		}
 	}
@@ -238,7 +244,7 @@ public class  ESEDatabase
 		ArrayList<ESEUser> matchingUsers = new ArrayList<ESEUser>();
 		CharSequence sequence = new String(username.toLowerCase());
 
-		for(ESEUser user:userList)
+		for(ESEUser user : userList)
 		{
 			ESEUser localCurrentUser = null;
 			try
@@ -269,45 +275,18 @@ public class  ESEDatabase
 		ESEEvent.resetIdCounter();
 		ESEGroup.resetIdCounter();
 	}
-	/**
-	 * creates a new guestUser and set the database guestUser to this new user
-	 * @throws ESEException
-	 */
 	
-
-	
-	/**
-	 * 
-	 * @return true if an user is logged in; else return false
-	 * @@Deprecated: Use the Security.isConnected();
-	 */
-	@Deprecated 
-	public static boolean isUserLogedIn()
-	{
-		String username = Security.connected();
-		
-		try 
-		{
-			ESEDatabase.getUserByName(username);
-			return true;
-		} 
-		catch (ESEException e)
-		{
-			return false;
-		}
-	}
-	
-	public static ESEUser getCurrentUserForView()
-	{
-		try 
-		{
-			return getCurrentUser();
-		} 
-		catch (ESEExceptionGuestUser e) 
-		{
-			return null;
-		}
-	}
+//	public static ESEUser getCurrentUserForView()
+//	{
+//		try 
+//		{
+//			return getCurrentUser();
+//		} 
+//		catch (ESEExceptionGuestUser e) 
+//		{
+//			return null;
+//		}
+//	}
 	
 	public static void addUserToOnline(ESEUser user)
 	{

@@ -198,12 +198,12 @@ public class ESECalendar implements Visitable
 	 * Returns a List with all ESEEvents, that may be view by the current user.
 	 * 
 	 * @return ArrayList<ESEEvent> all events.
-	 * 
 	 * @see ESEDatabase#getCurrentUser()
 	 */
 	public ArrayList<ESEEvent> getAllAllowedEvents()
 	{
-		try {
+		try
+		{
 			if (ESEDatabase.getCurrentUser().equals(this.owner))
 			{
 				return this.getAllEvents();
@@ -254,18 +254,24 @@ public class ESECalendar implements Visitable
 	 * 
 	 * @param month given
 	 * @return ArrayList<ESEEvent> of ESEEvents of given month.
-	 * 
 	 * @see {@link #getAllEventsOfMonth(int)} same without restriction of current user.
 	 * @see {@link ESEDatabase#getCurrentUser()} current logged in user.
 	 */
 	public ArrayList<ESEEvent> getAllAllowedEventsOfMonth(int month, int year)
 	{
-		try {
+		try
+		{
 			if (ESEDatabase.getCurrentUser().equals(this.owner))
+			{
 				return this.getAllEventsOfMonth(month, year);
+			}
 			else
+			{
 				return this.getAllPublicEventsOfMonth(month, year);
-		} catch (ESEExceptionGuestUser e) {
+			}
+		}
+		catch (ESEExceptionGuestUser e)
+		{
 			return this.getAllPublicEventsOfMonth(month, year);
 		}
 	}

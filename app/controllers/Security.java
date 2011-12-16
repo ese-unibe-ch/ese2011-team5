@@ -23,7 +23,7 @@ public class Security extends Secure.Security
 					ESEDatabase.addUserToOnline(loginUser);
 					Secure.authenticate(username, password, false); //TODO New variable for boolean
 					
-				} catch (Throwable e) 
+				} catch (Throwable e)
 				{
 					flash.error("Wrong password! Try it again! <a href=forgotPassword/" 
 							+ username +"> Did you forget your password? - Don't worry, be happy: There is a solution! </a>");
@@ -43,11 +43,11 @@ public class Security extends Secure.Security
 			  flash.error("No user with the given username exists!");
 	          params.flash();
 		}
-		System.out.println("LOGIN OK...");
+		System.out.println("Login process completed");
 		Application.showCalendars();
 	}
 
-	public static String connected()
+	public static String connected() throws NullPointerException
 	{
 		return session.get("username");
 	}

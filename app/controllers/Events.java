@@ -3,7 +3,6 @@
  */
 package controllers;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -64,7 +63,8 @@ public class Events extends Application
 			if (lowerlimit == null || upperlimit == null)
 			{
 				query = new SearchEventVisitor(name);
-			} else
+			}
+			else
 			{
 				DateTime upper = formatter.parseDateTime(upperlimit);
 				DateTime lower = formatter.parseDateTime(lowerlimit);
@@ -75,7 +75,8 @@ public class Events extends Application
 			Collections.sort(events);
 
 			renderText(gson.toJson(events));
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			renderText(e);
 		}
