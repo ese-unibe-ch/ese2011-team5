@@ -1,22 +1,121 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
-	Welcome on the Homepage of ESECalendar!<br>
-	<br>
-	ESECalendar allows you to organize your appointments<br>
-	online. You can create as many calendars as you want<br>
-	and share your appointments with your friends.<br>
-	<br>
-	#{ifnot currentUser}
-	You are currently not logged in. You can search for other<br>
-	users on the right side and search their calendars. You can<br>
-	only see their public appointments.<br>
-	<br>
-	If you want to create your own calendars, please sign in or register.<br> 
-	<br>
-	#{login /}
-	#{/ifnot}
-	#{include 'onlineUsers.html' /}
-	#{include 'searchUser.html' /}
+	<table>
+    	<colgroup>
+    		<col width="180">
+    		<col width="20">
+    		<col width="180">
+    		<col width="5">
+    		<col width="180">
+    		<col width="20">
+    		<col width="180">
+    	</colgroup>
+ 		 <tr style="height: 40px;">
+			<td colspan="7" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Home</font></td>
+		</tr>
+ 		 <tr style="height: 5px;">
+ 		 	<td colspan="7" rowspan="1"></td>
+		</tr>
+		
+		#{ifnot currentUser}
+			<tr style="height: 43px;">
+				<td>Search for other users</td>
+				<td></td>
+				<td colspan="3" style="vertical-align: center;">Welcome on the Homepage of SPACECal!</td>
+				<td></td>
+				<td>Contacts</td>
+	 		</tr>
+	 		<tr>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;"></td>
+				<td></td>
+				
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+					SPACECal allows you to organize your appointments
+					online. You can create as many calendars as you want
+					and share your appointments with your friends.<br>
+					<br>
+					You are currently not logged in. You can search for other
+					users on the right side and search their calendars. You can
+					only see their public appointments.
+				</td>
+				
+				<td></td>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;"></td>
+			</tr>
+	 		
+	 		<tr style="height: 10px;">
+	 			<td></td>
+				<td></td>
+				<td colspan="3"></td>
+				<td></td>
+				<td></td>
+	 		</tr>
+	 		<tr>
+		 		<td></td>
+				<td></td>
+		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+		 		If you want to create your own calendars, please sign in or register.<br>
+		 		#{login /}
+				</td>
+				<td></td>
+				<td></td>
+	 		</tr>
+ 		#{/ifnot}
+ 		
+ 		
+ 		#{if currentUser}
+ 			<tr style="height: 43px;">
+				<td>Search for other users</td>
+				<td></td>
+				<td colspan="3" style="vertical-align: center;">Welcome on the Homepage of SPACECal!</td>
+				<td></td>
+				<td>Contacts</td>
+	 		</tr>
+	 		<tr>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;"></td>
+				<td></td>
+				
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+					Cal-Liste
+				</td>
+				
+				<td></td>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+					<ul>
+						#{list items: currentUser.getGroupList().get(0), as: 'group'}
+							<li style="margin-left: -20px;">${group.getGroupName()}</li>
+							<ul>
+								#{list items: group.getUserList(), as: 'userInList'}
+									<li style="margin-left: -40px;">${userInList.getName()}</li>
+								#{/list}
+							</ul>
+						#{/list}
+					</ul>
+					<ul>
+						<li style="margin-left: -20px;">All Contacts</li>
+					</ul>
+				</td>
+			</tr>
+	 		<tr style="height: 10px;">
+	 			<td></td>
+				<td></td>
+				<td colspan="3"></td>
+				<td></td>
+				<td></td>
+	 		</tr>
+	 		<tr>
+		 		<td></td>
+				<td></td>
+		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+		 		Add cal<br>
+		 		#{login /}
+				</td>
+				<td></td>
+				<td></td>
+	 		</tr>
+ 		#{/if}
+ 		
+    </table>
+    
 </body>

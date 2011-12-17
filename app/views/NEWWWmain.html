@@ -76,23 +76,36 @@ A:hover {
 		<tr>
 			<td colspan="7" rowspan="1"></td> <!-- Zeile unter Navbar -->
 		</tr>
-		<tr vertical-align:top;">
-
- 		 	<td colspan="7" >#{doLayout /}</td>
+		<tr style="height: 40px; vertical-align:top;">
+			<td></td>
+			<td></td>
+ 		 	<td colspan="3" rowspan="5">#{doLayout /}</td>
+ 		 	<td></td>
+ 		 	<td></td>
  		</tr>
  		<tr style="height: 5px;">
 			<td></td>
 			<td></td>
 			<td></td>
-			<td></td>
- 		 	<td></td>
- 		 	<td></td>
  		 	<td></td>
  		</tr>
+ 		<tr style="height: 20px;">
+			<td colspan="1" rowspan="2" style="vertical-align: top;">#{include 'leftbox.html' /}</td>
+			<td></td>
+			<td></td>
+ 		 	<td colspan="1" rowspan="2" style="vertical-align: top;">#{include 'rightbox.html' /}</td>
+ 		</tr>
+ 		<tr>
+ 			<td></td>
+ 			<td></td>
+ 		</tr>
+ 		<tr>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 			<td></td>
+ 		</tr>
  	</table>
- 	
- 	#{include 'leftbox.html' /}
- 	
  	
     </body>
 		

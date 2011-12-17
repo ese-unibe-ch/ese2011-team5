@@ -1,10 +1,36 @@
 #{script 'jquery.reveal.js' /}
-#{extends 'main.html' /}
-
 
 <body>
+	<table>
+		<colgroup>
+			<col width="180">
+		</colgroup>
+		
+		#{if currentUser}
+		<tr style="height: 40px; vertical-align:center;">
+			<td>Search for other users</td>
+		</tr>
+		<tr>
+			<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 3px;">
+				<ul>
+	              
+	            </ul>
+          	</td>
+		</tr>
+		#{/if}
+		
+		#{ifnot currentUser}
+		<tr style="height: 40px; vertical-align:top;">
+			<td>Calendars of YOU?</a></td>
+		</tr>
+		<tr>
+			<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 3px;">When you are logged in, 
+			a list of calendars is shown here</td>
+		</tr>
+		#{/ifnot}
+		
+	</table>
 	
-
 	*{NEW:}*
 	
 	<script type="text/javascript" charset="utf-8">
@@ -34,7 +60,6 @@
 			</p>
 		</div>
 	</ul>
+	
+</body>
 
-	
-	
-<body>

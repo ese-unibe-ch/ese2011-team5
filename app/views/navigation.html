@@ -1,24 +1,7 @@
-#{stylesheet 'navigation.css' /}
-<nav id="mainNav">
+#{if currentUser}
 	<a href = @{Application.index()}>Home</a>
-	
-	#{if currentUser}
-		|
-		<a href=@{Application.showCalendars()}>Calendars</a>
-		|
-		<a href=@{Application.showGroups()}>Contacts</a>
-		|
+	|		Contacts
+	|		<a href="@{Application.showUserProfile(currentUser.getName())}">Profile</a>
+	|		<a href=@{Security.logout()}>Log out</a>
 		
-	#{/if}
-	
-</nav>
-
-<nav id="statusNav">
-	#{if currentUser}
-		Logged in as <a href=@{Application.showCurrentUserProfile()}>${currentUser.getName()}</a>
-		<a href=@{Security.logout()}>Logout</a>
-	#{/if}
-	#{else}
-		<a href=@{Application.login()}>Login</a>
-	#{/else}
-</nav>
+#{/if}

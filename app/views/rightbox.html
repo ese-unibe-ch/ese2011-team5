@@ -1,0 +1,36 @@
+<body>
+	<table>
+		<colgroup>
+			<col width="180">
+		</colgroup>
+		<tr style="height: 40px; vertical-align:center;">
+			<td>Contacts</td>
+		</tr>
+		#{if currentUser}
+			<tr>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 3px;">
+					<ul>
+						#{list items: currentUser.getGroupList().get(0), as: 'group'}
+							<li style="margin-left: -20px;">${group.getGroupName()}</li>
+							<ul>
+								#{list items: group.getUserList(), as: 'userInList'}
+									<li style="margin-left: -40px;">${userInList.getName()}</li>
+								#{/list}
+							</ul>
+						#{/list}
+					</ul>
+					<ul>
+						<li style="margin-left: -20px;">All Contacts</li>
+					</ul>
+				</td>
+			</tr>
+		#{/if}
+		#{else}
+			<tr>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 3px;">
+					If you were logged in, your contacts would be shown here.
+				</td>
+			</tr>
+		#{/else}
+	</table>
+</body>
