@@ -38,14 +38,13 @@ public class Events extends Application
 			renderArgs.put("upperlimit", upperlimit);
 			renderArgs.put("lowerlimit", lowerlimit);
 			renderArgs.put("userId", user.getUserID());
-			render();													//LK: TODO CHECK THIS TRY AND CATCH; maybe there will be an wrong render?
 		} 
 		catch (ESEExceptionGuestUser e) 
 		{
 			//TODO Auto-generated catch block
 			//e.printStackTrace();				//DON'T DO ANYTHING
 		}
-	
+			render();													//LK: TODO CHECK THIS TRY AND CATCH; maybe there will be an wrong render?
 	}
 
 	public static void handleEventSearch(@Required Long uid,
@@ -80,6 +79,5 @@ public class Events extends Application
 		{
 			renderText(e);
 		}
-
 	}
 }

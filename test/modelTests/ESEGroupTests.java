@@ -1,6 +1,5 @@
 package modelTests;
 
-import static org.junit.Assert.*;
 import models.*;
 import org.junit.*;
 import play.test.UnitTest;
@@ -81,7 +80,7 @@ public class ESEGroupTests extends UnitTest
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
 		
-		this.group1.removeUserFromGroup(friend3);
+		this.group1.removeUserFromGroup(this.friend3);
 		assertEquals(1, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
 		assertEquals(this.friend1, this.group1.getUserList().get(0));

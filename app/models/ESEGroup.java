@@ -28,9 +28,9 @@ public class ESEGroup
 	 */
 	private int groupID;
 	/**
-	 * String name by which this ESEGroup is associated.<br> It might be
-	 * that different ESEGroups have the same <code>groupename</code>. To
-	 * distinguish use {@link #groupID}.
+	 * String name by which this ESEGroup is associated.<br>
+	 * It might be that different ESEGroups have the same <code>groupename</code>.
+	 * To distinguish use {@link #groupID}.
 	 */
 	private String groupname;
 	/**
@@ -43,14 +43,11 @@ public class ESEGroup
 	 * Constructor for ESEGroup.<br>
 	 * Creates an new Group that belongs to one ESEUser. 
 	 * The Group is initially created empty. Contacts ({@link ESEUser}) have to be added later.
-	 * 
 	 * @param groupname String name of this group. Must not be empty.
 	 * @param owner ESEUser that owns this group. Must not be <code>null</code>
-	 * 
 	 * @throws ESEException
-	 * 
-	 * @see {@link ESEUser}
-	 * @see {@link #addUserToGroup(ESEUser)}
+	 * @see ESEUser
+	 * @see #addUserToGroup(ESEUser)
 	 */
 	public ESEGroup(String groupname, ESEUser owner) throws ESEException
 	{
@@ -81,6 +78,7 @@ public class ESEGroup
 	{
 		idCounter = 0;
 	}
+
 	/**
 	 * @return int {@link #groupID} of this ESEGroup. The value is ranged
 	 * between 0 and the current value of {@link #idCounter}.
@@ -89,6 +87,7 @@ public class ESEGroup
 	{
 		return this.groupID;
 	}
+
 	/**
 	 * @return String {@link #groupname} of this ESEGroup. 
 	 */
@@ -96,6 +95,7 @@ public class ESEGroup
 	{
 		return this.groupname;
 	}
+
 	/**
 	 * @return ESEUser {@link #owner} of this ESEGroup. 
 	 */
@@ -103,6 +103,7 @@ public class ESEGroup
 	{
 		return this.owner;
 	}
+
 	/**
 	 * @return ArrayList<ESEUser> {@link #userList} of this ESEGroup.
 	 * This lists contains all Contacts (ESEUser) that are part of this group.
@@ -111,9 +112,9 @@ public class ESEGroup
 	{
 		return new ArrayList<ESEUser>(this.userList);
 	}
+
 	/**
 	 * Adds a Contact ({@link ESEUser}) to the group.
-	 * 
 	 * @param user to be added.
 	 * @throws ESEException if the user is already part of this group.
 	 */
@@ -126,9 +127,9 @@ public class ESEGroup
 		}
 		throw new ESEException("This user is already in the group!");
 	}
+
 	/**
 	 * Removes a Contact ({@link ESEUser}) from this group.
-	 * 
 	 * @param user to be removed.
 	 * @throws ESEException if user is not in the list.
 	 */
@@ -148,15 +149,10 @@ public class ESEGroup
 		{
 			ESEUser user=ESEDatabase.getUserByName(userName);
 			return this.userList.contains(user);
-			
 		} 
 		catch (ESEException e) 
 		{
 			return false;
 		}
-		
-		
-		
-		
 	}
 }

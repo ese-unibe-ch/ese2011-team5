@@ -1,6 +1,5 @@
 package modelTests;
 
-import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.Date;
 import models.*;
@@ -90,15 +89,15 @@ public class ESEEventTests extends UnitTest
 	@Test
 	public void isEventDay()
 	{
-		dummyCal.addEvent(event1);
-		dummyCal.addEvent(event2);
-		dummyCal.addEvent(event3);
-		assertTrue(dummyCal.getAllEvents().get(0).isEventDay(24, 11, 2011));
-		assertTrue(dummyCal.getAllEvents().get(1).isEventDay(24, 11, 2011));
-		assertFalse(dummyCal.getAllEvents().get(1).isEventDay(1, 11, 2011));
-		assertFalse(dummyCal.getAllEvents().get(1).isEventDay(25, 11, 2011));
-		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(24, 11, 2011));
-		assertTrue(dummyCal.getAllEvents().get(2).isEventDay(25, 11, 2011));
+		this.dummyCal.addEvent(this.event1);
+		this.dummyCal.addEvent(this.event2);
+		this.dummyCal.addEvent(this.event3);
+		assertTrue(this.dummyCal.getAllEvents().get(0).isEventDay(24, 11, 2011));
+		assertTrue(this.dummyCal.getAllEvents().get(1).isEventDay(24, 11, 2011));
+		assertFalse(this.dummyCal.getAllEvents().get(1).isEventDay(1, 11, 2011));
+		assertFalse(this.dummyCal.getAllEvents().get(1).isEventDay(25, 11, 2011));
+		assertTrue(this.dummyCal.getAllEvents().get(2).isEventDay(24, 11, 2011));
+		assertTrue(this.dummyCal.getAllEvents().get(2).isEventDay(25, 11, 2011));
 	}
 
 	@Test
@@ -109,7 +108,7 @@ public class ESEEventTests extends UnitTest
 		this.cal.set(2011, 11, 14, 00, 00);
 		this.endDate = this.cal.getTime();
 		ESEEvent editEvent = new ESEEvent("editevent", this.dummyCal, this.startDate, this.endDate, false);
-		dummyCal.addEvent(editEvent);
+		this.dummyCal.addEvent(editEvent);
 
 		editEvent.setEventName("Edit Event");
 		assertEquals("Edit Event", editEvent.getEventName());

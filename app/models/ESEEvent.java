@@ -20,15 +20,14 @@ import com.google.gson.annotations.Expose;
 
 /**
  * Class handling events in a Calendar.
- * 
  * @see ESECalendar
  * @see ESEUser
  */
 public class ESEEvent implements Comparable<ESEEvent>, Visitable
 {
 	/**
-	 * static counter to determine uniquely eventID.<br>
-	 * Increased after initialization of an new ESEEvent.
+	 * Static counter to determine uniquely eventID.<br>
+	 * Increased after initialisation of an new ESEEvent.
 	 */
 	private static int idCounter = 0;
 	/**
@@ -45,8 +44,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	private ESECalendar originsCalendar;
 	/**
 	 * List of all {@link ESECalendar} which contain this ESEEvent.
-	 * The ESECalendar in which this ESEEvent was originally created
-	 * is also part of this List.
+	 * The ESECalendar in which this ESEEvent was originally created is also part of this List.
 	 */
 	private ArrayList<ESECalendar> correspondingCalendars;
 	/**
@@ -59,11 +57,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	@Expose
 	private Date endDate;
 	/**
-	 * If {@link #isPublic()} is <code>true</code>, all ESEUser may
-	 * view this ESEEvent.<br>
+	 * If {@link #isPublic()} is <code>true</code>, all ESEUser may see this ESEEvent.<br>
 	 * If {@link #isPublic()} is <code>false</code>, only ESEUser
-	 * that are <b>Contancs</b> of the {@link ESECalendar#getOwner()} of
-	 * the ESEEvent can view it.
+	 * that are <b>Contancs</b> of the {@link ESECalendar#getOwner()}
+	 * of the ESEEvent can view it.
 	 */
 	private boolean isPublic;
 
@@ -75,16 +72,13 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 * The {@link ESEUser} that owns the ESECalendar
 	 * creating this ESEEvent is automatically added to the List of
 	 * participants of this ESEEvent.
-	 * 
 	 * @param eventName Name of Event. Must not be empty.
 	 * @param correspondingCalendar Originated Calendar.
 	 * @param startDate Time and Date when the Event starts.
 	 * @param endDate Time and Date when the Event ends.
 	 * @param isPublic Privacy of an Event.
-	 * 
 	 * @throws ESEException if correspondingCalendar is <code>null</code>
 	 * or if eventName is empty.
-	 * 
 	 * @see ESECalendar
 	 * @see ESEUser
 	 */
@@ -129,7 +123,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	/**
 	 * Query to determine if this ESEEvent takes places on a given day.<br>
-	 * 
 	 * @param day of month
 	 * @param month 0 to 11
 	 * @param year
@@ -147,8 +140,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		Calendar startCal = new GregorianCalendar();
 		Calendar endCal = new GregorianCalendar();
 
-		startCal.setTime(startDate);
-		endCal.setTime(endDate);
+		startCal.setTime(this.startDate);
+		endCal.setTime(this.endDate);
 
 		if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR)
 				&& dateAsCal.get(dateAsCal.YEAR) == startCal.get(startCal.YEAR))
@@ -164,7 +157,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @param startDate of ESEEvent.
 	 * @param endDate of ESEEvent.
 	 * @throws ESEException if endDate is before startDate.
@@ -187,7 +179,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return String name of this ESEEvent.
 	 */
 	public String getEventName()
@@ -196,7 +187,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return originsCalendar<br>
 	 * ESECalendar that originally created this ESEEvent.
 	 */
@@ -207,9 +197,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	/**
 	 * Adds this ESEEvent to another {@link ESECalendar}.
-	 * 
 	 * @param calendar that this ESEEvent should be added to.
-	 * 
 	 */
 	public void addCorrespondingCalendar(ESECalendar calendar)
 	{
@@ -222,7 +210,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	/**
 	 * Returns a ESECalendar specified by it's Id that contains
 	 * this ESEEvent.
-	 * 
 	 * @param id of searched Calendar.
 	 * @return correspondingCalendar
 	 * @throws ESEException if there is no ESECalendar with this id.
@@ -240,7 +227,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return Date specifying the time, when the ESEEvent starts.
 	 */
 	public Date getStartDate()
@@ -261,9 +247,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 * ESECalendar than the originated ESECalendar.<br>
 	 * However, it is only within the originated ESECalendar possible,
 	 * to edit an ESEEvent.
-	 * 
 	 * @param correspondingCalendar to which this ESEEvent should be copied.
-	 * 
 	 * @see #removeCopiedEvent(ESECalendar)
 	 * @see ESECalendar
 	 */
@@ -279,7 +263,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	/**
 	 * Removes an ESEEvent, that is not originated from the corresponding Calendar.
-	 * 
+	 * @param correspondingCalendar 
 	 * @see #copyEvent(ESECalendar)
 	 */
 	public void removeCopiedEvent(ESECalendar correspondingCalendar)
@@ -292,7 +276,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return String representation of endDate in the following format: "dd.MM.yyyy HH:mm"
 	 */
 	public String getStringEndDate()
@@ -301,7 +284,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return String representation of startDate in the following format: "dd.MM.yyyy HH:mm"
 	 */
 	public String getStringStartDate()
@@ -310,7 +292,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * 
 	 * @return boolean Privacy of this ESEEvent.
 	 */
 	public boolean isPublic()
@@ -320,8 +301,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	/**
 	 * Set the {@link #eventName} to a new value.<br>
-	 * 
 	 * @param eventName to be set.
+	 * @throws ESEException 
 	 */
 	public void setEventName(String eventName) throws ESEException
 	{
@@ -342,8 +323,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Sets the {@link #startDate} to a new value. <br>
-	 * 
+	 * Sets the {@link #startDate} to a new value.<br>
 	 * @param startDate time when ESEEvent starts.
 	 * @throws ESEException if startDate is after endDate
 	 */
@@ -355,8 +335,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Sets the {@link #endDate} to a new value. <br>
-	 * 
+	 * Sets the {@link #endDate} to a new value.<br>
 	 * @param endDate time when ESEEvent ends.
 	 * @throws ESEException if startDate is after endDate
 	 */
@@ -370,8 +349,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	/**
 	 * For publiclyViewable is <code>true</code> the Event is set to public.<br>
 	 * For publiclyViewable is <code>false</code> the Event is set to private.
-	 * 
-	 * @param publiclyViewable
+	 * @param publiclyViewable Boolean value to set the visibility of the event.
 	 */
 	public void setVisibility(boolean publiclyViewable)
 	{
@@ -439,13 +417,13 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * @return String representation of this ESEEvent. <br>
+	 * @return String representation of this ESEEvent.<br>
 	 *         Example. "Meeting: From 12.09.2011 13:00 to 12.09.2011 15:00"
 	 */
 	public String toString()
 	{
-		return eventName + ": From " + ESEConversionHelper.convertDateToString(startDate)
-				+ " to " + ESEConversionHelper.convertDateToString(endDate);
+		return this.eventName + ": From " + ESEConversionHelper.convertDateToString(this.startDate)
+				+ " to " + ESEConversionHelper.convertDateToString(this.endDate);
 	}
 
 	@Override
@@ -460,12 +438,10 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Removes an ESEEvent from all ESECalendars, including
-	 * its originated ESECalendar.
-	 * 
+	 * Removes an ESEEvent from all ESECalendars, including its originated ESECalendar.
+	 * In contrast, {@link #removeCopiedEvent(ESECalendar)} removes an event from one calendar.
 	 * @throws ESEException
-	 * 
-	 * @see {@link #removeCopiedEvent(ESECalendar)} remove Event from one Calendar.
+	 * @see #removeCopiedEvent(ESECalendar)
 	 */
 	public void eventRemoveInCorrespondingCalendars() throws ESEException
 	{
@@ -478,7 +454,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 	
 	/**
-	 * get all participants of the event
+	 * Get all participants of the event
 	 * @return an arrayList of ESEUsers
 	 */
 	public ArrayList<ESEUser> getParticipants()

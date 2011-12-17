@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import models.*;
 import org.junit.*;
 
-import controllers.Security;
 import play.test.UnitTest;
 
 public class ESECalendarTests extends UnitTest
 {
-
 	ESEUser ownerDummy;
 	ESEUser ownerDummy2;
 	ESECalendar cal1;

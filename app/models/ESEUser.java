@@ -21,7 +21,6 @@ import models.visitor.Visitor;
  * A User has a <code>password</code> that is used to login.<br>
  * A User can have several Calendars as well as different groups of contacts that
  * can be added to its lists.
- * 
  * @see ESECalendar
  * @see ESEGroup
  * @see ESEDatabase
@@ -39,8 +38,6 @@ public class ESEUser implements Visitable
 	private int userID;
 	/**
 	 * Describes personal informations about an ESEUser.
-	 * 
-	 * @see ESEProfil
 	 */
 		
 	private Date registrationDate;
@@ -75,7 +72,6 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Contains all ESECalendars that are owned by this ESEUser.
-	 * 
 	 * @see ESECalendar
 	 */
 	private ArrayList<ESECalendar> calendarList;
@@ -88,19 +84,19 @@ public class ESEUser implements Visitable
 	/**
 	 * Default Constructor for ESEUser.<br>
 	 * Question and Answer to change password are set to default:<br>
-	 * Question: "Holy solution", Answer:"42"<p>
-	 * Example: ESEUser user = ("UsernameOfJack", "secretPassword", "Jack",
-	 * "Sparrow");
-	 * 
+	 * Question: "Holy solution", Answer: "42"<p>
+	 * Example: ESEUser user = ("UsernameOfJack", "secretPassword", "Jack", "Sparrow");
+	 * {@link #ESEUser(String, String, String, String, String, String)} is an extended constructor<br>
+	 * to create an ESEUser with individual Answer and Question.
+	 * The {@link ESEDatabase} organizes ESEUser to serve in application.
+
 	 * @param username String must not be empty, or an Exception is thrown.
 	 * @param password String must not be empty, or an Exception is thrown.
 	 * @param firstName First name of registered Person.
 	 * @param familyName Second/Family name of registered Person.
 	 * @throws ESEException
-	 * 
-	 * @see {@link #ESEUser(String, String, String, String, String, String)} extended constructor<br>
-	 *      to create ESEUser with individual Answer and Question.
-	 * @see {@link ESEDatabase} organizes ESEUser to serve in application.
+	 * @see #ESEUser(String, String, String, String, String, String)
+	 * @see ESEDatabase
 	 */
 	public ESEUser(String username, String password, String firstName, String familyName) throws ESEException
 	{
@@ -110,7 +106,6 @@ public class ESEUser implements Visitable
 	/**
 	 * Extended constructor for ESEUser that also provides the option of choosing
 	 * an own Question and Answer to reset the password.
-	 * 
 	 * @param username String must not be empty and unique in {@link ESEDatabase}, or an Exception is thrown.
 	 * @param password String must not be empty, or an Exception is thrown.
 	 * @param firstName First name of registered Person.
@@ -172,7 +167,7 @@ public class ESEUser implements Visitable
 	 * Methods with read only access
 	 */
 	/**
-	 * @return {@link int} unique userID of this ESEUser.
+	 * @return {@link Integer} unique userID of this ESEUser.
 	 */
 	public int getUserID()
 	{
@@ -180,7 +175,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link ArrayList} of type {@link ESEGroup}. This is a
 	 * shallow copy, so changes made within this ArrayList will not
 	 * affect the real Data.
@@ -191,7 +185,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link ArrayList} of type {@link ESECalendar}. This is a
 	 * shallow copy, so changes made within this ArrayList will not
 	 * affect the real Data.
@@ -202,13 +195,12 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Creates an new {@link ESECalendar} for this ESEUser. <br>
-	 * 
+	 * Creates an new {@link ESECalendar} for this ESEUser.<br>
+	 * This is different from {@link #addCalendar(ESECalendar)} which only adds
+	 * but does not create a new calendar.
 	 * @param calendarName Must not be empty.
-	 * 
 	 * @throws ESEException
-	 * 
-	 * @see {@link #addCalendar(ESECalendar)} to only add but not create a new calendar.
+	 * @see #addCalendar(ESECalendar) to only add but not create a new calendar.
 	 */
 	public void addCalendar(String calendarName) throws ESEException
 	{
@@ -216,8 +208,7 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Creates an new {@link ESEGroup} for this ESEUser. <br>
-	 * 
+	 * Creates an new {@link ESEGroup} for this ESEUser.
 	 * @param groupName Must not be empty.
 	 * @throws ESEException
 	 */
@@ -229,13 +220,11 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Returns the corresponding ESECalendar of this ESEUser.
-	 * 
 	 * @param id unique
 	 * @return {@link ESECalendar} with corresponding ID of this ESEUser.
 	 * @throws ESEException
-	 * 
-	 * @see {@link #getCalendarByName(String)} to search by Calendar name.
-	 * @see {@link #getCalendarList()} to get all Calendars.
+	 * @see #getCalendarByName(String)
+	 * @see #getCalendarList()
 	 */
 	public ESECalendar getCalendarByID(int id) throws ESEException
 	{
@@ -251,12 +240,11 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Returns the corresponding ESECalendar of this ESEUser.
-	 * 
 	 * @param name of searched ESECalendar.
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
-	 * @see {@link #getCalendarByID(int)} to search by Calendar ID.
-	 * @see {@link #getCalendarList()} to get all Calendars.
+	 * @see #getCalendarByID(int)
+	 * @see #getCalendarList()
 	 */
 	public ESECalendar getCalendarByName(String name) throws ESEException
 	{
@@ -272,12 +260,11 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Returns the corresponding ESEGroup to this <code>id</code>.
-	 * 
 	 * @param id of searched ESEGroup
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
-	 * @see {@link #getGroupByName(String)}
-	 * @see {@link #getGroupList()}
+	 * @see #getGroupByName(String)
+	 * @see #getGroupList()
 	 */
 	public ESEGroup getGroupByID(int id) throws ESEException
 	{
@@ -292,13 +279,12 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Returns the corresponding ESEGroup to this <code>name</code>.
-	 * 
+	 * Returns the corresponding {@link ESEGroup} to this <code>name</code>.
 	 * @param name of searched ESEGroup
 	 * @return {@link ESECalendar} searched.
 	 * @throws ESEException
-	 * @see {@link #getGroupByID(String)}
-	 * @see {@link #getGroupList()}
+	 * @see #getGroupByID(int)
+	 * @see #getGroupList()
 	 */
 	public ESEGroup getGroupByName(String name) throws ESEException
 	{
@@ -318,13 +304,12 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Returns all ESEEvents of the ESECalendar with the corresponding ID.<br>
-	 * 
+	 * Use {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
 	 * @param calendarID
 	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
-	 * 
-	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
-	 * @see {@link ESEEvent}
+	 * @see #getAllPublicEvents(int)
+	 * @see ESEEvent
 	 */
 	public ArrayList<ESEEvent> getAllEvents(int calendarID) throws ESEException
 	{
@@ -340,14 +325,12 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Returns all public ESEEvents of the ESECalendar with the corresponding ID.<br>
-	 * 
+	 * Use {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
 	 * @param calendarID
 	 * @return {@link ArrayList} of type ESEEvent.
 	 * @throws ESEException
-	 * 
-	 * @see {@link #getAllPublicEvents(int)} to get only public ESEEvents of this ESECalendar.
-	 * @see {@link ESEEvent}
-	 * 
+	 * @see #getAllPublicEvents(int)
+	 * @see ESEEvent
 	 */
 	public ArrayList<ESEEvent> getAllPublicEvents(int calendarID) throws ESEException
 	{
@@ -365,13 +348,10 @@ public class ESEUser implements Visitable
 	 * Methods with read-write access
 	 */
 	/**
-	 * Adds an ESECalendar to this ESEUsers Calendar List. <br>
-	 * 
+	 * Adds an ESECalendar to this ESEUsers Calendar List.<br>
 	 * @param calendarToAdd owner must be this.
-	 * 
 	 * @throws ESEException
-	 * 
-	 * @see {@link #addCalendar(String)} to create and add a new calendar.
+	 * @see #addCalendar(String)
 	 */
 	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
 	{
@@ -383,8 +363,7 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Creates and adds a new Group to the list of this ESEUser. <br>
-	 * 
+	 * Creates and adds a new Group to the list of this ESEUser.<br>
 	 * @param groupToAdd String must not be empty.
 	 * @throws ESEException
 	 */
@@ -399,9 +378,7 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Sets the password to a new value.
-	 * 
 	 * @param newPassword String must not be empty.
-	 * 
 	 * @see #setAnswer(String)
 	 * @see #setQuestion(String)
 	 */
@@ -412,9 +389,8 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Replaces the old questions with a new secret question.
-	 * 
 	 * @param newQuestion String must not be empty.
-	 * @see {@link #setAnswer(String)} to change also the answer to the new question.
+	 * @see #setAnswer(String)
 	 */
 	public void setQuestion(String newQuestion)
 	{
@@ -424,9 +400,8 @@ public class ESEUser implements Visitable
 	/**
 	 * Replaces the old answer with a new one.
 	 * The answer should relate to the current <code>secretQuestion</code>.
-	 * 
 	 * @param newAnswer String must not be empty.
-	 * @see {@link #setQuestion(String)}
+	 * @see #setQuestion(String)
 	 */
 	public void setAnswer(String newAnswer)
 	{
@@ -435,8 +410,7 @@ public class ESEUser implements Visitable
 	
 
 	/**
-	 * 
-	 * @return {@link String} username of this ESEUser, specified by its ESEProfile.
+	 * @return {@link String} username of this ESEUser, specified by its profile.
 	 */
 	public String getName()
 	{
@@ -444,7 +418,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link String} password of this ESEUser.
 	 */
 	public String getPassword()
@@ -453,7 +426,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link String} firstName of this ESEUser.
 	 */
 	public String getFirstName()
@@ -462,7 +434,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link String} familyName of this ESEUser.
 	 */
 	public String getFamilyName()
@@ -471,17 +442,16 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * 
 	 * @return birthday of this ESEUser.
 	 */
 	public Date getBirthday()
 	{
-		return birthday;
+		return this.birthday;
 	}
 	
 	/**
-	 * @return String {@link #birthday} representation of this ESEProfile, 
-	 * with the following format: "dd.MM.yyyy HH:mm".<br>
+	 * @return String {@link #birthday} representation of this profile, 
+	 * with the following format: "dd.MM.yyyy".<br>
 	 * If not initialized "-" is returned instead.
 	 */
 	public String getBirthdayString()
@@ -490,7 +460,7 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * @return Date {@link #registrationDate} of this ESEProfile.
+	 * @return Date {@link #registrationDate} of this profile.
 	 */
 	public Date getRegistrationDate()
 	{
@@ -498,7 +468,7 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * @return String {@link #registrationDate} representation of this ESEProfile.
+	 * @return String {@link #registrationDate} representation of this profile.
 	 */
 	public String getRegistrationDateString()
 	{
@@ -506,7 +476,7 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * @return String {@link #eMail} of this ESEProfile.
+	 * @return String {@link #eMail} of this profile.
 	 * If not initialized, the default value is "-".
 	 */
 	public String getMail()
@@ -514,7 +484,7 @@ public class ESEUser implements Visitable
 		return eMail;
 	}
 	/**
-	 * @return String {@link #street} of this ESEProfile. 
+	 * @return String {@link #street} of this profile. 
 	 * If not initialized, the default value is "-".
 	 */
 	public String getStreet()
@@ -522,7 +492,7 @@ public class ESEUser implements Visitable
 		return street;
 	}
 	/**
-	 * @return String {@link #city} of this ESEProfile. 
+	 * @return String {@link #city} of this profile. 
 	 * If not initialized, the default value is "-".
 	 */
 	public String getCity()
@@ -530,7 +500,7 @@ public class ESEUser implements Visitable
 		return city;
 	}
 	/**
-	 * @return String {@link #postCode} of this ESEProfile. 
+	 * @return String {@link #postCode} of this profile. 
 	 * If not initialized, the default value is "-".
 	 */
 	public String getPostCode()
@@ -539,7 +509,7 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * @return String {@link #stateMessage} of this ESEProfile. 
+	 * @return String {@link #stateMessage} of this profile. 
 	 * If not initialized, the default value is "hi there!".
 	 */
 	public String getStateMessage()
@@ -548,69 +518,69 @@ public class ESEUser implements Visitable
 	}
 	
 	/**
-	 * Set the {@link #stateMessage} to a new value.<br>
-	 * The default value of stateMessage when a new ESEProfile is 
-	 * created is: "hi there!". <p>
-	 * Example of new message: <br>
+	 * Sets the {@link #stateMessage} to a new value.<br>
+	 * The default value of stateMessage when a new profile is created is: "hi there!".<p>
+	 * Example of new message:<br>
 	 * stateMessage = "I'm at home and it is raining."
-	 * 
 	 * @param stateMessage the message to be set.
 	 */
 	public void setStateMessage(String stateMessage)
 	{
 		this.stateMessage=stateMessage;
 	}
+
 	/**
-	 * Set the {@link #username} to a new value.<br>
-	 * 
+	 * Sets the {@link #username} to a new value.<br>
 	 * @param username to be set. Must not be empty.
 	 */
 	public void setUsername(String username)
 	{
 		this.username = username;
 	}
+
 	/**
-	 * Set the {@link #firstName} to a new value.<br> 
+	 * Sets the {@link #firstName} to a new value.<br> 
 	 * The default value by initialization is "-".
-	 * 
 	 * @param firstName to be set.
 	 */
 	public void setFirstName(String firstName)
 	{
 		this.firstName = firstName;
 	}
+
 	/**
-	 * Set the {@link #familyName} to a new value. <br>
+	 * Sets the {@link #familyName} to a new value.<br>
 	 * The default value by initialization is "-".
-	 * 
 	 * @param familyName to be set.
 	 */
 	public void setFamilyName(String familyName)
 	{
 		this.familyName = familyName;
 	}
+
 	/**
-	 * Set {@link #birthday} to the right Date.
+	 * Sets {@link #birthday} to the right Date.
 	 * @param birthday {@link Date} of birth of related ESEUser.
-	 * @see {@link #setBirthday(String)} to set by String.
+	 * @see #setBirthday(String) to set by String.
 	 */
 	public void setBirthday(Date birthday)
 	{
 		this.birthday = birthday;
 	}
+
 	/**
-	 * Set {@link #birthday} to the right Date.
-	 * 
-	 * @param birthday <br>The String must have the following format: "dd.MM.yyyy HH:mm".
-	 * @see {@link #setBirthday(Date)} to set by Date.
+	 * Sets {@link #birthday} to the right Date.
+	 * @param birthday The String must have the following format: "dd.MM.yyyy".
+	 * @see #setBirthday(Date) to set by Date.
 	 */	
 	public void setBirthday(String birthday)
 	{
 		Date birthdayDate = ESEConversionHelper.convertBirthdayStringToDate(birthday);
 		this.setBirthday(birthdayDate);
 	}
+
 	/**
-	 * Set {@link #eMail} to a new value.<br>
+	 * Sets {@link #eMail} to a new value.<br>
 	 * The default value by initialization is "-".
 	 * @param eMail to be set.
 	 */
@@ -618,8 +588,9 @@ public class ESEUser implements Visitable
 	{
 		this.eMail = eMail;
 	}
+
 	/**
-	 * Set {@link #street} to a new value.<br>
+	 * Sets {@link #street} to a new value.<br>
 	 * The default value by initialization is "-".
 	 * @param street to be set.
 	 */
@@ -627,8 +598,9 @@ public class ESEUser implements Visitable
 	{
 		this.street = street;
 	}
+
 	/**
-	 * Set {@link #city} to a new value.<br>
+	 * Sets {@link #city} to a new value.<br>
 	 * The default value by initialization is "-".
 	 * @param city to be set.
 	 */
@@ -636,8 +608,9 @@ public class ESEUser implements Visitable
 	{
 		this.city = city;
 	}
+
 	/**
-	 * Set {@link #postCode} to a new value.<br>
+	 * Sets {@link #postCode} to a new value.<br>
 	 * The default value by initialization is "-".
 	 * @param postCode to be set.
 	 */
@@ -647,7 +620,6 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link String} that contains the Question.
 	 */
 	public String getQuestion()
@@ -656,19 +628,16 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * 
 	 * @return {@link String} that contains the Answer.
 	 */
 	public String getAnswer()
 	{
 		return this.secureAnswer;
 	}
+
 	@Override
 	public String toString()
 	{
 		return this.getName();
 	}
-	
-	
-
 }

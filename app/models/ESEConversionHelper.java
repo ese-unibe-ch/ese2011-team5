@@ -33,7 +33,6 @@ public class ESEConversionHelper
 	}
 	/**
 	 * Converts a {@link Date} to a {@link String} value.
-	 * 
 	 * @param userDateString
 	 * @return Date of birthday
 	 * @see #convertBirthdayDateToString(Date)
@@ -72,8 +71,7 @@ public class ESEConversionHelper
 	}
 	/**
 	 * Converts a {@link Date} to a {@link String} value.<br>
-	 * If a <code>null</code> Date is passed, the birthday String 
-	 * is set to "-".
+	 * If a <code>null</code> Date is passed, the birthday String is set to "-".
 	 * @param date to be converted
 	 * @return String representation of birthday
 	 * @see #convertBirthdayStringToDate(String)

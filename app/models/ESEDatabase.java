@@ -13,13 +13,10 @@ import java.util.List;
 
 import controllers.Security;
 /**
- * The ESEDatabase is responsible for the administration of 
- * the {@link ESEUser}s.<br>
+ * The ESEDatabase is responsible for the administration of the {@link ESEUser}s.<br>
  * It is also the responsibility of this class to ensure, that
  * the currentUser is the user logged in within the application.
- * 
  * @see ESEUser
- *
  */
 public class  ESEDatabase
 {
@@ -40,7 +37,7 @@ public class  ESEDatabase
 	 */
 
 	/**
-	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return the default guestUser
+	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return a ESEExceptionGuestUser
 	 * @return currentUser ESEUser
 	 * @throws ESEExceptionGuestUser 
 	 */
@@ -67,17 +64,14 @@ public class  ESEDatabase
 	 * Methods to create ESEUsers
 	 */
 	/**
-	 * Creates a new ESEUser.
-	 * 
+	 * Creates a new ESEUser without secret question and answer.
 	 * @param username of new ESEUser. Must not be null.
 	 * @param password of new ESEUser. Must not be null.
 	 * @param firstName of new ESEUser.
 	 * @param familyName of new ESEUser
-	 * @throw ESEException 
-	 * @see {@link #createUser(String, String, String, String, String, String)}
-	 * to create a ELEUser with secret question and answer.
+	 * @throws ESEException 
+	 * @see #createUser(String, String, String, String, String, String)
 	 * @see ESEUser
-	 * @see ESEProfile
 	 */
 	public static void createUser(String username, String password, String firstName, String familyName) throws ESEException
 	{
@@ -85,8 +79,7 @@ public class  ESEDatabase
 		userList.add(userToAdd);
 	}
 	/**
-	 * Creates a new ESEUser.
-	 * 
+	 * Creates a new ESEUser with secret question and answer.
 	 * @param username of new ESEUser. Must not be null.
 	 * @param password of new ESEUser. Must not be null.
 	 * @param firstName of new ESEUser.
@@ -94,6 +87,8 @@ public class  ESEDatabase
 	 * @param question to reset password of new ESEUser.
 	 * @param answer to reset password of new ESEUser.
 	 * @throws ESEException
+	 * @see #createUser(String, String, String, String)
+	 * @see ESEUser
 	 */
 	public static void createUser(String username, String password,
 			String firstName, String familyName, String question, String answer) throws ESEException
@@ -107,11 +102,9 @@ public class  ESEDatabase
 	 */
 	/**
 	 * Searches by username and returns a {@link ESEUser}.
-	 * 
 	 * @param username to search by.
 	 * @return ESEUser searched for.
 	 * @throws ESEException if there is no ESEUser with such username.
-	 * 
 	 * @see #getUserByID(int) to search by ID.
 	 */
 	public static ESEUser getUserByName(String username) throws ESEException
@@ -129,11 +122,9 @@ public class  ESEDatabase
 	
 	/**
 	 * Searches by userID and returns a {@link ESEUser}.
-	 * 
 	 * @param userID to search by.
 	 * @return ESEUser searched for.
 	 * @throws ESEException if there is no ESEUser with such ID.
-	 * 
 	 * @see #getUserByName(String) to search by username.
 	 */
 	public static ESEUser getUserByID(int userID) throws ESEException
@@ -150,7 +141,6 @@ public class  ESEDatabase
 	/**
 	 * Returns a List with all registered {@link ESEUser}s but the one
 	 * ESEUser that is passed as argument.
-	 * 
 	 * @param username only ESEUser not to be returned.
 	 * @return ArrayList<ESEUser> of ESEUsers.
 	 */
@@ -165,7 +155,7 @@ public class  ESEDatabase
 		 */
 		for (ESEUser user : userList)
 		{
-			if (user.getName().equals(username) || user.getName().equals("guest"))
+			if (user.getName().equals(username)/* || user.getName().equals("guest")*/)
 			{
 				userListToReturn.remove(user);
 			}
@@ -187,7 +177,6 @@ public class  ESEDatabase
 	 */
 	/**
 	 * Removes a {@link ESEUser} by its username.
-	 * 
 	 * @param username String of ESEUser to be removed.
 	 * @throws ESEException if there is no ESEUser with this username.
 	 */
@@ -205,7 +194,6 @@ public class  ESEDatabase
 	}
 	/**
 	 * Remove a {@link ESEUser} by its ID.
-	 * 
 	 * @param userID int of ESEUser to be removed.
 	 * @throws ESEException if there is no ESEUser with this ID.
 	 */
@@ -227,7 +215,6 @@ public class  ESEDatabase
 	 */
 	/**
 	 * Returns a List with all {@link ESEUser}s registered.
-	 * 
 	 * @return ArrayList<ESEUser> of all ESEUsers.
 	 */
 	public static ArrayList<ESEUser> getAllUsers()
