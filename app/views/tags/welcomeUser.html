@@ -1,6 +1,3 @@
-<head>
-	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-</head>
 <body>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -19,31 +16,15 @@
 		});
 	</script>
 
-	<h3>Welcome user ${_currentUser.getName()}!</h3>
-	
-	<b>Your calendars:</b>
-	
-	#{list items:_calendarList, as:'calendar'}
-		<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),_currentUser.getName())}">${calendar.getCalendarName()}</a></p>
-	#{/list}
-	
+	<list>
+	<ul style="margin-left: -20px; margin-top: -1px;">
+		#{list items:_calendarList, as:'calendar'}
+			<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),_currentUser.getName())}">${calendar.getCalendarName()}</a></li>
+		#{/list}
+	</ul>
+	</list>
 	#{if _calendarList.size()<3}
 	<br><br><br>
 	#{/if}
-	
-	<b>Add a calendar:</b>
-	
-	#{form @Application.addCalendar()}
-	    <p>
-	        <label for="calendarName">Name of the Calendar: </label>
-	        <input type="text" name="calendarName" id="calendarName" />
-	    </p>
-	    <p>
-	        <input type="submit" value="Submit your Calendar" />
-	    </p>
-	
-	#{/form}
-	
-	<a href="#" id="searchEvent">Search an Event?</a>
 	
 </body>

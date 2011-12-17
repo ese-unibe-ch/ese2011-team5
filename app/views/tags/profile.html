@@ -1,31 +1,55 @@
-<head>
-	<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-</head>
-
-<body>
-#{if _currentUser.equals(_watchedUser)}
-	<h1>You are watching your own profile!</h1>
-#{/if}
-#{else}
-	<h1>You are watching ${_watchedUser.getName()}'s profile</h1>
-#{/else}
-
-	Username: ${_watchedUser.getName()} </br>
-	Member since: ${_watchedUser.getRegistrationDate()} </br>
-	State message: ${_watchedUser.getStateMessage()} </br>
-	Firstname: ${_watchedUser.getFirstName()} </br>
-	Familyname: ${_watchedUser.getFamilyName()} </br>
-	Em@il: ${_watchedUser.getMail()} </br>
-	
-	#{if _watchedUser.getBirthday()==null}
-		Birthday: - </br>
-	#{/if}
-	#{else}
-		Birthday: ${_watchedUser.getBirthdayString()} </br>
-	#{/else}
-	
-	
-	Street: ${_watchedUser.getStreet()} </br>
-	City: ${_watchedUser.getCity()} </br>
-	Postcode: ${_watchedUser.getPostCode()} </br>
-</body>
+<table>
+					<colgroup>
+			    		<col width="180">
+			    		<col width="180">
+			    	</colgroup>
+			    	
+					<tr>
+			    		<td>
+							First name:<br>
+						</td>
+						<td>
+							${_watchedUser.getFirstName()}
+						</td>
+					</tr>
+					<tr>
+			    		<td>
+							Family name:<br>
+						</td>
+						<td>
+							${_watchedUser.getFamilyName()}
+						</td>
+					</tr>
+					<tr>
+			    		<td>
+							Email:<br>
+						</td>
+						<td>
+							${_watchedUser.getMail()}
+						</td>
+					</tr>
+					<tr>
+			    		<td>
+							Birthday:<br>
+						</td>
+						<td>
+							${_watchedUser.getBirthdayString()}
+						</td>
+					</tr>
+					<tr>
+			    		<td>
+							Street:<br>
+						</td>
+						<td>
+							${_watchedUser.getStreet()}
+						</td>
+					</tr>
+					<tr>
+			    		<td>
+							City:<br>
+						</td>
+						<td>
+							${_watchedUser.getCity()}
+						</td>
+					</tr>
+</table>

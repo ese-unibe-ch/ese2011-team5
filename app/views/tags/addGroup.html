@@ -1,0 +1,37 @@
+#{form @Application.createNewGroup()}
+
+<table>
+	<colgroup>
+    	<col width="150">
+   		<col width="5">
+   		<col width="150">
+    </colgroup>
+    <tr>
+    	<td>Add a group</td>
+    	<td></td>
+    	<td></td>
+    </tr>
+    <tr>
+    	<td>Group name:</td>
+    	<td></td>
+    	<td><input type="text" style="width: 150px;" name="groupname" /></td>
+    </tr>
+    <tr>
+    	<td></td>
+    	<td></td>
+    	<td><input type="submit" style="width: 80px;" value="Submit" /></td>
+    </tr>
+</table>
+
+	#{if flash.error}
+		<p class="error">
+			&{flash.error}
+		</p>
+	#{/if}
+	#{if flash.success}
+		<p class="success">
+			&{flash.success}
+		</p>
+	#{/if}
+
+#{/form}

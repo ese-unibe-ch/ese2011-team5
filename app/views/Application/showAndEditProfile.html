@@ -1,32 +1,33 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
-	<header>
-		<aside id="login">
-			#{nav currentUser:currentUser/}
-		</aside>
-		<h1 id="title"> ESECalendar <h1>
-		<hr>
-	</header>
-
-	<section id="section">
-		<aside id="search">
-		
-			#{searchUserForm /}
-			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
-			
-		</aside>
-		
-		<article>
-			#{profile profile:profile, watchedUser:watchedUser, currentUser:currentUser /}
-			#{editProfile currentUser:currentUser /}
-		<article>
-	
-	</section>
-	
-	<footer>
-		#{footer /}
-	</footer>
-
+	<table>
+    	<colgroup>
+    		<col width="180">
+    		<col width="5">
+    		<col width="180">
+    	</colgroup>
+ 		 <tr style="height: 40px;">
+			<td colspan="3" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Profile</font></td>
+		</tr>
+ 		 <tr style="height: 5px;">
+ 		 	<td colspan="3" rowspan="1"></td>
+		</tr>
+		<tr style="height: 40px;">
+ 			<td colspan="3" style="vertical-align: center;">Profile of ${watchedUser.getName()}</td>
+ 		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+				#{profile watchedUser:watchedUser, currentUser:currentUser /}
+			</td>
+	 	</tr>
+	 	<tr style="height: 10px;">
+			<td colspan="3"></td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
+	 			#{editProfile watchedUser:watchedUser, currentUser:currentUser /}
+	 		</td>
+	 	</tr>
+ 	</table>
 </body>

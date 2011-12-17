@@ -1,0 +1,23 @@
+<body>
+	#{list items:_events, as:'event'}
+			#{if event.isEventDay(_selectedDay,_month,_year)} 
+				<p> ${event.toString()} </p>
+				
+				#{showParticipants participants:event.getParticipants() /}
+				
+				#{if !_calendar.getOwner().equals(_currentUser) && _currentUser!=null}
+						<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> Copy the event in your own calendar </a></p>
+				#{/if}
+				#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
+						<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"> Edit Event</a>
+				#{/if}
+				#{if _calendar.getOwner().equals(_currentUser)}
+					<span style="color:white">e</span><a href="@{Application.removeEvent(_calendar.getID(), event.getEventID(), _selectedDay, _month, _year)}">Remove Event</a>
+				#{/if}
+			#{/if}
+			#{else}
+				...no events at selected day...
+			#{/else}
+	#{/list}
+	
+</body>

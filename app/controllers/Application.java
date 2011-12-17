@@ -146,7 +146,7 @@ public class Application extends Controller
 			flash.error(e.getMessage());
 			params.flash();
 		} 
-		showCalendars();
+		index();
 	}
 
 	public static void showCalendarView(int calendarID, String username,
@@ -678,9 +678,7 @@ public class Application extends Controller
 
 	public static void doEditProfile(@Required int userID, String firstName,
 			String familyName, String birthday, String mail,
-			String stateMessage, String street, String city, String postcode,
-			String password, String confirmpassword, String question,
-			String answer) throws ESEException, ESEExceptionGuestUser
+			String street, String city) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser user = ESEDatabase.getUserByID(userID);
 		//ESEProfile profile = user.getProfile();
@@ -705,29 +703,7 @@ public class Application extends Controller
 		{
 			user.setMail(mail);
 		}
-		if (isStringNotEmpty(postcode))
-		{
-			user.setPostCode(postcode);
-		}
-		if (isStringNotEmpty(stateMessage))
-		{
-			user.setStateMessage(stateMessage);
-		}
-		if (isStringNotEmpty(street))
-		{
-			user.setStreet(street);
-		}
-		if (isStringNotEmpty(question))
-		{
-			user.setQuestion(question);
-		}
-		if (isStringNotEmpty(answer))
-		{
-			user.setAnswer(answer);
-		}
-
-		changePassword(userID, password, confirmpassword);
-
+		
 		showAndEditProfile(userID);
 	}
 

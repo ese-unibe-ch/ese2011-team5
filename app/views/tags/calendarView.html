@@ -1,32 +1,18 @@
-<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-	</head>
-
-<div id="wrapper">
-
-    <div id="centerCol">
-     
-	<h1>${_monthString} ${_year}</h1>
-	<h2>${_calendar.getCalendarName()}</h2>
-	
-	<a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(),0, _month-1, _year)}">last Month</a>
-	          
-	<a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(), 0, _month+1, _year)}">next Month</a>
-	
-
-	<ol class="calendar" start="6">
-			<li id="lastmonth">
+<body>
+	<ol id="calendar" style="margin-left: -77px; margin-top: -15px; font-size: small;">
+		<li id="lastmonth" style="list-style: none;">
 			<ul>
 				#{list items:_weekdays, as:'day'}
 					<li>${day}</li>
 				#{/list}
 			</ul>
-			<ul start="${startOfLastMonth}">
+			<ul start="${_startOfLastMonth}">
 				#{list items:_daysFromLastMonth, as:'day'}
 					<li>${day}</li>
 				#{/list}
 			</ul>
 		</li>
-		<li id="thismonth">
+		<li id="thismonth" style="list-style: none;">
 			<ul>
 				#{list items:_daysFromThisMonth, as:'day'}
 				<!-- Unterscheidung des Layouts: normal | selektiert | heute -->
@@ -50,7 +36,7 @@
 				#{/list}
 			</ul>
 		</li>
-		<li id="nextmonth">
+		<li id="nextmonth" style="list-style: none;">
 			<ul>
 				#{list items:_daysFromNextMonth, as:'day'}
 					<li>${day}</li>
@@ -58,33 +44,5 @@
 			</ul>
 		</li>
 	</ol>
-	
-	<ol class="calendar" start="6">
-	
-	<br>
-	<h3>Events at selected Day:</h3>
-	
-	#{list items:_events, as:'event'}
-		#{if event.isEventDay(_selectedDay,_month,_year)} 
-		<p> ${event.toString()} </p>
-		
-		#{showParticipants participants:event.getParticipants() /}
-		
-		#{if !_calendar.getOwner().equals(_currentUser) && _currentUser!=null}
-				<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> Copy the event in your own calendar </a></p>
-				
-					
-			#{/if}
-			#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
-					<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"> Edit Event</a>
-			#{/if}
-			#{if _calendar.getOwner().equals(_currentUser)}
-				<span style="color:white">e</span><a href="@{Application.removeEvent(_calendar.getID(), event.getEventID(), _selectedDay, _month, _year)}">Remove Event</a>
-			#{/if}
-		
-		#{/if}
-	#{/list}
-		
-		
-	</ol>
-	
+
+</body>
