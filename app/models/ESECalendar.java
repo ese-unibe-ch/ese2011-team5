@@ -136,13 +136,6 @@ public class ESECalendar implements Visitable
 				ESEConversionHelper.convertStringToDate(startDate),
 				ESEConversionHelper.convertStringToDate(endDate), isPublic);
 		eventOverlaps = newEvent.checkForOverlapping(this.eventList);
-		/*for (ESEEvent existingEvent : this.eventList)
-		{
-			if (checkEventOverlaps(existingEvent, newEvent))
-			{
-				eventOverlaps = true;
-			}
-		}*/
 		this.eventList.add(newEvent);
 		if (eventOverlaps)
 		{

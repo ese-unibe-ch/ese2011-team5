@@ -41,7 +41,6 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 	@Override
 	public void visit(ESEEvent event)
 	{
-		// TODO: implement boundaries
 		if (this.condition(event))
 		{
 			events.add(event);
