@@ -1,6 +1,25 @@
 #{extends 'main.html' /}
 
 <body>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#searchEvent').click(function(ev){
+				var windowName = 'Search for an Event?';
+				var url = '@{Events.searchEvent()}';
+				var width = 500;
+				var height = 600;
+				var left = (screen.width/2)-(width/2);
+				var top = (screen.height/2)-(height/2);
+				var windowSize = "width=" + width + ", height=" + height + ",screenX=" + left + ",screenY=" + top +"scrollbars=yes";
+				window.open(url, windowName, windowSize);
+				ev.preventDefault();
+				return false;
+			});
+		});
+	</script>
+	
+	
+	
 	<table>
     	<colgroup>
     		<col width="190">
@@ -44,10 +63,12 @@
  		
  		#{if currentUser}
  			<tr style="height: 40px;">
- 				<td colspan="3" style="vertical-align: center;">Calendars of ${currentUser.getName()}</td>
+ 				<td style="vertical-align: center;">Calendars of ${currentUser.getName()}</td>
+ 				<td></td>
+ 				<td style="vertical-align: center;">Search for an Event</td>
 	 		</tr>
 	 		<tr>
-		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+		 		<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
 		 		
 					<list>
 						<ul style="margin-left: -20px; margin-top: -1px;">
@@ -57,6 +78,10 @@
 						</ul>
 					</list>
 
+				</td>
+				<td></td>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+					Would you like to search for an event in your calendars? Then <a href="#" id="searchEvent">click here</a>.
 				</td>
 	 		</tr>
 	 		<tr style="height: 10px;">
