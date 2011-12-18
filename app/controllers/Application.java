@@ -233,9 +233,6 @@ public class Application extends Controller
 	{
 		
 		
-		System.out.println(calendarID);
-		System.out.println(eventID);
-		
 		try
 		{
 			ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
@@ -507,7 +504,6 @@ public class Application extends Controller
 	 */
 	public static void search(@Required String searchName)
 	{
-		System.out.println("search: " + searchName);
 		List<ESEUser> results = new ArrayList<ESEUser>();
 		if (!searchName.equals(""))
 		{
@@ -518,7 +514,6 @@ public class Application extends Controller
 			results = ESEDatabase.getAllUsers();
 		}
 		
-		System.out.println("RESULT: " + results);
 		render(results);
 	}
 	
@@ -529,7 +524,6 @@ public class Application extends Controller
 	{
 		List<ESEUser> results = ESEDatabase.getAllUsers();
 		
-		System.out.println("RESULT ALL: " + results);
 		render(results);
 	}
 
