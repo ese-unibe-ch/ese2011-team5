@@ -44,7 +44,7 @@ public class Security extends Secure.Security
 	          params.flash();
 		}
 		System.out.println("Login process completed");
-		Application.showCalendars();
+		Application.index();
 	}
 
 	public static String connected() throws NullPointerException
