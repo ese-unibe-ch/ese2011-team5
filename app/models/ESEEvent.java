@@ -422,8 +422,17 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	public String toString()
 	{
-		return this.eventName + ": From " + ESEConversionHelper.convertDateToString(this.startDate)
-				+ " to " + ESEConversionHelper.convertDateToString(this.endDate);
+		return this.eventName;
+	}
+	
+	public String getStartDateString(){
+		return ESEConversionHelper.convertDateToString(this.startDate).substring(0,6) 
+				+ ESEConversionHelper.convertDateToString(this.startDate).substring(10,16);
+	}
+	
+	public String getEndDateString(){
+		return ESEConversionHelper.convertDateToString(this.endDate).substring(0,6) 
+				+ ESEConversionHelper.convertDateToString(this.endDate).substring(10,16);
 	}
 
 	@Override

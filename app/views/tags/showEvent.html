@@ -1,0 +1,38 @@
+<table>
+	<colgroup>
+    	<col width="150">
+   		<col width="5">
+   		<col width="150">
+    </colgroup>
+    <tr>
+    	<td>Event to Edit</td>
+    	<td></td>
+    	<td></td>
+    </tr>
+    <tr>
+    	<td>Event name</td>
+    	<td></td>
+    	<td>${_event.getEventName()}</td>
+    </tr>
+    <tr>
+    	<td>Start Date</td>
+    	<td></td>
+    	<td>${_event.getStringStartDate()}</td>
+    </tr>
+    <tr>
+    	<td>End Date</td>
+    	<td></td>
+    	<td>${_event.getStringEndDate()}</td>
+    </tr>
+    <tr>
+    	<td>Visibility</td>
+    	<td></td>
+    	<td>
+    	#{if _event.isPublic()}
+    		public
+    	#{/if}
+    	#{else}
+    		private
+    	#{/else}
+    </tr>
+</table>    

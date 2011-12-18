@@ -1,23 +1,24 @@
 <body>
 	#{list items:_events, as:'event'}
-			#{if event.isEventDay(_selectedDay,_month,_year)} 
-				<p> ${event.toString()} </p>
-				
-				#{showParticipants participants:event.getParticipants() /}
-				
-				#{if !_calendar.getOwner().equals(_currentUser) && _currentUser!=null}
-						<p><a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"> Copy the event in your own calendar </a></p>
-				#{/if}
-				#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
-						<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"> Edit Event</a>
-				#{/if}
-				#{if _calendar.getOwner().equals(_currentUser)}
-					<span style="color:white">e</span><a href="@{Application.removeEvent(_calendar.getID(), event.getEventID(), _selectedDay, _month, _year)}">Remove Event</a>
-				#{/if}
+		#{if event.isEventDay(_selectedDay,_month,_year)} 
+			#{if event.isPublic()}<b>#{/if}${event.toString()}#{if event.isPublic()}</b>#{/if}
+			
+			#{if event.getCorrespondingCalendar().getOwner().equals(_currentUser)}
+				<a href="@{Application.removeEvent(_calendar.getID(), event.getEventID(), _selectedDay, _month, _year)}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a>
+				<a href="@{Application.editEvent(event.getCorrespondingCalendar().getID(), event.getEventID(), _selectedDay, _month, _year)}"><img title="edit" alt="edit" src="/public/images/edit.jpg"></a>
 			#{/if}
-			#{else}
-				...no events at selected day...
-			#{/else}
+			#{if !_calendar.getOwner().equals(_currentUser) && _currentUser!=null}
+				<a href="@{Application.copyEvent(event.getEventID(),_calendar.getOwner().getUserID(), _calendar.getID())}"><img title="copy" alt="copy" src="/public/images/copy.jpg"></a>
+			#{/if}
+			<div style="font-size: small;">
+				${event.getStartDateString()} - ${event.getEndDateString()}
+				#{showParticipants participants:event.getParticipants() /}
+			</div>
+		#{/if}
+		<div style="font-size: .3em;"><br></div>
 	#{/list}
+	#{if _events.isEmpty()}
+		<div style="font-size: .3em;"><br></div>
+	#{/if}
 	
 </body>

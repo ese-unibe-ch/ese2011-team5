@@ -1,10 +1,8 @@
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 		
-	Participants of the event:
-	<ul>
+	<li>Participants of the event:</li>
 	#{list items:_participants, as:'participant'}
-	<li><a href="@{Application.showOtherCalendars(participant.getName())}">${participant.getName()}</a></li>
+	<div style="margin-left: 20px;"><li><a href="@{Application.showOtherCalendars(participant.getName())}">${participant.getName()}</a></li></div>
 	
 	#{/list}
-	<ul>
 	

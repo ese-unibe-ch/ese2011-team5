@@ -24,10 +24,12 @@
 	 	<tr style="height: 10px;">
 			<td colspan="3"></td>
 	 	</tr>
+	 	#{if watchedUser.equals(currentUser)}
 	 	<tr>
 	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
 	 			#{editProfile watchedUser:watchedUser, currentUser:currentUser /}
 	 		</td>
 	 	</tr>
+	 	#{/if}
  	</table>
 </body>
