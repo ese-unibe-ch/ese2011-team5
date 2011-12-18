@@ -1,79 +1,66 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
-	</head>
-	<body>
-		<table id="registertable" border="0">
-			<tr>
-					#{if flash.error}
+<body>
+register...
+#{form @Register.createNewUser()}
+	#{if flash.error}
 						<p id="error">
 							${flash.error}
 						</p>
 					#{/if}
 					
-					#{form @Register.createNewUser()}
-						<tr>
-							<td>
-								<p id="username-field">
-									<label for="username">New &{'secure.username'}</label>
-								</p>
-							</td>
-							<td>
-								<input type="text" name="username" id="username" value="${flash.username}" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p id="password-field">
-									<label for="password">New &{'secure.password'}</label>
-								</p>
-							</td>
-							<td>
-								<input type="password" name="password" id="password" value="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p id="confirmpassword-field">
-									<label for="confirmpassword">Confirm new &{'secure.password'}</label>
-								</p>
-							</td>
-							<td>
-								<input type="password" name="confirmpassword" id="confirmpassword" value="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p id="question-field">
-									<label for="question">A question you have to answer if you forget the password:</label>
-								</p>
-							</td>
-							<td>
-								<input type="text" name="question" id="question" value="${flash.question}" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<p id="answer-field">
-									<label for="answer">The answer:</label>
-								</p>
-							</td>
-							<td>
-								<input type="text" name="answer" id="answer" value="" />
-							</td>
-						</tr>
-						<tr>
-							<td>
-							</td>
-							<td>
-								<p id="register-field">
-									<input type="submit" id="register" value="&{'Register'}" />
-								</p>
-							</td>
-						</tr>
-					#{/form}
-			</tr>
-		</table>
-	</body>
-</html>
+					
+	<table>
+	<colgroup>
+		<col width="180">
+		<col width="150">
+		</colgroup>
+				<tr>
+					<td>
+						<label for="username">&{'secure.username'}</label>
+					</td>
+					<td>
+						<input type="text" name="username" id="username" style="width: 150px;" value="${flash.username}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="password">&{'secure.password'}</label>
+					</td>
+					<td>
+						<input type="password" name="password" id="password" style="width: 150px;" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="confirmpassword">Confirm &{'secure.password'}</label>
+					</td>
+					<td>
+						<input type="password" name="confirmpassword" id="confirmpassword" style="width: 150px;" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="question">Secret Question</label>
+					</td>
+					<td>
+						<input type="text" name="question" id="question" style="width: 150px;" value="${flash.question}" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="answer">Secret Answer</label>
+					</td>
+					<td>
+						<input type="text" name="answer" id="answer" style="width: 150px;" value="" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td>
+						<div style="text-align:right;"><input type="submit" id="register" style="width: 100px;" value="&{'Register'}" /></div>
+					</td>
+				</tr>
+			#{/form}
+		</tr>
+</table>
+</body>

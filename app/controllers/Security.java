@@ -68,7 +68,7 @@ public class Security extends Secure.Security
 		//ESEDatabase.getCurrentUser().getProfile().changeState(ESEState.OFFLINE);
 		//ESEDatabase.setCurrentUser("guest");
 
-		Application.showCalendars(); // go to the start screen, not to the login
+		Application.index(); // go to the start screen, not to the login
 	}
 
 	private static Object invoke(String m, Object... args) throws Throwable 
