@@ -1,36 +1,43 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
-	<header>
-		<aside id="login">
-			#{nav currentUser:currentUser/}
-		</aside>
-		<h1 id="title"> ESECalendar <h1>
-		<hr>
-	</header>
-
-	<section id="section">
-		<aside id="search">
-		
-			#{searchUserForm /}
-			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
-			
-		</aside>
-		
-		<article>
-		
-			Calendars of ${otherUser.getName()}:<br>
-			
-			#{list items:calendarList, as:'calendarToShow'}
-				<p><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendarToShow.getID(), calendarToShow.getOwner().getName())}">${calendarToShow.getCalendarName()}</a></p>
-			#{/list}
-		<article>
-	
-	</section>
-	
-	<footer>
-		#{footer /}
-	</footer>
-
+	<table>
+    	<colgroup>
+    		<col width="190">
+    		<col width="5">
+    		<col width="190">
+    	</colgroup>
+ 		 <tr style="height: 40px;">
+			<td colspan="3" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Home</font></td>
+		</tr>
+ 		 <tr style="height: 5px;">
+ 		 	<td colspan="3" rowspan="1"></td>
+		</tr>
+		<tr style="height: 40px;">
+ 			<td colspan="3" style="vertical-align: center;">Calendars of ${otherUser.getName()}</td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+	 	
+				<list>
+					<ul style="margin-left: -20px; margin-top: -1px;">
+						#{list items:calendarList, as:'calendarToShow'}
+							<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendarToShow.getID(), calendarToShow.getOwner().getName())}">${calendarToShow.getCalendarName()}</a></li>
+						#{/list}
+					</ul>
+				</list>
+			</td>
+ 		</tr>
+ 		<tr style="height: 10px;">
+			<td colspan="3"></td>
+ 		</tr>
+ 		<tr>
+	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
+	 		
+	 		Klick on a calendar listed above to see public events in this calendar of ${otherUser.getName()}
+	 		
+			</td>
+ 		</tr>
+ 		
+    </table>
 </body>

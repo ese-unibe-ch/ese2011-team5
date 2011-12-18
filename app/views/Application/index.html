@@ -49,7 +49,13 @@
 	 		<tr>
 		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
 		 		
-					#{welcomeUser currentUser:currentUser, calendarList:currentUser.getCalendarList() /}
+					<list>
+						<ul style="margin-left: -20px; margin-top: -1px;">
+							#{list items:currentUser.getCalendarList(), as:'calendar'}
+								<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),currentUser.getName())}">${calendar.getCalendarName()}</a></li>
+							#{/list}
+						</ul>
+					</list>
 
 				</td>
 	 		</tr>

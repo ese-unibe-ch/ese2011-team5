@@ -617,12 +617,14 @@ public class Application extends Controller
 	 * @param userID2 Of the other user
 	 * @param otherUserCalendarID2 Of the other user's calendar
 	 * @throws ESEExceptionGuestUser 
+	 * @throws ESEException 
 	 */
-	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2) throws ESEExceptionGuestUser
+	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2) throws ESEExceptionGuestUser, ESEException
 	{
-		// ESEUser user=ESEDatabase.getUserByID(userID);
-		// ESECalendar calendar=user.getCalendarByID(calendarID);
-		// ESEEvent event=calendar.getEventById(eventID);
+		ESEUser user = ESEDatabase.getUserByID(userID2);
+		ESECalendar calendar = user.getCalendarByID(otherUserCalendarID2);
+		ESEEvent event = calendar.getEventByID(eventID2);
+		
 		int userID = userID2;
 		int eventID = eventID2;
 		int otherUserCalendarID = otherUserCalendarID2;
@@ -630,7 +632,7 @@ public class Application extends Controller
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		List<ESECalendar> calendarList = currentUser.getCalendarList();
 
-		render(userID, otherUserCalendarID, eventID, calendarList, currentUser);
+		render(userID, otherUserCalendarID, eventID, calendarList, currentUser, event);
 	}
 
 	public static void doCopyEvent(int otherUserID, int otherUserCalendarID,

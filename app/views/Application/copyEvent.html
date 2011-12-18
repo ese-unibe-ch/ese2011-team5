@@ -1,38 +1,33 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
-	<header>
-		<aside id="login">
-			#{nav currentUser:currentUser/}
-		</aside>
-		<h1 id="title"> ESECalendar <h1>
-		<hr>
-	</header>
-	
-	<section id="section">
-		<aside id="search">
-		
-			#{searchUserForm /}
-			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
-			
-		</aside>
-		
-		<article>
-			#{if flash.error}
-						<p id="error">
-							${flash.error}
-						</p>
-			#{/if}
-		
-			#{copyEvent calendarList:calendarList, userID:userID, otherUserCalendarID:otherUserCalendarID, eventID:eventID /}
-		
-		<article>
-	
-	</section>
-	
-	<footer>
-		#{footer /}
-	</footer>
-
+	<table>
+    	<colgroup>
+    		<col width="180">
+    		<col width="5">
+    		<col width="180">
+    	</colgroup>
+ 		 <tr style="height: 40px;">
+			<td colspan="3" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Edit Event</font></td>
+		</tr>
+ 		 <tr style="height: 5px;">
+ 		 	<td colspan="3" rowspan="1"></td>
+		</tr>
+		<tr style="height: 40px;">
+ 			<td colspan="3" style="vertical-align: center;">${event.getEventName()}</td>
+ 		</tr>
+		<tr>
+			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+				#{showEvent event:event, currentUser:currentUser /}
+			</td>
+	 	</tr>
+	 	<tr style="height: 10px;">
+			<td colspan="3"></td>
+	 	</tr>
+	 	<tr>
+	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
+	 			#{copyEvent calendarList:calendarList, userID:userID, otherUserCalendarID:otherUserCalendarID, eventID:eventID /}
+	 		</td>
+	 	</tr>
+ 	</table>
 </body>

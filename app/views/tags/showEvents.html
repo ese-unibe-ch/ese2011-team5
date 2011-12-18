@@ -14,11 +14,9 @@
 				${event.getStartDateString()} - ${event.getEndDateString()}
 				#{showParticipants participants:event.getParticipants() /}
 			</div>
+			<div style="font-size: .2em;"><br></div>
 		#{/if}
-		<div style="font-size: .3em;"><br></div>
 	#{/list}
-	#{if _events.isEmpty()}
-		<div style="font-size: .3em;"><br></div>
-	#{/if}
+	<div style="font-size: .2em;"><br></div>
 	
 </body>

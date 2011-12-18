@@ -1,8 +1,6 @@
 #{extends 'main.html' /}
-#{set title:'ESECalendar' /}
 
 <body>
-	
 	<table>
     	<colgroup>
     		<col width="190">
@@ -18,7 +16,7 @@
 		<tr style="height: 40px;">
 			<td style="vertical-align: center;">${calendar.getCalendarName()}</td>
 			<td></td>
-			<td>${monthString} ${selectedDay}</td>
+			<td>${monthString} #{if selectedDay != 0}${selectedDay}#{/if}</td>
  		</tr>
 		<tr>
 			<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
@@ -35,11 +33,14 @@
 	 	<tr>
 	 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
 	 			#{if calendar.getOwner().equals(currentUser)}
-			Add event:
-			<section id="AddEvent">
-				#{addEvent event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
-			</section>
-			#{/if}
+					Add event:
+					<section id="AddEvent">
+						#{addEvent event:event, calendar:calendar, currentUser:currentUser, year:year, month:month, selectedDay:selectedDay  /}
+					</section>
+				#{/if}
+				#{else}
+					Click on the <img title="copy" alt="copy" src="/public/images/copy.jpg"> symbol to copy a public event in your own calendar.
+				#{/else}
 	 		</td>
 	 	</tr>
  	</table>
