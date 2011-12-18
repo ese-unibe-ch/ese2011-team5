@@ -340,7 +340,10 @@ public class ESECalendar implements Visitable
 	public List<Integer> getDaysFromThisMonth(int month, int year)
 	{
 		Calendar cal = new GregorianCalendar();
+		cal.set(year, month, 1);
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		
+		System.out.println(max);
 
 		List<Integer> daysFromThisMonth = new ArrayList<Integer>();
 		for (int i = 0; i < max; i++)
