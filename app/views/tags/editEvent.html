@@ -55,11 +55,10 @@
     </tr>
 </table>    
 
-	<p>
-			  <input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
-			  <input type="hidden" name="selectedDay" id="selectedDay" value="${_selectedDay}" />
-			  <input type="hidden" name="year" id="year" value="${_year}" />
-			  <input type="hidden" name="month" id="month" value="${_month}" />
-	</p>
+<input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
+<input type="hidden" name="eventID" id="eventID" value="${_event.getEventID()}" />
+<input type="hidden" name="selectedDay" id="selectedDay" value="${_selectedDay}" />
+<input type="hidden" name="year" id="year" value="${_year}" />
+<input type="hidden" name="month" id="month" value="${_month}" />
     
 #{/form}

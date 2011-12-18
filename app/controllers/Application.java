@@ -270,6 +270,11 @@ public class Application extends Controller
 			String eventName, String eventStart, String eventEnd,
 			boolean isPublic, int selectedDay, int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
+		
+		
+		System.out.println(calendarID);
+		System.out.println(eventID);
+		
 		try
 		{
 			ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
