@@ -1,0 +1,75 @@
+#{extends 'main.html' /}
+#{set title:'ESECalendar' /}
+
+<body>
+	<header>
+		<aside id="login">
+			#{nav currentUser:currentUser/}
+		</aside>
+		<h1 id="title"> ESECalendar <h1>
+		<hr>
+	</header>
+	
+	<section id="section">
+		<aside id="search">
+		
+			#{searchUserForm /}
+			#{searchResults otherUsersList:otherUsersList, currentUser:currentUser /}
+			
+		</aside>
+		
+		<article>
+
+		#{if flash.error}
+			<p id="error">
+				${flash.error}
+				#{if flash.error.matches("Event \".*\" overlaps with existing event!")}
+					<a href=@{Application.showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year)}>Continue anyway</a>
+				#{/if}
+			</p>
+		#{/if}
+
+		#{form @Application.doEditEvent()}
+		    <p>
+		        <label for="eventName">Name of the Event: </label>
+		        <input type="text" name="eventName" id="eventName" value="${event.getEventName()}" />
+		    </p>
+		    <p>
+		        <label for="eventStart">Start Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventStart" id="eventStart" value="${event.getStringStartDate()}"/>
+		    </p>
+		    <p>
+		        <label for="eventEnd">End Date (dd.MM.yyyy HH.mm): </label>
+		        <input type="text" name="eventEnd" id="eventEnd" value="${event.getStringEndDate()}"/>
+		    </p>
+		    <p>
+		    	<input type="hidden" name="calendarID" id="calendarID" value=${calendar.getID()} />
+		    	<input type="hidden" name="eventID" id="eventID" value=${event.getEventID()} />
+		    	<input type="hidden" name="selectedDay" id="selectedDay" value="${selectedDay}" />
+			    <input type="hidden" name="year" id="year" value="${year}" />
+			    <input type="hidden" name="month" id="month" value="${month}" />
+		    </p>
+		    <p>
+		    	<label for="isPrivate">Public Event</label>
+		    	#{if event.isPublic()}
+		    		<input type="checkbox" name="isPublic" id="isPublic" checked="checked"/>
+		    	#{/if}
+		    	#{else}
+		    		<input type="checkbox" name="isPublic" id="isPublic"/>
+		    	#{/else}
+		    </p>	
+		    <p>
+		        <input type="submit" value="Submit your Event" />
+		    </p>
+		
+		#{/form}
+
+		<article>
+	
+	</section>
+	
+	<footer>
+		#{footer /}
+	</footer>
+
+</body>

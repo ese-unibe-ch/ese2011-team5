@@ -1,0 +1,65 @@
+#{form @Application.doEditEvent()}
+
+<table>
+	<colgroup>
+    	<col width="150">
+   		<col width="5">
+   		<col width="150">
+    </colgroup>
+    <tr>
+    	<td>Add event</td>
+    	<td></td>
+    	<td></td>
+    </tr>
+    <tr>
+    	<td>Event name</td>
+    	<td></td>
+    	<td><input type="text" name="eventName"  style="width: 150px; value="${_eventToEdit.getEventName()}" /></td>
+    </tr>
+    <tr>
+    	<td>Start Date</td>
+    	<td></td>
+    	<td><input type="text" name="eventStart" style="width: 150px;"id="eventStart" value="${_eventToEdit.getStringStartDate()}" /></td>
+    </tr>
+    <tr>
+    	<td>End Date</td>
+    	<td></td>
+    	<td><input type="text" name="eventEnd" style="width: 150px;"id="eventEnd" value="${_eventToEdit.getStringEndDate()}" /></td>
+    </tr>
+    <tr>
+    	<td>Event is Public</td>
+    	<td></td>
+    	<td>
+    	#{if _eventToEdit.isPublic()}
+    		<input type="checkbox" name="isPublic" id="isPublic" checked="checked"/></td>
+    	#{/if}
+    	#{else}
+    		<input type="checkbox" name="isPublic" id="isPublic" /></td>
+    	#{/else}
+    </tr>
+    <tr>
+    	<td></td>
+    	<td></td>
+    	<td><input type="submit" style="width: 80px;" value="Submit" /></td>
+    </tr>
+</table>    
+
+	<p>
+			  <input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
+			  <input type="hidden" name="selectedDay" id="selectedDay" value="${_selectedDay}" />
+			  <input type="hidden" name="year" id="year" value="${_year}" />
+			  <input type="hidden" name="month" id="month" value="${_month}" />
+	</p>
+
+    #{if flash.error}
+		<p class="error">
+			&{flash.error}
+		</p>
+	#{/if}
+	#{if flash.success}
+		<p class="success">
+			&{flash.success}
+		</p>
+	#{/if}
+    
+#{/form}
