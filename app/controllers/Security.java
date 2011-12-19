@@ -19,11 +19,13 @@ public class Security extends Secure.Security
 
 			if(loginUser.getPassword().equals(password))
 			{
-				try {
+				try
+				{
 					ESEDatabase.addUserToOnline(loginUser);
 					Secure.authenticate(username, password, false); //TODO New variable for boolean
 					
-				} catch (Throwable e)
+				}
+				catch (Throwable e)
 				{
 					flash.error("Wrong password! Try it again! <a href=forgotPassword/" 
 							+ username +"> Did you forget your password? - Don't worry, be happy: There is a solution! </a>");
@@ -76,17 +78,21 @@ public class Security extends Secure.Security
 		
 		Class security = null;
 		List<Class> classes = Play.classloader.getAssignableClasses(Security.class);
-		if (classes.size() == 0) {
+		if (classes.size() == 0)
+		{
 			security = Security.class;
-		} else {
+		}
+		else
+		{
 			security = classes.get(0);
 		}
-		try {
+		try
+		{
 			return Java.invokeStaticOrParent(security, m, args);
-		} catch (InvocationTargetException e) {
+		}
+		catch (InvocationTargetException e)
+		{
 			throw e.getTargetException();
 		}
-		
-	
 	}
 }

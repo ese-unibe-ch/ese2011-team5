@@ -20,12 +20,12 @@ public class ESEEventTests extends UnitTest
 	ESECalendar dummyCal;
 
 	@Before
-	public void setUp() throws ESEException		/* Sets up three Events for testing purposes */
+	public void setUp() throws ESEException // Sets up three Events for testing purposes
 	{
 		ESEDatabase.clearAll();
 
 		this.dummyUser = new ESEUser("TestUser", "testpass", "Dummy", "Test");
-		this.dummyCal = new ESECalendar("Dummy", this.dummyUser); /*for the moment id = 0*/
+		this.dummyCal = new ESECalendar("Dummy", this.dummyUser); /* For the moment id = 0 */
 
 		this.cal.set(2011, 11, 24, 18, 00);
 		this.startDate = this.cal.getTime();
@@ -49,7 +49,7 @@ public class ESEEventTests extends UnitTest
 	@Test
 	public void shouldBeInitialized()
 	{
-		/*Event 1*/
+		/* Event 1 */
 		assertTrue(this.event1 != null);
 		assertEquals(0, this.event1.getEventID());
 		assertTrue("Weihnachten".equals(this.event1.getEventName()));
@@ -61,7 +61,7 @@ public class ESEEventTests extends UnitTest
 		assertEquals(this.endDate, this.event1.getEndDate());
 		assertEquals(this.dummyCal, this.event1.getCorrespondingCalendar());
 
-		/*Event 2*/
+		/* Event 2 */
 		assertTrue(this.event2 != null);
 		assertEquals(1, this.event2.getEventID());
 		assertTrue("Samichlaus".equals(this.event2.getEventName()));
@@ -73,7 +73,7 @@ public class ESEEventTests extends UnitTest
 		assertEquals(this.endDate, this.event2.getEndDate());
 		assertEquals(this.dummyCal, this.event2.getCorrespondingCalendar());
 
-		/*Event 3*/
+		/* Event 3 */
 		assertTrue(this.event3 != null);
 		assertEquals(2, this.event3.getEventID());
 		assertTrue("Winter Ferien".equals(this.event3.getEventName()));
@@ -149,6 +149,5 @@ public class ESEEventTests extends UnitTest
 
 		editEvent.setVisibility(true);
 		assertTrue(editEvent.isPublic());
-
 	}
 }

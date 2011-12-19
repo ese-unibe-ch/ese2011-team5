@@ -8,6 +8,7 @@ import java.util.List;
 
 import models.ESEDatabase;
 import models.ESEEvent;
+import models.ESEException;
 import models.ESEExceptionGuestUser;
 import models.ESEUser;
 import models.visitor.SearchEventVisitor;
@@ -75,7 +76,7 @@ public class Events extends Application
 
 			renderText(gson.toJson(events));
 		}
-		catch (Exception e)
+		catch (ESEException e)
 		{
 			renderText(e);
 		}

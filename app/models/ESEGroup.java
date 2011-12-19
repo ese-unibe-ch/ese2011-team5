@@ -11,15 +11,15 @@ package models;
 import java.util.ArrayList;
 /**
  * An ESEGroup is always owned by a certain ESEUser (referred as <b>Owner</b>).
- * The responsibility of the ESEGroup is, to organize <b>Contancts</b> (other {@link ESEUser}s) 
- * known by the <b>Owner</b>.<br>
- * An <b> Owner</b> can have several different ESEGroups.
+ * The responsibility of the ESEGroup is, to organise <b>Contacts</b> consisting
+ * of other ESEUsers known by the <b>Owner</b>.<br>
+ * An <b>Owner</b> can have several different ESEGroups.
  * A <b>Contact</b> may be in more than one ESEGroup.
  */
 public class ESEGroup
 {
 	/**
-	 * static counter to determine uniquely groupId.<br>
+	 * Static counter to determine uniquely groupID.<br>
 	 * Increased after initialization of an new ESEGroup.
 	 */
 	private static int idCounter = 0;
@@ -29,7 +29,7 @@ public class ESEGroup
 	private int groupID;
 	/**
 	 * String name by which this ESEGroup is associated.<br>
-	 * It might be that different ESEGroups have the same <code>groupename</code>.
+	 * It might be that different ESEGroups have the same <code>groupname</code>.
 	 * To distinguish use {@link #groupID}.
 	 */
 	private String groupname;
@@ -37,15 +37,19 @@ public class ESEGroup
 	 * The {@link ESEUser} to whom this ESEGroup belongs.
 	 */
 	private ESEUser owner;
+
+	/**
+	 * List containing {@link ESEUser} that are part of this group.
+	 */
 	private ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 
 	/**
 	 * Constructor for ESEGroup.<br>
-	 * Creates an new Group that belongs to one ESEUser. 
-	 * The Group is initially created empty. Contacts ({@link ESEUser}) have to be added later.
+	 * Creates an new group that belongs to one ESEUser. 
+	 * The group is initially created empty. Contacts ({@link ESEUser}) have to be added later.
 	 * @param groupname String name of this group. Must not be empty.
-	 * @param owner ESEUser that owns this group. Must not be <code>null</code>
-	 * @throws ESEException
+	 * @param owner ESEUser that owns this group. Must not be <code>null</code>.
+	 * @throws ESEException No group name or no owner given.
 	 * @see ESEUser
 	 * @see #addUserToGroup(ESEUser)
 	 */
@@ -60,13 +64,13 @@ public class ESEGroup
 			throw new ESEException("Group is not assigned to any user!");
 		}
 
-		for(ESEGroup group : owner.getGroupList())
-		{
-			if(groupname.equals(group.getGroupName()))
-			{
-				throw new ESEException("This group is already in the database!");
-			}
-		}
+//		for(ESEGroup group : owner.getGroupList())
+//		{
+//			if(groupname.equals(group.getGroupName()))
+//			{
+//				throw new ESEException("This group is already in the database!");
+//			}
+//		}
 
 		this.groupID = idCounter++;
 		this.groupname = groupname;
@@ -80,8 +84,8 @@ public class ESEGroup
 	}
 
 	/**
-	 * @return int {@link #groupID} of this ESEGroup. The value is ranged
-	 * between 0 and the current value of {@link #idCounter}.
+	 * @return int {@code #groupID} of this ESEGroup. The value is ranged
+	 * between 0 and the current value of {@code #idCounter}.
 	 */
 	public int getGroupID()
 	{
@@ -89,7 +93,7 @@ public class ESEGroup
 	}
 
 	/**
-	 * @return String {@link #groupname} of this ESEGroup. 
+	 * @return String {@code #groupname} of this ESEGroup. 
 	 */
 	public String getGroupName()
 	{
@@ -97,7 +101,7 @@ public class ESEGroup
 	}
 
 	/**
-	 * @return ESEUser {@link #owner} of this ESEGroup. 
+	 * @return ESEUser {@code #owner} of this ESEGroup. 
 	 */
 	public ESEUser getOwner()
 	{
@@ -105,7 +109,7 @@ public class ESEGroup
 	}
 
 	/**
-	 * @return ArrayList<ESEUser> {@link #userList} of this ESEGroup.
+	 * @return ArrayList<ESEUser> {@code #userList} of this ESEGroup.
 	 * This lists contains all Contacts (ESEUser) that are part of this group.
 	 */
 	public ArrayList<ESEUser> getUserList()
@@ -120,7 +124,7 @@ public class ESEGroup
 	 */
 	public void addUserToGroup(ESEUser user) throws ESEException
 	{
-		if (!this.userList.contains(user))
+		if(!this.userList.contains(user))
 		{
 			this.userList.add(user);
 			return;
@@ -135,7 +139,7 @@ public class ESEGroup
 	 */
 	public void removeUserFromGroup(ESEUser user) throws ESEException
 	{
-		if (this.userList.contains(user))
+		if(this.userList.contains(user))
 		{
 			this.userList.remove(user);
 			return;
@@ -145,12 +149,12 @@ public class ESEGroup
 
 	public boolean userAlreadyInGroup(String userName)
 	{
-		try 
+		try
 		{
-			ESEUser user=ESEDatabase.getUserByName(userName);
+			ESEUser user = ESEDatabase.getUserByName(userName);
 			return this.userList.contains(user);
-		} 
-		catch (ESEException e) 
+		}
+		catch(ESEException e)
 		{
 			return false;
 		}

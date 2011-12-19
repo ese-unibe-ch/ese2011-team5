@@ -5,19 +5,18 @@ package models.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import models.ESECalendar;
 
 public class SearchCalendarVisitor extends AbstractVisitor<ESECalendar>
 {
 
 	private List<ESECalendar> calendars = new ArrayList<ESECalendar>();
-	private String calnendarName;
+	private String calendarName;
 	private Integer id;
 
 	public SearchCalendarVisitor(String calendarName)
 	{
-		this.calnendarName = calendarName;
+		this.calendarName = calendarName;
 	}
 
 	public SearchCalendarVisitor(Integer id)
@@ -28,7 +27,7 @@ public class SearchCalendarVisitor extends AbstractVisitor<ESECalendar>
 	@Override
 	public void visit(ESECalendar eseCalendar)
 	{
-		if (this.condition(eseCalendar))
+		if(this.condition(eseCalendar))
 		{
 			this.calendars.add(eseCalendar);
 		}
@@ -42,13 +41,15 @@ public class SearchCalendarVisitor extends AbstractVisitor<ESECalendar>
 
 	private boolean condition(ESECalendar eseCalendar)
 	{
-		if (this.calnendarName != null)
+		if(this.calendarName != null)
 		{
-			return eseCalendar.getCalendarName().contains(this.calnendarName);
-		} else if (id != null)
+			return eseCalendar.getCalendarName().contains(this.calendarName);
+		}
+		else if(this.id != null)
 		{
 			return this.id.equals(eseCalendar.getID());
-		} else
+		}
+		else
 		{
 			return false;
 		}

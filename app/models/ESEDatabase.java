@@ -9,18 +9,16 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 import controllers.Security;
+
 /**
  * The ESEDatabase is responsible for the administration of the {@link ESEUser}s.<br>
  * It is also the responsibility of this class to ensure, that
  * the currentUser is the user logged in within the application.
  * @see ESEUser
  */
-public class  ESEDatabase
+public class ESEDatabase
 {
-	
 	/**
 	 * The guestUser is the default user if no user is logged in at the moment.
 	 */
@@ -31,15 +29,15 @@ public class  ESEDatabase
 	private static ArrayList<ESEUser> userList = new ArrayList<ESEUser>();
 	private static ArrayList<ESEUser> onlineUser = new ArrayList<ESEUser>();
 
-
 	/*
 	 * Current user method:
 	 */
 
 	/**
-	 * Returns the ESEUser that is currently logged in with the cookie. If no cookie exist it will return a ESEExceptionGuestUser
-	 * @return currentUser ESEUser
-	 * @throws ESEExceptionGuestUser 
+	 * Returns the {@link ESEUser} that is currently logged in with the cookie.
+	 * If no cookie exists it will return a ESEExceptionGuestUser.
+	 * @return currentUser ESEUser.
+	 * @throws ESEExceptionGuestUser The user is not logged in.
 	 */
 	public static ESEUser getCurrentUser() throws ESEExceptionGuestUser 
 	{
@@ -48,7 +46,7 @@ public class  ESEDatabase
 			String username = Security.connected();
 			return ESEDatabase.getUserByName(username);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			System.out.println("THE CURRENT USER IS GUEST!");
 			throw new ESEExceptionGuestUser();
@@ -64,12 +62,12 @@ public class  ESEDatabase
 	 * Methods to create ESEUsers
 	 */
 	/**
-	 * Creates a new ESEUser without secret question and answer.
-	 * @param username of new ESEUser. Must not be null.
+	 * Creates a new {@link ESEUser} without secret question and answer.
+	 * @param username of new ESEUser. Must not be null and unique.
 	 * @param password of new ESEUser. Must not be null.
 	 * @param firstName of new ESEUser.
-	 * @param familyName of new ESEUser
-	 * @throws ESEException 
+	 * @param familyName of new ESEUser.
+	 * @throws ESEException Username is not unique.
 	 * @see #createUser(String, String, String, String, String, String)
 	 * @see ESEUser
 	 */
@@ -78,15 +76,16 @@ public class  ESEDatabase
 		ESEUser userToAdd = new ESEUser(username, password, firstName, familyName);
 		userList.add(userToAdd);
 	}
+
 	/**
 	 * Creates a new ESEUser with secret question and answer.
-	 * @param username of new ESEUser. Must not be null.
+	 * @param username of new ESEUser. Must not be null and unique.
 	 * @param password of new ESEUser. Must not be null.
 	 * @param firstName of new ESEUser.
 	 * @param familyName of new ESEUser.
 	 * @param question to reset password of new ESEUser.
 	 * @param answer to reset password of new ESEUser.
-	 * @throws ESEException
+	 * @throws ESEException Username is not unique.
 	 * @see #createUser(String, String, String, String)
 	 * @see ESEUser
 	 */
@@ -109,17 +108,16 @@ public class  ESEDatabase
 	 */
 	public static ESEUser getUserByName(String username) throws ESEException
 	{
-		for (ESEUser user : userList)
+		for(ESEUser user : userList)
 		{
-			if (user.getName().equals(username))
+			if(user.getName().equals(username))
 			{
 				return user;
 			}
 		}
-		
 		throw new ESEException("User \"" + username + "\" not found!");
 	}
-	
+
 	/**
 	 * Searches by userID and returns a {@link ESEUser}.
 	 * @param userID to search by.
@@ -129,33 +127,34 @@ public class  ESEDatabase
 	 */
 	public static ESEUser getUserByID(int userID) throws ESEException
 	{
-		for (ESEUser user : userList)
+		for(ESEUser user : userList)
 		{
-			if (user.getUserID() == userID)
+			if(user.getUserID() == userID)
 			{
 				return user;
 			}
 		}
-		throw new ESEException("No user with this ID!");
+		throw new ESEException("No user with ID \"" + userID + "\" existing!");
 	}
+
 	/**
-	 * Returns a List with all registered {@link ESEUser}s but the one
-	 * ESEUser that is passed as argument.
-	 * @param username only ESEUser not to be returned.
-	 * @return ArrayList<ESEUser> of ESEUsers.
+	 * Returns a List with every {@link ESEUser} registered in the {@link ESEDatabase} except
+	 * the one that is passed as argument.
+	 * @param username This ESEUser will not be returned.
+	 * @return {@code ArrayList<ESEUser>} of ESEUsers.
 	 */
 	public static ArrayList<ESEUser> getOtherUsers(String username)
 	{
 		ArrayList<ESEUser> userListToReturn = new ArrayList<ESEUser>(userList);
 
 		/*
-		 * int i = 0; for (ESEUser user : userList){ if
+		 * int i = 0; for(ESEUser user : userList){ if
 		 * (user.getName().equals(username)) break; else i=1; }
 		 * userListToReturn.remove(i);
 		 */
-		for (ESEUser user : userList)
+		for(ESEUser user : userList)
 		{
-			if (user.getName().equals(username)/* || user.getName().equals("guest")*/)
+			if(user.getName().equals(username)/* || user.getName().equals("guest")*/)
 			{
 				userListToReturn.remove(user);
 			}
@@ -182,16 +181,17 @@ public class  ESEDatabase
 	 */
 	public static void removeUserByName(String username) throws ESEException
 	{
-  		for (ESEUser user : userList)
-  		{
-			if (user.getName().equals(username))
+		for(ESEUser user : userList)
+		{
+			if(user.getName().equals(username))
 			{
 				userList.remove(user);
 				return;
 			}
 		}
-		throw new ESEException("No such user exists!");
+		throw new ESEException("No such user \"" + username + "\" exists!");
 	}
+
 	/**
 	 * Remove a {@link ESEUser} by its ID.
 	 * @param userID int of ESEUser to be removed.
@@ -199,15 +199,15 @@ public class  ESEDatabase
 	 */
 	public static void removeUserByID(int userID) throws ESEException
 	{
-		for (ESEUser user : userList)
+		for(ESEUser user : userList)
 		{
-			if (user.getUserID() == userID)
+			if(user.getUserID() == userID)
 			{
 				userList.remove(user);
 				return;
 			}
 		}
-		throw new ESEException("No user with this ID!");
+		throw new ESEException("No user with ID \"" + userID + "\" existing!");
 	}
 
 	/*
@@ -221,10 +221,12 @@ public class  ESEDatabase
 	{
 		return new ArrayList<ESEUser>(userList);
 	}
+
 	/**
-	 * Returns all {@link ESEUser}s with the corresponding <code>username</code>.
+	 * Returns all ESEUsers with the corresponding <code>username</code>.
 	 * @param username to be searched for.
-	 * @return ArrayList<ESEUser> of ESEUsers with corresponding username.
+	 * @return {@code ArrayList<ESEUser>} of ESEUsers with corresponding username.
+	 * @see ESEUser
 	 */
 	public static ArrayList<ESEUser> findUser(String username)
 	{
@@ -237,8 +239,8 @@ public class  ESEDatabase
 			try
 			{
 				localCurrentUser = getCurrentUser();
-			} 
-			catch (ESEExceptionGuestUser e) 
+			}
+			catch(ESEExceptionGuestUser e)
 			{
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();				//DO NOTHING
@@ -250,7 +252,7 @@ public class  ESEDatabase
 		}
 		return matchingUsers;
 	}
-	
+
 	/*
 	 * for testing purposes
 	 */
@@ -262,19 +264,19 @@ public class  ESEDatabase
 		ESEEvent.resetIdCounter();
 		ESEGroup.resetIdCounter();
 	}
-	
+
 //	public static ESEUser getCurrentUserForView()
 //	{
-//		try 
+//		try
 //		{
 //			return getCurrentUser();
-//		} 
-//		catch (ESEExceptionGuestUser e) 
+//		}
+//		catch(ESEExceptionGuestUser e)
 //		{
 //			return null;
 //		}
 //	}
-	
+
 	public static void addUserToOnline(ESEUser user)
 	{
 		System.out.println("ADD USER TO ONLINE: " + user);
@@ -283,7 +285,7 @@ public class  ESEDatabase
 			onlineUser.add(user);
 		}
 	}
-	
+
 	public static void removeUserOnline(ESEUser user)
 	{
 		if(onlineUser.contains(user))
@@ -291,7 +293,7 @@ public class  ESEDatabase
 			onlineUser.remove(user);
 		}
 	}
-	
+
 	public static List<ESEUser> getOnlineUsers()
 	{
 		return onlineUser;

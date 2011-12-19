@@ -67,8 +67,8 @@ public class ESEGroupTests extends UnitTest
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
 		assertEquals(this.friend1, this.group1.getUserList().get(0));
-		assertEquals(this.friend3, this.group1.getUserList().get(1));		
-		assertEquals(this.friend3, this.group2.getUserList().get(0));		
+		assertEquals(this.friend3, this.group1.getUserList().get(1));
+		assertEquals(this.friend3, this.group2.getUserList().get(0));
 	}
 
 	@Test
@@ -79,7 +79,7 @@ public class ESEGroupTests extends UnitTest
 		this.group2.addUserToGroup(this.friend3);
 		assertEquals(2, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());
-		
+
 		this.group1.removeUserFromGroup(this.friend3);
 		assertEquals(1, this.group1.getUserList().size());
 		assertEquals(1, this.group2.getUserList().size());

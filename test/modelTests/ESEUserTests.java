@@ -2,9 +2,7 @@ package modelTests;
 
 import java.util.ArrayList;
 import models.*;
-
 import org.junit.*;
-
 import play.test.UnitTest;
 
 public class ESEUserTests extends UnitTest
@@ -39,7 +37,7 @@ public class ESEUserTests extends UnitTest
 		assertEquals("familyName 1", this.user1.getFamilyName());
 	}
 
-	@Test(expected=ESEExceptionGuestUser.class)
+	@Test(expected = ESEExceptionGuestUser.class)
 	public void shouldReturnGuestUserException() throws ESEExceptionGuestUser
 	{
 		ESEDatabase.getCurrentUser();
@@ -125,7 +123,7 @@ public class ESEUserTests extends UnitTest
 		assertEquals(testCalendar1.getAllEvents(), allowedEvents);
 		assertEquals(publicEvents, onlyAllowedEvents);
 	}
-	
+
 	@Test
 	public void shouldEditProfile()
 	{

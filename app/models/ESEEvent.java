@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import models.visitor.Visitable;
 import models.visitor.Visitor;
-
 import com.google.gson.annotations.Expose;
 
 /**
@@ -30,68 +28,71 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 * Increased after initialisation of an new ESEEvent.
 	 */
 	private static int idCounter = 0;
+
 	/**
 	 * Number to distinct different ESEEvent within one application.
 	 */
 	@Expose
 	private int eventID;
+
 	@Expose
 	private String eventName;
+
 	/**
-	 * The {@link ESECalendar} in which the ESEEvent originally
-	 * was created.
+	 * The {@link ESECalendar} in which the ESEEvent originally was created.
 	 */
 	private ESECalendar originsCalendar;
+
 	/**
 	 * List of all {@link ESECalendar} which contain this ESEEvent.
 	 * The ESECalendar in which this ESEEvent was originally created is also part of this List.
 	 */
 	private ArrayList<ESECalendar> correspondingCalendars;
+
 	/**
 	 * List of all {@link ESEUser} that participate in this ESEEvent.
 	 * The ESEUser that created this ESEEvent is also in this List.
 	 */
 	private ArrayList<ESEUser> participants;
+
 	@Expose
 	private Date startDate;
+
 	@Expose
 	private Date endDate;
+
 	/**
-	 * If {@link #isPublic()} is <code>true</code>, all ESEUser may see this ESEEvent.<br>
-	 * If {@link #isPublic()} is <code>false</code>, only ESEUser
-	 * that are <b>Contancs</b> of the {@link ESECalendar#getOwner()}
+	 * If {@link #isPublic()} is <code>true</code>, all ESEUsers may see this ESEEvent.<br>
+	 * If {@link #isPublic()} is <code>false</code>, only ESEUsers
+	 * that are <b>Contacts</b> of the {@link ESECalendar#getOwner()}
 	 * of the ESEEvent can view it.
 	 */
 	private boolean isPublic;
 
 	/**
 	 * Constructor for ESEEvent.<br>
-	 * The {@link ESECalendar} creating this ESEEvent is
-	 * automatically added to the List of corresponding
-	 * Calendars of this ESEEvent.<br>
-	 * The {@link ESEUser} that owns the ESECalendar
-	 * creating this ESEEvent is automatically added to the List of
-	 * participants of this ESEEvent.
+	 * The {@link ESECalendar} creating this ESEEvent is automatically added
+	 * to the List of corresponding Calendars of this ESEEvent.<br>
+	 * The {@link ESEUser} that owns the ESECalendar creating this ESEEvent
+	 * is automatically added to the List of participants of this ESEEvent.
 	 * @param eventName Name of Event. Must not be empty.
 	 * @param correspondingCalendar Originated Calendar.
 	 * @param startDate Time and Date when the Event starts.
 	 * @param endDate Time and Date when the Event ends.
 	 * @param isPublic Privacy of an Event.
-	 * @throws ESEException if correspondingCalendar is <code>null</code>
-	 * or if eventName is empty.
+	 * @throws ESEException if correspondingCalendar is <code>null</code> or if eventName is empty.
 	 * @see ESECalendar
 	 * @see ESEUser
 	 */
 	public ESEEvent(String eventName, ESECalendar correspondingCalendar,
 			Date startDate, Date endDate, boolean isPublic) throws ESEException
 	{
-
 		checkDateValidity(startDate, endDate);
-		if (correspondingCalendar == null)
+		if(correspondingCalendar == null)
 		{
 			throw new ESEException("Event is not assigned to any calendar!");
 		}
-		if (eventName.isEmpty())
+		if(eventName.isEmpty())
 		{
 			throw new ESEException("Event name must not be empty!");
 		}
@@ -107,7 +108,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 		this.participants = new ArrayList<ESEUser>();
 		this.participants.add(correspondingCalendar.getOwner());
-
 	}
 
 	public void accept(Visitor visitor)
@@ -125,9 +125,9 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 * Query to determine if this ESEEvent takes places on a given day.<br>
 	 * @param day of month
 	 * @param month 0 to 11
-	 * @param year
+	 * @param year of date
 	 * @return <code>true</code> if Event takes place on that day.<br>
-	 *         <code>false</code> if Event doesn't take place on that day.
+	 * <code>false</code> if Event doesn't take place on that day.
 	 */
 	public boolean isEventDay(int day, int month, int year)
 	{
@@ -143,17 +143,25 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		startCal.setTime(this.startDate);
 		endCal.setTime(this.endDate);
 
-		if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR)
+		if(dateAsCal.get(dateAsCal.DAY_OF_YEAR) == startCal.get(startCal.DAY_OF_YEAR)
 				&& dateAsCal.get(dateAsCal.YEAR) == startCal.get(startCal.YEAR))
+		{
 			return true;
-		else if (dateAsCal.get(dateAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR)
+		}
+		else if(dateAsCal.get(dateAsCal.DAY_OF_YEAR) == endCal.get(endCal.DAY_OF_YEAR)
 				&& dateAsCal.get(dateAsCal.YEAR) == endCal.get(endCal.YEAR))
+		{
 			return true;
-		else if (startCal.getTimeInMillis() < dateAsCal.getTimeInMillis()
+		}
+		else if(startCal.getTimeInMillis() < dateAsCal.getTimeInMillis()
 				&& endCal.getTimeInMillis() > dateAsCal.getTimeInMillis())
+		{
 			return true;
+		}
 		else
+		{
 			return false;
+		}
 	}
 
 	/**
@@ -163,15 +171,15 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	private void checkDateValidity(Date startDate, Date endDate) throws ESEException
 	{
-		if (startDate.after(endDate))
+		if(startDate.after(endDate))
 		{
 			throw new ESEException("Invalid start and end date!");
 		}
 	}
 
 	/**
-	 * @return int {@link #eventID} of this ESEEvent. The value is ranged
-	 *         between 0 and the current value of {@link #idCounter}.
+	 * @return {@link Integer} {@code eventID} of this ESEEvent. The value is ranged
+	 *         between 0 and the current value of {@code idCounter}.
 	 */
 	public int getEventID()
 	{
@@ -201,14 +209,14 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	public void addCorrespondingCalendar(ESECalendar calendar)
 	{
-		if (!this.correspondingCalendars.contains(calendar))
+		if(!this.correspondingCalendars.contains(calendar))
 		{
 			this.correspondingCalendars.add(calendar);
 		}
 	}
 
 	/**
-	 * Returns a ESECalendar specified by it's Id that contains
+	 * Returns a ESECalendar specified by it's ID that contains
 	 * this ESEEvent.
 	 * @param id of searched Calendar.
 	 * @return correspondingCalendar
@@ -216,9 +224,9 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	public ESECalendar getOneCorresponding(int id) throws ESEException
 	{
-		for (ESECalendar calendar : this.correspondingCalendars)
+		for(ESECalendar calendar : this.correspondingCalendars)
 		{
-			if (calendar.getID() == id)
+			if(calendar.getID() == id)
 			{
 				return calendar;
 			}
@@ -253,30 +261,29 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	public void copyEvent(ESECalendar correspondingCalendar)
 	{
-		if (!this.correspondingCalendars.contains(correspondingCalendar))
+		if(!this.correspondingCalendars.contains(correspondingCalendar))
 		{
 			this.correspondingCalendars.add(correspondingCalendar);
 		
 		}
-
 	}
 
 	/**
-	 * Removes an ESEEvent, that is not originated from the corresponding Calendar.
-	 * @param correspondingCalendar 
+	 * Removes an ESEEvent, that is not originated from the corresponding {@link ESECalendar}.
+	 * @param correspondingCalendar Calendar from which the event was copied.
 	 * @see #copyEvent(ESECalendar)
 	 */
 	public void removeCopiedEvent(ESECalendar correspondingCalendar)
 	{
-		if (this.correspondingCalendars.contains(correspondingCalendar))
+		if(this.correspondingCalendars.contains(correspondingCalendar))
 		{
 			this.correspondingCalendars.remove(correspondingCalendar);
-			
 		}
 	}
 
 	/**
-	 * @return String representation of endDate in the following format: "dd.MM.yyyy HH:mm"
+	 * @return String representation of endDate of the format specified in
+	 * {@link ESEConversionHelper#convertDateToString(Date)}.
 	 */
 	public String getStringEndDate()
 	{
@@ -284,7 +291,8 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * @return String representation of startDate in the following format: "dd.MM.yyyy HH:mm"
+	 * @return String representation of startDate of the format specified in
+	 * {@link ESEConversionHelper#convertDateToString(Date)}.
 	 */
 	public String getStringStartDate()
 	{
@@ -292,7 +300,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * @return boolean Privacy of this ESEEvent.
+	 * @return {@link Boolean} Privacy of this ESEEvent.
 	 */
 	public boolean isPublic()
 	{
@@ -300,13 +308,13 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Set the {@link #eventName} to a new value.<br>
+	 * Sets the {@code eventName} to a new value.<br>
 	 * @param eventName to be set.
-	 * @throws ESEException 
+	 * @throws ESEException eventName is empty.
 	 */
 	public void setEventName(String eventName) throws ESEException
 	{
-		if (eventName.isEmpty())
+		if(eventName.isEmpty())
 		{
 			throw new ESEException("Event name must not be empty!");
 		}
@@ -323,7 +331,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Sets the {@link #startDate} to a new value.<br>
+	 * Sets the {@code startDate} to a new value.<br>
 	 * @param startDate time when ESEEvent starts.
 	 * @throws ESEException if startDate is after endDate
 	 */
@@ -335,7 +343,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	}
 
 	/**
-	 * Sets the {@link #endDate} to a new value.<br>
+	 * Sets the {@code endDate} to a new value.<br>
 	 * @param endDate time when ESEEvent ends.
 	 * @throws ESEException if startDate is after endDate
 	 */
@@ -358,9 +366,9 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	public Boolean checkForOverlapping(ArrayList<ESEEvent> eventList)
 	{
-		for (ESEEvent existingEvent : eventList)
+		for(ESEEvent existingEvent : eventList)
 		{
-			if (!this.equals(existingEvent) && checkEventOverlaps(existingEvent, this))
+			if(!this.equals(existingEvent) && checkEventOverlaps(existingEvent, this))
 			{
 				return true;
 			}
@@ -424,44 +432,53 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	{
 		return this.eventName;
 	}
-	
-	public String getStartDateString(){
-		return ESEConversionHelper.convertDateToString(this.startDate).substring(0,6) 
-				+ ESEConversionHelper.convertDateToString(this.startDate).substring(10,16);
+
+	public String getStartDateString()
+	{
+		return ESEConversionHelper.convertDateToString(this.startDate).substring(0, 6) 
+				+ ESEConversionHelper.convertDateToString(this.startDate).substring(10, 16);
 	}
-	
-	public String getEndDateString(){
-		return ESEConversionHelper.convertDateToString(this.endDate).substring(0,6) 
-				+ ESEConversionHelper.convertDateToString(this.endDate).substring(10,16);
+
+	public String getEndDateString()
+	{
+		return ESEConversionHelper.convertDateToString(this.endDate).substring(0, 6) 
+				+ ESEConversionHelper.convertDateToString(this.endDate).substring(10, 16);
 	}
 
 	@Override
 	public int compareTo(ESEEvent compareEvent)
 	{
-		if (this.getStartDate().getTime() > compareEvent.getStartDate().getTime())
+		if(this.getStartDate().getTime() > compareEvent.getStartDate().getTime())
+		{
 			return 1;
-		if (this.getStartDate().getTime() == compareEvent.getStartDate().getTime())
+		}
+		if(this.getStartDate().getTime() == compareEvent.getStartDate().getTime())
+		{
 			return 0;
+		}
 		else
+		{
 			return -1;
+		}
 	}
 
 	/**
 	 * Removes an ESEEvent from all ESECalendars, including its originated ESECalendar.
 	 * In contrast, {@link #removeCopiedEvent(ESECalendar)} removes an event from one calendar.
-	 * @throws ESEException
+	 * @throws ESEException The event that should be removed
+	 * was not found in a corresponding calendar.
 	 * @see #removeCopiedEvent(ESECalendar)
 	 */
 	public void eventRemoveInCorrespondingCalendars() throws ESEException
 	{
-		for (ESECalendar calendar : this.correspondingCalendars)
+		for(ESECalendar calendar : this.correspondingCalendars)
 		{
 			calendar.removeEvent(this.eventID);
 		}
 
 		this.correspondingCalendars.clear();
 	}
-	
+
 	/**
 	 * Get all participants of the event
 	 * @return an arrayList of ESEUsers
@@ -470,18 +487,17 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	{
 		return new ArrayList<ESEUser>(this.participants);
 	}
-	
+
 	public void addParticipant(ESEUser participant)
 	{
 		this.participants.add(participant);
 	}
-	
+
 	public void removeParticipant(ESEUser participant)
 	{
 		if(this.participants.contains(participant))
 		{
 			this.participants.remove(participant);
 		}
-		
 	}
 }

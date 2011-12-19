@@ -3,11 +3,11 @@ package modelTests;
 import java.util.ArrayList;
 import models.*;
 import org.junit.*;
-
 import play.test.UnitTest;
 
 public class ESECalendarTests extends UnitTest
 {
+
 	ESEUser ownerDummy;
 	ESEUser ownerDummy2;
 	ESECalendar cal1;
@@ -103,7 +103,7 @@ public class ESECalendarTests extends UnitTest
 		{
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -112,13 +112,13 @@ public class ESECalendarTests extends UnitTest
 		{
 			this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
 		}
 
-		assertEquals(5, this.cal1.getAllEventsOfMonth(3,2011).size());
+		assertEquals(5, this.cal1.getAllEventsOfMonth(3, 2011).size());
 	}
 
 	@Test
@@ -131,7 +131,7 @@ public class ESECalendarTests extends UnitTest
 		{
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -140,13 +140,13 @@ public class ESECalendarTests extends UnitTest
 		{
 			this.cal1.addEvent("Testevent5", "19.04.2011 12:00", "21.04.2011 14:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
 		}
 
-		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3,2011).size());
+		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3, 2011).size());
 	}
 
 	@Test
@@ -159,7 +159,7 @@ public class ESECalendarTests extends UnitTest
 		{
 			this.cal1.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -197,7 +197,7 @@ public class ESECalendarTests extends UnitTest
 			testCal.addEvent("StartDate conflict", "7.11.2011 16:00", "14.11.2011 18:00", true);
 			fail("StartDate conflict expected");
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -207,7 +207,7 @@ public class ESECalendarTests extends UnitTest
 			testCal.addEvent("EndDate conflict", "1.11.2011 16:00", "7.11.2011 18:00", true);
 			fail("EndDate conflict expected");
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -217,7 +217,7 @@ public class ESECalendarTests extends UnitTest
 			testCal.addEvent("Contains conflict", "7.11.2011 16:00", "8.11.2011 18:00", true);
 			fail("Contains conflict expected");
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -227,7 +227,7 @@ public class ESECalendarTests extends UnitTest
 			testCal.addEvent("Subset conflict", "1.11.2011 16:00", "16.11.2011 18:00", true);
 			fail("Subset conflict expected");
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -242,7 +242,7 @@ public class ESECalendarTests extends UnitTest
 		this.cal1.addEvent("Testevent2", "15.04.2011 13:40", "16.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent3", "17.04.2011 13:40", "18.04.2011 13:00", true);
 		this.cal1.addEvent("Testevent4", "18.04.2011 13:40", "19.04.2011 13:00", false);
- 
+
 		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(13));
 		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(14));
 		assertTrue(this.cal1.getEventDaysOfMonth(3, 2011).contains(15));
@@ -255,7 +255,6 @@ public class ESECalendarTests extends UnitTest
 		assertEquals("Testevent1", publicEventsList.get(0).getEventName());
 		assertEquals("Testevent2", publicEventsList.get(1).getEventName());
 		assertEquals("Testevent3", publicEventsList.get(2).getEventName());
-
 	}
 
 	@Test
@@ -269,7 +268,7 @@ public class ESECalendarTests extends UnitTest
 		{
 			cal3.addEvent("Testevent4", "16.04.2011 13:40", "19.04.2011 13:00", true);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			// No exception handling
 			// Overlapping event added intentionally
@@ -291,24 +290,24 @@ public class ESECalendarTests extends UnitTest
 
 		ArrayList<Integer> eventsInOctober = this.cal2.getEventDaysOfMonth(9, 2011);
 		assertEquals(18, eventsInOctober.size());
-		for (int i=14; i<=31; i++)
+		for(int i = 14; i <= 31; i++)
 		{
-			assertEquals(String.valueOf(i), String.valueOf(eventsInOctober.get(i-14)));
+			assertEquals(String.valueOf(i), String.valueOf(eventsInOctober.get(i - 14)));
 		}
 
 		ArrayList<Integer> eventsInNovember = this.cal2.getEventDaysOfMonth(10, 2011);
-		for (int i=1; i<=30; i++)
+		for(int i = 1; i <= 30; i++)
 		{
 			assertTrue(eventsInNovember.contains(i));
 		}
 
 		ArrayList<Integer> eventsInDecember = this.cal2.getEventDaysOfMonth(11, 2011);
-		for (int i=1; i<=17; i++)
+		for(int i = 1; i <= 17; i++)
 		{
 			assertTrue(eventsInDecember.contains(i));
 		}
 
-		for (int i=18; i<=31; i++)
+		for(int i = 18; i <= 31; i++)
 		{
 			assertFalse(eventsInDecember.contains(i));
 		}

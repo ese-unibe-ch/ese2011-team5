@@ -449,18 +449,13 @@ public class Application extends Controller
 		}
 		else 
 		{
-			flash.error("wrong answer!");
+			flash.error("Wrong answer!");
 			params.flash();
 			forgotPassword(username);
 		}
 	}
 
-	/**
-	 * ONLY used if an error happens in changePassword!
-	 * 
-	 * @param username
-	 * @throws ESEException
-	 */
+	// ONLY used if an error happens in changePassword!
 	public static void resetPassword(String username) throws ESEException
 	{
 		ESEUser currentUser = null;
@@ -553,10 +548,7 @@ public class Application extends Controller
 		render(otherUsers);
 	}
 	
-	/**
-	 * For ajax
-	 * @param searchName
-	 */
+	// For ajax
 	public static void search(@Required String searchName)
 	{
 		System.out.println("search: " + searchName);
@@ -611,14 +603,6 @@ public class Application extends Controller
 		render(results);
 	}
 
-	/**
-	 * 
-	 * @param eventID2 
-	 * @param userID2 Of the other user
-	 * @param otherUserCalendarID2 Of the other user's calendar
-	 * @throws ESEExceptionGuestUser 
-	 * @throws ESEException 
-	 */
 	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2) throws ESEExceptionGuestUser, ESEException
 	{
 		ESEUser user = ESEDatabase.getUserByID(userID2);
@@ -690,25 +674,29 @@ public class Application extends Controller
 		ESEUser user = ESEDatabase.getUserByID(userID);
 		//ESEProfile profile = user.getProfile();
 
-		if (isStringNotEmpty(birthday))
+		if (isStringNotEmpty(firstName))
 		{
-			user.setBirthday(birthday);
-		}
-		if (isStringNotEmpty(city))
-		{
-			user.setCity(city);
+			user.setFirstName(firstName);
 		}
 		if (isStringNotEmpty(familyName))
 		{
 			user.setFamilyName(familyName);
 		}
-		if (isStringNotEmpty(firstName))
-		{
-			user.setFirstName(firstName);
-		}
 		if (isStringNotEmpty(mail))
 		{
 			user.setMail(mail);
+		}
+		if (isStringNotEmpty(birthday))
+		{
+			user.setBirthday(birthday);
+		}
+		if (isStringNotEmpty(street))
+		{
+			user.setStreet(street);
+		}
+		if (isStringNotEmpty(city))
+		{
+			user.setCity(city);
 		}
 		
 		showAndEditProfile(userID);

@@ -85,7 +85,7 @@ public class ESEDatabaseTest extends UnitTest
 		ArrayList<ESEUser> searchResults;
 		ArrayList<String> strFind = new ArrayList<String>(Arrays.asList("DB User", "db[^A-Za-z0-9]user", ".*b [A-Z]s.*", ".b..[a-z]er", "db.*ser"));
 
-		for(int i=0; i<strFind.size(); i++)
+		for(int i = 0; i < strFind.size(); i++)
 		{
 			searchResults = ESEDatabase.findUser(strFind.get(0));
 			assertEquals(this.setupUser, searchResults.get(0));

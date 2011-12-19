@@ -4,7 +4,6 @@
 package models.visitor;
 
 import java.util.Collection;
-
 import models.ESECalendar;
 import models.ESEEvent;
 import models.ESEUser;

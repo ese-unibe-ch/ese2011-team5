@@ -6,9 +6,7 @@ package models.visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import models.ESEEvent;
-
 import org.joda.time.DateTime;
 
 public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
@@ -30,8 +28,7 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 		this.id = id;
 	}
 
-	public SearchEventVisitor(String name, DateTime lowerLimit,
-			DateTime upperLimit)
+	public SearchEventVisitor(String name, DateTime lowerLimit, DateTime upperLimit)
 	{
 		this(name);
 		this.upperLimit = upperLimit;
@@ -42,9 +39,9 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 	public void visit(ESEEvent event)
 	{
 		// TODO: implement boundaries
-		if (this.condition(event))
+		if(this.condition(event))
 		{
-			events.add(event);
+			this.events.add(event);
 		}
 	}
 
@@ -53,16 +50,17 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 		DateTime start = new DateTime(event.getStartDate());
 		DateTime end = new DateTime(event.getEndDate());
 
-		if (this.upperLimit == null && this.lowerLimit == null)
+		if(this.upperLimit == null && this.lowerLimit == null)
 		{
 			return this.isAlike(event);
 		}
 
-		if ((this.lowerLimit.isBefore(start) || this.lowerLimit.equals(start))
+		if((this.lowerLimit.isBefore(start) || this.lowerLimit.equals(start))
 				&& (this.upperLimit.isAfter(end) || this.upperLimit.equals(end)))
 		{
 			return this.isAlike(event);
-		} else
+		}
+		else
 		{
 			return false;
 		}
@@ -71,11 +69,14 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 	private boolean isAlike(ESEEvent event)
 	{
 
-		if (this.name != null)
+		if(this.name != null)
 		{
 			return event.getEventName().contains(this.name);
-		} else if (this.id != null)
+		}
+		else if(this.id != null)
+		{
 			return this.id.equals(event.getEventID());
+		}
 		else
 		{
 			return false;
@@ -86,5 +87,4 @@ public class SearchEventVisitor extends AbstractVisitor<ESEEvent>
 	{
 		return this.events;
 	}
-
 }
