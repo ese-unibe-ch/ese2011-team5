@@ -166,14 +166,6 @@ public class ESEDatabase
 	 * Methods to add or remove ESEUsers, ESECalendars, ESEEvents, ESEGroups
 	 */
 
-	/*
-	 * public static void addCalendarToDB(ESECalendar calendar){
-	 * calendarList.add(calendar); }
-	 *
-	 * public static void addEventToDB(ESEEvent event){ eventList.add(event); }
-	 *
-	 * public static void addGroupToDB(ESEGroup group){ groupList.add(group); }
-	 */
 	/**
 	 * Removes a {@link ESEUser} by its username.
 	 * @param username String of ESEUser to be removed.
@@ -264,18 +256,6 @@ public class ESEDatabase
 		ESEEvent.resetIdCounter();
 		ESEGroup.resetIdCounter();
 	}
-
-//	public static ESEUser getCurrentUserForView()
-//	{
-//		try
-//		{
-//			return getCurrentUser();
-//		}
-//		catch(ESEExceptionGuestUser e)
-//		{
-//			return null;
-//		}
-//	}
 
 	public static void addUserToOnline(ESEUser user)
 	{

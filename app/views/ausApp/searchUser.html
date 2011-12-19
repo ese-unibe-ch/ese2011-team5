@@ -1,4 +1,0 @@
-#{extends 'main.html' /}
-#{list items:_otherUsers, as:'otherUser'}
-	<p><a href=@{Application.showOtherCalendars(otherUser.getName())}>${otherUser.getName()}</a> add to Friends</p>
-#{/list}

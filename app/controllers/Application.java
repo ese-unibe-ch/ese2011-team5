@@ -15,8 +15,6 @@ public class Application extends Controller
 
 	private static boolean validLogin = true;
 
-	//private static ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
-
 	public static void showCalendars()
 	{
 		ESEUser currentUser = null;
@@ -48,37 +46,6 @@ public class Application extends Controller
 		}
 	}
 
-//	public static void showCalendars(ArrayList<ESEUser> otherUsers) throws ESEException {
-//		ESEUser currentUser=null;
-//		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
-//		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-//		System.out.println("Show calendars()");
-//		
-//		try 
-//		{
-//			currentUser = ESEDatabase.getCurrentUser();
-//			calendarList = currentUser.getCalendarList();
-//			groups = currentUser.getGroupList();
-//		} 
-//		catch (ESEExceptionGuestUser e)
-//		{
-////			// TODO Auto-generated catch block
-////			e.printStackTrace();				//DON'T DO ANYTHING
-//		}
-//		finally
-//		{
-//			if (!validLogin)
-//			{
-//				flash.error("You have to provide an username and a password!");
-//				params.flash();
-//			}
-//
-//			render(currentUser, groups, otherUsers, calendarList);
-//		}
-//
-//		
-//	}
-
 	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
 			String currentUser) throws ESEException
 			{
@@ -96,11 +63,6 @@ public class Application extends Controller
 		int currentDay = day;
 		showCalendarView(calendarID, currentUser, currentDay, currentMonth, currentYear);
 	}
-
-//	public static void showCalendars(boolean valid) {
-//		validLogin = valid;
-//		showCalendars();
-//	}
 
 	public static void showOtherCalendars(String username) throws ESEException
 	{
@@ -204,7 +166,6 @@ public class Application extends Controller
 		ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month, year);
 		ArrayList<String> weekdays = getWeekDays();
 
-		//ArrayList<ESEUser> otherUsersList = otherUsers;
 		render(calendarUser, currentUser, calendar, events, month, monthString,
 				startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
 				daysFromNextMonth, eventDaysOfMonth, selectedDay, weekdays,
@@ -271,9 +232,6 @@ public class Application extends Controller
 			boolean isPublic, int selectedDay, int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
 		
-		
-		System.out.println(calendarID);
-		System.out.println(eventID);
 		
 		try
 		{
@@ -521,7 +479,6 @@ public class Application extends Controller
 
 	public static void searchUser(@Required String searchName)
 	{
-		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(searchName);
 
 		if (!searchName.equals(""))
@@ -533,26 +490,12 @@ public class Application extends Controller
 			otherUsers = ESEDatabase.getAllUsers();
 		}
 
-//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
-//		for (ESEUser u : otherUserLocalOriginal)
-//		{
-//			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
-//			{
-//				otherUsersLocal.remove(u);						//NOT LONGER NECESSARY BECAUSE THERE ISN'T A GUEST USER!
-//			}
-//		}
-
-		//otherUsers = otherUsersLocal;
-
-		//showCalendars();
 		render(otherUsers);
 	}
 	
 	// For ajax
 	public static void search(@Required String searchName)
 	{
-		System.out.println("search: " + searchName);
-		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		List<ESEUser> results = new ArrayList<ESEUser>();
 		if (!searchName.equals(""))
 		{
@@ -563,19 +506,6 @@ public class Application extends Controller
 			results = ESEDatabase.getAllUsers();
 		}
 		
-		System.out.println("RESULT: " + results);
-//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
-//		for (ESEUser u : otherUserLocalOriginal)
-//		{
-//			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
-//			{
-//				otherUsersLocal.remove(u);						//NOT LONGER NECESSARY BECAUSE THERE ISN'T A GUEST USER!
-//			}
-//		}
-
-		//otherUsers = otherUsersLocal;
-
-		//showCalendars();
 		render(results);
 	}
 	
@@ -584,22 +514,8 @@ public class Application extends Controller
 	 */
 	public static void search()
 	{
-		//ArrayList<ESEUser> otherUsersLocal = new ArrayList<ESEUser>();
 		List<ESEUser> results = ESEDatabase.getAllUsers();
 		
-		System.out.println("RESULT ALL: " + results);
-//		ArrayList<ESEUser> otherUserLocalOriginal = new ArrayList<ESEUser>(otherUsersLocal);
-//		for (ESEUser u : otherUserLocalOriginal)
-//		{
-//			if (u.getName().equals("guest") || u.getName().equals(ESEDatabase.getCurrentUser().getName()))
-//			{
-//				otherUsersLocal.remove(u);						//NOT LONGER NECESSARY BECAUSE THERE ISN'T A GUEST USER!
-//			}
-//		}
-
-		//otherUsers = otherUsersLocal;
-
-		//showCalendars();
 		render(results);
 	}
 
@@ -634,8 +550,6 @@ public class Application extends Controller
 			event.addCorrespondingCalendar(selectedCalendar);
 			selectedCalendar.addEvent(event);
 			event.addParticipant(user);
-			// betweenShowCalendarsAndShowCalendarView(ESEDatabase.getCurrentUser().getCalendarList().get(0).getID(),
-			// ESEDatabase.getCurrentUser().getName());
 			int day = ESEConversionHelper.getDay(event.getStartDate());
 			int month = ESEConversionHelper.getMonth(event.getStartDate());
 			int year = ESEConversionHelper.getYear(event.getStartDate());
@@ -702,22 +616,6 @@ public class Application extends Controller
 		showAndEditProfile(userID);
 	}
 
-	private static void changePassword(int userID, String password,
-			String confirmpassword) throws ESEException, ESEExceptionGuestUser
-	{
-		if (!password.equals(confirmpassword))
-		{
-			flash.error("Passwords do not match!");
-			params.flash();
-			showAndEditProfile();
-		}
-		else
-		{
-			ESEUser user = ESEDatabase.getUserByID(userID);
-			user.setPassword(password);
-		}
-	}
-
 	private static boolean isStringNotEmpty(String input)
 	{
 		return !input.isEmpty();
@@ -741,7 +639,6 @@ public class Application extends Controller
 			//TODO Auto-generated catch block
 			//e.printStackTrace();				//DON'T DO ANYTHING
 		}
-		//ArrayList<ESEUser> otherUsersList = otherUsers;
 		render(groupList, currentUser, otherUsersList);
 	}
 
