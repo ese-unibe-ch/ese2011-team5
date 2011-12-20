@@ -1,0 +1,68 @@
+#{extends 'main.html' /}
+
+<body>
+	<table>
+		<colgroup>
+			<col width="180">
+			<col width="5">
+			<col width="180">
+		</colgroup>
+		<tr style="height: 40px;">
+			<td colspan="3" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Edit Event</font></td>
+		</tr>
+		<tr style="height: 5px;">
+			<td colspan="3" rowspan="1"></td>
+		</tr>
+		<tr style="height: 40px;">
+			<td colspan="3" style="vertical-align: center;">${calendarToEdit.getCalendarName()}</td>
+		</tr>
+		#{form @Application.doEditCalendarName()}
+		<tr>
+			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+				<table>
+					<colgroup>
+				    	<col width="150">
+				   		<col width="5">
+				   		<col width="150">
+				    </colgroup>
+				    #{if flash.error}<th colspan="3" id="error">${flash.error}</th>#{/if}
+				    <tr>
+				    	<td>Edit calendar name</td>
+				    	<td></td>
+				    	<td></td>
+				    </tr>
+				    <tr>
+				    </tr>
+				    <tr>
+				    	<td>Old calendar name</td>
+				    	<td></td>
+				    	<td>${calendarToEdit.getCalendarName()}</td>
+				    </tr>
+				    <tr>
+				    	<td>New calendar name</td>
+				    	<td></td>
+				    	<td><input type="text" name="calendarName"  style="width: 150px; "id="calendarName" value="${calendarToEdit.getCalendarName()}" /></td>
+				    </tr>
+				    <tr>
+				    	<td></td>
+				    	<td></td>
+				    	<td><input type="hidden" name="calendarID" id="calendarID" value="${calendarToEdit.getID()}" />
+				    	<input type="submit" style="width: 80px;" value="Submit" /></td>
+				    </tr>
+				    
+				    
+				</table>
+			</td>
+		</tr>
+		<tr style="height: 10px;">
+			<td colspan="3"></td>
+		</tr>
+		
+		#{/form}
+		<tr>
+			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
+				On this page, you can edit the name of your calendar.
+			</td>
+		</tr>
+	</table>
+</body>

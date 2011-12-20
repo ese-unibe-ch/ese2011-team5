@@ -1,0 +1,21 @@
+#{selenium }
+    // Open the home page, and check that no error occured
+    clearSession()
+    open('/register/index')
+ 
+	type('username', 'Dummy3')
+	type('password', '123')
+	type('confirmpassword', '123')
+	type('question', 'My name')
+	type('answer', 'Dummy')
+	clickAndWait('register')
+	waitForPageToLoad(1000)
+	assertTextPresent('Home')
+
+	type('calendarName', 'Kalender 1')
+	clickAndWait('submit')
+	assertTextPresent('Kalender 1')
+	
+    	
+	
+#{/selenium}
