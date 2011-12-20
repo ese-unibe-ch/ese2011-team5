@@ -51,11 +51,6 @@ public class ESEDatabase
 			System.out.println("THE CURRENT USER IS GUEST!");
 			throw new ESEExceptionGuestUser();
 		}
-		catch(NullPointerException e)
-		{
-			System.out.println("No session, that means we are running a test");
-			throw new ESEExceptionGuestUser();
-		}
 	}
 
 	/*

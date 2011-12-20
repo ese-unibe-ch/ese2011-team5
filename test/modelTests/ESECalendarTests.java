@@ -149,6 +149,7 @@ public class ESECalendarTests extends UnitTest
 		assertEquals(3, this.cal1.getAllPublicEventsOfMonth(3, 2011).size());
 	}
 
+	/*
 	@Test
 	public void shouldGetAllAllowedEventsOfMonth() throws ESEException
 	{
@@ -167,6 +168,7 @@ public class ESECalendarTests extends UnitTest
 
 		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3, 2011).size());
 	}
+	*/
 
 	@Test
 	public void shouldGetAllPublicEvents() throws ESEException

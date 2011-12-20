@@ -1,11 +1,30 @@
-#{form @Application.addEvent()}
+#{stylesheet 'jquery-ui/jquery-ui.css' /}
+#{script 'jquery-ui.min.js' /}
+<script type="text/javascript">
+	$(document).ready
+	(
+		function()
+		{
+			$('#eventStart').datepicker({dateFormat: 'dd.mm.yy 00:00', firstDay: 1});
+			$('#eventEnd').datepicker({dateFormat: 'dd.mm.yy 00:00', firstDay: 1});
+		}
+	);	
+</script>
+#{extends 'main.html' /}
 
+#{form @Application.addEvent()}
 <table>
 	<colgroup>
     	<col width="150">
    		<col width="5">
    		<col width="150">
     </colgroup>
+    #{if flash.error}<th colspan="3" id="error">${flash.error}</th>#{/if}
+    <tr>
+    	<td>Add event:</td>
+    	<td></td>
+    	<td></td>
+    </tr>
     <tr>
     	<td>Event name</td>
     	<td></td>
@@ -26,7 +45,6 @@
     	<td></td>
     	<td><input type="checkbox" name="isPublic" id="isPublic" style="width: 150px" /></td>
     </tr>
-    
     <tr>
     	<td></td>
     	<td></td>
@@ -34,10 +52,9 @@
     </tr>
 </table>
 
-
 <input type="hidden" name="calendarID" id="calendarID" value="${_calendar.getID()}" />
 <input type="hidden" name="selectedDay" id="selectedDay" value="${_selectedDay}" />
 <input type="hidden" name="year" id="year" value="${_year}" />
 <input type="hidden" name="month" id="month" value="${_month}" />
-	
+
 #{/form}

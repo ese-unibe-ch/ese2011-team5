@@ -4,11 +4,9 @@
 
 # Home page
 GET     /                                       											Application.index
-GET		/calendars																					Application.showCalendars
 GET		/forgotPassword/{username}															Application.forgotPassword(username)	
 GET 	/{username}																			Application.showOtherCalendars()
 GET		/{username}/{calendarID}/day={selectedDay}&month={month}&year={year}				Application.showCalendarView()
-
 GET 	/events/search																		Events.searchEvent
 GET		/events/handle/search/{uid}/{name}/{lowerlimit}/{upperlimit}						Events.handleEventSearch
 GET		/events/handle/search/{uid}/{name}													Events.handleEventSearch

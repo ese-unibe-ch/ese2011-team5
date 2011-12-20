@@ -17,27 +17,25 @@
 			});
 		});
 	</script>
-	
-	
-	
+
 	<table>
-    	<colgroup>
-    		<col width="190">
-    		<col width="5">
-    		<col width="190">
-    	</colgroup>
- 		 <tr style="height: 40px;">
+		<colgroup>
+			<col width="190">
+			<col width="5">
+			<col width="190">
+		</colgroup>
+		<tr style="height: 40px;">
 			<td colspan="3" rowspan="1" style="vertical-align: top; font-weight: bold; text-align: center;"><font size="6">Home</font></td>
 		</tr>
- 		 <tr style="height: 5px;">
- 		 	<td colspan="3" rowspan="1"></td>
+		<tr style="height: 5px;">
+			<td colspan="3" rowspan="1"></td>
 		</tr>
-		
+
 		#{ifnot currentUser}
 			<tr style="height: 40px;">
 				<td colspan="3" style="vertical-align: center;">Welcome on the Homepage of SPACECal!</td>
-	 		</tr>
-	 		<tr>
+			</tr>
+			<tr>
 				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
 					SPACECal allows you to organize your appointments
 					online. You can create as many calendars as you want
@@ -46,55 +44,49 @@
 					You are currently not logged in. You can search for other
 					users on the right side and search their calendars. You can
 					only see their public appointments.
-				
 				</td>
-	 		</tr>
-	 		<tr style="height: 10px;">
+			</tr>
+			<tr style="height: 10px;">
 				<td colspan="3"></td>
-	 		</tr>
-	 		<tr>
-		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
-		 		If you want to create your own calendars, please sign in or register.<br>
-		 		#{login /}
+			</tr>
+			<tr>
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+				If you want to create your own calendars, please sign in or register.<br>
+				#{login /}
 				</td>
-	 		</tr>
- 		#{/ifnot}
- 		
- 		
- 		#{if currentUser}
- 			<tr style="height: 40px;">
- 				<td style="vertical-align: center;">Calendars of ${currentUser.getName()}</td>
- 				<td></td>
- 				<td style="vertical-align: center;">Search for an Event</td>
-	 		</tr>
-	 		<tr>
-		 		<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
-		 		
+			</tr>
+		#{/ifnot}
+
+		#{if currentUser}
+			<tr style="height: 40px;">
+				<td style="vertical-align: center;">Calendars of ${currentUser.getName()}</td>
+				<td></td>
+				<td style="vertical-align: center;">Search for an Event</td>
+			</tr>
+			<tr>
+				<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
 					<list>
 						<ul style="margin-left: -20px; margin-top: -1px;">
 							#{list items:currentUser.getCalendarList(), as:'calendar'}
-								<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),currentUser.getName())}">${calendar.getCalendarName()}</a></li>
+								<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),currentUser.getName())}">${calendar.getCalendarName()}</a> <a href="@{Application.removeCalendar(calendar.getID())}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a></li>
 							#{/list}
 						</ul>
 					</list>
-
+				#{if flash.error}<a id="error">${flash.error}</a>#{/if}
 				</td>
 				<td></td>
 				<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
 					Would you like to search for an event in your calendars? Then <a href="#" id="searchEvent">click here</a>.
 				</td>
-	 		</tr>
-	 		<tr style="height: 10px;">
+			</tr>
+			<tr style="height: 10px;">
 				<td colspan="3"></td>
-	 		</tr>
-	 		<tr>
-		 		<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
-		 		
-		 		#{addCalendar currentUser:currentUser /}
-		 		
+			</tr>
+			<tr>
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">
+				#{addCalendar currentUser:currentUser /}
 				</td>
-	 		</tr>
- 		#{/if}
- 		
-    </table>
+			</tr>
+		#{/if}
+	</table>
 </body>

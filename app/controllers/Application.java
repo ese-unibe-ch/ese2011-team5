@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-
 import models.*;
 import play.data.validation.Required;
 import play.mvc.Controller;
@@ -13,42 +12,42 @@ import play.mvc.Controller;
 public class Application extends Controller
 {
 
-	private static boolean validLogin = true;
+//	private static boolean validLogin = true;
 
-	public static void showCalendars()
-	{
-		ESEUser currentUser = null;
-		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
-		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-		ArrayList<ESEUser> otherUsersList = new ArrayList<ESEUser>();
-		try
-		{
-			currentUser = ESEDatabase.getCurrentUser();
-			calendarList = currentUser.getCalendarList();
-
-			if (ESEDatabase.getOtherUsers(currentUser.getName()).isEmpty())
-			{
-				otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
-			}
-
-			groups = currentUser.getGroupList();
-			if (!validLogin) 
-			{
-				flash.error("You have to provide an username and a password!");
-				params.flash();
-			}
-			//otherUsersList = otherUsers;
-			render(currentUser, groups, otherUsersList, calendarList);
-		} 
-		catch (ESEExceptionGuestUser e)
-		{
-			render(currentUser, groups, otherUsersList, calendarList);
-		}
-	}
+//	public static void showCalendars()
+//	{
+//		ESEUser currentUser = null;
+//		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
+//		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
+//		ArrayList<ESEUser> otherUsersList = new ArrayList<ESEUser>();
+//		try
+//		{
+//			currentUser = ESEDatabase.getCurrentUser();
+//			calendarList = currentUser.getCalendarList();
+//
+//			if(ESEDatabase.getOtherUsers(currentUser.getName()).isEmpty())
+//			{
+//				otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
+//			}
+//
+//			groups = currentUser.getGroupList();
+//			if(!validLogin)
+//			{
+//				flash.error("You have to provide an username and a password!");
+//				params.flash();
+//			}
+//			//otherUsersList = otherUsers;
+//			render(currentUser, groups, otherUsersList, calendarList);
+//		}
+//		catch(ESEExceptionGuestUser e)
+//		{
+//			render(currentUser, groups, otherUsersList, calendarList);
+//		}
+//	}
 
 	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
 			String currentUser) throws ESEException
-			{
+	{
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -57,7 +56,7 @@ public class Application extends Controller
 
 	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
 			String currentUser, int day, int month, int year) throws ESEException
-			{
+	{
 		int currentMonth = month;
 		int currentYear = year;
 		int currentDay = day;
@@ -70,11 +69,11 @@ public class Application extends Controller
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
 		ArrayList<ESEUser> otherUsersList = new ArrayList<ESEUser>();
-				
+
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESECalendar> calendarList = otherUser.getCalendarList();
-		
-		try 
+
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
@@ -82,14 +81,14 @@ public class Application extends Controller
 			otherUsersList = otherUsers;
 			if(currentUser.equals(otherUser))
 			{
-				showCalendars();
+				index();
 			}
 			else
 			{
 				render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList);
 			}
 		}
-		catch (ESEExceptionGuestUser e)
+		catch(ESEExceptionGuestUser e)
 		{
 			render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList);
 		}
@@ -98,28 +97,43 @@ public class Application extends Controller
 	public static void addCalendar(String calendarName) throws ESEExceptionGuestUser
 	{
 		ESEUser currentUser = null;
-		try 
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			currentUser.addCalendar(calendarName);
-		} 
-		catch (ESEException e) 
+		}
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-		} 
+		}
 		index();
 	}
 
+	public static void removeCalendar(int calendarId) throws ESEExceptionGuestUser
+	{
+		ESEUser currentUser = null;
+		try
+		{
+			currentUser = ESEDatabase.getCurrentUser();
+			currentUser.removeCalendar(calendarId);
+		}
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+		}
+		index();
+	}
 	public static void showCalendarView(int calendarID, String username,
 			int selectedDay, int month, int year) throws ESEException
 	{
-		if (month == 12)
+		if(month == 12)
 		{
 			month = 0;
 			year++;
 		}
-		if (month == -1)
+		if(month == -1)
 		{
 			month = 11;
 			year--;
@@ -127,49 +141,59 @@ public class Application extends Controller
 
 		ESEUser currentUser = null;
 		ArrayList<ESEUser> otherUsersList = null;
-		try 
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
-		} 
-		catch (ESEExceptionGuestUser e)
+		}
+		catch(ESEExceptionGuestUser e)
 		{
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();				//DON'T DO ANYTHING
 		}
 
 		ESEUser calendarUser = ESEDatabase.getUserByName(username);
-		ESECalendar calendar = calendarUser.getCalendarByID(calendarID);
 
-		int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-		if (month != Calendar.getInstance().get(Calendar.MONTH))
+		try
 		{
-			currentDay = 100;
+			ESECalendar calendar = calendarUser.getCalendarByID(calendarID);
+
+			int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+			if(month != Calendar.getInstance().get(Calendar.MONTH))
+			{
+				currentDay = 100;
+			}
+
+			SimpleDateFormat dfs = new SimpleDateFormat();
+			String monthString = dfs.getDateFormatSymbols().getMonths()[month];
+
+			List<Integer> daysFromLastMonth = new ArrayList<Integer>();
+			List<Integer> daysFromNextMonth = new ArrayList<Integer>();
+			daysFromLastMonth = calendar.getDaysFromLastMonth(month, year);
+			daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
+			List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month, year);
+
+			int startOfLastMonth = 0;
+			if(!daysFromLastMonth.isEmpty())
+			{
+				startOfLastMonth = daysFromLastMonth.get(0);
+			}
+
+			ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month, year);
+			ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month, year);
+			ArrayList<String> weekdays = getWeekDays();
+
+			render(calendarUser, currentUser, calendar, events, month, monthString,
+					startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
+					daysFromNextMonth, eventDaysOfMonth, selectedDay, weekdays,
+					currentDay, year, otherUsersList);
 		}
-
-		SimpleDateFormat dfs = new SimpleDateFormat();
-		String monthString = dfs.getDateFormatSymbols().getMonths()[month];
-
-		List<Integer> daysFromLastMonth = new ArrayList<Integer>();
-		List<Integer> daysFromNextMonth = new ArrayList<Integer>();
-		daysFromLastMonth = calendar.getDaysFromLastMonth(month, year);
-		daysFromNextMonth = calendar.getDaysFromNextMonth(month, year);
-		List<Integer> daysFromThisMonth = calendar.getDaysFromThisMonth(month, year);
-
-		int startOfLastMonth = 0;
-		if (!daysFromLastMonth.isEmpty())
+		catch(ESEException e)
 		{
-			startOfLastMonth = daysFromLastMonth.get(0);
+			flash.error(e.getMessage());
+			params.flash();
+			index();
 		}
-
-		ArrayList<ESEEvent> events = calendar.getAllAllowedEventsOfMonth(month, year);
-		ArrayList<Integer> eventDaysOfMonth = calendar.getEventDaysOfMonth(month, year);
-		ArrayList<String> weekdays = getWeekDays();
-
-		render(calendarUser, currentUser, calendar, events, month, monthString,
-				startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
-				daysFromNextMonth, eventDaysOfMonth, selectedDay, weekdays,
-				currentDay, year, otherUsersList);
 	}
 
 	public static void showEvents(int calendarID, String username) throws ESEException
@@ -177,13 +201,13 @@ public class Application extends Controller
 		ESEUser currentUser = null;
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-		try 
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 			groups = currentUser.getGroupList();
 		}
-		catch (ESEExceptionGuestUser e)
+		catch(ESEExceptionGuestUser e)
 		{
 			//				// TODO Auto-generated catch block
 			//				e.printStackTrace();				//DON'T DO ANYTHING
@@ -201,16 +225,16 @@ public class Application extends Controller
 			int selectedDay, int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
-		try 
+		try
 		{
 			calendar.addEvent(eventName, eventStart, eventEnd, isPublic);
-		} 
-		catch (IllegalArgumentException e)
+		}
+		catch(IllegalArgumentException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-		} 
-		catch (ESEException e)
+		}
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
@@ -223,7 +247,15 @@ public class Application extends Controller
 			int selectedDay, int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
 		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
-		calendar.removeEvent(eventID);
+		try
+		{
+			calendar.removeEvent(eventID);
+		}
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+		}
 		showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 	}
 
@@ -231,11 +263,9 @@ public class Application extends Controller
 			String eventName, String eventStart, String eventEnd,
 			boolean isPublic, int selectedDay, int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
-		
-		
+		ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 		try
 		{
-			ESECalendar calendar = ESEDatabase.getCurrentUser().getCalendarByID(calendarID);
 			ESEEvent event = calendar.getEventByID(eventID);
 
 			event.setEventName(eventName);
@@ -244,23 +274,23 @@ public class Application extends Controller
 					ESEConversionHelper.convertStringToDate(eventEnd));
 			event.setVisibility(isPublic);
 
-			if (event.checkForOverlapping(calendar.getAllEvents()))
+			if(event.checkForOverlapping(calendar.getAllEvents()))
 			{
 				throw new ESEException("Event \"" + event.getEventName() + "\" overlaps with existing event!");
 			}
 			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 		}
-		catch (IllegalArgumentException e)
+		catch(IllegalArgumentException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-			editEvent(calendarID, eventID, selectedDay, month, year);
+			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-			editEvent(calendarID, eventID, selectedDay, month, year);
+			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 		}
 	}
 
@@ -268,16 +298,25 @@ public class Application extends Controller
 			int month, int year) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ESECalendar calendar = currentUser.getCalendarByID(calendarID);
-		ESEEvent event = calendar.getEventByID(eventID);
-		ArrayList<ESEUser> otherUsersList = otherUsers;
+		try
+		{
+			ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+			ESEEvent event = calendar.getEventByID(eventID);
+			ArrayList<ESEUser> otherUsersList = otherUsers;
 
-		render(currentUser, calendar, calendarID, event, calendar.getOwner().getName(),
-				selectedDay, month, year, otherUsersList);
+			render(currentUser, calendar, calendarID, event, calendar.getOwner().getName(),
+					selectedDay, month, year, otherUsersList);
+		}
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
+		}
 	}
 
-	public static void showUsersInGroup(int groupID)
+	public static void showUsersInGroup(int groupID) throws ESEExceptionGuestUser
 	{
 		showGroups();
 	}
@@ -293,12 +332,12 @@ public class Application extends Controller
 			group.addUserToGroup(userToAdd);
 			showUsersInGroup(groupID);
 		}
-		catch (ESEException e)
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
 			showUsersInGroup(groupID);
-		} 
+		}
 	}
 
 	public static void removeUserFromGroup(String username, int groupID) throws ESEException, ESEExceptionGuestUser
@@ -311,38 +350,37 @@ public class Application extends Controller
 		showUsersInGroup(groupID);
 	}
 
-	public static void profile(int userID) throws ESEException, ESEExceptionGuestUser
-	{
-		ESEUser currentUser = ESEDatabase.getCurrentUser();
-		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
-		ArrayList<ESEGroup> groups = currentUser.getGroupList();
-		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
-		render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
-	}
-	
+//	public static void profile(int userID) throws ESEException, ESEExceptionGuestUser
+//	{
+//		ESEUser currentUser = ESEDatabase.getCurrentUser();
+//		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
+//		ArrayList<ESEGroup> groups = currentUser.getGroupList();
+//		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
+//		render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
+//	}
+
 	public static void showUserProfile(String username) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser user = ESEDatabase.getUserByName(username);
 		showAndEditProfile(user.getUserID());
 	}
 
-	public static void showCurrentUserProfile() throws ESEException, ESEExceptionGuestUser
-	{
-//		if(ESEDatabase.isUserLogedIn())
+//	public static void showCurrentUserProfile() throws ESEException, ESEExceptionGuestUser
+//	{
+////		if(ESEDatabase.isUserLogedIn())
+////		{
+////			ESEUser user = ESEDatabase.getCurrentUser();
+////			showAndEditProfile(user.getUserID());
+////		}
+
+//		if(controllers.Secure.Security.isConnected())
 //		{
-//			ESEUser user = ESEDatabase.getCurrentUser();
+//			ESEUser user = ESEDatabase.getCurrentUser(); //Exception can be thrown, because this exception should not happen
 //			showAndEditProfile(user.getUserID());
 //		}
-		
-		if(controllers.Secure.Security.isConnected())
-		{
-			ESEUser user = ESEDatabase.getCurrentUser(); //Exception can be thrown, because this exception should not happen
-			showAndEditProfile(user.getUserID());
-		}
-		// DO NOTHING TODO: go back to the last page!
-	}
-	
-	
+//		// DO NOTHING TODO: go back to the last page!
+//	}
+
 	public static void showAndEditProfile(int userID) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
@@ -363,14 +401,14 @@ public class Application extends Controller
 		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-		try 
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			calendarList = currentUser.getCalendarList();
 			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 			groups = currentUser.getGroupList();
-		} 
-		catch (ESEExceptionGuestUser e)
+		}
+		catch(ESEExceptionGuestUser e)
 		{
 			//				// TODO Auto-generated catch block
 			//				e.printStackTrace();				//DON'T DO ANYTHING
@@ -401,11 +439,11 @@ public class Application extends Controller
 		}
 
 		ESEUser user = ESEDatabase.getUserByName(username);
-		if (user.getAnswer().equals(answer)) 
+		if(user.getAnswer().equals(answer))
 		{
 			render(user, username, currentUser, calendarList, otherUsers, groups);
 		}
-		else 
+		else
 		{
 			flash.error("Wrong answer!");
 			params.flash();
@@ -420,15 +458,15 @@ public class Application extends Controller
 		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-		
-		try 
+
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
 			calendarList = currentUser.getCalendarList();
 			otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 			groups = currentUser.getGroupList();
-		} 
-		catch (ESEExceptionGuestUser e) 
+		}
+		catch(ESEExceptionGuestUser e)
 		{
 			//				// TODO Auto-generated catch block
 			//				e.printStackTrace();				//DON'T DO ANYTHING
@@ -442,20 +480,18 @@ public class Application extends Controller
 			@Required String password, @Required String confirmpassword)
 			throws ESEException
 	{
-		if (!password.equals(confirmpassword))
+		ESEUser user = ESEDatabase.getUserByName(username);
+		if(!password.equals(confirmpassword))
 		{
-			ESEUser user = ESEDatabase.getUserByName(username);
 			flash.error("Passwords do not match!");
 			params.flash();
 			resetPassword(username, user.getAnswer());
 		}
 		else
 		{
-			ESEUser user = ESEDatabase.getUserByName(username);
 			user.setPassword(password);
 			Security.ownAuthenticate(username, password);
-
-			showCalendars();
+			index();
 		}
 	}
 
@@ -463,17 +499,17 @@ public class Application extends Controller
 	{
 		ESEUser user = ESEDatabase.getCurrentUser();
 		ESEGroup group = null;
-		try 
+		try
 		{
 			user.addGroup(groupname);
 			group = user.getGroupByName(groupname);
 			showUsersInGroup(group.getGroupID());
-		} 
-		catch (ESEException e)
+		}
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-			showCalendars();
+			showGroups();
 		}
 	}
 
@@ -481,7 +517,7 @@ public class Application extends Controller
 	{
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(searchName);
 
-		if (!searchName.equals(""))
+		if(!searchName.equals(""))
 		{
 			otherUsers = ESEDatabase.findUser(searchName);
 		}
@@ -492,12 +528,12 @@ public class Application extends Controller
 
 		render(otherUsers);
 	}
-	
-	// For ajax
+
+	// For Ajax
 	public static void search(@Required String searchName)
 	{
 		List<ESEUser> results = new ArrayList<ESEUser>();
-		if (!searchName.equals(""))
+		if(!searchName.equals(""))
 		{
 			results = ESEDatabase.findUser(searchName);
 		}
@@ -505,17 +541,15 @@ public class Application extends Controller
 		{
 			results = ESEDatabase.getAllUsers();
 		}
-		
+
 		render(results);
 	}
-	
-	/**
-	 * For ajax
-	 */
+
+	// For Ajax
 	public static void search()
 	{
 		List<ESEUser> results = ESEDatabase.getAllUsers();
-		
+
 		render(results);
 	}
 
@@ -524,7 +558,7 @@ public class Application extends Controller
 		ESEUser user = ESEDatabase.getUserByID(userID2);
 		ESECalendar calendar = user.getCalendarByID(otherUserCalendarID2);
 		ESEEvent event = calendar.getEventByID(eventID2);
-		
+
 		int userID = userID2;
 		int eventID = eventID2;
 		int otherUserCalendarID = otherUserCalendarID2;
@@ -554,18 +588,18 @@ public class Application extends Controller
 			int month = ESEConversionHelper.getMonth(event.getStartDate());
 			int year = ESEConversionHelper.getYear(event.getStartDate());
 			betweenShowCalendarsAndShowCalendarView(selectedCalendar.getID(), ESEDatabase.getCurrentUser().getName(), day, month, year);
-		} 
-		catch (ESEException e) 
+		}
+		catch(ESEException e)
 		{
 			flash.error(e.getMessage());
 			params.flash();
-			showCalendars();
+			index();
 		}
 	}
 
 	private static ArrayList<String> getWeekDays()
 	{
-		String[] weekdaysArray = { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+		String[] weekdaysArray = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
 		// List<String> weekdays = new ArrayList<String>();
 		ArrayList<String> weekdays = new ArrayList<String>(Arrays.asList(weekdaysArray));
 		return weekdays;
@@ -576,7 +610,7 @@ public class Application extends Controller
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
-		ArrayList<ESEGroup> groups = currentUser.getGroupList();			
+		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
 		render(currentUser, groups, otherUsers, calendarList);
 	}
@@ -588,31 +622,31 @@ public class Application extends Controller
 		ESEUser user = ESEDatabase.getUserByID(userID);
 		//ESEProfile profile = user.getProfile();
 
-		if (isStringNotEmpty(firstName))
+		if(isStringNotEmpty(firstName))
 		{
 			user.setFirstName(firstName);
 		}
-		if (isStringNotEmpty(familyName))
+		if(isStringNotEmpty(familyName))
 		{
 			user.setFamilyName(familyName);
 		}
-		if (isStringNotEmpty(mail))
+		if(isStringNotEmpty(mail))
 		{
 			user.setMail(mail);
 		}
-		if (isStringNotEmpty(birthday))
+		if(isStringNotEmpty(birthday))
 		{
 			user.setBirthday(birthday);
 		}
-		if (isStringNotEmpty(street))
+		if(isStringNotEmpty(street))
 		{
 			user.setStreet(street);
 		}
-		if (isStringNotEmpty(city))
+		if(isStringNotEmpty(city))
 		{
 			user.setCity(city);
 		}
-		
+
 		showAndEditProfile(userID);
 	}
 
@@ -621,24 +655,12 @@ public class Application extends Controller
 		return !input.isEmpty();
 	}
 
-	public static void showGroups()
+	public static void showGroups() throws ESEExceptionGuestUser
 	{
-		ESEUser currentUser = null;
-		List<ESEGroup> groupList = new ArrayList<ESEGroup>();
-		ArrayList<ESEUser> otherUsersList = null;
-		
-		try 
-		{
-			currentUser = ESEDatabase.getCurrentUser();
-			groupList = currentUser.getGroupList();
-			otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
-		} 
-		
-		catch (ESEExceptionGuestUser e) 
-		{
-			//TODO Auto-generated catch block
-			//e.printStackTrace();				//DON'T DO ANYTHING
-		}
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		List<ESEGroup> groupList = currentUser.getGroupList();
+		ArrayList<ESEUser> otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
+
 		render(groupList, currentUser, otherUsersList);
 	}
 
@@ -646,16 +668,16 @@ public class Application extends Controller
 	{
 		render();
 	}
-	
+
 	public static void index()
 	{
 		ESEUser currentUser = null;
 		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
-		try 
+		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
-		} 	
-		catch (ESEExceptionGuestUser e) 
+		}
+		catch(ESEExceptionGuestUser e)
 		{
 			//TODO Auto-generated catch block
 			//e.printStackTrace();				//DON'T DO ANYTHING

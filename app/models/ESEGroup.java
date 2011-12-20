@@ -124,12 +124,11 @@ public class ESEGroup
 	 */
 	public void addUserToGroup(ESEUser user) throws ESEException
 	{
-		if(!this.userList.contains(user))
+		if(this.userList.contains(user))
 		{
-			this.userList.add(user);
-			return;
+			throw new ESEException("This user \"" + user + "\" is already in the group!");
 		}
-		throw new ESEException("This user is already in the group!");
+		this.userList.add(user);
 	}
 
 	/**
@@ -139,12 +138,11 @@ public class ESEGroup
 	 */
 	public void removeUserFromGroup(ESEUser user) throws ESEException
 	{
-		if(this.userList.contains(user))
+		if(!this.userList.contains(user))
 		{
-			this.userList.remove(user);
-			return;
+			throw new ESEException("No such user \"" + user + "\" exists!");
 		}
-		throw new ESEException("No such user exists!");
+		this.userList.remove(user);
 	}
 
 	public boolean userAlreadyInGroup(String userName)

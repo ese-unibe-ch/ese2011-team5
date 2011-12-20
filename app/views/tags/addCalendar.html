@@ -1,4 +1,3 @@
-
 #{form @Application.addCalendar()}
 
 <table>
@@ -9,7 +8,7 @@
     </colgroup>
     <tr>
     	<td>Add a calendar</td>
-    	<td></td>
+    	<td>#{if flash.error}<th colspan="2" id="error">${flash.error}</th>#{/if}</td>
     	<td></td>
     </tr>
     <tr>
