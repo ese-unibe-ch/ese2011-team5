@@ -145,6 +145,12 @@ public class ESEGroup
 		this.userList.remove(user);
 	}
 
+	/**
+	 * Checks whether the user with a certain user name is 
+	 * already in this group
+	 * @param userName
+	 * @return 'true' if user is already in this group, 'false' elsewhere
+	 */
 	public boolean userAlreadyInGroup(String userName)
 	{
 		try
@@ -156,5 +162,12 @@ public class ESEGroup
 		{
 			return false;
 		}
+	}
+	
+	/**
+	 * Setter for group name.
+	 */
+	public void setGroupName(String groupName){
+		this.groupname = groupName;
 	}
 }

@@ -68,7 +68,10 @@
 					<list>
 						<ul style="margin-left: -20px; margin-top: -1px;">
 							#{list items:currentUser.getCalendarList(), as:'calendar'}
-								<li><a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),currentUser.getName())}">${calendar.getCalendarName()}</a> <a href="@{Application.removeCalendar(calendar.getID())}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a></li>
+								<li>
+								<a href="@{Application.betweenShowCalendarsAndShowCalendarView(calendar.getID(),currentUser.getName())}">${calendar.getCalendarName()}</a> <a href="@{Application.removeCalendar(calendar.getID())}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a>
+								<a href="@{Application.editCalendar(calendar.getID())}"><img title="edit" alt="edit" src="/public/images/edit.jpg"></a>
+								</li>
 							#{/list}
 						</ul>
 					</list>

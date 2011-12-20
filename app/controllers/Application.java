@@ -293,6 +293,32 @@ public class Application extends Controller
 			showCalendarView(calendarID, calendar.getOwner().getName(), selectedDay, month, year);
 		}
 	}
+	
+	public static void editCalendar(int calendarID) throws ESEExceptionGuestUser, ESEException{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESECalendar calendarToEdit = currentUser.getCalendarByID(calendarID);
+		render(currentUser, calendarToEdit);
+	}
+	
+	public static void doEditCalendarName(int calendarID, String calendarName) throws ESEExceptionGuestUser, ESEException{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		currentUser.getCalendarByID(calendarID).setCalendarName(calendarName);
+		
+		index();
+	}
+	
+	public static void editGroup(int groupID) throws ESEExceptionGuestUser, ESEException{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		ESEGroup groupToEdit = currentUser.getGroupByID(groupID);
+		render(currentUser, groupToEdit);
+	}
+	
+	public static void doEditGroup(int groupID, String groupName) throws ESEExceptionGuestUser, ESEException{
+		ESEUser currentUser = ESEDatabase.getCurrentUser();
+		currentUser.getGroupByID(groupID).setGroupName(groupName);
+		
+		index();
+	}
 
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
 			int month, int year) throws ESEException, ESEExceptionGuestUser

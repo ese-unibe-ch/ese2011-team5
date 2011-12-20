@@ -432,6 +432,14 @@ public class ESECalendar implements Visitable
 		}
 		return eventDaysList;
 	}
+	
+	/**
+	 * Setter for calendar name
+	 * @param calendarName
+	 */
+	public void setCalendarName(String calendarName){
+		this.calendarName = calendarName;
+	}
 
 	public String toString()
 	{
