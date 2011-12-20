@@ -3,10 +3,13 @@
     clearSession()
     open('/register/index')
  
-	type('username-field', 'Dummy')
-	type('password-field', '123')
-	type('question-field', 'My name'
-	type('answer-field', 'Dummy'
+	type('username', 'Dummy1')
+	type('password', '123')
+	type('confirmpassword', '123')
+	type('question', 'My name')
+	type('answer', 'Dummy')
 	clickAndWait('register')
+	waitForPageToLoad(1000)
+	assertTextPresent('Home')
 
 #{/selenium}

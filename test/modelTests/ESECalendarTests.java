@@ -165,12 +165,6 @@ public class ESECalendarTests extends UnitTest
 			// Overlapping event added intentionally
 		}
 
-		//ESEDatabase.setCurrentUser(ownerDummy);
-
-		assertEquals(4, this.cal1.getAllAllowedEventsOfMonth(3, 2011).size());
-
-		//ESEDatabase.setCurrentUser(ownerDummy2);
-
 		assertEquals(2, this.cal1.getAllAllowedEventsOfMonth(3, 2011).size());
 	}
 

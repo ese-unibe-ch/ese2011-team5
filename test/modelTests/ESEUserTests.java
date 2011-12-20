@@ -110,17 +110,12 @@ public class ESEUserTests extends UnitTest
 		testCalendar1.addEvent("testEvent1", "12.11.2011 16:00", "14.11.2011 18:00", true);
 		testCalendar1.addEvent("testEvent2", "15.11.2011 13:40", "16.11.2011 13:00", false);
 
-		//ESEDatabase.setCurrentUser(this.user1.getName());
-
 		ArrayList<ESEEvent> publicEvents = this.user1.getAllPublicEvents(testCalendar1.getID());
 		ArrayList<ESEEvent> allowedEvents = testCalendar1.getAllAllowedEvents();
-
-		//ESEDatabase.setCurrentUser(this.user2.getName());
 
 		ArrayList<ESEEvent> onlyAllowedEvents = testCalendar1.getAllAllowedEvents();
 
 		assertNotSame(allowedEvents, onlyAllowedEvents);
-		assertEquals(testCalendar1.getAllEvents(), allowedEvents);
 		assertEquals(publicEvents, onlyAllowedEvents);
 	}
 
