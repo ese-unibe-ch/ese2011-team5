@@ -48,7 +48,7 @@ public class Security extends Secure.Security
 		Application.index();
 	}
 
-	public static String connected() throws NullPointerException
+	public static String connected()
 	{
 		return session.get("username");
 	}

@@ -39,6 +39,6 @@ public class Register extends Controller
 			index();
 		}
 		Security.ownAuthenticate(username, password);
-		Application.showCalendars();
+		Application.index();
 	}
 }

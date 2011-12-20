@@ -8,7 +8,7 @@
     </colgroup>
     <tr>
     	<td>Add a group</td>
-    	<td></td>
+    	<td>#{if flash.error}<th colspan="2" id="error">${flash.error}</th>#{/if}</td>
     	<td></td>
     </tr>
     <tr>
@@ -22,16 +22,5 @@
     	<td><input type="submit" style="width: 80px;" value="Submit" /></td>
     </tr>
 </table>
-
-	#{if flash.error}
-		<p class="error">
-			&{flash.error}
-		</p>
-	#{/if}
-	#{if flash.success}
-		<p class="success">
-			&{flash.success}
-		</p>
-	#{/if}
 
 #{/form}

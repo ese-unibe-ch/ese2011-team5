@@ -32,32 +32,32 @@
 		padding: 5px;
 	}
 	#font {
-		  font-family: Arial, Helvetica, sans-serif;
-		  font-size: medium;
-		  padding: 0 0 0 2px;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: medium;
+		padding: 0 0 0 2px;
 }
 </style>
 <script type="text/javascript">
 	$(document).ready(
 		function() { 
 			$('#searchEvent').validate({
-	    		rules: {
-	    			name: "required"
-	    		},
-    		
-	    		messages: {
-	    			name: "Please enter something..."
-	    		},
-    		});
+				rules: {
+					name: "required"
+				},
 
-			$('#upperlimit').datepicker({dateFormat: 'dd.mm.yy'});
-			$('#lowerlimit' ).datepicker({dateFormat: 'dd.mm.yy'});
+				messages: {
+					name: "Please enter something..."
+				},
+			});
+
+			$('#upperlimit').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
+			$('#lowerlimit').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
 			$('#results').hide();
 			$('#searchEvent').submit( function(){ 
 				getData();
 				return false;
 			});
-	});	
+	});
 	
 	function getData(){
 		var lowerlimit = null;
@@ -65,12 +65,12 @@
 		lowerlimit = $('#lowerlimit').val();
 		upperlmit = $('#upperlimit').val();
 		var name = $('#name').val();
-		
+
 		if(lowerlimit!="" && upperlimit!=""){
 			var request = #{jsAction @Events.handleEventSearch(':uid', ':name', ':lowerlimit', ':upperlimit') /}
-			var params = {	uid: ${userId}, 
-									name:$('#name').val(), 
-									lowerlimit: $('#lowerlimit').val(), 
+			var params = {uid: ${userId},
+									name:$('#name').val(),
+									lowerlimit: $('#lowerlimit').val(),
 									upperlimit: $('#upperlimit').val()
 						};
 		} else {
@@ -79,43 +79,43 @@
 									name:$('#name').val()
 						};
 		}
-		
+
 		if(name){
 			$.getJSON(request(params), 
 								function(events){ 
-									prepareResultBox(events);  
+									prepareResultBox(events);
 								}
-			);	
-			
+			);
+
 			$('#results').show();
-		}						
+		}
 	}
-	
+
 	function prepareResultBox(events){
 		$('#results #elements .element').remove();
-		
+
 		if(events.length==0){
-			$('#results #elements').append('<div class="element">No events have been found!</div>');  
+			$('#results #elements').append('<div class="element">No events have been found!</div>');
 		}
-	
+
 		var name, end, start, out;
 		for(var i = 0; i < events.length; i++){
 			name = events[i].eventName;
 			end = events[i].endDate;
 			start = events[i].startDate;
-			out = '<div class="element"><div class="title">' 
-				+  name + '</div><div class="field">start: ' 
-			 	+  start + '<div/><div class="field">end: '  
-			 	+ end +'<div/></div>';
-			 	
-			 	$('#results #elements').append(out);
+			out = '<div class="element"><div class="title">'
+				+  name + '</div><div class="field">start: '
+				+  start + '<div/><div class="field">end: '
+				+ end +'<div/></div>';
+
+				$('#results #elements').append(out);
 		}
-	}		
+	}
 </script>
 
 <div id="font">
 <h1>Event Search</h1>
-Enter all or part of the event name, starting at the beginning in the search field. 
+Enter all or part of the event name, starting at the beginning in the search field.
 Optionally lower and upper date bounds can be set to limit the search results.
 
 #{form @Events.searchEvent(), id:'searchEvent'}
@@ -126,22 +126,22 @@ Optionally lower and upper date bounds can be set to limit the search results.
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
-	
+
 	<div>
 	#{field 'lowerlimit'}
 	<p>
 		<label>lower bound(optional):</label>
-		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="yyyy-MM-dd"/>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="dd.mm.yy"/>
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
 	</div>
-	
+
 	<div>
 	#{field 'upperlimit'}
 	<p>
 		<label>upper bound(optional):</label>
-		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="yyyy-MM-dd"/>
+		<input type="text" name="${field.name}" id="${field.name}" value="${field.value}" placeholder="dd.mm.yy"/>
 		<span class="error">${field.error}</span>
 	</p>
 	#{/field}
@@ -154,7 +154,7 @@ Optionally lower and upper date bounds can be set to limit the search results.
 	<br/>
 	<p>
 		<div id="results">
-			
+
 			<h2>Found:</h2>
 				<div id="elements">
 				</div>

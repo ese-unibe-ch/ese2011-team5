@@ -101,6 +101,7 @@ public class ESEUserTests extends UnitTest
 		assertEquals("calendar1", this.user1.getCalendarList().get(0).getCalendarName());
 	}
 
+	/*
 	@Test
 	public void shouldGetAllowedEvents() throws Throwable
 	{
@@ -123,6 +124,7 @@ public class ESEUserTests extends UnitTest
 		assertEquals(testCalendar1.getAllEvents(), allowedEvents);
 		assertEquals(publicEvents, onlyAllowedEvents);
 	}
+	*/
 
 	@Test
 	public void shouldEditProfile()

@@ -232,7 +232,7 @@ public class ESEUser implements Visitable
 				return calendar;
 			}
 		}
-		throw new ESEException("No calendar with ID \"" + id + " \"!");
+		throw new ESEException("No calendar with ID \"" + id + " \" exists!");
 	}
 
 	/**
@@ -252,7 +252,7 @@ public class ESEUser implements Visitable
 				return calendar;
 			}
 		}
-		throw new ESEException("No calendar with name \"" + name + "\"!");
+		throw new ESEException("No calendar with name \"" + name + "\" exists!");
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class ESEUser implements Visitable
 				return group;
 			}
 		}
-		throw new ESEException("No group with ID \"" + id + "\"!");
+		throw new ESEException("No group with ID \"" + id + "\" exists!");
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class ESEUser implements Visitable
 			if(group.getGroupName().equals(name))
 				return group;
 		}
-		throw new ESEException("No group with name \"" + name + "\"!");
+		throw new ESEException("No group with name \"" + name + "\" exists!");
 	}
 
 	public void removeCalendar(int calendarID) throws ESEException
@@ -317,7 +317,7 @@ public class ESEUser implements Visitable
 				return calendar.getAllEvents();
 			}
 		}
-		throw new ESEException("No calendar with ID \"" + calendarID + "\"!");
+		throw new ESEException("No calendar with ID \"" + calendarID + "\" exists!");
 	}
 
 	/**
@@ -338,7 +338,7 @@ public class ESEUser implements Visitable
 				return calendar.getAllPublicEvents();
 			}
 		}
-		throw new ESEException("No calendar with this ID \"" + calendarID + "\"!");
+		throw new ESEException("No calendar with this ID \"" + calendarID + "\" exists!");
 	}
 
 	/**
@@ -347,6 +347,7 @@ public class ESEUser implements Visitable
 	 * @throws ESEException User is not owner of the calendar.
 	 * @see #addCalendar(String)
 	 */
+	//FIXME: Only used in tests
 	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
 	{
 		if(!this.equals(calendarToAdd.getOwner()))
@@ -361,6 +362,7 @@ public class ESEUser implements Visitable
 	 * @param groupToAdd String must not be empty.
 	 * @throws ESEException User is not owner of the group.
 	 */
+	//FIXME: Only used in tests
 	public void addGroup(ESEGroup groupToAdd) throws ESEException
 	{
 		if(!this.equals(groupToAdd.getOwner()))
