@@ -3,7 +3,6 @@
 #{/ifnot}
   
 #{list items:results, as:'user'}
-	
 		#{ifnot currentUser.equals(user)}
 			<li>
 				<a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
