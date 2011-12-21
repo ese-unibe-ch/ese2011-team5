@@ -1,4 +1,5 @@
 <body>
+#{if currentUser}
 	<table>
 		<colgroup>
 			<col width="190">
@@ -24,16 +25,9 @@
 					</ul>
 				</td>
 			</tr>
-		#{/if}
-		#{else}
 			<tr style="height: 40px; vertical-align:center;">
 				<td>Your future Contacts here?</td>
 			</tr>
-			<tr>
-				<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 3px;">
-					If you were logged in, your contacts would be shown here.
-				</td>
-			</tr>
-		#{/else}
 	</table>
+	#{/ if}
 </body>

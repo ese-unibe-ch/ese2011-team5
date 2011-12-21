@@ -22,7 +22,7 @@ public class Security extends Secure.Security
 				try
 				{
 					ESEDatabase.addUserToOnline(loginUser);
-					Secure.authenticate(username, password, false); //TODO New variable for boolean
+					Secure.authenticate(username, password, false);
 					
 				}
 				catch (Throwable e)

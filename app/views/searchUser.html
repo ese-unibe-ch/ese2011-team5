@@ -3,11 +3,11 @@
 
 
 <body>
-
-	*{NEW:}*
+	 <a href = # id="displayAll">Display all users</a>
 
 	<script type="text/javascript" charset="utf-8">
 		var searchAction = #{jsAction @Application.search(':query') /}
+		var searchActionAll = #{jsAction @Application.search('') /}
 	
 		//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
 		$(document).ready(function (){
@@ -20,7 +20,15 @@
 			$('#displayAll').click(function() {
 				$('#results p').load(searchActionAll());
 			});
+	});
+
+	$(document).ready(function ()
+	{
+		$('#displayAll').click(function()
+		{
+			$('#results p').load(searchActionAll());
 		});
+	});
 	</script>
 
 	Enter user name:<br>

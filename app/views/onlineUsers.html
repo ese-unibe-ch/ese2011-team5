@@ -1,0 +1,18 @@
+#{if onlineUsers.isEmpty()}
+			No other user online at the moment.
+			#{/if}
+			#{else}
+			#{if onlineUsers.size()>1}
+				The following users are online:
+			#{/ if}
+			#{else}
+				The following user is online:
+			#{/ else}
+			<br>
+			<ul>
+				#{list items: onlineUsers, as:'user'}
+					<li><a href="@{Application.showOtherCalendars(user.getName())}">${user.getName()}</a>
+				#{/list}
+			</ul>
+			#{/else}
+
