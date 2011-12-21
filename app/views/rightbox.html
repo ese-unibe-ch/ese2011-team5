@@ -14,7 +14,8 @@
 							<li style="margin-left: -20px;">${group.getGroupName()}</li>
 							<ul>
 								#{list items: group.getUserList(), as: 'userInList'}
-									<li style="margin-left: -40px;">${userInList.getName()}</li>
+									<li style="margin-left: -40px;"><a href=@{Application.showOtherCalendars(userInList.getName())}>${userInList.getName()}</a></li>
+									
 								#{/list}
 							</ul>
 						#{/list}
