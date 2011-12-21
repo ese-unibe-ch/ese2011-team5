@@ -1,13 +1,13 @@
 <body>
 
 	<table>
-    	<colgroup>
-    		<col width="10">
-    		<col width="130">
-    		<col width="10">
- 		 </colgroup>
- 		 
- 		 <tr>
+		<colgroup>
+			<col width="10">
+			<col width="130">
+			<col width="10">
+		</colgroup>
+
+		<tr>
 			<td><a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(),0, _month-1, _year)}"><img title="last" alt="last" src="/public/images/arrow-left.jpg"></a></td>
 			<td style="text-align:center;">${_monthString} ${_year}</td>
 			<td><a href="@{Application.showCalendarView(_calendar.getID(), _calendar.getOwner().getName(),0, _month+1, _year)}"><img title="next" alt="next" src="/public/images/arrow-right.jpg"></a>
@@ -60,5 +60,4 @@
 			</ul>
 		</li>
 	</ol>
-
 </body>

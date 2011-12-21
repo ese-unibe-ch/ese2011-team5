@@ -1,100 +1,100 @@
-			<body>		
-					<table>
-						<colgroup>
-				    		<col width="180">
-				    		<col width="180">
-				    	</colgroup>
-				    	<tr>
-				    		<td>
-								<b>Edit profile</b>
-							</td>
-							<td>
-							</td>
+<body>
+	<table>
+		<colgroup>
+			<col width="180">
+			<col width="180">
+		</colgroup>
+		<tr>
+			<td>
+				<b>Edit profile</b>
+			</td>
+			<td>
+			</td>
+		</tr>
+		#{form @Application.doEditProfile()}
+			<tr>
+				<td>
+					First name:<br>
+				</td>
+				<td>
+					<p>
+						<input type="text" name="firstName" id="firstName" style="width: 170px;" value="${_currentUser.getFirstName()}"/>
+					</p>
+				</td>
+					</tr>
+					<tr>
+					<td>
+						Family name:<br>
+					</td>
+					<td>
+						<p>
+							<input type="text" name="familyName" id="familyName" style="width: 170px;" value="${_currentUser.getFamilyName()}"/>
+						</p>
+					</td>
 						</tr>
-						#{form @Application.doEditProfile()}
-							<tr>
-					    		<td>
-						    		First name:<br>
-								</td>
-								<td>
-									<p>
-										<input type="text" name="firstName" id="firstName" style="width: 170px;" value="${_currentUser.getFirstName()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td>
-									Family name:<br>
-								</td>
-								<td>
-									<p>
-										<input type="text" name="familyName" id="familyName" style="width: 170px;" value="${_currentUser.getFamilyName()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td>
-									Email:<br>
-								</td>
-								<td>
-									<p>
-											<input type="text" name="mail" id="mail" style="width: 170px;" value="${_currentUser.getMail()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td>
-									Birthday:<br>
-								</td>
-								<td>
-									<p>
-											<input type="text" name="birthday" id="birthday" style="width: 170px;" value="${_currentUser.getBirthdayString()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td>
-									Street:<br>
-								</td>
-								<td>
-									<p>
-											<input type="text" name="street" id="street" style="width: 170px;" value="${_currentUser.getStreet()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td>
-									City:<br>
-								</td>
-								<td>
-									<p>
-											<input type="text" name="city" id="city" id="street" style="width: 170px;" value="${_currentUser.getCity()}"/>
-									</p>
-								</td>
-							</tr>
-							<tr>
-					    		<td></td>
-								<td>
-									<p id="check-field">
-										<input type="submit" id="check" value="Submit" />
-									</p>	
-								</td>
-							</tr>
-							
-							<tr>
-					    		<td colspan="2">
-						    		#{if flash.error}
-										<p class="error">
-											&{flash.error}
-										</p>
-									#{/if}
-									#{if flash.success}
-										<p class="success">
-											&{flash.success}
-										</p>
-									#{/if}
-					    		</td>
-							</tr>
-						#{/form}
-					</table>
-				</body>
+						<tr>
+					<td>
+						Email:<br>
+					</td>
+					<td>
+						<p>
+							<input type="text" name="mail" id="mail" style="width: 170px;" value="${_currentUser.getMail()}"/>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Birthday:<br>
+					</td>
+					<td>
+						<p>
+							<input type="text" name="birthday" id="birthday" style="width: 170px;" value="${_currentUser.getBirthdayString()}"/>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						Street:<br>
+					</td>
+					<td>
+						<p>
+								<input type="text" name="street" id="street" style="width: 170px;" value="${_currentUser.getStreet()}"/>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						City:<br>
+					</td>
+					<td>
+						<p>
+							<input type="text" name="city" id="city" id="street" style="width: 170px;" value="${_currentUser.getCity()}"/>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<p id="check-field">
+							<input type="submit" id="check" value="Submit" />
+						</p>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						#{if flash.error}
+							<p class="error">
+								&{flash.error}
+							</p>
+						#{/if}
+						#{if flash.success}
+							<p class="success">
+								&{flash.success}
+							</p>
+						#{/if}
+					</td>
+				</tr>
+			#{/form}
+	</table>
+</body>
