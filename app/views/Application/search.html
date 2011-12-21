@@ -8,7 +8,7 @@
 			<li>
 				<a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
 				#{if currentUser && !currentUser.getGroupByName("Friends").getUserList().contains(user)}
-					</br><a href="@{Application.addUserToGroup(user.getName(),currentUser.getGroupByName("Friends").getGroupID())}">( add to Friends )</a>
+					<a href="@{Application.addUserToGroup(user.getName(),currentUser.getGroupByName("Friends").getGroupID())}"><img title="add to Friends" alt="add to Friends" src="/public/images/addfriend.jpg"></a>
 				#{/ if}
 			</li>
 		#{/ ifnot}
