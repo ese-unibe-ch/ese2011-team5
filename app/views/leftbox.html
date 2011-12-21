@@ -13,58 +13,57 @@
 		<tr>
 			<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 3px;">
 	
-	<script type="text/javascript" charset="utf-8">
-	var searchAction = #{jsAction @Application.search(':query') /}
-	var searchActionAll = #{jsAction @Application.search('') /}
-	
-	//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
-	$(document).ready(function (){
-		$('#search').keyup(function () {
-			$('#results p').load(searchAction({query: this.value}));
-		});		
-	});
-	
-	$(document).ready(function (){
-		$('#displayAll').click(function() {
-			$('#results p').load(searchActionAll());
-		});		
-	});
-	
-	
-	$(document).ready(function ()
-	{
-	    $('#displayAll').click(function() {
-		$('#results p').load(searchActionAll());
-		});
-	});
-	
-	</script>
-	
-	Enter user name:<br>
-	<input type="text" style="width: 100px;" id="search" name="search">
-	<br>
-	<ul>
-		<div id="results">
-			<p>
-			</p>
-		</div>
-		
-	</ul>
-	<a href = # id="displayAll">Display all users</a>
+				<script type="text/javascript" charset="utf-8">
+				var searchAction = #{jsAction @Application.search(':query') /}
+				var searchActionAll = #{jsAction @Application.search('') /}
+				
+				//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
+				$(document).ready(function (){
+					$('#search').keyup(function () {
+						$('#results p').load(searchAction({query: this.value}));
+					});		
+				});
+				
+				$(document).ready(function (){
+					$('#displayAll').click(function() {
+						$('#results p').load(searchActionAll());
+					});		
+				});
+				
+				
+				$(document).ready(function ()
+				{
+				    $('#displayAll').click(function() {
+					$('#results p').load(searchActionAll());
+					});
+				});
+				
+				</script>
+				
+				Enter user name:<br>
+				<input type="text" style="width: 100px;" id="search" name="search">
+				<br>
+				<ul>
+					<div id="results">
+						<p>
+						</p>
+					</div>
+				</ul>
+				<a href = # id="displayAll">Display all users</a>
           	</td>
 		</tr>
-		*{#{/if}}*
-		*{
-		#{ifnot currentUser}
+	*{#{/if}}*
+
+		*{#{ifnot currentUser}
 		<tr style="height: 40px; vertical-align:center;">
 			<td>Calendars of YOU?</a></td>
 		</tr>
 		<tr>
 			<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 3px;">When you are logged in, 
-			the possiblity to search for other users is given here</td>
+the possiblity to search for other users is given here</td>
 		</tr>
-		#{/ifnot}
-		}*
+		#{/ifnot}}*
+	
 	</table>
 	
 </body>
