@@ -3,16 +3,11 @@
 #{/ifnot}
   
 #{list items:results, as:'user'}
-	
-		#{ifnot currentUser.equals(user)}
-			<li>
+		<li>
 				<a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
 				#{if currentUser && !currentUser.getGroupByName("Friends").getUserList().contains(user)}
 					<a href="@{Application.addUserToGroup(user.getName(),currentUser.getGroupByName("Friends").getGroupID())}"><img title="add to Friends" alt="add to Friends" src="/public/images/addfriend.jpg"></a>
 				#{/ if}
 			</li>
-		#{/ ifnot}
 		
-
-	 
 #{/list}

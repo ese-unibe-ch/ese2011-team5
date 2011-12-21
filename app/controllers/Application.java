@@ -515,6 +515,18 @@ public class Application extends Controller
 	public static void search(@Required String searchName)
 	{
 		List<ESEUser> results = new ArrayList<ESEUser>();
+		ESEUser currentUser = null;
+		
+		try 
+		{
+			currentUser = ESEDatabase.getCurrentUser();
+		} 
+		catch (ESEExceptionGuestUser e) 
+		{
+			// Do not do anything. When the currentUser is null, this method
+			// still should run.
+		}
+
 		if(!searchName.equals(""))
 		{
 			results = ESEDatabase.findUser(searchName);
@@ -524,7 +536,7 @@ public class Application extends Controller
 			results = ESEDatabase.getAllUsers();
 		}
 
-		render(results);
+		render(results, currentUser);
 	}
 
 	// For Ajax
