@@ -497,7 +497,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 
 	/**
 	 * Adds an ESEUser as participant to this ESEEvent.
-	 * @param participant
+	 * @param participant User that follows this event.
 	 */
 	public void addParticipant(ESEUser participant)
 	{
@@ -507,7 +507,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	/**
 	 * Removes a certain ESEUser from the list of participants
 	 * of this ESEEvent.
-	 * @param participant
+	 * @param participant User that unfollows this event.
 	 */
 	public void removeParticipant(ESEUser participant)
 	{
