@@ -1,6 +1,6 @@
 
 #{list items:_groupList, as:'group'}
-	<b><li>${group.getGroupName()} <a href="@{Application.editGroup(group.getGroupID())}"><img title="edit" alt="edit" src="/public/images/edit.jpg"></a></li></b>
+	<li>${group.getGroupName()} <a href="@{Application.editGroup(group.getGroupID())}"><img title="edit" alt="edit" src="/public/images/edit.jpg"></a></li>
 	#{list items:group.getUserList(), as: 'userInList'}
 		<ul>
 			
