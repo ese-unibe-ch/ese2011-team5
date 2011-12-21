@@ -1,6 +1,8 @@
 
 #{list items:_groupList, as:'group'}
-	<li>${group.getGroupName()} <a href="@{Application.editGroup(group.getGroupID())}"><img title="edit" alt="edit" src="/public/images/edit.jpg"></a></li>
+	<li>${group.getGroupName()} <a href="@{Application.editGroup(group.getGroupID())}">
+	#{if !group.getGroupName().equals("Friends")}<img title="edit" alt="edit" src="/public/images/edit.jpg">#{/if}</a>#{else}<img title="Group 'Friends' cannot be edited" alt="no edit" src="/public/images/edit.jpg">#{/else}
+	</li>
 	#{list items:group.getUserList(), as: 'userInList'}
 		<ul>
 			<li>
