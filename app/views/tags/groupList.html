@@ -5,16 +5,14 @@
 	</li>
 	#{list items:group.getUserList(), as: 'userInList'}
 		<ul>
-			
 				<a href="@{Application.showOtherCalendars(userInList.getName())}">${userInList.getName()}</a>  
 				<a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a>
 			
-		
 				#{if group.getGroupName().equals("Friends")}
 				 	(add to:
 				 	#{list items:_groupList, as:'groupp'} 
 						#{if !groupp.groupName.equals("Friends") && !groupp.userAlreadyInGroup(userInList.getName())}
-				 			<a href="@{Application.addUserToGroup(userInList.getName(), groupp.getGroupID())}">${groupp.getGroupName()}</a>  
+				 			<a href="@{Application.addUserToGroup(userInList.getName(), groupp.getGroupID())}"> | ${groupp.getGroupName()}</a>  
 				 		#{/if}
 				 	 #{/list}
 				 	 )
