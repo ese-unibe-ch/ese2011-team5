@@ -347,6 +347,13 @@ public class Application extends Controller
 		showGroups();
 	}
 
+	/**
+	 * GeneralAddToGroup
+	 * @see #addUserToFriend
+	 * @param username
+	 * @param groupID
+	 * @throws ESEExceptionGuestUser
+	 */
 	public static void addUserToGroup(String username, int groupID) throws ESEExceptionGuestUser
 	{
 		try
@@ -363,6 +370,25 @@ public class Application extends Controller
 			flash.error(e.getMessage());
 			params.flash();
 			showUsersInGroup(groupID);
+		}
+	}
+	
+	public static void addUserToFriend(String username) throws ESEExceptionGuestUser
+	{	
+		try
+		{
+			ESEUser currentUser = ESEDatabase.getCurrentUser();
+			ESEUser userToAdd = ESEDatabase.getUserByName(username);
+			ESEGroup group = currentUser.getGroupByName("Friends");
+
+			group.addUserToGroup(userToAdd);
+			showUsersInGroup(group.getGroupID());
+		}
+		catch(ESEException e)
+		{
+			flash.error(e.getMessage());
+			params.flash();
+			index(); 
 		}
 	}
 

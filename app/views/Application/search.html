@@ -1,6 +1,10 @@
 #{ifnot results}
 	No results...
 #{/ifnot}
+  
 #{list items:results, as:'user'}
-		<li><a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a></li>
+	<li>
+		<a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
+		</br> <a href="@{Application.addUserToFriend(user.getName())}">( add to Friends )</a>
+	 </li>
 #{/list}
