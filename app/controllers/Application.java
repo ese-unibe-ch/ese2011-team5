@@ -11,40 +11,6 @@ import play.mvc.Controller;
 
 public class Application extends Controller
 {
-
-//	private static boolean validLogin = true;
-
-//	public static void showCalendars()
-//	{
-//		ESEUser currentUser = null;
-//		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
-//		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
-//		ArrayList<ESEUser> otherUsersList = new ArrayList<ESEUser>();
-//		try
-//		{
-//			currentUser = ESEDatabase.getCurrentUser();
-//			calendarList = currentUser.getCalendarList();
-//
-//			if(ESEDatabase.getOtherUsers(currentUser.getName()).isEmpty())
-//			{
-//				otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
-//			}
-//
-//			groups = currentUser.getGroupList();
-//			if(!validLogin)
-//			{
-//				flash.error("You have to provide an username and a password!");
-//				params.flash();
-//			}
-//			//otherUsersList = otherUsers;
-//			render(currentUser, groups, otherUsersList, calendarList);
-//		}
-//		catch(ESEExceptionGuestUser e)
-//		{
-//			render(currentUser, groups, otherUsersList, calendarList);
-//		}
-//	}
-
 	public static void betweenShowCalendarsAndShowCalendarView(int calendarID,
 			String currentUser) throws ESEException
 	{
@@ -150,8 +116,9 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this method
+			//still should run. Our model makes sure, however, that only public events
+			//are displayed
 		}
 
 		ESEUser calendarUser = ESEDatabase.getUserByName(username);
@@ -211,8 +178,9 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this method
+			//still should run. Our model makes sure, however, that only public events
+			//are displayed
 		}
 		ESEUser otherUser = ESEDatabase.getUserByName(username);
 		ArrayList<ESEEvent> eventList = new ArrayList<ESEEvent>();
@@ -381,36 +349,11 @@ public class Application extends Controller
 		showUsersInGroup(groupID);
 	}
 
-//	public static void profile(int userID) throws ESEException, ESEExceptionGuestUser
-//	{
-//		ESEUser currentUser = ESEDatabase.getCurrentUser();
-//		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
-//		ArrayList<ESEGroup> groups = currentUser.getGroupList();
-//		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
-//		render(currentUser, groups, otherUsers, watchedUser/*, profile*/);
-//	}
-
 	public static void showUserProfile(String username) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser user = ESEDatabase.getUserByName(username);
 		showAndEditProfile(user.getUserID());
 	}
-
-//	public static void showCurrentUserProfile() throws ESEException, ESEExceptionGuestUser
-//	{
-////		if(ESEDatabase.isUserLogedIn())
-////		{
-////			ESEUser user = ESEDatabase.getCurrentUser();
-////			showAndEditProfile(user.getUserID());
-////		}
-
-//		if(controllers.Secure.Security.isConnected())
-//		{
-//			ESEUser user = ESEDatabase.getCurrentUser(); //Exception can be thrown, because this exception should not happen
-//			showAndEditProfile(user.getUserID());
-//		}
-//		// DO NOTHING TODO: go back to the last page!
-//	}
 
 	public static void showAndEditProfile(int userID) throws ESEException, ESEExceptionGuestUser
 	{
@@ -443,8 +386,8 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this user should still
+			//be able to reset his password!
 		}
 		ESEUser user = ESEDatabase.getUserByName(username);
 		String question = user.getQuestion();
@@ -468,8 +411,8 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			//			// TODO Auto-generated catch block
-			//				e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this user should still
+			//be able to reset his password!
 		}
 
 		ESEUser user = ESEDatabase.getUserByName(username);
@@ -503,8 +446,8 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this user should still
+			//be able to reset his password!
 		}
 		ESEUser user = ESEDatabase.getUserByName(username);
 
@@ -652,7 +595,6 @@ public class Application extends Controller
 	private static ArrayList<String> getWeekDays()
 	{
 		String[] weekdaysArray = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-		// List<String> weekdays = new ArrayList<String>();
 		ArrayList<String> weekdays = new ArrayList<String>(Arrays.asList(weekdaysArray));
 		return weekdays;
 	}
@@ -673,8 +615,7 @@ public class Application extends Controller
 			String street, String city) throws ESEException, ESEExceptionGuestUser
 	{
 		ESEUser user = ESEDatabase.getUserByID(userID);
-		//ESEProfile profile = user.getProfile();
-
+		
 		if(isStringNotEmpty(firstName))
 		{
 			user.setFirstName(firstName);
@@ -733,8 +674,9 @@ public class Application extends Controller
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			//TODO Auto-generated catch block
-			//e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything. When the currentUser is NULL, this method
+			//still should run. However, this guest user only sees the welcome page
+			//and can only see public events then.
 		}
 		render(currentUser, onlineUsers);
 	}

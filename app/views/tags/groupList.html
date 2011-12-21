@@ -5,7 +5,7 @@
 		<ul>
 			
 				<a href="@{Application.showOtherCalendars(userInList.getName())}">${userInList.getName()}</a>  
-				<a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}">remove</a>
+				<a href="@{Application.removeUserFromGroup(userInList.getName(), group.getGroupID())}"><img title="remove" alt="remove" src="/public/images/delete.jpg"></a>
 			
 		
 				#{if group.getGroupName().equals("Friends")}
