@@ -347,13 +347,6 @@ public class Application extends Controller
 		showGroups();
 	}
 
-	/**
-	 * GeneralAddToGroup
-	 * @see #addUserToFriend
-	 * @param username
-	 * @param groupID
-	 * @throws ESEExceptionGuestUser
-	 */
 	public static void addUserToGroup(String username, int groupID) throws ESEExceptionGuestUser
 	{
 		try
@@ -361,7 +354,7 @@ public class Application extends Controller
 			ESEUser currentUser = ESEDatabase.getCurrentUser();
 			ESEUser userToAdd = ESEDatabase.getUserByName(username);
 			ESEGroup group = currentUser.getGroupByID(groupID);
-
+			
 			group.addUserToGroup(userToAdd);
 			showUsersInGroup(groupID);
 		}
@@ -372,25 +365,7 @@ public class Application extends Controller
 			showUsersInGroup(groupID);
 		}
 	}
-	
-	public static void addUserToFriend(String username) throws ESEExceptionGuestUser
-	{	
-		try
-		{
-			ESEUser currentUser = ESEDatabase.getCurrentUser();
-			ESEUser userToAdd = ESEDatabase.getUserByName(username);
-			ESEGroup group = currentUser.getGroupByName("Friends");
 
-			group.addUserToGroup(userToAdd);
-			showUsersInGroup(group.getGroupID());
-		}
-		catch(ESEException e)
-		{
-			flash.error(e.getMessage());
-			params.flash();
-			index(); 
-		}
-	}
 
 	public static void removeUserFromGroup(String username, int groupID) throws ESEException, ESEExceptionGuestUser
 	{
@@ -585,16 +560,31 @@ public class Application extends Controller
 	public static void search(@Required String searchName)
 	{
 		List<ESEUser> results = new ArrayList<ESEUser>();
-		if(!searchName.equals(""))
+		ESEUser currentUser = null;
+		
+		try 
 		{
-			results = ESEDatabase.findUser(searchName);
-		}
-		else
+			currentUser = ESEDatabase.getCurrentUser();
+		} 
+		catch (ESEExceptionGuestUser e) 
 		{
-			results = ESEDatabase.getAllUsers();
+			
 		}
+		finally
+		{
+			if(!searchName.equals(""))
+			{
+				results = ESEDatabase.findUser(searchName);
+			}
+			else
+			{
+				results = ESEDatabase.getAllUsers();
+			}
 
-		render(results);
+			render(results, currentUser);
+		}
+		
+		
 	}
 
 	// For Ajax

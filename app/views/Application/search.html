@@ -5,6 +5,9 @@
 #{list items:results, as:'user'}
 	<li>
 		<a href=@{Application.showOtherCalendars(user.getName())}>${user.getName()}</a>
-		</br> <a href="@{Application.addUserToFriend(user.getName())}">( add to Friends )</a>
+		#{if currentUser}
+			</br><a href="@{Application.addUserToGroup(user.getName(),currentUser.getGroupByName("Friends").getGroupID())}">( add to Friends )</a>
+		#{/ if}
+
 	 </li>
 #{/list}
