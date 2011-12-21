@@ -1,8 +1,8 @@
 #{selenium }
-    // Open the home page, and check that no error occured
-    clearSession()
-    open('/register/index')
- 
+	// Open the home page, and check that no error occured
+	clearSession()
+	open('/register/index')
+
 	type('username', 'Dummy3')
 	type('password', '123')
 	type('confirmpassword', '123')
@@ -15,7 +15,4 @@
 	type('calendarName', 'Kalender 1')
 	clickAndWait('submit')
 	assertTextPresent('Kalender 1')
-	
-    	
-	
 #{/selenium}

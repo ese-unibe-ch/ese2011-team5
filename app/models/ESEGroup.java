@@ -55,22 +55,7 @@ public class ESEGroup
 	 */
 	public ESEGroup(String groupname, ESEUser owner) throws ESEException
 	{
-		if(groupname.isEmpty())
-		{
-			throw new ESEException("Group name must not be empty!");
-		}
-		if(owner == null)
-		{
-			throw new ESEException("Group is not assigned to any user!");
-		}
-
-//		for(ESEGroup group : owner.getGroupList())
-//		{
-//			if(groupname.equals(group.getGroupName()))
-//			{
-//				throw new ESEException("This group is already in the database!");
-//			}
-//		}
+		checkGroupName(groupname, owner);
 
 		this.groupID = idCounter++;
 		this.groupname = groupname;
@@ -145,11 +130,9 @@ public class ESEGroup
 		this.userList.remove(user);
 	}
 
-	/**
-	 * Checks whether the user with a certain user name is 
-	 * already in this group
-	 * @param userName
-	 * @return 'true' if user is already in this group, 'false' elsewhere
+	/** Checks whether a certain {@link ESEUser} is already in this group.
+	 * @param userName User to test for group membership.
+	 * @return {@code Boolean} {@code true} if the user is already in this group, {@code false} otherwise.
 	 */
 	public boolean userAlreadyInGroup(String userName)
 	{
@@ -160,14 +143,39 @@ public class ESEGroup
 		}
 		catch(ESEException e)
 		{
+			// This user is not even in the database
 			return false;
 		}
 	}
-	
-	/**
-	 * Setter for group name.
+
+	/** Setter for group name.
+	 * @param newGroupname New name of this group. Must not be empty.
+	 * @throws ESEException If group name or owner is missing or null.
 	 */
-	public void setGroupName(String groupName){
-		this.groupname = groupName;
+	public void setGroupName(String newGroupname) throws ESEException
+	{
+		checkGroupName(newGroupname, this.owner);
+		this.groupname = newGroupname;
+	}
+
+	private void checkGroupName(String newGroupName, ESEUser groupOwner) throws ESEException
+	{
+		if(newGroupName.isEmpty())
+		{
+			throw new ESEException("Group name must not be empty!");
+		}
+
+		if(groupOwner == null)
+		{
+			throw new ESEException("Group is not assigned to any user!");
+		}
+
+//		for(ESEGroup group : owner.getGroupList())
+//		{
+//			if(groupname.equals(group.getGroupName()))
+//			{
+//				throw new ESEException("This group is already in the database!");
+//			}
+//		}
 	}
 }

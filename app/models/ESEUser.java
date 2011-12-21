@@ -78,7 +78,7 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Contains all ESEGroups of an ESEUser. Within these groups, an
-	 * ESEUser may organize Contacts (other ESEUser).
+	 * ESEUser may organise Contacts (other ESEUser).
 	 */
 	private ArrayList<ESEGroup> groupList;
 
@@ -89,7 +89,7 @@ public class ESEUser implements Visitable
 	 * Example: ESEUser user = ("UsernameOfJack", "secretPassword", "Jack", "Sparrow");
 	 * {@link #ESEUser(String, String, String, String, String, String)} is an extended constructor<br>
 	 * to create an ESEUser with individual Answer and Question.
-	 * The {@link ESEDatabase} organizes ESEUser to serve in application.
+	 * The {@link ESEDatabase} organises ESEUser to serve in application.
 	 * @param username String must be unique in {@link ESEDatabase}, or an Exception is thrown.
 	 * @param password String must not be empty.
 	 * @param firstName First name of registered Person.
@@ -192,12 +192,9 @@ public class ESEUser implements Visitable
 	}
 
 	/**
-	 * Creates an new {@link ESECalendar} for this ESEUser.<br>
-	 * This is different from {@link #addCalendar(ESECalendar)} which only adds
-	 * but does not create a new calendar.
-	 * @param calendarName Must not be empty and unique in the users calendar list.
-	 * @throws ESEException Calendar name is null or already in the calendar list.
-	 * @see #addCalendar(ESECalendar) to only add but not create a new calendar.
+	 * Creates an new {@link ESECalendar} for this ESEUser and ads it to the {@code calendarList}.<br>
+	 * @param calendarName Must not be empty.
+	 * @throws ESEException Calendar name is null.
 	 */
 	public void addCalendar(String calendarName) throws ESEException
 	{
@@ -206,8 +203,8 @@ public class ESEUser implements Visitable
 
 	/**
 	 * Creates an new {@link ESEGroup} for this ESEUser.
-	 * @param groupName Must not be empty and unique for this user.
-	 * @throws ESEException Group name is empty or ambiguous.
+	 * @param groupName Must not be empty.
+	 * @throws ESEException Group name is empty.
 	 */
 	public void addGroup(String groupName) throws ESEException
 	{
@@ -347,30 +344,28 @@ public class ESEUser implements Visitable
 	 * @throws ESEException User is not owner of the calendar.
 	 * @see #addCalendar(String)
 	 */
-	//FIXME: Only used in tests
-	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
-	{
-		if(!this.equals(calendarToAdd.getOwner()))
-		{
-			throw new ESEException("Taking a foreign calendar is not allowed!");
-		}
-		this.calendarList.add(calendarToAdd);
-	}
+//	public void addCalendar(ESECalendar calendarToAdd) throws ESEException
+//	{
+//		if(!this.equals(calendarToAdd.getOwner()))
+//		{
+//			throw new ESEException("Taking a foreign calendar is not allowed!");
+//		}
+//		this.calendarList.add(calendarToAdd);
+//	}
 
 	/**
 	 * Creates and adds a new Group to the list of this ESEUser.<br>
 	 * @param groupToAdd String must not be empty.
 	 * @throws ESEException User is not owner of the group.
 	 */
-	//FIXME: Only used in tests
-	public void addGroup(ESEGroup groupToAdd) throws ESEException
-	{
-		if(!this.equals(groupToAdd.getOwner()))
-		{
-			throw new ESEException("Taking a foreign group is not allowed!");
-		}
-		this.groupList.add(groupToAdd);
-	}
+//	public void addGroup(ESEGroup groupToAdd) throws ESEException
+//	{
+//		if(!this.equals(groupToAdd.getOwner()))
+//		{
+//			throw new ESEException("Taking a foreign group is not allowed!");
+//		}
+//		this.groupList.add(groupToAdd);
+//	}
 
 	/**
 	 * Sets the password to a new value.

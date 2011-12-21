@@ -48,7 +48,6 @@ public class ESEDatabase
 		}
 		catch(ESEException e)
 		{
-			System.out.println("THE CURRENT USER IS GUEST!");
 			throw new ESEExceptionGuestUser();
 		}
 	}
@@ -254,7 +253,6 @@ public class ESEDatabase
 
 	public static void addUserToOnline(ESEUser user)
 	{
-		System.out.println("ADD USER TO ONLINE: " + user);
 		if(!onlineUser.contains(user))
 		{
 			onlineUser.add(user);

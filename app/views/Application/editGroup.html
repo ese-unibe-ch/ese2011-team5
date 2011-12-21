@@ -17,47 +17,44 @@
 			<td colspan="3" style="vertical-align: center;">${groupToEdit.getGroupName()}</td>
 		</tr>
 		#{form @Application.doEditGroup()}
-		<tr>
-			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
-				<table>
-					<colgroup>
-				    	<col width="150">
-				   		<col width="5">
-				   		<col width="150">
-				    </colgroup>
-				    #{if flash.error}<th colspan="3" id="error">${flash.error}</th>#{/if}
-				    <tr>
-				    	<td>Edit group name</td>
-				    	<td></td>
-				    	<td></td>
-				    </tr>
-				    <tr>
-				    </tr>
-				    <tr>
-				    	<td>Old group name</td>
-				    	<td></td>
-				    	<td>${groupToEdit.getGroupName()}</td>
-				    </tr>
-				    <tr>
-				    	<td>New group name</td>
-				    	<td></td>
-				    	<td><input type="text" name="groupName"  style="width: 150px; "id="groupName" value="${groupToEdit.getGroupName()}" /></td>
-				    </tr>
-				    <tr>
-				    	<td></td>
-				    	<td></td>
-				    	<td><input type="hidden" name="groupID" id="groupID" value="${groupToEdit.getGroupID()}" />
-				    	<input type="submit" style="width: 80px;" value="Submit" /></td>
-				    </tr>
-				    
-				    
-				</table>
-			</td>
-		</tr>
-		<tr style="height: 10px;">
-			<td colspan="3"></td>
-		</tr>
-		
+			<tr>
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 180px; padding: 5px;">
+					<table>
+						<colgroup>
+							<col width="150">
+							<col width="5">
+							<col width="150">
+						</colgroup>
+						#{if flash.error}<th colspan="3" id="error">${flash.error}</th>#{/if}
+						<tr>
+							<td>Edit group name</td>
+							<td></td>
+							<td></td>
+						</tr>
+						<tr>
+						</tr>
+						<tr>
+							<td>Old group name</td>
+							<td></td>
+							<td>${groupToEdit.getGroupName()}</td>
+						</tr>
+						<tr>
+							<td>New group name</td>
+							<td></td>
+							<td><input type="text" name="groupName" style="width: 150px; "id="groupName" value="${groupToEdit.getGroupName()}" /></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td><input type="hidden" name="groupID" id="groupID" value="${groupToEdit.getGroupID()}" />
+							<input type="submit" style="width: 80px;" value="Submit" /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td colspan="3"></td>
+			</tr>
 		#{/form}
 		<tr>
 			<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 100px; padding: 5px;">

@@ -1,112 +1,114 @@
-#{set title:'SPACECal' /}
+#{set title:'SPACEKal' /}
 
 <html>
-    <head>
-        <title>#{get 'title' /}</title>
-        <meta charset="${_response_encoding}">
-        #{get 'moreStyles' /}
-        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
-        <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
-        #{get 'moreScripts' /}
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+	<head>
+		<title>#{get 'title' /}</title>
+		<meta charset="${_response_encoding}">
+		#{get 'moreStyles' /}
+		<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
+		<script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		#{get 'moreScripts' /}
+		<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
 		<style type="text/css">
-html {
-  background-color: rgb(255, 255, 255);
-}
-body {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-}
-:link {
-  color: rgb(0, 0, 238);
-  text-decoration: none;
-}
-:link:active {
-  color: rgb(238, 0, 0);
-  text-decoration: none;
-}
-A:hover {
-  color: rgb(60, 60, 60);
-  text-decoration: none;
-}
-:link:visited {
-  color: rgb(85, 26, 139);
-  text-decoration: none;
-}
-#font {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: medium;
-  padding: 0 0 0 2px;
-}
-#border {
-  -webkit-box-shadow: -2px 3px 4px 1px rgb(109, 109, 109);
-  box-shadow: -2px 3px 4px 1px rgb(109, 109, 109);
-}
-</style>
-   
-   </head>
-    
-    <body id="font">
-    
-    <table>
-    	<colgroup>
-    		<col width="190">
-    		<col width="20">
-    		<col width="190">
-    		<col width="5">
-    		<col width="190">
-    		<col width="20">
-    		<col width="190">
- 		 </colgroup>
- 		 <tr>
-			<td colspan="7" rowspan="1"></td> <!-- oberste Zeile -->
+			html
+			{
+				background-color: rgb(255, 255, 255);
+			}
+			body
+			{
+				background-color: rgb(255, 255, 255);
+				color: rgb(0, 0, 0);
+			}
+			:link
+			{
+				color: rgb(0, 0, 238);
+				text-decoration: none;
+			}
+			:link:active
+			{
+				color: rgb(238, 0, 0);
+				text-decoration: none;
+			}
+			A:hover
+			{
+				color: rgb(60, 60, 60);
+				text-decoration: none;
+			}
+			:link:visited
+			{
+				color: rgb(85, 26, 139);
+				text-decoration: none;
+			}
+			#font
+			{
+				font-family: Arial, Helvetica, sans-serif;
+				font-size: medium;
+				padding: 0 0 0 2px;
+			}
+			#border
+			{
+				-webkit-box-shadow: -2px 3px 4px 1px rgb(109, 109, 109);
+				box-shadow: -2px 3px 4px 1px rgb(109, 109, 109);
+			}
+		</style>
+	</head>
+	<body id="font">
+	<table>
+		<colgroup>
+			<col width="190">
+			<col width="20">
+			<col width="190">
+			<col width="5">
+			<col width="190">
+			<col width="20">
+			<col width="190">
+		</colgroup>
+		<tr>
+			<td colspan="7" rowspan="1"><img title="Logo" alt="SpaceKal" src="/public/images/LogoSpaceKal.png"></td> <!-- oberste Zeile -->
 		</tr>
-	 		<tr style="height: 40px;">
-	 		 	<td style="vertical-align: center;"><img title="Logo"
-	              alt="SpaceCal" src="/public/images/LogoSpaceCal.jpg"></td>
-	 		 	
-	 		 	<td colspan="5" rowspan="1" style="vertical-align: center; text-align: center;">#{include 'navigation.html' /}</td>
-	 		 	
-	 		 	<td style="vertical-align: center; text-align: right;">
-	 		 		#{if currentUser}
-	 		 		Logged in as ${currentUser.getName()}<br>(<a href=@{Security.logout()}>Log out</a>)
-	 		 		#{/if}
-	 		 	</td>
-			</tr>
+			<tr>
+				<td style="vertical-align: center;"></td>
 
+				<td colspan="5" rowspan="1" style="vertical-align: center; text-align: center;">#{include 'navigation.html' /}</td>
+
+				<td style="vertical-align: center; text-align: right;">
+					#{if currentUser}
+					Logged in as ${currentUser.getName()}<br>(<a href=@{Security.logout()}>Log out</a>)
+					#{/if}
+				</td>
+			</tr>
 		<tr>
 			<td colspan="7" rowspan="1"></td> <!-- Zeile unter Navbar -->
 		</tr>
 		<tr style="height: 40px; vertical-align:top;">
 			<td></td>
 			<td></td>
- 		 	<td colspan="3" rowspan="5">#{doLayout /}</td>
- 		 	<td></td>
- 		 	<td></td>
- 		</tr>
- 		<tr style="height: 5px;">
+			<td colspan="3" rowspan="5">#{doLayout /}</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr style="height: 5px;">
 			<td></td>
 			<td></td>
 			<td></td>
- 		 	<td></td>
- 		</tr>
- 		<tr style="height: 20px;">
+			<td></td>
+		</tr>
+		<tr style="height: 20px;">
 			<td colspan="1" rowspan="2" style="vertical-align: top;">#{include 'leftbox.html' /}</td>
 			<td></td>
 			<td></td>
- 		 	<td colspan="1" rowspan="2" style="vertical-align: top;">#{include 'rightbox.html' /}</td>
- 		</tr>
- 		<tr>
- 			<td></td>
- 			<td></td>
- 		</tr>
- 		<tr>
- 			<td></td>
- 			<td></td>
- 			<td></td>
- 			<td></td>
- 		</tr>
- 	</table>
-    </body>
-		
+			<td colspan="1" rowspan="2" style="vertical-align: top;">#{include 'rightbox.html' /}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	</body>
 </html>

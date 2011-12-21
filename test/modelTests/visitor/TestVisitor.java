@@ -32,8 +32,11 @@ public class TestVisitor extends UnitTest
 		ESEDatabase.clearAll();
 		this.user = new ESEUser("dummy", "pw", "firstName", "familyName");
 
-		this.myCalendar = new ESECalendar("My Calendar", this.user);
-		this.mySportCalendar = new ESECalendar("My Sport Calendar", this.user);
+		this.user.addCalendar("My Calendar");
+		this.user.addCalendar("My Sport Calendar");
+
+		this.myCalendar = this.user.getCalendarByName("My Calendar");
+		this.mySportCalendar = this.user.getCalendarByName("My Sport Calendar");
 
 		this.startDate1 = this.formatter.parseDateTime("2011.12.24 08:00");
 		this.endDate1 = this.formatter.parseDateTime("2011.12.24 12:00");
@@ -48,9 +51,6 @@ public class TestVisitor extends UnitTest
 		this.event2 = new ESEEvent("Weihnachten 2011", this.myCalendar,
 				this.startDate2.toDate(), this.endDate2.toDate(), false);
 		this.myCalendar.addEvent(this.event2);
-
-		this.user.addCalendar(this.myCalendar);
-		this.user.addCalendar(this.mySportCalendar);
 
 	}
 

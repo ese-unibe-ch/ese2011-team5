@@ -3,28 +3,26 @@
 
 
 <body>
-	
 
 	*{NEW:}*
-	
+
 	<script type="text/javascript" charset="utf-8">
-	var searchAction = #{jsAction @Application.search(':query') /}
+		var searchAction = #{jsAction @Application.search(':query') /}
 	
-	//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
-	$(document).ready(function (){
-		$('#search').keyup(function () {
-			$('#results p').load(searchAction({query: this.value}));
-		});		
-	});
+		//If you type in the #search field, an ajax request is fired and the response is stored in the results-div
+		$(document).ready(function (){
+			$('#search').keyup(function () {
+				$('#results p').load(searchAction({query: this.value}));
+			});
+		});
 	
-	$(document).ready(function (){
-		$('#displayAll').click(function() {
-			$('#results p').load(searchActionAll());
-		});		
-	});
-	
+		$(document).ready(function (){
+			$('#displayAll').click(function() {
+				$('#results p').load(searchActionAll());
+			});
+		});
 	</script>
-	
+
 	Enter user name:<br>
 	<input type="text" style="width: 100px;" id="search" name="search">
 	<br>
@@ -35,6 +33,4 @@
 		</div>
 	</ul>
 
-	
-	
 <body>

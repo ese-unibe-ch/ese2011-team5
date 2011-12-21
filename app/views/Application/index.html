@@ -2,8 +2,10 @@
 
 <body>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#searchEvent').click(function(ev){
+		$(document).ready(function()
+		{
+			$('#searchEvent').click(function(ev)
+			{
 				var windowName = 'Search for an Event?';
 				var url = '@{Events.searchEvent()}';
 				var width = 500;
@@ -30,32 +32,6 @@
 		<tr style="height: 5px;">
 			<td colspan="3" rowspan="1"></td>
 		</tr>
-
-		#{ifnot currentUser}
-			<tr style="height: 40px;">
-				<td colspan="3" style="vertical-align: center;">Welcome on the Homepage of SPACECal!</td>
-			</tr>
-			<tr>
-				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
-					SPACECal allows you to organize your appointments
-					online. You can create as many calendars as you want
-					and share your appointments with your friends.<br>
-					<br>
-					You are currently not logged in. You can search for other
-					users on the right side and search their calendars. You can
-					only see their public appointments.
-				</td>
-			</tr>
-			<tr style="height: 10px;">
-				<td colspan="3"></td>
-			</tr>
-			<tr>
-				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
-				If you want to create your own calendars, please sign in or register.<br>
-				#{login /}
-				</td>
-			</tr>
-		#{/ifnot}
 
 		#{if currentUser}
 			<tr style="height: 40px;">
@@ -91,5 +67,30 @@
 				</td>
 			</tr>
 		#{/if}
+		#{else}
+			<tr style="height: 40px;">
+				<td colspan="3" style="vertical-align: center;">Welcome on the Homepage of SPACEKal!</td>
+			</tr>
+			<tr>
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+					SPACEKal allows you to organise your appointments
+					online. You can create as many calendars as you want
+					and share your appointments with your friends.<br>
+					<br>
+					You are currently not logged in. You can search for other
+					users on the left side and search their calendars. You can
+					only see their public appointments.
+				</td>
+			</tr>
+			<tr style="height: 10px;">
+				<td colspan="3"></td>
+			</tr>
+			<tr>
+				<td colspan="3" rowspan="1" id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 5px;">
+				If you want to create your own calendars, please sign in or register.<br>
+				#{login /}
+				</td>
+			</tr>
+		#{/else}
 	</table>
 </body>

@@ -37,12 +37,6 @@ public class ESEUserTests extends UnitTest
 		assertEquals("familyName 1", this.user1.getFamilyName());
 	}
 
-	@Test(expected = ESEExceptionGuestUser.class)
-	public void shouldReturnGuestUserException() throws ESEExceptionGuestUser
-	{
-		ESEDatabase.getCurrentUser();
-	}
-
 	@Test
 	public void shouldAddCalendar() throws ESEException
 	{

@@ -1,8 +1,8 @@
 #{selenium }
-    // Open the home page, and check that no error occured
-    clearSession()
-    open('/register/index')
- 
+	// Open the home page, and check that no error occured
+	clearSession()
+	open('/register/index')
+
 	type('username', 'Dummy1')
 	type('password', '123')
 	type('confirmpassword', '123')
@@ -11,5 +11,4 @@
 	clickAndWait('register')
 	waitForPageToLoad(1000)
 	assertTextPresent('Home')
-
 #{/selenium}

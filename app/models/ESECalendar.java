@@ -17,7 +17,7 @@ import models.visitor.Visitable;
 import models.visitor.Visitor;
 
 /**
- * ESECalendar organizes the ESEEvents of an ESEUser.
+ * ESECalendar organises the ESEEvents of an ESEUser.
  * It is also responsible for the correct interpretation of
  * time and Date representation within the application.
  * @see ESEUser
@@ -34,30 +34,13 @@ public class ESECalendar implements Visitable
 
 	/**
 	 * Constructor for ESECalendar.
-	 * @param calendarName Must not be empty and unique.
+	 * @param calendarName Must not be empty.
 	 * @param owner Must not be null.
-	 * @throws ESEException Either owner or calendarName is not given or null
-	 * or calendarName is ambiguous.
+	 * @throws ESEException Either owner or calendarName is not given or null.
 	 */
 	public ESECalendar(String calendarName, ESEUser owner) throws ESEException
 	{
-		if (calendarName.isEmpty())
-		{
-			throw new ESEException("Calendar name must not be empty!");
-		}
-		if (owner == null)
-		{
-			throw new ESEException("Calendar is not assigned to any user!");
-		}
-
-		for (ESECalendar calendar : owner.getCalendarList())
-		{
-			if (calendarName.equals(calendar.getCalendarName()))
-			{
-				throw new ESEException("A calendar with this name already exists!");
-			}
-		}
-
+		checkCalendarName(calendarName, owner);
 		this.calendarID = idCounter++;
 		this.eventList = new ArrayList<ESEEvent>();
 		this.calendarName = calendarName;
@@ -339,8 +322,6 @@ public class ESECalendar implements Visitable
 		Calendar cal = new GregorianCalendar();
 		cal.set(year, month, 1);
 		int max = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-		
-		System.out.println(max);
 
 		List<Integer> daysFromThisMonth = new ArrayList<Integer>();
 		for (int i = 0; i < max; i++)
@@ -435,10 +416,34 @@ public class ESECalendar implements Visitable
 	
 	/**
 	 * Setter for calendar name
-	 * @param calendarName
+	 * @param newCalendarName Must not be empty.
+	 * @throws ESEException calendarName is empty.
 	 */
-	public void setCalendarName(String calendarName){
-		this.calendarName = calendarName;
+	public void setCalendarName(String newCalendarName) throws ESEException
+	{
+		checkCalendarName(newCalendarName, this.owner);
+		this.calendarName = newCalendarName;
+	}
+
+	private void checkCalendarName(String calendarName, ESEUser calendarOwner) throws ESEException
+	{
+		if (calendarName.isEmpty())
+		{
+			throw new ESEException("Calendar name must not be empty!");
+		}
+
+		if (calendarOwner == null)
+		{
+			throw new ESEException("Calendar is not assigned to any user!");
+		}
+
+//		for (ESECalendar calendar : calendarOwner.getCalendarList())
+//		{
+//			if (calendarName.equals(calendar.getCalendarName()))
+//			{
+//				throw new ESEException("A calendar with this name already exists!");
+//			}
+//		}
 	}
 
 	public String toString()
