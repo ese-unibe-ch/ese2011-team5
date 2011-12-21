@@ -289,7 +289,7 @@ public class Application extends Controller
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		currentUser.getGroupByID(groupID).setGroupName(groupName);
 		
-		index();
+		showGroups();
 	}
 
 	public static void editEvent(int calendarID, int eventID, int selectedDay,
