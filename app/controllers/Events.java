@@ -42,10 +42,10 @@ public class Events extends Application
 		} 
 		catch (ESEExceptionGuestUser e) 
 		{
-			//TODO Auto-generated catch block
-			//e.printStackTrace();				//DON'T DO ANYTHING
+			//Don't do anything, because other users than the current user are not
+			//allowed to use this method
 		}
-			render();													//LK: TODO CHECK THIS TRY AND CATCH; maybe there will be an wrong render?
+			render();
 	}
 
 	public static void handleEventSearch(@Required Long uid,

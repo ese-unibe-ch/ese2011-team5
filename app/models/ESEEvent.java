@@ -131,7 +131,6 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 	 */
 	public boolean isEventDay(int day, int month, int year)
 	{
-		// TODO: remove noise!
 		Calendar dateAsCal = new GregorianCalendar();
 		dateAsCal.set(dateAsCal.DAY_OF_MONTH, day);
 		dateAsCal.set(dateAsCal.MONTH, month);
@@ -364,6 +363,7 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		this.isPublic = publiclyViewable;
 	}
 
+	
 	public Boolean checkForOverlapping(ArrayList<ESEEvent> eventList)
 	{
 		for(ESEEvent existingEvent : eventList)
@@ -445,6 +445,13 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 				+ ESEConversionHelper.convertDateToString(this.endDate).substring(10, 16);
 	}
 
+	/**
+	 * Compares two ESEEvents to determine which one has the earlier start date.
+	 * Events with earlier start dates are shown first in the list of all events of
+	 * a certain day, in the view.
+	 * @param compareEvent ESEEvent whose start date is compared to the start date
+	 * of this ESEEvent.
+	 */
 	@Override
 	public int compareTo(ESEEvent compareEvent)
 	{
@@ -488,11 +495,20 @@ public class ESEEvent implements Comparable<ESEEvent>, Visitable
 		return new ArrayList<ESEUser>(this.participants);
 	}
 
+	/**
+	 * Adds an ESEUser as participant to this ESEEvent.
+	 * @param participant
+	 */
 	public void addParticipant(ESEUser participant)
 	{
 		this.participants.add(participant);
 	}
 
+	/**
+	 * Removes a certain ESEUser from the list of participants
+	 * of this ESEEvent.
+	 * @param participant
+	 */
 	public void removeParticipant(ESEUser participant)
 	{
 		if(this.participants.contains(participant))

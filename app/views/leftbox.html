@@ -13,8 +13,6 @@
 		<tr>
 			<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 3px;">
 	
-			<a href = # id="displayAll">Display all users</a>
-	
 	<script type="text/javascript" charset="utf-8">
 	var searchAction = #{jsAction @Application.search(':query') /}
 	var searchActionAll = #{jsAction @Application.search('') /}
@@ -50,7 +48,9 @@
 			<p>
 			</p>
 		</div>
+		
 	</ul>
+	<a href = # id="displayAll">Display all users</a>
           	</td>
 		</tr>
 		*{#{/if}}*
@@ -61,7 +61,7 @@
 		</tr>
 		<tr>
 			<td id="border" style="vertical-align: top; border: 2px solid; height: 190px; padding: 3px;">When you are logged in, 
-			a list of calendars is shown here TADA</td>
+			the possiblity to search for other users is given here</td>
 		</tr>
 		#{/ifnot}
 		}*
