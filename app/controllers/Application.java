@@ -65,6 +65,7 @@ public class Application extends Controller
 
 	public static void showOtherCalendars(String username) throws ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = null;
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
@@ -85,12 +86,12 @@ public class Application extends Controller
 			}
 			else
 			{
-				render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList);
+				render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList, onlineUsers);
 			}
 		}
 		catch(ESEExceptionGuestUser e)
 		{
-			render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList);
+			render(currentUser, otherUsers, otherUser, calendarList, groups, otherUsersList, onlineUsers);
 		}
 	}
 
@@ -141,6 +142,7 @@ public class Application extends Controller
 
 		ESEUser currentUser = null;
 		ArrayList<ESEUser> otherUsersList = null;
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		try
 		{
 			currentUser = ESEDatabase.getCurrentUser();
@@ -153,7 +155,6 @@ public class Application extends Controller
 		}
 
 		ESEUser calendarUser = ESEDatabase.getUserByName(username);
-
 		try
 		{
 			ESECalendar calendar = calendarUser.getCalendarByID(calendarID);
@@ -186,7 +187,7 @@ public class Application extends Controller
 			render(calendarUser, currentUser, calendar, events, month, monthString,
 					startOfLastMonth, daysFromLastMonth, daysFromThisMonth,
 					daysFromNextMonth, eventDaysOfMonth, selectedDay, weekdays,
-					currentDay, year, otherUsersList);
+					currentDay, year, otherUsersList, onlineUsers);
 		}
 		catch(ESEException e)
 		{
@@ -198,6 +199,7 @@ public class Application extends Controller
 
 	public static void showEvents(int calendarID, String username) throws ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = null;
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
 		ArrayList<ESEGroup> groups = new ArrayList<ESEGroup>();
@@ -217,7 +219,7 @@ public class Application extends Controller
 		eventList = otherUser.getCalendarByID(calendarID).getAllAllowedEvents();
 
 		ESECalendar calendar = otherUser.getCalendarByID(calendarID);
-		render(calendar, currentUser, otherUser, otherUsers, eventList, groups);
+		render(calendar, currentUser, otherUser, otherUsers, eventList, groups, onlineUsers);
 	}
 
 	public static void addEvent(int calendarID, String eventName,
@@ -295,9 +297,10 @@ public class Application extends Controller
 	}
 	
 	public static void editCalendar(int calendarID) throws ESEExceptionGuestUser, ESEException{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESECalendar calendarToEdit = currentUser.getCalendarByID(calendarID);
-		render(currentUser, calendarToEdit);
+		render(currentUser, calendarToEdit, onlineUsers);
 	}
 	
 	public static void doEditCalendarName(int calendarID, String calendarName) throws ESEExceptionGuestUser, ESEException{
@@ -308,9 +311,10 @@ public class Application extends Controller
 	}
 	
 	public static void editGroup(int groupID) throws ESEExceptionGuestUser, ESEException{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ESEGroup groupToEdit = currentUser.getGroupByID(groupID);
-		render(currentUser, groupToEdit);
+		render(currentUser, groupToEdit, onlineUsers);
 	}
 	
 	public static void doEditGroup(int groupID, String groupName) throws ESEExceptionGuestUser, ESEException{
@@ -410,6 +414,7 @@ public class Application extends Controller
 
 	public static void showAndEditProfile(int userID) throws ESEException, ESEExceptionGuestUser
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
@@ -419,11 +424,12 @@ public class Application extends Controller
 		ESEUser watchedUser = ESEDatabase.getUserByID(userID);
 		//ESEProfile profile = watchedUser.getProfile();
 
-		render(currentUser, groups, otherUsers, watchedUser, /*profile,*/ otherUsersList);
+		render(currentUser, groups, otherUsers, watchedUser, /*profile,*/ otherUsersList, onlineUsers);
 	}
 
 	public static void forgotPassword(String username) throws ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = null;
 		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
@@ -443,11 +449,12 @@ public class Application extends Controller
 		ESEUser user = ESEDatabase.getUserByName(username);
 		String question = user.getQuestion();
 
-		render(user, currentUser, calendarList, otherUsers, groups, question);
+		render(user, currentUser, calendarList, otherUsers, groups, question, onlineUsers);
 	}
 
 	public static void resetPassword(String username, String answer) throws ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = null;
 		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
@@ -468,7 +475,7 @@ public class Application extends Controller
 		ESEUser user = ESEDatabase.getUserByName(username);
 		if(user.getAnswer().equals(answer))
 		{
-			render(user, username, currentUser, calendarList, otherUsers, groups);
+			render(user, username, currentUser, calendarList, otherUsers, groups, onlineUsers);
 		}
 		else
 		{
@@ -481,6 +488,7 @@ public class Application extends Controller
 	// ONLY used if an error happens in changePassword!
 	public static void resetPassword(String username) throws ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = null;
 		ArrayList<ESECalendar> calendarList = new ArrayList<ESECalendar>();
 		ArrayList<ESEUser> otherUsers = new ArrayList<ESEUser>();
@@ -500,7 +508,7 @@ public class Application extends Controller
 		}
 		ESEUser user = ESEDatabase.getUserByName(username);
 
-		render(user, currentUser, calendarList, otherUsers, groups);
+		render(user, currentUser, calendarList, otherUsers, groups, onlineUsers);
 	}
 
 	public static void changePassword(@Required String username,
@@ -542,6 +550,7 @@ public class Application extends Controller
 
 	public static void searchUser(@Required String searchName)
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(searchName);
 
 		if(!searchName.equals(""))
@@ -553,7 +562,7 @@ public class Application extends Controller
 			otherUsers = ESEDatabase.getAllUsers();
 		}
 
-		render(otherUsers);
+		render(otherUsers, onlineUsers);
 	}
 
 	// For Ajax
@@ -597,6 +606,7 @@ public class Application extends Controller
 
 	public static void copyEvent(int eventID2, int userID2, int otherUserCalendarID2) throws ESEExceptionGuestUser, ESEException
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser user = ESEDatabase.getUserByID(userID2);
 		ESECalendar calendar = user.getCalendarByID(otherUserCalendarID2);
 		ESEEvent event = calendar.getEventByID(eventID2);
@@ -608,7 +618,7 @@ public class Application extends Controller
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		List<ESECalendar> calendarList = currentUser.getCalendarList();
 
-		render(userID, otherUserCalendarID, eventID, calendarList, currentUser, event);
+		render(userID, otherUserCalendarID, eventID, calendarList, currentUser, event, onlineUsers);
 	}
 
 	public static void doCopyEvent(int otherUserID, int otherUserCalendarID,
@@ -649,12 +659,13 @@ public class Application extends Controller
 
 	public static void showAndEditProfile() throws ESEExceptionGuestUser
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		ArrayList<ESECalendar> calendarList = currentUser.getCalendarList();
 		ArrayList<ESEUser> otherUsers = ESEDatabase.getOtherUsers(currentUser.getName());
 		ArrayList<ESEGroup> groups = currentUser.getGroupList();
 
-		render(currentUser, groups, otherUsers, calendarList);
+		render(currentUser, groups, otherUsers, calendarList, onlineUsers);
 	}
 
 	public static void doEditProfile(@Required int userID, String firstName,
@@ -699,11 +710,12 @@ public class Application extends Controller
 
 	public static void showGroups() throws ESEExceptionGuestUser
 	{
+		List<ESEUser> onlineUsers = ESEDatabase.getOnlineUsers();
 		ESEUser currentUser = ESEDatabase.getCurrentUser();
 		List<ESEGroup> groupList = currentUser.getGroupList();
 		ArrayList<ESEUser> otherUsersList = ESEDatabase.getOtherUsers(currentUser.getName());
 
-		render(groupList, currentUser, otherUsersList);
+		render(groupList, currentUser, otherUsersList, onlineUsers);
 	}
 
 	public static void login()
